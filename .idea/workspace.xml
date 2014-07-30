@@ -6,8 +6,8 @@
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/app/bower_components/jquery/test/data/dashboard.xml" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406390937513" ignored="false" />
     <file path="$PROJECT_DIR$/app/bower_components/jquery/test/data/with_fries.xml" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406390937513" ignored="false" />
-    <file path="/index.html" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406734983620" ignored="false" />
-    <file path="/controllers.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406735052695" ignored="false" />
+    <file path="/index.html" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406750218036" ignored="false" />
+    <file path="/controllers.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406750355100" ignored="false" />
     <file path="/directives.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406391397109" ignored="false" />
     <file path="/app.css" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406485439508" ignored="false" />
     <file path="/stylesheet_global.css" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406733748966" ignored="false" />
@@ -26,8 +26,8 @@
     <file path="$PROJECT_DIR$/bower_components/angular/angular.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406606205173" ignored="false" />
     <file path="/units.json" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406609906442" ignored="false" />
     <file path="/unique.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406610619031" ignored="false" />
-    <file path="/sectors.json" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406688064653" ignored="false" />
-    <file path="/initial_sectors.json" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406733144147" ignored="false" />
+    <file path="/sectors.json" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406750035436" ignored="false" />
+    <file path="/initial_sectors.json" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406750113628" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +91,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="47" selection-start="1889" selection-end="1889" vertical-scroll-proportion="-3.6">
+            <state line="35" column="59" selection-start="1615" selection-end="1615" vertical-scroll-proportion="-5.7">
               <folding>
                 <element signature="tag#head#0;tag#html#0" expanded="false" />
                 <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#dialog#3;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -103,7 +103,7 @@
       <file leaf-file-name="controllers.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="49" selection-start="1348" selection-end="1348" vertical-scroll-proportion="0.53571427">
+            <state line="88" column="65" selection-start="2241" selection-end="2241" vertical-scroll-proportion="0.55714285">
               <folding />
             </state>
           </provider>
@@ -130,7 +130,16 @@
       <file leaf-file-name="sectors.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/data/sectors.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="18" selection-start="175" selection-end="175" vertical-scroll-proportion="-4.375">
+            <state line="1" column="22" selection-start="24" selection-end="24" vertical-scroll-proportion="-0.625">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="initial_sectors.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/data/initial_sectors.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="31" selection-start="132" selection-end="132" vertical-scroll-proportion="-2.5">
               <folding />
             </state>
           </provider>
@@ -165,10 +174,10 @@
         <option value="$PROJECT_DIR$/app/data/units.json" />
         <option value="$PROJECT_DIR$/app/js/unique.js" />
         <option value="$PROJECT_DIR$/app/css/ict/stylesheet_global.css" />
-        <option value="$PROJECT_DIR$/app/data/initial_sectors.json" />
-        <option value="$PROJECT_DIR$/app/data/sectors.json" />
-        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/js/init.js" />
+        <option value="$PROJECT_DIR$/app/data/sectors.json" />
+        <option value="$PROJECT_DIR$/app/data/initial_sectors.json" />
+        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/js/controllers.js" />
       </list>
     </option>
@@ -532,30 +541,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/data/initial_sectors.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="16" selection-start="18" selection-end="18" vertical-scroll-proportion="0.021367522">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/data/sectors.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="18" selection-start="175" selection-end="175" vertical-scroll-proportion="-4.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="47" selection-start="1889" selection-end="1889" vertical-scroll-proportion="-3.6">
-          <folding>
-            <element signature="tag#head#0;tag#html#0" expanded="false" />
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#dialog#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/init.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="0" selection-start="91" selection-end="91" vertical-scroll-proportion="-3.4615386">
@@ -563,9 +548,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/data/sectors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="22" selection-start="24" selection-end="24" vertical-scroll-proportion="-0.625">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/data/initial_sectors.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="31" selection-start="132" selection-end="132" vertical-scroll-proportion="-2.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="59" selection-start="1615" selection-end="1615" vertical-scroll-proportion="-5.7">
+          <folding>
+            <element signature="tag#head#0;tag#html#0" expanded="false" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#dialog#3;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="49" selection-start="1348" selection-end="1348" vertical-scroll-proportion="0.53571427">
+        <state line="88" column="65" selection-start="2241" selection-end="2241" vertical-scroll-proportion="0.55714285">
           <folding />
         </state>
       </provider>

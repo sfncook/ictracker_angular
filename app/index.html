@@ -30,10 +30,10 @@
             BNCH
         </button>
         <div class="clear_both"></div>
-        <button class="unit-add-btn" ng-click="showUnitsDlg()">+Unit</button>
+        <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
         <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
         <div class="clear_both"></div>
-        <button class="unit_btn" ng-repeat="unit in units">
+        <button class="unit_btn" ng-repeat="unit in sector.units">
             {{unit.name}}
         </button>
     </tbar>

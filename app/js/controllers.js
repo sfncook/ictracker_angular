@@ -2,7 +2,7 @@
 
 var app = angular.module("ictApp", []);
 
-app.factory('sharedProperties', function() {
+app.factory('sectorCallbacks', function() {
     var selectedSector = {};
 
     return {
@@ -16,7 +16,7 @@ app.factory('sharedProperties', function() {
 });
 
 
-app.controller('TbarContainer', function($scope, $http, sharedProperties){
+app.controller('TbarContainer', function($scope, $http, sectorCallbacks){
     $http.get('data/initial_sectors.json').
         success(function(data){
             $scope.sectors = data;
@@ -27,7 +27,7 @@ app.controller('TbarContainer', function($scope, $http, sharedProperties){
     }
 
     $scope.showSectorNameDlg = function(sector) {
-        sharedProperties.setSelectedSector(sector);
+        sectorCallbacks.setSelectedSector(sector);
         $("#sector-name-dlg").dialog( "open" );
     }
 
@@ -35,7 +35,8 @@ app.controller('TbarContainer', function($scope, $http, sharedProperties){
         $("#bnch-dlg").dialog( "open" );
     }
 
-    $scope.showUnitsDlg = function() {
+    $scope.showUnitsDlg = function(sector) {
+        sectorCallbacks.setSelectedSector(sector);
         $("#units-dlg").dialog( "open" );
     }
 
@@ -49,19 +50,19 @@ app.controller('SectorTbar', function($scope){
 });
 
 
-app.controller('SectorNamesDlg', function($scope, $http, sharedProperties){
+app.controller('SectorNamesDlg', function($scope, $http, sectorCallbacks){
     $http.get('data/sectors.json').
         success(function(data){
             $scope.catalog_sectors = data;
         });
 
     $scope.setSectorName = function(sectorName) {
-        var selectedSector = sharedProperties.getSelectedSector();
+        var selectedSector = sectorCallbacks.getSelectedSector();
         selectedSector.name=sectorName;
     };
 });
 
-app.controller('UnitsDlg', function($scope, $http){
+app.controller('UnitsDlg', function($scope, $http, sectorCallbacks){
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
         success(function(data){
@@ -85,6 +86,10 @@ app.controller('UnitsDlg', function($scope, $http){
     };
 
     $scope.selectUnit = function(unit) {
+        var selectedSector = sectorCallbacks.getSelectedSector();
+        if (selectedSector.units.indexOf(unit)<0) {
+            selectedSector.units.push(unit);
+        }
     };
 });
 
