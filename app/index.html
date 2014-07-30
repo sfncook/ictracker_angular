@@ -22,7 +22,7 @@
 <div ng-controller="TbarContainer">
     <tbar ng-repeat="sector in sectors" ng-controller="SectorTbar">
         <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg()">PAR</button>
-        <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg()">
+        <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
             {{sector.name}}
         </button>
         <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
@@ -42,7 +42,9 @@
 
 <dialog id="sector-name-dlg" title="Sector Name" ng-controller="SectorNamesDlg">
     <button class="sector_name_btn"
-            ng-repeat="sector in catalog_sectors">
+            ng-repeat="sector in catalog_sectors"
+            ng-click="setSectorName(sector.name)"
+            ng-class="{lightgreen: sector.name==selected_sector.name}">
         {{sector.name}}
     </button>
 </dialog>

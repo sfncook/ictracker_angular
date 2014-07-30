@@ -1,16 +1,22 @@
 'use strict';
 
-var app = angular.module("ictApp");
+var app = angular.module("ictApp", []);
 
-app.factory('myCallback_svc', function($rootScope) {
-    var callback_svc = {};
-    callback_svc.callback=0;
+app.factory('sharedProperties', function() {
+    var selectedSector = {};
 
-    return callback_svc;
+    return {
+        getSelectedSector: function () {
+            return selectedSector;
+        },
+        setSelectedSector: function(value) {
+            selectedSector = value;
+        }
+    };
 });
 
 
-app.controller('TbarContainer', function($scope, $http){
+app.controller('TbarContainer', function($scope, $http, sharedProperties){
     $http.get('data/initial_sectors.json').
         success(function(data){
             $scope.sectors = data;
@@ -20,7 +26,8 @@ app.controller('TbarContainer', function($scope, $http){
         $("#par-dlg").dialog( "open" );
     }
 
-    $scope.showSectorNameDlg = function() {
+    $scope.showSectorNameDlg = function(sector) {
+        sharedProperties.setSelectedSector(sector);
         $("#sector-name-dlg").dialog( "open" );
     }
 
@@ -41,36 +48,20 @@ app.controller('SectorTbar', function($scope){
 
 });
 
-//app.directive('sector', function(myCallback_svc){
-//    return  {
-//        restrict:'E',
-//        link:function($scope) {
-//            $scope.name='[Sector]';
-//            $scope.units=[];
-//            $scope.openSectorNameDlg=function() {
-//                console.log("openSectorNameDlg");
-//            }
-//        },
-//        controller:function($scope, myCallback_svc){
-//            $scope.openSectorNameDlg=function() {
-//                console.log("openSectorNameDlg");
-//            }
-////            myCallback_svc.callback=function(unit){
-////                console.log(unit);
-////                $scope.units.push.apply(unit);
-////            };
-//        }
-//    }
-//});
 
-app.controller('SectorNamesDlg', function($scope, $http, myCallback_svc){
+app.controller('SectorNamesDlg', function($scope, $http, sharedProperties){
     $http.get('data/sectors.json').
         success(function(data){
             $scope.catalog_sectors = data;
         });
+
+    $scope.setSectorName = function(sectorName) {
+        var selectedSector = sharedProperties.getSelectedSector();
+        selectedSector.name=sectorName;
+    };
 });
 
-app.controller('UnitsDlg', function($scope, $http, myCallback_svc){
+app.controller('UnitsDlg', function($scope, $http){
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
         success(function(data){
@@ -94,8 +85,6 @@ app.controller('UnitsDlg', function($scope, $http, myCallback_svc){
     };
 
     $scope.selectUnit = function(unit) {
-        $("#units-dlg").data("tbar_selected");
-        myCallback_svc.callback(unit);
     };
 });
 
