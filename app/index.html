@@ -19,9 +19,12 @@
 </head>
 <body>
 
-<sector id="sector_prototype">
+<sector ng-repeat="sectortbar in sectortbars | unique:'city'" id="sector_prototype" ng-controller="SectorTbar">
     <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: haspar}">PAR</button>
-    <button class="sector-name-btn sector_toprow_btn">SECTOR NAME</button>
+    <button class="sector-name-btn sector_toprow_btn"
+            ng-click="filterByCity()">
+        {{name}}
+    </button>
     <button class="bnch-btn sector_toprow_btn">
         <img src="img/bnch_bar_black.png">
         BNCH
@@ -30,13 +33,21 @@
     <button class="unit-add-btn">+Unit</button>
     <button class="action-add-btn">+Action</button>
     <div class="clear_both"></div>
+    <button class="unit_btn" ng-repeat="unit in units">
+        {{unit.name}}
+    </button>
 </sector>
 
 
+
+<dialog id="sector-name-dlg" title="Sector Name" ng-controller="SectorNamesDlg">
+    <button class="sector_name_btn"
+            ng-repeat="sector in catalog_sectors">
+        {{sector.name}}
+    </button>
+</dialog>
+
 <dialog id="par-dlg" title="Sector PAR"></dialog>
-
-<dialog id="sector-name-dlg" title="Sector Name"></dialog>
-
 <dialog id="bnch-dlg" title="Benchmarks"></dialog>
 
 <dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
@@ -64,7 +75,7 @@
             <td>
                 <button class="unit_btn"
                         ng-repeat="unit in catalog_units | unique:'name' | filter:filter_city | filter:filter_type"
-                        ng-click="selectUnit(unit.name)">
+                        ng-click="selectUnit(unit)">
                     {{unit.name}}
                 </button>
             </td>

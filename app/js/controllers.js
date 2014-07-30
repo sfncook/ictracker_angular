@@ -2,7 +2,49 @@
 
 var app = angular.module("ictApp");
 
-app.controller('UnitsDlg', function($scope, $http){
+app.factory('myCallback_svc', function($rootScope) {
+    var callback_svc = {};
+    callback_svc.callback=0;
+
+    return callback_svc;
+});
+
+app.controller('SectorTbar', function($scope, $compile){
+    $scope.filterByCity = function() {
+        console.log('testing');
+    };
+});
+
+//app.directive('sector', function(myCallback_svc){
+//    return  {
+//        restrict:'E',
+//        link:function($scope) {
+//            $scope.name='[Sector]';
+//            $scope.units=[];
+//            $scope.openSectorNameDlg=function() {
+//                console.log("openSectorNameDlg");
+//            }
+//        },
+//        controller:function($scope, myCallback_svc){
+//            $scope.openSectorNameDlg=function() {
+//                console.log("openSectorNameDlg");
+//            }
+////            myCallback_svc.callback=function(unit){
+////                console.log(unit);
+////                $scope.units.push.apply(unit);
+////            };
+//        }
+//    }
+//});
+
+app.controller('SectorNamesDlg', function($scope, $http, myCallback_svc){
+    $http.get('data/sectors.json').
+        success(function(data){
+            $scope.catalog_sectors = data;
+        });
+});
+
+app.controller('UnitsDlg', function($scope, $http, myCallback_svc){
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
         success(function(data){
@@ -25,8 +67,9 @@ app.controller('UnitsDlg', function($scope, $http){
         }
     };
 
-    $scope.selectUnit = function(unit_name) {
+    $scope.selectUnit = function(unit) {
         $("#units-dlg").data("tbar_selected");
+        myCallback_svc.callback(unit);
     };
 });
 

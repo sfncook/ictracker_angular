@@ -9,9 +9,15 @@ angular.module("ictApp", []);
 
 function addTbar() {
     var tbar = $("#sector_prototype").clone().appendTo("body");
+
     tbar.find(".par-btn").click(function(){$("#par-dlg").dialog( "open" );});
-    tbar.find(".sector-name-btn").click(function(){$("#sector-name-dlg").dialog( "open" );});
+
+//    tbar.find(".sector-name-btn").click(function(){
+//        $("#sector-name-dlg").dialog( "open" );
+//    });
+
     tbar.find(".bnch-btn").click(function(){$("#bnch-dlg").dialog( "open" );});
+
     tbar.find(".unit-add-btn").click(function(){
         $("#units-dlg").data("tbar_selected", tbar);
         $("#units-dlg").dialog( "open" );
@@ -27,10 +33,6 @@ function initTbars() {
     addTbar();
 }
 
-function initButtons() {
-    $("button").button();
-}
-
 function initDialogs() {
     $( "dialog" ).dialog({
         autoOpen: false,
@@ -43,7 +45,6 @@ function initDialogs() {
 }
 
 function init() {
-    initButtons();
     initDialogs();
     initTbars();
 }
