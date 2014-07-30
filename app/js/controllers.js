@@ -9,10 +9,36 @@ app.factory('myCallback_svc', function($rootScope) {
     return callback_svc;
 });
 
-app.controller('SectorTbar', function($scope, $compile){
-    $scope.filterByCity = function() {
-        console.log('testing');
-    };
+
+app.controller('TbarContainer', function($scope, $http){
+    $http.get('data/initial_sectors.json').
+        success(function(data){
+            $scope.sectors = data;
+        });
+
+    $scope.showParDlg = function() {
+        $("#par-dlg").dialog( "open" );
+    }
+
+    $scope.showSectorNameDlg = function() {
+        $("#sector-name-dlg").dialog( "open" );
+    }
+
+    $scope.showBnchDlg = function() {
+        $("#bnch-dlg").dialog( "open" );
+    }
+
+    $scope.showUnitsDlg = function() {
+        $("#units-dlg").dialog( "open" );
+    }
+
+    $scope.showActionsDlg = function() {
+        $("#actions-dlg").dialog( "open" );
+    }
+});
+
+app.controller('SectorTbar', function($scope){
+
 });
 
 //app.directive('sector', function(myCallback_svc){

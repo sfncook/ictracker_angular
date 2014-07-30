@@ -19,25 +19,25 @@
 </head>
 <body>
 
-<sector ng-repeat="sectortbar in sectortbars | unique:'city'" id="sector_prototype" ng-controller="SectorTbar">
-    <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: haspar}">PAR</button>
-    <button class="sector-name-btn sector_toprow_btn"
-            ng-click="filterByCity()">
-        {{name}}
-    </button>
-    <button class="bnch-btn sector_toprow_btn">
-        <img src="img/bnch_bar_black.png">
-        BNCH
-    </button>
-    <div class="clear_both"></div>
-    <button class="unit-add-btn">+Unit</button>
-    <button class="action-add-btn">+Action</button>
-    <div class="clear_both"></div>
-    <button class="unit_btn" ng-repeat="unit in units">
-        {{unit.name}}
-    </button>
-</sector>
-
+<div ng-controller="TbarContainer">
+    <tbar ng-repeat="sector in sectors" ng-controller="SectorTbar">
+        <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg()">PAR</button>
+        <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg()">
+            {{sector.name}}
+        </button>
+        <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
+            <img src="img/bnch_bar_black.png">
+            BNCH
+        </button>
+        <div class="clear_both"></div>
+        <button class="unit-add-btn" ng-click="showUnitsDlg()">+Unit</button>
+        <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
+        <div class="clear_both"></div>
+        <button class="unit_btn" ng-repeat="unit in units">
+            {{unit.name}}
+        </button>
+    </tbar>
+</div>
 
 
 <dialog id="sector-name-dlg" title="Sector Name" ng-controller="SectorNamesDlg">
@@ -82,6 +82,8 @@
         </tr>
     </table>
 </dialog>
+
+<dialog id="actions-dlg" title="Actions"></dialog>
 
 </body>
 </html>

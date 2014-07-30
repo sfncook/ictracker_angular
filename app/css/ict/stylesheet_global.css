@@ -65,7 +65,7 @@ body {
     clear: both;
 }
 
-sector {
+tbar {
     border:1px solid gray;
     margin:10px;
     width: 350px;
@@ -88,4 +88,9 @@ sector {
 
 .sector_name_btn {
     margin:5px;
+}
+
+.sector-name-btn {
+    width:150px;
+    height:25px;
 }
