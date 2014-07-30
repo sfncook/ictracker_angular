@@ -1,0 +1,87 @@
+/*
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,500,400italic,700);
+@import url(http://fonts.googleapis.com/css?family=Carrois+Gothic+SC);
+*/
+
+/*
+ **** MAIN STYLES ****
+ */
+html {
+    font-size: 100%;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+:focus {
+    /*Get rid of annoying blue outline when you click on anything*/
+    outline: none !important;
+}
+
+#units_dialog_cities_div {
+    display:block;
+    padding-left:80px;
+    border-bottom:1px solid #999;
+}
+
+#units_dialog_types_div {
+    float:left;
+    width:80px;
+    height: 450px;
+    border-right:1px solid #999;
+}
+
+#unitTypeColumn {
+    padding-bottom: 15px;
+}
+
+.unit_city_btn {
+    margin:5px;
+}
+
+.unit_type_btn {
+    margin:5px;
+}
+
+.unit_btn {
+    margin:5px;
+}
+
+.glowlightgreen {
+    background: lightgreen;
+}
+
+#units_dialog_units {
+    float:left;
+}
+
+.clear_both {
+    clear: both;
+}
+
+sector {
+    border:1px solid gray;
+    margin:10px;
+    width: 350px;
+    height: 200px;
+    float:left;
+}
+
+.sector_toprow_btn {
+    float:left;
+    margin:5px;
+}
+
+.unit-add-btn {
+    margin:5px;
+}
+
+.action-add-btn {
+    margin:5px;
+}

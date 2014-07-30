@@ -1,0 +1,22 @@
+[
+    {"name":"E201", "type":"Engine", "city":"Chandler"},
+    {"name":"E202", "type":"Engine", "city":"Chandler"},
+    {"name":"E203", "type":"Engine", "city":"Chandler"},
+    {"name":"E204", "type":"Engine", "city":"Chandler"},
+    {"name":"E205", "type":"Engine", "city":"Chandler"},
+
+    {"name":"L201", "type":"Ladder", "city":"Chandler"},
+    {"name":"L202", "type":"Ladder", "city":"Chandler"},
+    {"name":"L203", "type":"Ladder", "city":"Chandler"},
+
+
+    {"name":"E210", "type":"Engine", "city":"Gilbert"},
+    {"name":"E211", "type":"Engine", "city":"Gilbert"},
+    {"name":"E212", "type":"Engine", "city":"Gilbert"},
+    {"name":"E213", "type":"Engine", "city":"Gilbert"},
+
+    {"name":"L210", "type":"Ladder", "city":"Gilbert"},
+    {"name":"L211", "type":"Ladder", "city":"Gilbert"},
+
+    {"name":"A213", "type":"Ambo", "city":"Gilbert"}
+]

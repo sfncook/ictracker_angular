@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" ng-app="ictApp">
+<head>
+  <meta charset="utf-8">
+  <title>ICT</title>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.11.0.custom/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/ict/reset.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_global.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
+
+    <script src="js/libs/jquery-1.11.0.js"></script>
+    <script src="js/libs/jquery-ui-1.10.4.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/unique.js"></script>
+</head>
+<body>
+
+<sector id="sector_prototype">
+    <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: haspar}">PAR</button>
+    <button class="sector-name-btn sector_toprow_btn">SECTOR NAME</button>
+    <button class="bnch-btn sector_toprow_btn">
+        <img src="img/bnch_bar_black.png">
+        BNCH
+    </button>
+    <div class="clear_both"></div>
+    <button class="unit-add-btn">+Unit</button>
+    <button class="action-add-btn">+Action</button>
+    <div class="clear_both"></div>
+</sector>
+
+
+<dialog id="par-dlg" title="Sector PAR"></dialog>
+
+<dialog id="sector-name-dlg" title="Sector Name"></dialog>
+
+<dialog id="bnch-dlg" title="Benchmarks"></dialog>
+
+<dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                <button class="unit_city_btn"
+                        ng-repeat="unit in catalog_units | unique:'city'"
+                        ng-click="filterByCity(unit.city)"
+                        ng-class="{glowlightgreen:filter_city=='{{unit.city}}'}">
+                    {{unit.city}}
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px">
+                <button class="unit_type_btn"
+                        ng-repeat="unit in catalog_units | unique:'type'"
+                        ng-click="filterByType(unit.type)"
+                        ng-class="{glowlightgreen:filter_type=='{{unit.type}}'}">
+                    {{unit.type}}
+                </button>
+            </td>
+            <td>
+                <button class="unit_btn"
+                        ng-repeat="unit in catalog_units | unique:'name' | filter:filter_city | filter:filter_type"
+                        ng-click="selectUnit(unit.name)">
+                    {{unit.name}}
+                </button>
+            </td>
+        </tr>
+    </table>
+</dialog>
+
+</body>
+</html>

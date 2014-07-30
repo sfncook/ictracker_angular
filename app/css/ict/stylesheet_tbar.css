@@ -1,0 +1,16 @@
+.lightgreen {
+    background:lightgreen !important;
+}
+
+.bnch_icon_off {
+    content:url(img/bnch_bar_black.png);
+}
+
+.bnch_icon_on_good {
+    content:url(img/bnch_bar_green.png);
+}
+
+.bnch_icon_on_bad {
+    content:url(img/bnch_bar_red.png);
+}
+
