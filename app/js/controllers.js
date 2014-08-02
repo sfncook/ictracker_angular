@@ -4,6 +4,7 @@ var app = angular.module("ictApp", []);
 
 app.factory('sectorCallbacks', function() {
     var selectedSector = {};
+    var parSetSectorFn;
 
     return {
         getSelectedSector: function () {
@@ -11,18 +12,60 @@ app.factory('sectorCallbacks', function() {
         },
         setSelectedSector: function(value) {
             selectedSector = value;
+        },
+
+        setParSetSectorFn: function(value) {
+            parSetSectorFn = value;
+        },
+        setParSector: function(sector) {
+            parSetSectorFn(sector);
         }
     };
 });
 
+app.controller('ParDlg', function($scope, sectorCallbacks){
+    var parSetSectorFn = function(sector) {
+        $scope.parSector = sector;
+    };
+    sectorCallbacks.setParSetSectorFn(parSetSectorFn);
+});
 
+var gridster;
+function initGridster() {
+    gridster = $("#tbar_container").gridster({
+        widget_base_dimensions: [278, 275],
+        widget_margins: [5, 5],
+        autogrow_cols: false
+    }).data('gridster');
+    gridster.disable();
+}
+
+var newTbars = [];
 app.controller('TbarContainer', function($scope, $http, sectorCallbacks){
     $http.get('data/initial_sectors.json').
         success(function(data){
             $scope.sectors = data;
         });
 
-    $scope.showParDlg = function() {
+    initGridster();
+    $scope.$watchCollection('sectors', function(newValue, oldValue){
+        if(typeof newValue!='undefined') {
+            newTbars = newTbars.concat(newValue);
+            console.log(newValue);
+            //This ensures we fire *after* the DOM is updated
+            $scope.$evalAsync(function() {
+                var tbar;
+                for (tbar in newTbars) {
+                    console.log(tbar);
+                    gridster.add_widget.apply(gridster, [tbar, 1, 1]);
+                }
+            });
+        }
+
+    });
+
+    $scope.showParDlg = function(sector) {
+        sectorCallbacks.setParSector(sector);
         $("#par-dlg").dialog( "open" );
     }
 
@@ -43,9 +86,10 @@ app.controller('TbarContainer', function($scope, $http, sectorCallbacks){
     $scope.showActionsDlg = function() {
         $("#actions-dlg").dialog( "open" );
     }
+
 });
 
-app.controller('SectorTbar', function($scope){
+app.controller('SectorTbar', function($scope, sectorCallbacks){
 
 });
 
@@ -66,6 +110,12 @@ app.controller('UnitsDlg', function($scope, $http, sectorCallbacks){
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
         success(function(data){
+            for(var i = 0; i < data.length; i++) {
+                var unit = data[i];
+                unit.par = "P";
+                unit.psi = "4000";
+//                console.log(unit);
+            }
             $scope.catalog_units = data;
         });
 
@@ -92,6 +142,7 @@ app.controller('UnitsDlg', function($scope, $http, sectorCallbacks){
         }
     };
 });
+
 
 //app.directive('initButton', function() {
 //    return function($scope, $element) {

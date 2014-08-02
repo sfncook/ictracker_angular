@@ -24,6 +24,22 @@ body {
     outline: none !important;
 }
 
+tbar {
+    border:1px solid gray;
+    margin:10px;
+    width: 278px;
+    height: 279px;
+    float:left;
+    padding: 0;
+    border-radius: 3px;
+    z-index:0;
+}
+
+button {
+    /*border-radius: 5px;*/
+    /*background: #EEE;*/
+}
+
 #units_dialog_cities_div {
     display:block;
     padding-left:80px;
@@ -65,14 +81,6 @@ body {
     clear: both;
 }
 
-tbar {
-    border:1px solid gray;
-    margin:10px;
-    width: 350px;
-    height: 200px;
-    float:left;
-}
-
 .sector_toprow_btn {
     float:left;
     margin:5px;
@@ -93,4 +101,136 @@ tbar {
 .sector-name-btn {
     width:150px;
     height:25px;
+}
+
+.benchmarks_icon {
+    width: 14px;
+    height: 15px;
+    margin-right: 4px;
+    float:left;
+}
+
+.benchmark_bar_img {
+    margin-bottom: 1px;
+}
+
+.tbar_col_div {
+    width:137px;
+    /*width:135px;
+    height:244px;*/
+    float:left;
+}
+.tbar_col_scroll_div {
+    width:134px;
+    height:211px;
+    overflow-y:scroll;
+    margin-top: 2px;
+}
+.tbar_col_left_div {
+    border-right: 1px solid #999;
+}
+
+.scroll-pane {
+    width: 137px;
+    height: 213px;
+    overflow: auto;
+}
+.left_scroll_pane>.jspContainer>.jspVerticalBar {
+    left: 0;
+    width: 3px;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.right_scroll_pane>.jspContainer>.jspVerticalBar {
+    right: 0;
+    width: 3px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.action_col_right>.right_scroll_pane{
+    background: #FFFF88;
+}
+
+.acct_unit_btn {
+    width:47px;
+    height:27px;
+    margin: 2px 5px;
+    background: yellow;
+    border: 2px #AAC7D1 solid;
+    padding:2px 0;
+    float:left;
+    border-radius: 10px;
+}
+.action_add_btn {
+    width:57px;
+    height:27px;
+    margin: 2px 4px;
+    float:right;
+    background: #AAC7D1;
+    border-bottom: 2px dotted #888 !important;
+    border-radius: 10px;
+    font-size:0.8rem;
+    padding:6px 0;
+}
+
+.tbar_title_container {
+    background: #BBB;
+    height: 29px;
+}
+
+.par-btn {
+    width:30px;
+    height: 22px;
+    padding:4px;
+    margin:2px;
+    font-size: 0.6rem;
+}
+.sector-name-btn {
+    width:170px;
+    height: 22px;
+    padding:0px;
+    margin:2px;
+    font-size: 1.0rem;
+}
+.bnch-btn {
+    width:57px;
+    height: 22px;
+    padding:4px;
+    margin:2px;
+    font-size: 0.6rem;
+}
+
+.personnel_btn {
+    width: 20px;
+    height: 20px;
+    padding: 2px 0;
+    border-radius: 15px;
+    font-size: 0.8rem;
+}
+
+.psi_red {
+    background: red;
+    color: #FFF !important;
+}
+.psi_yellow {background: yellow;}
+.psi_green {background: #3dff00;}
+.psi_btn {
+    width:  25px;
+    color: #666;
+    font-weight: normal;
+    font-size: 0.6rem;
+    text-shadow: none;
+    padding: 4px 0;
+}
+
+.par_dlg_row {
+    border-bottom:1px solid darkgray;
+}
+
+.par_sector_btn {
+    width:170px;
+    margin:5px auto !important;
 }

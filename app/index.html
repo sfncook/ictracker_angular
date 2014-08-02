@@ -9,33 +9,110 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/ict/stylesheet_global.css">
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_header.css">
 
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
     <script src="bower_components/angular/angular.js"></script>
+    <script src="js/jquery.gridster.js"></script>
     <script src="js/init.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/unique.js"></script>
 </head>
 <body>
 
-<div ng-controller="TbarContainer">
+<div id="ict_header">
+    <div id="time" class="time_lg header_item">00:00</div>
+    <img id="title_icon" class="header_item" src="img/logo/ict_logo_100x100.png"/>
+    <button id="dispatched_units_btn" class="header_item button">
+        <div>Dispatched</div>
+        <div>Units</div>
+    </button>
+    <button id="upgrade_btn" class="header_item button">Upgrade</button>
+
+    <div id="header_row2" class="header_row">
+        <div class="dialog_vertical_align_cell">
+            <button id="osr_header_btn" class="header_item button">
+                <div>OSR</div>
+                <div id="osr_btn_perccomplete">(0% Complete)</div>
+            </button>
+            <button id="objectives_header_btn" class="header_item button">
+                <div>Objectives</div>
+                <div id="objectives_btn_perccomplete">(0% Complete)</div>
+            </button>
+            <button id="iap_btn" class="header_item button">IAP</button>
+        </div>
+    </div>
+
+    <div id="header_row3" class="header_row">
+        <!--<div id="cmd_term_btn" class="disabled header_item button">-->
+            <!--<img class="terminate_icon" src="images/terminate.png"/>-->
+            <!--<div>Command</div>-->
+            <!--<div>Terminated</div>-->
+        <!--</div>-->
+        <button id="report_btn" class="header_item button">
+            <!--<img class="report_icon" src="images/report.png"/>-->
+            <div>Time</div>
+            <div>Report</div>
+        </button>
+        <button id="sectorreport_btn" class="header_item button">
+            <!--<img class="report_icon" src="images/report.png"/>-->
+            <div>Sector Report</div>
+        </button>
+    </div>
+</div><!-- ict_header-->
+
+<div id="tbar_container" class="gridster" ng-controller="TbarContainer">
     <tbar ng-repeat="sector in sectors" ng-controller="SectorTbar">
-        <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg()">PAR</button>
-        <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
-            {{sector.name}}
-        </button>
-        <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
-            <img src="img/bnch_bar_black.png">
-            BNCH
-        </button>
+        <div class="tbar_title_container">
+            <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
+            <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
+                {{sector.name}}
+            </button>
+            <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
+                <!--<span class="benchmarks_icon">-->
+                    <!--<img class="benchmark_bar_img_1 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                    <!--<img class="benchmark_bar_img_2 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                    <!--<img class="benchmark_bar_img_3 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                    <!--<img class="benchmark_bar_img_4 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                <!--</span>-->
+                BNCH
+            </button>
+            <div class="clear_both"></div>
+        </div>
+
+
         <div class="clear_both"></div>
-        <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
-        <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
-        <div class="clear_both"></div>
-        <button class="unit_btn" ng-repeat="unit in sector.units">
-            {{unit.name}}
-        </button>
+
+        <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
+            <!--<button class="unit_move_cancel_btn">Cancel</button>-->
+            <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
+            <div class="clear_both"></div>
+            <div class="left_scroll_pane scroll-pane jspScrollable">
+                <div class="jspContainer">
+                    <div class="jspPane">
+                        <div ng-repeat="unit in sector.units">
+                            <button class="personnel_btn" ng-click="showParDlg(unit)">{{unit.par}}</button>
+                            <button class="psi_green psi_btn" ng-click="showPsiDlg(unit)">{{unit.psi}}</button>
+                            <button class="unit_btn">
+                                {{unit.name}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action_col_right tbar_col_right_div tbar_col_div">
+            <button class="acct_unit_btn">@acct</button>
+            <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
+            <div class="clear_float"></div>
+            <div class="right_scroll_pane scroll-pane jspScrollable">
+                <div class="jspContainer">
+                    <div class="jspPane"></div>
+                </div>
+            </div>
+        </div>
     </tbar>
 </div>
 
@@ -49,8 +126,26 @@
     </button>
 </dialog>
 
-<dialog id="par-dlg" title="Sector PAR"></dialog>
+<dialog id="par-dlg" title="Sector PAR" ng-controller="ParDlg">
+    <div class="par_dlg_row">
+        <button class="par_sector_btn sector-name-btn">{{parSector.name}}</button>
+    </div>
+    <div id="par_dialog_units" ng-repeat="unit in parSector.units">
+        <div class="par_dialog_unit_leftcol">
+            <button class="personnel_btn">{{unit.par}}</button>
+            <button class="psi_btn">{{unit.psi}}</button>
+            <button class="unit_btn">{{unit.name}}</button>
+            <div class="clear_float"></div>
+            <button class="mayday_par_btn">Mayday</button>
+        </div>
+        <div class="par_dialog_people"></div>
+        <div class="clear_float"></div>
+    </div>
+</dialog>
+
 <dialog id="bnch-dlg" title="Benchmarks"></dialog>
+
+<dialog id="unit-info-dlg" title="Unit"></dialog>
 
 <dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
     <table>

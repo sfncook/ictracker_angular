@@ -14,3 +14,16 @@
     content:url(img/bnch_bar_red.png);
 }
 
+.gridster .gs-w {
+    /*cursor: pointer;*/
+}
+
+.gridster .player {
+    background: #BBB;
+}
+
+
+.gridster .preview-holder {
+    border: none!important;
+    background: red!important;
+}
