@@ -30,39 +30,12 @@ app.controller('ParDlg', function($scope, sectorCallbacks){
     sectorCallbacks.setParSetSectorFn(parSetSectorFn);
 });
 
-var gridster;
-function initGridster() {
-    gridster = $("#tbar_container").gridster({
-        widget_base_dimensions: [278, 275],
-        widget_margins: [5, 5],
-        autogrow_cols: false
-    }).data('gridster');
-    gridster.disable();
-}
 
-var newTbars = [];
 app.controller('TbarContainer', function($scope, $http, sectorCallbacks){
     $http.get('data/initial_sectors.json').
         success(function(data){
             $scope.sectors = data;
         });
-
-    initGridster();
-    $scope.$watchCollection('sectors', function(newValue, oldValue){
-        if(typeof newValue!='undefined') {
-            newTbars = newTbars.concat(newValue);
-            console.log(newValue);
-            //This ensures we fire *after* the DOM is updated
-            $scope.$evalAsync(function() {
-                var tbar;
-                for (tbar in newTbars) {
-                    console.log(tbar);
-                    gridster.add_widget.apply(gridster, [tbar, 1, 1]);
-                }
-            });
-        }
-
-    });
 
     $scope.showParDlg = function(sector) {
         sectorCallbacks.setParSector(sector);
