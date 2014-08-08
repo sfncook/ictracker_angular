@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="css/ict/stylesheet_global.css">
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
     <link rel="stylesheet" href="css/ict/stylesheet_header.css">
+    <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css" />
 
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="js/jquery.gridster.js"></script>
+    <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+    <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/unique.js"></script>
@@ -62,58 +64,66 @@
     </div>
 </div><!-- ict_header-->
 
+<!--<div ng-controller="MyCtrl">-->
+    <!--<ul gridster="gridsterOpts" style="margin-top:60px">-->
+        <!--<li gridster-item="item" ng-repeat="sector in sectors" style="border:1px solid grey; width:150px; margin:10px;">{{sector.name}}</li>-->
+    <!--</ul>-->
+<!--</div>-->
+
 <div ng-controller="TbarContainer">
-    <tbar ng-repeat="sector in sectors" ng-controller="SectorTbar">
-        <div class="tbar_title_container">
-            <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
-            <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
-                {{sector.name}}
-            </button>
-            <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
-                <!--<span class="benchmarks_icon">-->
-                    <!--<img class="benchmark_bar_img_1 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
-                    <!--<img class="benchmark_bar_img_2 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
-                    <!--<img class="benchmark_bar_img_3 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
-                    <!--<img class="benchmark_bar_img_4 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
-                <!--</span>-->
-                BNCH
-            </button>
+    <ul gridster="gridsterOpts">
+        <tbar gridster-item="item" ng-repeat="sector in sectors" ng-controller="SectorTbar">
+            <div class="tbar_title_container">
+                <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
+                <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
+                    {{sector.name}}
+                </button>
+                <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
+                    <!--<span class="benchmarks_icon">-->
+                        <!--<img class="benchmark_bar_img_1 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                        <!--<img class="benchmark_bar_img_2 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                        <!--<img class="benchmark_bar_img_3 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                        <!--<img class="benchmark_bar_img_4 benchmark_bar_img" src="img/bnch_bar_black.png"/>-->
+                    <!--</span>-->
+                    BNCH
+                </button>
+                <div class="clear_both"></div>
+            </div>
+
+
             <div class="clear_both"></div>
-        </div>
 
-
-        <div class="clear_both"></div>
-
-        <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
-            <!--<button class="unit_move_cancel_btn">Cancel</button>-->
-            <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
-            <div class="clear_both"></div>
-            <div class="left_scroll_pane scroll-pane jspScrollable">
-                <div class="jspContainer">
-                    <div class="jspPane">
-                        <div ng-repeat="unit in sector.units">
-                            <button class="personnel_btn" ng-click="showParDlg(unit)">{{unit.par}}</button>
-                            <button class="psi_green psi_btn" ng-click="showPsiDlg(unit)">{{unit.psi}}</button>
-                            <button class="unit_btn">
-                                {{unit.name}}
-                            </button>
+            <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
+                <!--<button class="unit_move_cancel_btn">Cancel</button>-->
+                <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
+                <div class="clear_both"></div>
+                <div class="left_scroll_pane scroll-pane jspScrollable">
+                    <div class="jspContainer">
+                        <div class="jspPane">
+                            <div ng-repeat="unit in sector.units">
+                                <button class="personnel_btn" ng-click="showParDlg(unit)">{{unit.par}}</button>
+                                <button class="psi_green psi_btn" ng-click="showPsiDlg(unit)">{{unit.psi}}</button>
+                                <button class="unit_btn">
+                                    {{unit.name}}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="action_col_right tbar_col_right_div tbar_col_div">
-            <button class="acct_unit_btn">@acct</button>
-            <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
-            <div class="clear_float"></div>
-            <div class="right_scroll_pane scroll-pane jspScrollable">
-                <div class="jspContainer">
-                    <div class="jspPane"></div>
+            <div class="action_col_right tbar_col_right_div tbar_col_div">
+                <button class="acct_unit_btn">@acct</button>
+                <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
+                <div class="clear_float"></div>
+                <div class="right_scroll_pane scroll-pane jspScrollable">
+                    <div class="jspContainer">
+                        <div class="jspPane"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </tbar>
+        </tbar>
+    </ul>
 </div>
 
 

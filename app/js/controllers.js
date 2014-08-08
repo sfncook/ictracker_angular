@@ -1,6 +1,59 @@
 'use strict';
 
-var app = angular.module("ictApp", []);
+var app = angular.module("ictApp", ['gridster']);
+
+//app.controller('MyCtrl', function($scope, $http){
+//    $http.get('data/initial_sectors.json').
+//        success(function(data){
+//            $scope.sectors = data;
+//        });
+//
+//    $scope.gridsterOpts = {
+//        margins: [20, 20],
+//        outerMargin: false,
+//        pushing: true,
+//        floating: true,
+//        draggable: {
+//            enabled: true
+//        },
+//        resizable: {
+//            enabled: false,
+//            handles: 'n, e, s, w, se, sw'
+//        }
+//    };
+//
+//    $scope.gridNames = [{
+//        name: "Dad",
+//        sizeX: 2,
+//        sizeY: 1,
+//        row: 0,
+//        col: 0
+//    }, {
+//        name: "Uncle Randy",
+//        sizeX: 2,
+//        sizeY: 2,
+//        row: 0,
+//        col: 2
+//    }, {
+//        name: "Grandpa",
+//        sizeX: 2,
+//        sizeY: 1,
+//        row: 2,
+//        col: 1
+//    }, {
+//        name: "Vickie's Dad",
+//        sizeX: 1,
+//        sizeY: 1,
+//        row: 2,
+//        col: 3
+//    }, {
+//        name: "Mike",
+//        sizeX: 1,
+//        sizeY: 1,
+//        row: 2,
+//        col: 4
+//    }];
+//});
 
 app.factory('sectorCallbacks', function() {
     var selectedSector = {};
@@ -36,6 +89,20 @@ app.controller('TbarContainer', function($scope, $http, sectorCallbacks){
         success(function(data){
             $scope.sectors = data;
         });
+
+    $scope.gridsterOpts = {
+        margins: [20, 20],
+        outerMargin: false,
+        pushing: true,
+        floating: true,
+        draggable: {
+            enabled: true
+        },
+        resizable: {
+            enabled: false,
+            handles: 'n, e, s, w, se, sw'
+        }
+    };
 
     $scope.showParDlg = function(sector) {
         sectorCallbacks.setParSector(sector);

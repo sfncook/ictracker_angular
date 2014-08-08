@@ -1,6 +1,6 @@
 [
-    {"name":"", "units":[]},
-    {"name":"RESCUE", "units":[]},
-    {"name":"Safety", "units":[]},
-    {"name":"ReHab", "units":[]}
+    {"name":"", "units":[], "sizeX":1, "sizeY":1},
+    {"name":"RESCUE", "units":[], "sizeX":1, "sizeY":1},
+    {"name":"Safety", "units":[], "sizeX":1, "sizeY":1},
+    {"name":"ReHab", "units":[], "sizeX":1, "sizeY":1}
 ]
