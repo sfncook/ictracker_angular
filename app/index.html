@@ -114,7 +114,7 @@
 
             <div class="action_col_right tbar_col_right_div tbar_col_div">
                 <button class="acct_unit_btn">@acct</button>
-                <button class="action-add-btn" ng-click="showActionsDlg()">+Action</button>
+                <button class="action-add-btn" ng-click="showActionsDlg(sector)">+Action</button>
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane jspScrollable">
                     <div class="jspContainer">
@@ -138,9 +138,9 @@
 
 <dialog id="par-dlg" title="Sector PAR" ng-controller="ParDlg">
     <div class="par_dlg_row">
-        <button class="par_sector_btn sector-name-btn">{{parSector.name}}</button>
+        <button class="par_sector_btn sector-name-btn">{{selectedSector.name}}</button>
     </div>
-    <div id="par_dialog_units" ng-repeat="unit in parSector.units">
+    <div id="par_dialog_units" ng-repeat="unit in selectedSector.units">
         <div class="par_dialog_unit_leftcol">
             <button class="personnel_btn">{{unit.par}}</button>
             <button class="psi_btn">{{unit.psi}}</button>
@@ -153,7 +153,7 @@
     </div>
 </dialog>
 
-<dialog id="bnch-dlg" title="Benchmarks"></dialog>
+<dialog id="bnch-dlg" title="Benchmarks" ng-controller="BnchDlg"></dialog>
 
 <dialog id="unit-info-dlg" title="Unit"></dialog>
 
@@ -190,7 +190,7 @@
     </table>
 </dialog>
 
-<dialog id="actions-dlg" title="Actions"></dialog>
+<dialog id="actions-dlg" title="Actions" ng-controller="ActionsDlg"></dialog>
 
 </body>
 </html>
