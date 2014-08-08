@@ -56,7 +56,6 @@ var app = angular.module("ictApp", ['gridster']);
 //});
 
 app.factory('dialogSvc', function() {
-    var selectedSector = {};
     var openParDlg;
     var showSectorNameDlg;
     var showBnchDlg;
@@ -64,12 +63,9 @@ app.factory('dialogSvc', function() {
     var showActionsDlg;
 
     return {
-        getSelectedSector: function () {
-            return selectedSector;
-        },
-        setSelectedSector: function(value) {
-            selectedSector = value;
-        }
+//        getSelectedSector: function () {
+//            return selectedSector;
+//        }
     };
 });
 
@@ -131,19 +127,18 @@ app.controller('ParDlg', function($scope, dialogSvc){
 });
 
 app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
-    var selectedSector = {};
+    $scope.selectedSector = {};
     $http.get('data/sectors.json').
         success(function(data){
             $scope.catalog_sectors = data;
         });
 
     $scope.setSectorName = function(sectorName) {
-        var selectedSector = dialogSvc.getSelectedSector();
-        selectedSector.name=sectorName;
+        $scope.selectedSector.name=sectorName;
     };
 
     dialogSvc.showSectorNameDlg = function(sector) {
-        selectedSector = sector;
+        $scope.selectedSector = sector;
         $("#sector-name-dlg").dialog( "open" );
     }
 });
@@ -157,7 +152,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 });
 
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
-    var selectedSector = {};
+    $scope.selectedSector = {};
 
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
@@ -188,14 +183,13 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     };
 
     $scope.selectUnit = function(unit) {
-        var selectedSector = dialogSvc.getSelectedSector();
-        if (selectedSector.units.indexOf(unit)<0) {
-            selectedSector.units.push(unit);
+        if ($scope.selectedSector.units.indexOf(unit)<0) {
+            $scope.selectedSector.units.push(unit);
         }
     };
 
     dialogSvc.showUnitsDlg = function(sector) {
-        selectedSector = sector;
+        $scope.selectedSector = sector;
         $("#units-dlg").dialog( "open" );
     }
 });

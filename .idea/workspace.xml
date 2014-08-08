@@ -3,14 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="d09600ab-1352-44ed-a959-06c5bb808d73" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/js/controllers.js" afterPath="$PROJECT_DIR$/app/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="angular.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/app/bower_components/jquery/test/data/dashboard.xml" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406390937513" ignored="false" />
     <file path="$PROJECT_DIR$/app/bower_components/jquery/test/data/with_fries.xml" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406390937513" ignored="false" />
     <file path="/index.html" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1407539797521" ignored="false" />
-    <file path="/controllers.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1407539875222" ignored="false" />
+    <file path="/controllers.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1407540195117" ignored="false" />
     <file path="/directives.js" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406391397109" ignored="false" />
     <file path="/app.css" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406485439508" ignored="false" />
     <file path="/stylesheet_global.css" changelist="d09600ab-1352-44ed-a959-06c5bb808d73" time="1406766220133" ignored="false" />
@@ -99,7 +99,7 @@
       <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="64" selection-start="6612" selection-end="6612" vertical-scroll-proportion="0.42857143">
+            <state line="132" column="29" selection-start="6213" selection-end="6213" vertical-scroll-proportion="0.18045112">
               <folding>
                 <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
                 <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#dialog#4;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -111,7 +111,7 @@
       <file leaf-file-name="controllers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="125" column="25" selection-start="2657" selection-end="2671" vertical-scroll-proportion="-14.423077">
+            <state line="65" column="27" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -162,8 +162,8 @@
         <option value="$PROJECT_DIR$/app/css/ict/stylesheet_tbar.css" />
         <option value="$PROJECT_DIR$/app/js/init.js" />
         <option value="$PROJECT_DIR$/app/data/initial_sectors.json" />
-        <option value="$PROJECT_DIR$/app/js/controllers.js" />
         <option value="$PROJECT_DIR$/app/index.html" />
+        <option value="$PROJECT_DIR$/app/js/controllers.js" />
       </list>
     </option>
   </component>
@@ -565,14 +565,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="25" selection-start="2657" selection-end="2671" vertical-scroll-proportion="-14.423077">
+        <state line="65" column="27" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="64" selection-start="6612" selection-end="6612" vertical-scroll-proportion="0.42857143">
+        <state line="132" column="29" selection-start="6213" selection-end="6213" vertical-scroll-proportion="0.18045112">
           <folding>
             <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
             <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#dialog#4;n#body#0;n#html#0;n#!!top" expanded="true" />
