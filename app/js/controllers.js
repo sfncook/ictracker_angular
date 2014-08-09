@@ -128,11 +128,6 @@ app.controller('TbarContainer', function($scope, dialogSvc){
 
 });
 
-app.controller('SectorTbar', function($scope, dialogSvc){
-
-});
-
-
 
 app.controller('ParDlg', function($scope, dialogSvc){
     $scope.selectedSector = {};
