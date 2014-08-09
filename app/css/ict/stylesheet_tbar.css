@@ -66,8 +66,8 @@ tbar {
 }
 
 .scroll-pane {
-    width: 137px;
-    height: 213px;
+    width: 140px;
+    height: 228px;
     overflow: auto;
 }
 .left_scroll_pane>.jspContainer>.jspVerticalBar {

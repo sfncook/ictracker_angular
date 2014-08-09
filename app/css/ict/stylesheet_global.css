@@ -113,6 +113,7 @@ button:active {
     text-align: center;
     z-index: 200;
     padding-right:100px;
+    pointer-events: none;
 }
 #mayday_btn {
     width:130px;
@@ -122,8 +123,8 @@ button:active {
     color: white;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-top: none;
     border-right: 2px solid orange;
     border-bottom: 2px solid orange;
@@ -131,12 +132,45 @@ button:active {
     font-size: 1.25rem;
     padding: 0 20px;
     text-align: center;
+    height:33px;
+    pointer-events:auto;
 }
 #mayday_btn:hover {
     background: #FF9696;
 }
 #mayday_btn:active {
     background: #C20000;
+}
+
+
+#mode_btn {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    z-index: 100;
+    float:right;
+    margin-right: 10px;
+    font-size:1.2rem;
+    padding: 0 20px;
+    height:33px;
+}
+.offensive_btn {
+    background: #66dd65;
+    border-right: 2px #88be54 solid;
+    border-bottom: 2px #88be54 solid;
+    border-left: 2px #88be54 solid;
+    /*color: white;*/
+}
+.offensive_btn:hover {
+    background: #00a400;
+}
+.offensive_btn:active {
+    background: green;
+}
+.defensive_btn {
+    background: #FF2B21 !important;
+    color: white;
 }
 
 .top_header_btn {
