@@ -77,7 +77,7 @@
     <div gridster="gridsterOpts">
         <tbar gridster-item="item" ng-repeat="sector in sectors">
             <div class="tbar_title_container">
-                <button ng-disabled="!sector.parAvailable" class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
+                <button ng-disabled="!sector.parAvailable" class="par-btn sector_toprow_btn" ng-class="{glowlightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
                 <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     {{sector.name}}
                 </button>
@@ -98,7 +98,7 @@
 
             <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
                 <!--<button class="unit_move_cancel_btn">Cancel</button>-->
-                <button class="unit-add-btn" ng-click="showUnitsDlg(sector)">+Unit</button>
+                <button class="unit_add_btn" ng-click="showUnitsDlg(sector)">+Unit</button>
                 <div class="clear_both"></div>
                 <div class="left_scroll_pane scroll-pane jspScrollable">
                     <div class="jspContainer">
@@ -117,7 +117,7 @@
 
             <div class="action_col_right tbar_col_right_div tbar_col_div">
                 <button class="acct_unit_btn">@acct</button>
-                <button class="action-add-btn" ng-click="showActionsDlg(sector)">+Action</button>
+                <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane jspScrollable">
                     <div class="jspContainer">
@@ -134,7 +134,7 @@
     <button class="sector_name_btn"
             ng-repeat="sector in catalog_sectors"
             ng-click="setSectorName(sector.name)"
-            ng-class="{lightgreen: sector.name==selected_sector.name}">
+            ng-class="{glowlightgreen: sector.name==selected_sector.name}">
         {{sector.name}}
     </button>
 </dialog>
