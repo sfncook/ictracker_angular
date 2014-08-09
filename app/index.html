@@ -71,7 +71,7 @@
 <!--</div>-->
 
 <div ng-controller="TbarContainer">
-    <ul gridster="gridsterOpts">
+    <div gridster="gridsterOpts">
         <tbar gridster-item="item" ng-repeat="sector in sectors" ng-controller="SectorTbar">
             <div class="tbar_title_container">
                 <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </tbar>
-    </ul>
+    </div>
 </div>
 
 

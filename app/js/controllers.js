@@ -70,25 +70,41 @@ app.factory('dialogSvc', function() {
 });
 
 
-app.controller('TbarContainer', function($scope, $http, dialogSvc){
-    $http.get('data/initial_sectors.json').
-        success(function(data){
-            $scope.sectors = data;
-        });
+app.controller('TbarContainer', function($scope, dialogSvc){
+    var tbar_width = 297;
+    var tbar_height = 300;
+    var header_width = 100;
+    var col_count = Math.floor(($(window).width()-header_width)/tbar_width);
+    var init_row_count = Math.floor($(window).height()/tbar_height);
+    init_row_count = Math.max(init_row_count, 3);
 
     $scope.gridsterOpts = {
+        columns:col_count,
         margins: [20, 20],
-        outerMargin: false,
-        pushing: true,
-        floating: true,
-        draggable: {
-            enabled: true
-        },
-        resizable: {
-            enabled: false,
-            handles: 'n, e, s, w, se, sw'
-        }
+        outerMargin: true,
+        colWidth: tbar_width,
+        rowHeight: tbar_height,
+        defaultSizeX: 1,
+        draggable: {enabled: false},
+        resizable: {enabled: false}
     };
+
+    $scope.sectors=[];
+    for(var rowi=0; rowi<init_row_count; rowi++) {
+        for(var coli=0; coli<col_count; coli++) {
+            var sectorName = "";
+            if(coli==col_count-1) {
+                if(rowi==0) {
+                    sectorName = "Rescue";
+                } else if(rowi==1) {
+                    sectorName = "REHAB";
+                } else if(rowi==2) {
+                    sectorName = "Safety";
+                }
+            }
+            $scope.sectors.push({name:sectorName, units:[]});
+        }//for col
+    }//for row
 
     $scope.showParDlg = function(sector) {
         dialogSvc.openParDlg(sector);
