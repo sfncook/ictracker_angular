@@ -9,12 +9,20 @@ tbar {
     z-index:0;
 }
 
+#tbar_container {
+    padding-top:20px;
+}
 
 .unit_add_btn {
-    border-radius: 10px;
-    margin:5px;
+    width:57px;
+    height:27px;
+    margin: 2px 4px;
+    float:right;
     background: #AAC7D1;
     border-bottom: 2px dotted #888 !important;
+    border-radius: 10px;
+    font-size: 1.0rem;
+    padding:2px 0;
 }
 
 .action_add_btn {
@@ -81,6 +89,13 @@ tbar {
     background: #FFFF88;
 }
 
+.unit_btn {
+    width: 57px;
+    height: 27px;
+    border-radius: 10px;
+    font-size: 1.0rem;
+    padding: 4px 0 0 0;
+}
 .acct_unit_btn {
     width:47px;
     height:27px;

@@ -67,13 +67,23 @@
     </div>
 </div><!-- ict_header-->
 
-<!--<div ng-controller="MyCtrl">-->
-    <!--<ul gridster="gridsterOpts" style="margin-top:60px">-->
-        <!--<li gridster-item="item" ng-repeat="sector in sectors" style="border:1px solid grey; width:150px; margin:10px;">{{sector.name}}</li>-->
-    <!--</ul>-->
-<!--</div>-->
+<div id="top_header_container">
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/medical.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/plane.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/hazmat.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/water.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/trench.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/mountain.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/palm.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/structure.png"/></button>
+    <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/confined.png"/></button>
 
-<div ng-controller="TbarContainer">
+    <button id="mayday_btn" class="button_top button">MAYDAY</button>
+    <button id="mode_btn" class="offensive_btn button_top button">OFFENSE</button>
+    <div class="clear_float"></div>
+</div>
+
+<div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
         <tbar gridster-item="item" ng-repeat="sector in sectors">
             <div class="tbar_title_container">
@@ -194,6 +204,8 @@
 </dialog>
 
 <dialog id="actions-dlg" title="Actions" ng-controller="ActionsDlg"></dialog>
+
+<div id="version_text">Version: 0.0</div>
 
 </body>
 </html>

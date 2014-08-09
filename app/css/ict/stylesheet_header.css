@@ -75,11 +75,16 @@
     top: 157px;
 }
 #mode_btn {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     z-index: 100;
     float:right;
     margin-right: 10px;
     font-size:1.2rem;
     padding: 0 20px;
+    height:30px;
 }
 #mode_side_dialog {
     top: 197px;

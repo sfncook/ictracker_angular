@@ -2,59 +2,6 @@
 
 var app = angular.module("ictApp", ['gridster']);
 
-//app.controller('MyCtrl', function($scope, $http){
-//    $http.get('data/initial_sectors.json').
-//        success(function(data){
-//            $scope.sectors = data;
-//        });
-//
-//    $scope.gridsterOpts = {
-//        margins: [20, 20],
-//        outerMargin: false,
-//        pushing: true,
-//        floating: true,
-//        draggable: {
-//            enabled: true
-//        },
-//        resizable: {
-//            enabled: false,
-//            handles: 'n, e, s, w, se, sw'
-//        }
-//    };
-//
-//    $scope.gridNames = [{
-//        name: "Dad",
-//        sizeX: 2,
-//        sizeY: 1,
-//        row: 0,
-//        col: 0
-//    }, {
-//        name: "Uncle Randy",
-//        sizeX: 2,
-//        sizeY: 2,
-//        row: 0,
-//        col: 2
-//    }, {
-//        name: "Grandpa",
-//        sizeX: 2,
-//        sizeY: 1,
-//        row: 2,
-//        col: 1
-//    }, {
-//        name: "Vickie's Dad",
-//        sizeX: 1,
-//        sizeY: 1,
-//        row: 2,
-//        col: 3
-//    }, {
-//        name: "Mike",
-//        sizeX: 1,
-//        sizeY: 1,
-//        row: 2,
-//        col: 4
-//    }];
-//});
-
 app.factory('dialogSvc', function() {
     var openParDlg;
     var showSectorNameDlg;
@@ -71,12 +18,17 @@ app.factory('dialogSvc', function() {
 
 
 app.controller('TbarContainer', function($scope, dialogSvc){
+    var window_width = $(window).width();
+    var window_height = $(window).height();
     var tbar_width = 297;
     var tbar_height = 300;
     var header_width = 100;
-    var col_count = Math.floor(($(window).width()-header_width)/tbar_width);
-    var init_row_count = Math.floor($(window).height()/tbar_height);
+    var col_count = Math.floor((window_width - header_width)/tbar_width);
+    var init_row_count = Math.floor(window_height/tbar_height);
     init_row_count = Math.max(init_row_count, 3);
+    var left_margin = Math.floor((window_width - (col_count*tbar_width) - header_width )/2);
+    console.log(left_margin);
+    $("#tbar_container").css("padding-left", left_margin);
 
     $scope.gridsterOpts = {
         columns:col_count,
@@ -209,80 +161,4 @@ app.controller('ActionsDlg', function($scope, dialogSvc){
         $("#actions-dlg").dialog( "open" );
     }
 });
-
-
-//app.filter("length", function() {
-//    return function( input, options) {
-//        var array = options["array"] || [];
-////        return array.length>0;
-//        return true;
-//    };
-//});
-
-//app.directive('initButton', function() {
-//    return function($scope, $element) {
-//        $element.button();
-//    };
-//})
-
-//var ictApp = angular.module('ictApp');
-//
-//ictApp.directive('sector', function() {
-//    return {
-//        restrict:'E'
-//    };
-//});
-//
-//
-//ictApp.directive('sectorNameBtn', function() {
-//    return {
-//        restrict:'E',
-//        transclude:true,
-//        template:'Shawn loves Vickie',
-//        link: function( $scope, $sectorNameBtnEl) {
-//            $sectorNameBtnEl.click(function(){
-//                $("#sector-name-dlg").dialog( "open" );
-//            });
-//        }
-//    };
-//});
-//
-//
-//ictApp.directive('parBtn', function() {
-//    return {
-//        restrict:'E',
-//        link: function( $scope, $parBtnEl) {
-//            $parBtnEl.click(function(){
-//                $scope.$apply(function(){
-//                    $scope.haspar = true;
-//                });
-//                $("#par-dlg").dialog( "open" );
-//            });
-//        }
-//    };
-//});
-//
-//
-//ictApp.directive('bnchBtn', function(){
-//    return {
-//        restrict:'E',
-//        link:function($scope, $bnchBtnEl){
-//            $scope.bnchBtnEl = $bnchBtnEl;
-//            $bnchBtnEl.click(function(){
-//                $scope.$apply(function(){
-//                    $scope.bnch="test";
-//                });
-//                $("#bnch-dlg").dialog( "open" );
-//            });
-//        },
-//        controller:function($scope) {
-//            $scope.$watch('bnch',function(newVal,oldVal){
-//                var str = oldVal+"->"+newVal;
-//                console.log(str);
-//                $scope.bnchBtnEl.find("img").attr('src', 'img/bnch_bar_red.png');
-//            });
-//        }
-//    };
-//});
-
 
