@@ -4,7 +4,7 @@ suffix=$1
 version=$2
 
 # Update version
-echo "\$( document ).ready(function(){\$('#version_text').html('Version:${version}');});" > ./html/version.js
+echo "\$( document ).ready(function(){\$('#version_text').html('Version:${version}');});" > ./app/version.js
 
 # Commit git
 git add -A
