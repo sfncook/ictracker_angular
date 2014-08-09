@@ -20,19 +20,18 @@ app.factory('dialogSvc', function() {
 app.controller('TbarContainer', function($scope, dialogSvc){
     var window_width = $(window).width();
     var window_height = $(window).height();
-    var tbar_width = 297;
+    var tbar_width = 290;
     var tbar_height = 300;
     var header_width = 100;
     var col_count = Math.floor((window_width - header_width)/tbar_width);
     var init_row_count = Math.floor(window_height/tbar_height);
     init_row_count = Math.max(init_row_count, 3);
     var left_margin = Math.floor((window_width - (col_count*tbar_width) - header_width )/2);
-    console.log(left_margin);
     $("#tbar_container").css("padding-left", left_margin);
 
     $scope.gridsterOpts = {
         columns:col_count,
-        margins: [20, 20],
+        margins: [10, 10],
         outerMargin: true,
         colWidth: tbar_width,
         rowHeight: tbar_height,

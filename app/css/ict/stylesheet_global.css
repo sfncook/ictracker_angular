@@ -98,15 +98,26 @@ button:active {
 }
 
 #top_header_container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width:100%;
     z-index: 200;
     padding-right:100px;
 }
+#top_header_mayday_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    text-align: center;
+    z-index: 200;
+    padding-right:100px;
+}
 #mayday_btn {
-    margin-left:50px;
+    width:130px;
+    margin-left:auto;
+    display: inline-block;
     background: red;
     color: white;
     border-top-left-radius: 0;
@@ -119,9 +130,7 @@ button:active {
     border-left: 2px solid orange;
     font-size: 1.25rem;
     padding: 0 20px;
-    width:130px;
     text-align: center;
-    float: left;
 }
 #mayday_btn:hover {
     background: #FF9696;
