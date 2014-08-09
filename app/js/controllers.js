@@ -216,6 +216,15 @@ app.controller('ActionsDlg', function($scope, dialogSvc){
     }
 });
 
+
+//app.filter("length", function() {
+//    return function( input, options) {
+//        var array = options["array"] || [];
+////        return array.length>0;
+//        return true;
+//    };
+//});
+
 //app.directive('initButton', function() {
 //    return function($scope, $element) {
 //        $element.button();

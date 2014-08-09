@@ -3,6 +3,8 @@ function Sector(name) // Constructor
 {
     this.name = name;
     this.units = [];
+    this.parAvailable = false;
+    this.haspar = false;
 }
 
 Sector.prototype.toggleUnit = function(unit)
@@ -11,5 +13,11 @@ Sector.prototype.toggleUnit = function(unit)
         this.units.remByVal(unit);
     } else {
         this.units.push(unit);
+    }
+
+    if(this.units.length>0) {
+        this.parAvailable = true;
+    } else {
+        this.parAvailable = false;
     }
 }

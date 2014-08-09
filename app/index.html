@@ -75,7 +75,7 @@
     <div gridster="gridsterOpts">
         <tbar gridster-item="item" ng-repeat="sector in sectors" ng-controller="SectorTbar">
             <div class="tbar_title_container">
-                <button ng-disabled="parAvailable" class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
+                <button ng-disabled="!sector.parAvailable" class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
                 <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     {{sector.name}}
                 </button>
