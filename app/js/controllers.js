@@ -101,7 +101,7 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
 
     dialogSvc.showSectorNameDlg = function(sector) {
         $scope.selectedSector = sector;
-        $("#sector-name-dlg").dialog( "open" );
+        $("#sector_name_dlg").dialog( "open" );
     }
 });
 

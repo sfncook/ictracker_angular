@@ -3,7 +3,55 @@
     {"name":"Sector 1"},
     {"name":"North Sector"},
     {"name":"A-Side Sector"},
+
+    {"name":""},
+    {"name":"Sector 2"},
+    {"name":"Eat Sector"},
+    {"name":"Bravo Sector"},
+
+    {"name":"Ventilation"},
+    {"name":"Sector 3"},
+    {"name":"South Sector"},
+    {"name":"Charlie Sector"},
+
+    {"name":"Roof"},
+    {"name":"Sector 4"},
+    {"name":"West Sector"},
+    {"name":"Delta Sector"},
+
+    {"name":""},
+    {"name":"Sector ####"},
+    {"name":""},
+    {"name":""},
+
+    {"name":""},
+    {"name":""},
+    {"name":""},
+    {"name":""},
+
+    {"name":"On Deck"},
+    {"name":"Overhaul"},
+    {"name":"IRIC"},
+    {"name":"Medical"},
+
+    {"name":"Staging"},
+    {"name":"Salvage"},
+    {"name":"RIC"},
+    {"name":"Triage"},
+
+    {"name":"Lobby"},
+    {"name":"Customer Service"},
     {"name":"RESCUE"},
+    {"name":"Treatment"},
+
+    {"name":"Accountability"},
+    {"name":"Evacuation"},
     {"name":"Safety"},
-    {"name":"ReHab"}
+    {"name":"Transportation"},
+
+    {"name":"Resource"},
+    {"name":"ReHab"},
+    {"name":""},
+    {"name":""}
+
 ]

@@ -91,7 +91,7 @@
         <tbar gridster-item="item" ng-repeat="sector in sectors">
             <div class="tbar_title_container">
                 <button ng-disabled="!sector.parAvailable" class="par-btn sector_toprow_btn" ng-class="{glowlightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
-                <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
+                <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     {{sector.name}}
                 </button>
                 <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg()">
@@ -143,13 +143,16 @@
 </div>
 
 
-<dialog id="sector-name-dlg" title="Sector Name" ng-controller="SectorNamesDlg">
-    <button class="sector_name_btn"
-            ng-repeat="sector in catalog_sectors"
-            ng-click="setSectorName(sector.name)"
-            ng-class="{glowlightgreen: sector.name==selected_sector.name}">
-        {{sector.name}}
-    </button>
+<dialog id="sector_name_dlg" title="Sector Name" ng-controller="SectorNamesDlg">
+    <div class="grid">
+        <div class="grid_item_1_4" ng-repeat="sector in catalog_sectors">
+            <button class="dlg_sector_name_btn sector_name_btn"
+                    ng-click="setSectorName(sector.name)"
+                    ng-class="{glowlightgreen: sector.name==selected_sector.name, button_hidden: sector.name==''}">
+                {{sector.name}}
+            </button>
+        </div>
+    </div>
 </dialog>
 
 <dialog id="par-dlg" title="Sector PAR" ng-controller="ParDlg">

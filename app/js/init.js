@@ -10,7 +10,7 @@ function initDialogs() {
         autoOpen: false,
         modal: true
     });
-    $( "#sector-name-dlg" ).dialog( "option", "width", 800 );
+    $( "#sector_name_dlg" ).dialog( "option", "width", 800 );
     $( "#par-dlg" ).dialog( "option", "width", 400 );
     $( "#bnch-dlg" ).dialog( "option", "width", 400 );
     $( "#units-dlg" ).dialog( "option", "width", 855 );

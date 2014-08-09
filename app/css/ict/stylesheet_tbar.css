@@ -29,15 +29,6 @@ tbar {
     margin:5px;
 }
 
-.sector_name_btn {
-    margin:5px;
-}
-
-.sector-name-btn {
-    width:150px;
-    height:25px;
-}
-
 .benchmarks_icon {
     width: 14px;
     height: 15px;
@@ -130,7 +121,7 @@ tbar {
     margin:2px;
     font-size: 0.6rem;
 }
-.sector-name-btn {
+.sector_name_btn {
     width:170px;
     height: 22px;
     padding:0px;

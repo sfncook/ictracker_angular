@@ -41,6 +41,9 @@ button:hover {
 button:active {
     background: #CCC;
 }
+.button_hidden {
+    visibility: hidden;
+}
 
 .button_top {
     border-top-left-radius: 0;
@@ -102,7 +105,7 @@ button:active {
     top: 0;
     left: 0;
     width:100%;
-    z-index: 200;
+    z-index: 50;
     padding-right:100px;
 }
 #top_header_mayday_container {
@@ -111,7 +114,7 @@ button:active {
     left: 0;
     width:100%;
     text-align: center;
-    z-index: 200;
+    z-index: 50;
     padding-right:100px;
     pointer-events: none;
 }
@@ -148,7 +151,7 @@ button:active {
     border-top-right-radius: 0;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    z-index: 100;
+    z-index: 50;
     float:right;
     margin-right: 10px;
     font-size:1.2rem;
@@ -186,5 +189,24 @@ button:active {
     bottom: 10px;
     left: 10px;
     background: white;
-    z-index: 150;
+    z-index: 50;
+}
+
+.grid {
+
+}
+.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+[class*='grid_item_'] {
+    float: left;
+}
+.grid_item_1_4 {
+    width:25%;
+}
+
+.dlg_sector_name_btn {
+    margin: 5px !important;
 }
