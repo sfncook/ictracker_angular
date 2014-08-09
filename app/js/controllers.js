@@ -173,13 +173,12 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.filter_city = 'Gilbert';
     $http.get('data/units.json').
         success(function(data){
+            var units = [];
             for(var i = 0; i < data.length; i++) {
-                var unit = data[i];
-                unit.par = "P";
-                unit.psi = "4000";
-//                console.log(unit);
+                var unit = new Unit(data[i].name, data[i].type, data[i].city);
+                units.push(unit);
             }
-            $scope.catalog_units = data;
+            $scope.catalog_units = units;
         });
 
     $scope.filterByCity = function(city) {
