@@ -18,6 +18,7 @@
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/Sector.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/unique.js"></script>
 </head>
@@ -74,7 +75,7 @@
     <div gridster="gridsterOpts">
         <tbar gridster-item="item" ng-repeat="sector in sectors" ng-controller="SectorTbar">
             <div class="tbar_title_container">
-                <button class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
+                <button ng-disabled="parAvailable" class="par-btn sector_toprow_btn" ng-class="{lightgreen: sector.haspar}" ng-click="showParDlg(sector)">PAR</button>
                 <button class="sector-name-btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     {{sector.name}}
                 </button>

@@ -102,7 +102,7 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                     sectorName = "Safety";
                 }
             }
-            $scope.sectors.push({name:sectorName, units:[]});
+            $scope.sectors.push(new Sector(sectorName));
         }//for col
     }//for row
 
@@ -199,9 +199,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     };
 
     $scope.selectUnit = function(unit) {
-        if ($scope.selectedSector.units.indexOf(unit)<0) {
-            $scope.selectedSector.units.push(unit);
-        }
+        $scope.selectedSector.toggleUnit(unit);
     };
 
     dialogSvc.showUnitsDlg = function(sector) {
