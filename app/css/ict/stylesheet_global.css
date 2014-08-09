@@ -180,3 +180,11 @@ button:active {
     width: 25px;
     height: 25px;
 }
+
+#version_text {
+    position:fixed;
+    bottom: 10px;
+    left: 10px;
+    background: white;
+    z-index: 150;
+}
