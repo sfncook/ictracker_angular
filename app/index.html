@@ -158,11 +158,14 @@
             ng-repeat="sector_dir in sector_dir_btns"
             ng-class="{glow_orange:selectedSector.sector_dir=='{{sector_dir.tbar}}'}"
             ng-click="setDir(sector_dir)">{{sector_dir.dialog}}</button>
-    <button
-            class="sector_numdir_btn"
-            ng-repeat="sector_num in sector_num_btns"
-            ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
-            ng-click="setNum(sector_num)">{{sector_num}}</button>
+    <div id="sector_num_container">
+        <button
+                class="sector_numdir_btn"
+                ng-repeat="sector_num in sector_num_btns"
+                ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
+                ng-click="setNum(sector_num)">{{sector_num}}</button>
+    </div>
+    <div class="clear_both"></div>
     <div id="sector_name_dlg_grid_container" class="grid">
         <div class="grid_item_1_4" ng-repeat="catalog_sector in catalog_sectors">
             <button

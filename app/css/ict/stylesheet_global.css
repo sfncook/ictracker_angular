@@ -27,10 +27,10 @@ body {
     padding: 0;
     border-radius: 1px;
     border: 1px solid #666;
+    background: white;
 }
 .ui-dialog .ui-dialog-content {
     padding: 0;
-    background: white;
 }
 .ui-dialog-titlebar {
     border-left:none;
@@ -348,4 +348,7 @@ button:active {
     border-radius: 10px;
     padding: 0;
     margin: 4px;
+}
+#sector_num_container {
+    float:right;
 }
