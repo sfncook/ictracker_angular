@@ -97,9 +97,9 @@
                 <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     <table>
                         <tr>
-                            <td class="tbar_title_dir_td">North</td>
+                            <td class="tbar_title_dir_td">{{sector.sector_dir}}</td>
                             <td class="tbar_title_td">{{sector.name}}</td>
-                            <td class="tbar_title_num_td">8</td>
+                            <td class="tbar_title_num_td">{{sector.sector_num}}</td>
                         </tr>
                     </table>
                 </button>
@@ -153,7 +153,7 @@
 
 
 <dialog id="sector_name_dlg" title="Sectors" ng-controller="SectorNamesDlg">
-    <button class="sector_numdir_btn" ng-repeat="sector_dir in sector_dir_btns" ng-click="setDir(sector_dir)">{{sector_dir}}</button>
+    <button class="sector_numdir_btn" ng-repeat="sector_dir in sector_dir_btns" ng-click="setDir(sector_dir)">{{sector_dir.dialog}}</button>
     <button class="sector_numdir_btn" ng-repeat="sector_num in sector_num_btns" ng-click="setNum(sector_num)">{{sector_num}}</button>
     <div id="sector_name_dlg_grid_container" class="grid">
         <div class="grid_item_1_4" ng-repeat="sector in catalog_sectors">

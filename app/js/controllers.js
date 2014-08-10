@@ -91,7 +91,7 @@ app.controller('ParDlg', function($scope, dialogSvc){
 app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
 
-    $scope.sector_dir_btns = ["N","E","S","W"];
+    $scope.sector_dir_btns = [{"dialog":"N","tbar":"North"},{"dialog":"E","tbar":"East"},{"dialog":"S","tbar":"South"},{"dialog":"W","tbar":"West"}];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
 
     $http.get('data/sectors.json').
@@ -104,7 +104,7 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
         $("#sector_name_dlg").dialog( "close" );
     };
     $scope.setDir = function(sector_dir) {
-        $scope.selectedSector.sector_dir=sector_dir;
+        $scope.selectedSector.sector_dir=sector_dir.tbar;
     };
     $scope.setNum = function(sector_num) {
         $scope.selectedSector.sector_num=sector_num;
