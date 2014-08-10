@@ -153,13 +153,22 @@
 
 
 <dialog id="sector_name_dlg" title="Sectors" ng-controller="SectorNamesDlg">
-    <button class="sector_numdir_btn" ng-repeat="sector_dir in sector_dir_btns" ng-click="setDir(sector_dir)">{{sector_dir.dialog}}</button>
-    <button class="sector_numdir_btn" ng-repeat="sector_num in sector_num_btns" ng-click="setNum(sector_num)">{{sector_num}}</button>
+    <button
+            class="sector_numdir_btn"
+            ng-repeat="sector_dir in sector_dir_btns"
+            ng-class="{glow_orange:selectedSector.sector_dir=='{{sector_dir.tbar}}'}"
+            ng-click="setDir(sector_dir)">{{sector_dir.dialog}}</button>
+    <button
+            class="sector_numdir_btn"
+            ng-repeat="sector_num in sector_num_btns"
+            ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
+            ng-click="setNum(sector_num)">{{sector_num}}</button>
     <div id="sector_name_dlg_grid_container" class="grid">
         <div class="grid_item_1_4" ng-repeat="sector in catalog_sectors">
-            <button class="dlg_sector_name_btn sector_name_btn"
-                    ng-click="setSectorName(sector.name)"
-                    ng-class="{glowlightgreen: sector.name==selected_sector.name, button_hidden: sector.name==''}">
+            <button
+                    class="dlg_sector_name_btn sector_name_btn"
+                    ng-class="{glow_orange:selectedSector.name=='{{sector.name}}', button_hidden: sector.name==''}"
+                    ng-click="setSectorName(sector.name)">
                 {{sector.name}}
             </button>
         </div>

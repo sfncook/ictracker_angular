@@ -124,6 +124,95 @@ button:active {
     background: lightgreen !important;
 }
 
+.glow_orange {
+    background: #FFAD2C;
+}
+.glow_orange:hover {
+    background: #FFAD2C;
+}
+.glow_blue {
+    background: #2A5071;
+    color: #DDD;
+    box-shadow: 2px 2px 2px #172C3E;
+}
+.glow_blue:hover {
+    background: #2A5071;
+}
+.glowlightyellow {
+    /*background: #FFFF99;*/
+    background: #FFFF88;
+}
+.glowlightyellow.unit_row_div {
+    border-top:1px solid #999;
+    border-bottom:1px solid #999;
+}
+/*.unit_row_div.glowlightyellow>.unit_btn{
+    margin-right:2px;
+}*/
+
+.font_red {
+    color: red !important;
+}
+.glowred {
+    background: red !important;
+    color: white;
+}
+.glowred:hover {
+    background: darkred !important;
+    color: white;
+}
+.glowred:active {
+    background: #666 !important;
+    color: white;
+}
+.glowpink {
+    background: pink !important;
+    color: #666;
+}
+.glowpink:hover {
+    background: red !important;
+    color: white;
+}
+.glowpink:hover {
+    background: red !important;
+    color: white;
+}
+.glowpink:active {
+    background: #666;
+    color: white;
+}
+.glowlightblue {
+    background: DeepSkyBlue;
+}
+.glowlightgreen {
+    background: LightGreen !important;
+}
+.glowlightgreen:hover {
+    background: DarkGreen;
+    color: white;
+}
+.glowgreen {
+    background: green;
+    color: white;
+}
+.glowgreen:hover {
+    background: DarkGreen;
+    color: white;
+}
+.glowgreen:active {
+    background: #666;
+    color: white;
+}
+.glowbabyblue {
+    background: #99e5ff;
+}
+.glowbabyblue:hover {
+    background: #77ddff;
+}
+.glowbabyblue:active {
+    background: #66aaff;
+}
+
 #units_dialog_units {
     float:left;
 }
