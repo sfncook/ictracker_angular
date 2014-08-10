@@ -90,6 +90,10 @@ app.controller('ParDlg', function($scope, dialogSvc){
 
 app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
+
+    $scope.sector_dir_btns = ["N","E","S","W"];
+    $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
+
     $http.get('data/sectors.json').
         success(function(data){
             $scope.catalog_sectors = data;
@@ -97,6 +101,18 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
 
     $scope.setSectorName = function(sectorName) {
         $scope.selectedSector.name=sectorName;
+        $("#sector_name_dlg").dialog( "close" );
+    };
+    $scope.setDir = function(sector_dir) {
+        $scope.selectedSector.sector_dir=sector_dir;
+    };
+    $scope.setNum = function(sector_num) {
+        $scope.selectedSector.sector_num=sector_num;
+    };
+
+    $scope.setSectorName = function(sectorName) {
+        $scope.selectedSector.name=sectorName;
+        $("#sector_name_dlg").dialog( "close" );
     };
 
     dialogSvc.showSectorNameDlg = function(sector) {

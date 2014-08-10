@@ -124,7 +124,7 @@ tbar {
 .sector_name_btn {
     width:170px;
     height: 22px;
-    padding:0px;
+    padding:0;
     margin:2px;
     font-size: 1.0rem;
 }
@@ -188,8 +188,29 @@ tbar {
     background: #BBB;
 }
 
-
 .gridster .preview-holder {
     border: none!important;
     background: red!important;
 }
+
+
+.tbar_title_container {
+    background: #BBB;
+    height: 29px;
+}
+.tbar_title_dir_td {
+    width:30px;
+    font-size:0.7rem;
+    padding-top:4px;
+}
+.tbar_title_num_td {
+    width:10px;
+}
+.tbar_title_td {
+    width: 130px;
+}
+.tbar_title_td div {
+    width: 100%;
+    text-align:center;
+}
+
