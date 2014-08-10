@@ -8,8 +8,10 @@ app.factory('dialogSvc', function() {
     var showBnchDlg;
     var showUnitsDlg;
     var showActionsDlg;
+    var tbar_sectors = [];
 
     return {
+        "tbar_sectors":[]
 //        getSelectedSector: function () {
 //            return selectedSector;
 //        }
@@ -29,6 +31,8 @@ app.controller('TbarContainer', function($scope, dialogSvc){
     var left_margin = Math.floor((window_width - (col_count*tbar_width) - header_width )/2);
     $("#tbar_container").css("padding-left", left_margin);
 
+    $scope.tbar_sectors=dialogSvc.tbar_sectors;
+
     $scope.gridsterOpts = {
         columns:col_count,
         margins: [10, 10],
@@ -40,20 +44,19 @@ app.controller('TbarContainer', function($scope, dialogSvc){
         resizable: {enabled: false}
     };
 
-    $scope.sectors=[];
     for(var rowi=0; rowi<init_row_count; rowi++) {
         for(var coli=0; coli<col_count; coli++) {
             var sectorName = "_";
             if(coli==col_count-1) {
                 if(rowi==0) {
-                    sectorName = "Rescue";
+                    sectorName = "RESCUE";
                 } else if(rowi==1) {
-                    sectorName = "REHAB";
+                    sectorName = "ReHab";
                 } else if(rowi==2) {
                     sectorName = "Safety";
                 }
             }
-            $scope.sectors.push(new Sector(sectorName));
+            $scope.tbar_sectors.push(new Sector(sectorName));
         }//for col
     }//for row
 
@@ -90,6 +93,7 @@ app.controller('ParDlg', function($scope, dialogSvc){
 
 app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
+    $scope.tbar_sectors=dialogSvc.tbar_sectors;
 
     $scope.sector_dir_btns = [{"dialog":"N","tbar":"North"},{"dialog":"E","tbar":"East"},{"dialog":"S","tbar":"South"},{"dialog":"W","tbar":"West"}];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];

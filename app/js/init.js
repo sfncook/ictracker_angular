@@ -41,3 +41,12 @@ Array.prototype.remByVal = function(val) {
     }
     return this;
 }
+
+Array.prototype.findSectorByName = function(name) {
+    for (var i = 0; i < this.length; i++) {
+        if (typeof this[i].name!='undefined' && this[i].name === name) {
+            return i;
+        }
+    }
+    return -1;
+}

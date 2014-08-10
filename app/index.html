@@ -88,7 +88,7 @@
 
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
-        <tbar gridster-item="item" ng-repeat="sector in sectors">
+        <tbar gridster-item="item" ng-repeat="sector in tbar_sectors">
             <div class="tbar_title_container">
                 <button ng-disabled="!sector.parAvailable"
                         class="par-btn sector_toprow_btn"
@@ -164,12 +164,12 @@
             ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
             ng-click="setNum(sector_num)">{{sector_num}}</button>
     <div id="sector_name_dlg_grid_container" class="grid">
-        <div class="grid_item_1_4" ng-repeat="sector in catalog_sectors">
+        <div class="grid_item_1_4" ng-repeat="catalog_sector in catalog_sectors">
             <button
                     class="dlg_sector_name_btn sector_name_btn"
-                    ng-class="{glow_orange:selectedSector.name=='{{sector.name}}', button_hidden: sector.name==''}"
-                    ng-click="setSectorName(sector.name)">
-                {{sector.name}}
+                    ng-class="{button_hidden: catalog_sector.name=='', glowlightgreen: tbar_sectors.findSectorByName(catalog_sector.name)>-1}"
+                    ng-click="setSectorName(catalog_sector.name)">
+                {{catalog_sector.name}}
             </button>
         </div>
     </div>
