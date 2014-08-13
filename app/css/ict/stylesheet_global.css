@@ -354,3 +354,10 @@ button:active {
 #sector_num_container {
     float:right;
 }
+
+.units_blg_city_btns_row {
+    margin-left:100px;
+}
+.units_blg_type_btns_col {
+    width:100px;
+}

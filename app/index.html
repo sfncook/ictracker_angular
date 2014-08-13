@@ -200,36 +200,46 @@
 <dialog id="unit-info-dlg" title="Unit"></dialog>
 
 <dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                <button class="unit_city_btn"
-                        ng-repeat="unit in catalog_units | unique:'city'"
-                        ng-click="filterByCity(unit.city)"
-                        ng-class="{glowlightgreen:filter_city=='{{unit.city}}'}">
-                    {{unit.city}}
-                </button>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:80px">
-                <button class="unit_type_btn"
-                        ng-repeat="unit in catalog_units | unique:'type'"
-                        ng-click="filterByType(unit.type)"
-                        ng-class="{glowlightgreen:filter_type=='{{unit.type}}'}">
-                    {{unit.type}}
-                </button>
-            </td>
-            <td>
-                <button class="unit_btn"
-                        ng-repeat="unit in catalog_units | unique:'name' | filter:filter_city | filter:filter_type"
-                        ng-click="selectUnit(unit)">
-                    {{unit.name}}
-                </button>
-            </td>
-        </tr>
-    </table>
+    <div class="units_blg_city_btns_row">
+        <button class="unit_city_btn"
+                ng-repeat="city in cities"
+                ng-click="selectCity(city)"
+                ng-class="{glowlightgreen:selected_city==city}">
+            {{city.name}}
+        </button>
+    </div>
+
+    <div class="units_blg_type_btns_col">
+        <button class="unit_type_btn"
+                ng-repeat="type in selected_city.types">
+            {{type.name}}
+        </button>
+    </div>
+
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td></td>-->
+            <!--<td>-->
+                <!--<button class="unit_city_btn">-->
+                    <!--{{city.name}}-->
+                <!--</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr ng-repeat="city in cities">-->
+            <!--<td style="width:80px">-->
+                <!--<button class="unit_type_btn"-->
+                        <!--ng-repeat="type in city.types">-->
+                    <!--{{type.name}}-->
+                <!--</button>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<button class="unit_btn"-->
+                        <!--ng-repeat="unit in type.units">-->
+                    <!--{{unit.name}}-->
+                <!--</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
 </dialog>
 
 <dialog id="actions-dlg" title="Actions" ng-controller="ActionsDlg"></dialog>

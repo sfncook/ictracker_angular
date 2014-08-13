@@ -136,31 +136,32 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
 
-    $scope.filter_city = 'Gilbert';
+    $scope.cities = [];
     $http.get('data/units.json').
         success(function(data){
-            var units = [];
+            // In order to eliminate duplicates write everything to objects
             for(var i = 0; i < data.length; i++) {
-                var unit = new Unit(data[i].name, data[i].type, data[i].city);
-                units.push(unit);
+                var city = $scope.cities.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
+                var type = city.types.putIfAbsent(data[i].type, {'name':data[i].type, 'units':[]});
+                var unit = type.units.putIfAbsent(data[i].unit, {'name':data[i].unit});
+
+                if( typeof data[i].default != 'undefined') {
+                    $scope.selected_city = city;
+                }
             }
-            $scope.catalog_units = units;
+
+            // Convert everything to arrays
+            $scope.cities = $scope.cities.propertiesToArray();
+            $scope.cities.forEach(function(city) {
+                city.types = city.types.propertiesToArray();
+                city.types.forEach(function(type) {
+                    type.units= type.units.propertiesToArray();
+                });
+            });
         });
 
-    $scope.filterByCity = function(city) {
-        if($scope.filter_city != city) {
-            $scope.filter_city = city;
-        } else {
-            $scope.filter_city = "";
-        }
-    };
-
-    $scope.filterByType = function(type) {
-        if($scope.filter_type != type) {
-            $scope.filter_type = type;
-        } else {
-            $scope.filter_type = "";
-        }
+    $scope.selectCity = function(city) {
+        $scope.selected_city = city;
     };
 
     $scope.selectUnit = function(unit) {

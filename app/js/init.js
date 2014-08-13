@@ -50,3 +50,33 @@ Array.prototype.findSectorByName = function(name) {
     }
     return -1;
 }
+
+/*
+ * If the key does not exist this set it to the given value. If
+ * the key *does* exist then do not make any changes. Return
+ * the resultant value - either the provided on or the previous
+ * based on whatever is done to the array.
+ */
+Array.prototype.putIfAbsent = function(key, val) {
+    if( typeof this[key] == 'undefined' ) {
+        this[key] = val;
+    }
+    return this[key];
+}
+
+
+/*
+ * Return the properties of this associative array as an array.
+ */
+Array.prototype.propertiesToArray = function() {
+    var array = [];
+    for (k in this)
+    {
+        if (this.hasOwnProperty(k))
+        {
+            array.push(this[k]);
+        }
+    }
+    return array;
+}
+
