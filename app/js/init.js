@@ -42,6 +42,10 @@ Array.prototype.remByVal = function(val) {
     return this;
 }
 
+/*
+ * 'this' must be an array of tbar objects such that this.name is
+ * the name of the sector.
+ */
 Array.prototype.findSectorByName = function(name) {
     for (var i = 0; i < this.length; i++) {
         if (typeof this[i].name!='undefined' && this[i].name === name) {
@@ -49,6 +53,21 @@ Array.prototype.findSectorByName = function(name) {
         }
     }
     return -1;
+}
+
+/*
+ * 'this' must be an array of tbar objects such that this.units is
+ * an array of unit objects such that unit.name is the name of the
+ * unit.
+ */
+Array.prototype.unitInSectors= function() {
+    var units = [];
+    for (var i = 0; i < this.length; i++) {
+        if (typeof this[i].units!='undefined') {
+            units = units.concat(this[i].units);
+        }
+    }
+    return units;
 }
 
 /*

@@ -357,9 +357,23 @@ button:active {
 
 .unit_dlg_units_container {
     overflow: scroll;
-    height: 450px;
+    height: 590px;
     width:760px;
 }
 .type_row_for_unit_btns {
     margin: 20px auto;
+}
+#dispatched_units_div {
+    width: 846px;
+    min-height: 60px;
+    margin: 2px;
+    border: 3px double #666;
+}
+#title_dispatched_units_div {
+    color: #999;
+    margin: 1px;
+}
+.dispatched_unit_btn {
+    margin: 4px 4px 6px 4px;
+    float: left;
 }

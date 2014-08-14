@@ -200,6 +200,17 @@
 <dialog id="unit-info-dlg" title="Unit"></dialog>
 
 <dialog id="units_dlg" title="Units" ng-controller="UnitsDlg">
+    <div id="dispatched_units_div">
+        <div id="title_dispatched_units_div">Dispatched Units</div>
+        <div id="units_dispatched_units_div">
+            <button class="unit_btn"
+                    ng-repeat="unit in tbar_sectors.unitInSectors()"
+                    ng-click="selectUnit(unit)">
+                {{unit.name}}
+            </button>
+            <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
+        </div>
+    </div>
     <table>
         <tr>
             <td></td>
@@ -228,7 +239,8 @@
                          ng-if="selected_type_name=='' || selected_type_name==type.name">
                         <button class="unit_btn"
                                 ng-repeat="unit in type.units"
-                                ng-click="selectUnit(unit)">
+                                ng-click="selectUnit(unit)"
+                                ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1}">
                             {{unit.name}}
                         </button>
                     </div>

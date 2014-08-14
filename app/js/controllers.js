@@ -135,6 +135,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
+    $scope.tbar_sectors=dialogSvc.tbar_sectors;
 
     $scope.cities = [];
     $scope.type_names = [];
@@ -145,7 +146,8 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             for(var i = 0; i < data.length; i++) {
                 var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
                 var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, {'city':data[i].city, 'type':data[i].type, 'name':data[i].unit, 'par':'P', 'psi':'4500'});
+                //TODO: use Unit class?
+                var unit = type.units.putIfAbsent(data[i].unit, {'city':data[i].city, 'type':data[i].type, 'name':data[i].unit});
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;
