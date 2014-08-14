@@ -197,6 +197,10 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         $scope.selectedSector.toggleUnit(unit);
     };
 
+    $scope.selectDispatchedUnit = function(unit) {
+        $scope.selectedSector.addUnit(unit);
+    };
+
     dialogSvc.showUnitsDlg = function(sector) {
         $scope.selectedSector = sector;
         $("#units_dlg").dialog( "open" );

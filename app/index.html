@@ -23,6 +23,7 @@
     <script src="js/Unit.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/unique.js"></script>
+    <script src="js/sector_units.js"></script>
     <script src="version.js"></script>
 </head>
 <body>
@@ -204,8 +205,8 @@
         <div id="title_dispatched_units_div">Dispatched Units</div>
         <div id="units_dispatched_units_div">
             <button class="unit_btn"
-                    ng-repeat="unit in tbar_sectors.unitInSectors()"
-                    ng-click="selectUnit(unit)">
+                    ng-repeat="unit in tbar_sectors | sector_units"
+                    ng-click="selectDispatchedUnit(unit)">
                 {{unit.name}}
             </button>
             <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>

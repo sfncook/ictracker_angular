@@ -21,3 +21,14 @@ Sector.prototype.toggleUnit = function(unit)
         this.parAvailable = false;
     }
 }
+
+Sector.prototype.addUnit = function(unit)
+{
+    if(!this.units.contains(unit)) {
+        this.units.push(unit);
+    }
+
+    if(this.units.length>0) {
+        this.parAvailable = true;
+    }
+}
