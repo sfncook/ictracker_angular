@@ -200,6 +200,7 @@
 <dialog id="unit-info-dlg" title="Unit"></dialog>
 
 <dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
+
     <div class="units_blg_city_btns_row">
         <button class="unit_city_btn"
                 ng-repeat="city in cities"
@@ -213,24 +214,21 @@
         <button class="unit_type_btn"
                 ng-repeat="type in selected_city.types"
                 ng-click="selectType(type)"
-                ng-class="{glowlightgreen:selected_type.name==type.name}">
+                ng-class="{glowlightgreen:selected_type_name==type.name}">
             {{type.name}}
         </button>
     </div>
 
     <div class="units_blg_units_btns_col">
-        <div ng-repeat="type_name in type_names"
-             ng-if="selected_type=='' || selected_type.name==type_name">
-            {{type_name}}
+        <div ng-repeat="type in selected_city.types"
+             ng-if="selected_type_name=='' || selected_type_name==type.name">
+            <button class="unit_btn"
+                    ng-repeat="unit in type.units"
+                    ng-click="selectUnit(type)">
+                {{unit.name}}
+            </button>
         </div>
     </div>
-
-    <button class="unit_type_btn"
-            ng-repeat="type in selected_city.types"
-            ng-click="selectUnit(type)"
-            ng-class="{glowlightgreen:selected_type.name==type.name}">
-        {{type.name}}
-    </button>
 
     <div class="clear_both"></div>
 
