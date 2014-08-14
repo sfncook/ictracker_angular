@@ -6,6 +6,12 @@ function Sector(name) // Constructor
     this.acctUnit = {'name':'@acct'};
     this.parAvailable = false;
     this.haspar = false;
+
+    // Formatting attributes
+    this.hasClock = false;
+    this.hasAcctBtn = true;
+    this.hasPsiBtn = true;
+    this.hasActions = true;
 }
 
 Sector.prototype.toggleUnit = function(unit)

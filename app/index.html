@@ -178,6 +178,9 @@
                     ng-class="{button_hidden: catalog_sector.name=='', glowlightgreen: tbar_sectors.findSectorByName(catalog_sector.name)>-1}"
                     ng-click="setSectorName(catalog_sector.name)">
                 {{catalog_sector.name}}
+                <img class="clock_icon"
+                     ng-if="catalog_sector.hasClock"
+                     src="img/clock.png"/>
             </button>
         </div>
     </div>

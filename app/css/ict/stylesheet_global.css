@@ -384,3 +384,12 @@ button:active {
 .btn_medtext {
     font-size:0.85rem !important;
 }
+
+.clock_icon {
+    width: 10px;
+    height: 10px;
+    margin: 0 7px;
+}
+.clock_icon:hover {
+    cursor: pointer !important;
+}
