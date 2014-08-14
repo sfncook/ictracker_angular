@@ -377,3 +377,10 @@ button:active {
     margin: 4px 4px 6px 4px;
     float: left;
 }
+
+.btn_smtext {
+    font-size:0.8rem !important;
+}
+.btn_medtext {
+    font-size:0.85rem !important;
+}
