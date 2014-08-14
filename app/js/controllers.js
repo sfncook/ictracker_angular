@@ -48,17 +48,29 @@ app.controller('TbarContainer', function($scope, dialogSvc){
 
     for(var rowi=0; rowi<init_row_count; rowi++) {
         for(var coli=0; coli<col_count; coli++) {
-            var sectorName = "_";
+            var sector = new Sector("_");
             if(coli==col_count-1) {
                 if(rowi==0) {
-                    sectorName = "RESCUE";
+                    sector.name = "RESCUE";
+                    sector.hasClock = true;
+                    sector.hasAcctBtn = true;
+                    sector.hasPsiBtn = true;
+                    sector.hasActions = true;
                 } else if(rowi==1) {
-                    sectorName = "ReHab";
+                    sector.name = "ReHab";
+                    sector.hasClock = false;
+                    sector.hasAcctBtn = false;
+                    sector.hasPsiBtn = false;
+                    sector.hasActions = false;
                 } else if(rowi==2) {
-                    sectorName = "Safety";
+                    sector.name = "Safety";
+                    sector.hasClock = true;
+                    sector.hasAcctBtn = true;
+                    sector.hasPsiBtn = true;
+                    sector.hasActions = true;
                 }
             }
-            $scope.tbar_sectors.push(new Sector(sectorName));
+            $scope.tbar_sectors.push(sector);
         }//for col
     }//for row
 
@@ -113,8 +125,13 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
             $scope.catalog_sectors = data;
         });
 
-    $scope.setSectorName = function(sectorName) {
-        $scope.selectedSector.name=sectorName;
+    $scope.selectSector = function(catalog_sector) {
+        $scope.selectedSector.name      =catalog_sector.name;
+        $scope.selectedSector.hasClock  =catalog_sector.hasClock;
+        $scope.selectedSector.hasAcctBtn=catalog_sector.hasAcctBtn;
+        $scope.selectedSector.hasPsiBtn =catalog_sector.hasPsiBtn;
+        $scope.selectedSector.hasActions=catalog_sector.hasActions;
+
         $("#sector_name_dlg").dialog( "close" );
     };
     $scope.setDir = function(sector_dir) {
@@ -124,10 +141,6 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
         $scope.selectedSector.sector_num=sector_num;
     };
 
-    $scope.setSectorName = function(sectorName) {
-        $scope.selectedSector.name=sectorName;
-        $("#sector_name_dlg").dialog( "close" );
-    };
 
     dialogSvc.showSectorNameDlg = function(sector) {
         $scope.selectedSector = sector;

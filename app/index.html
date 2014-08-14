@@ -128,7 +128,9 @@
                         <div class="jspPane">
                             <div ng-repeat="unit in sector.units">
                                 <button class="personnel_btn" ng-click="showPerDlg(unit)">{{unit.par}}</button>
-                                <button class="psi_green psi_btn" ng-click="showPsiDlg(unit)">{{unit.psi}}</button>
+                                <button class="psi_green psi_btn"
+                                        ng-click="showPsiDlg(unit)"
+                                        ng-if="sector.hasPsiBtn">{{unit.psi}}</button>
                                 <button class="unit_btn"
                                         ng-class="{btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
                                     {{unit.name}}
@@ -139,9 +141,11 @@
                 </div>
             </div>
 
-            <div class="action_col_right tbar_col_right_div tbar_col_div">
+            <div class="action_col_right tbar_col_right_div tbar_col_div"
+                 ng-if="sector.hasActions">
                 <button class="acct_unit_btn"
-                        ng-click="showUnitsDlgForAcct(sector)">
+                        ng-click="showUnitsDlgForAcct(sector)"
+                        ng-if="sector.hasAcctBtn">
                             {{sector.acctUnit.name}}
                         </button>
                 <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
@@ -176,7 +180,7 @@
             <button
                     class="dlg_sector_name_btn sector_name_btn"
                     ng-class="{button_hidden: catalog_sector.name=='', glowlightgreen: tbar_sectors.findSectorByName(catalog_sector.name)>-1}"
-                    ng-click="setSectorName(catalog_sector.name)">
+                    ng-click="selectSector(catalog_sector)">
                 {{catalog_sector.name}}
                 <img class="clock_icon"
                      ng-if="catalog_sector.hasClock"
