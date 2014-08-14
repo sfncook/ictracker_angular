@@ -199,38 +199,43 @@
 
 <dialog id="unit-info-dlg" title="Unit"></dialog>
 
-<dialog id="units-dlg" title="Units" ng-controller="UnitsDlg">
-
-    <div class="units_blg_city_btns_row">
-        <button class="unit_city_btn"
-                ng-repeat="city in cities"
-                ng-click="selectCity(city)"
-                ng-class="{glowlightgreen:selected_city==city}">
-            {{city.name}}
-        </button>
-    </div>
-
-    <div class="units_blg_type_btns_col">
-        <button class="unit_type_btn"
-                ng-repeat="type in selected_city.types"
-                ng-click="selectType(type)"
-                ng-class="{glowlightgreen:selected_type_name==type.name}">
-            {{type.name}}
-        </button>
-    </div>
-
-    <div class="units_blg_units_btns_col">
-        <div ng-repeat="type in selected_city.types"
-             ng-if="selected_type_name=='' || selected_type_name==type.name">
-            <button class="unit_btn"
-                    ng-repeat="unit in type.units"
-                    ng-click="selectUnit(type)">
-                {{unit.name}}
-            </button>
-        </div>
-    </div>
-
-    <div class="clear_both"></div>
+<dialog id="units_dlg" title="Units" ng-controller="UnitsDlg">
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                <button class="unit_city_btn"
+                        ng-repeat="city in cities"
+                        ng-click="selectCity(city)"
+                        ng-class="{glowlightgreen:selected_city==city}">
+                    {{city.name}}
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px">
+                <button class="unit_type_btn"
+                        ng-repeat="type in selected_city.types"
+                        ng-click="selectType(type)"
+                        ng-class="{glowlightgreen:selected_type_name==type.name}">
+                    {{type.name}}
+                </button>
+            </td>
+            <td>
+                <div class="unit_dlg_units_container">
+                    <div class="type_row_for_unit_btns"
+                         ng-repeat="type in selected_city.types"
+                         ng-if="selected_type_name=='' || selected_type_name==type.name">
+                        <button class="unit_btn"
+                                ng-repeat="unit in type.units"
+                                ng-click="selectUnit(unit)">
+                            {{unit.name}}
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 </dialog>
 

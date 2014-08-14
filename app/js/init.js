@@ -13,7 +13,7 @@ function initDialogs() {
     $( "#sector_name_dlg" ).dialog( "option", "width", 730 );
     $( "#par-dlg" ).dialog( "option", "width", 400 );
     $( "#bnch-dlg" ).dialog( "option", "width", 400 );
-    $( "#units-dlg" ).dialog( "option", "width", 855 );
+    $( "#units_dlg" ).dialog( "option", "width", 855 );
 }
 
 function init() {
