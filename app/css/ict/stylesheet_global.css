@@ -359,5 +359,11 @@ button:active {
     margin-left:100px;
 }
 .units_blg_type_btns_col {
+    background: green;
     width:100px;
+    /*float:left;*/
+}
+.units_blg_units_btns_col {
+    background: red;
+    /*float:left;*/
 }

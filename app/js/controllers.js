@@ -137,31 +137,68 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
 
     $scope.cities = [];
+    $scope.type_names = [];
+    $scope.units = [];
     $http.get('data/units.json').
         success(function(data){
             // In order to eliminate duplicates write everything to objects
+            var cities_local = [];
+            var type_names_local = [];
             for(var i = 0; i < data.length; i++) {
-                var city = $scope.cities.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
-                var type = city.types.putIfAbsent(data[i].type, {'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, {'name':data[i].unit});
+                var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
+                var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
+                var unit = type.units.putIfAbsent(data[i].unit, {'city':data[i].city, 'type':data[i].type, 'name':data[i].unit});
+                $scope.units.push(unit);
+                type_names_local[type.name] = '1';
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;
+                    $scope.selected_type = type;
                 }
             }
 
             // Convert everything to arrays
-            $scope.cities = $scope.cities.propertiesToArray();
+            $scope.cities = cities_local.propertiesToArray();
             $scope.cities.forEach(function(city) {
                 city.types = city.types.propertiesToArray();
                 city.types.forEach(function(type) {
                     type.units= type.units.propertiesToArray();
                 });
             });
+
+            for (var type_name in type_names_local) {
+                if (type_names_local.hasOwnProperty(type_name)) {
+                    $scope.type_names.push(type_name);
+                }
+            }
         });
 
     $scope.selectCity = function(city) {
         $scope.selected_city = city;
+    };
+
+    $scope.selectType = function(type) {
+        if( $scope.selected_type != type) {
+            $scope.selected_type = type;
+        } else {
+            $scope.selected_type = '';
+        }
+    };
+
+    $scope.filterByCity = function(city) {
+        if($scope.filter_city != city) {
+            $scope.filter_city = city;
+        } else {
+            $scope.filter_city = "";
+        }
+    };
+
+    $scope.filterByType = function(type) {
+        if($scope.filter_type != type) {
+            $scope.filter_type = type;
+        } else {
+            $scope.filter_type = "";
+        }
     };
 
     $scope.selectUnit = function(unit) {

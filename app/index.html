@@ -211,35 +211,29 @@
 
     <div class="units_blg_type_btns_col">
         <button class="unit_type_btn"
-                ng-repeat="type in selected_city.types">
+                ng-repeat="type in selected_city.types"
+                ng-click="selectType(type)"
+                ng-class="{glowlightgreen:selected_type.name==type.name}">
             {{type.name}}
         </button>
     </div>
 
-    <!--<table>-->
-        <!--<tr>-->
-            <!--<td></td>-->
-            <!--<td>-->
-                <!--<button class="unit_city_btn">-->
-                    <!--{{city.name}}-->
-                <!--</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--<tr ng-repeat="city in cities">-->
-            <!--<td style="width:80px">-->
-                <!--<button class="unit_type_btn"-->
-                        <!--ng-repeat="type in city.types">-->
-                    <!--{{type.name}}-->
-                <!--</button>-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<button class="unit_btn"-->
-                        <!--ng-repeat="unit in type.units">-->
-                    <!--{{unit.name}}-->
-                <!--</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-    <!--</table>-->
+    <div class="units_blg_units_btns_col">
+        <div ng-repeat="type_name in type_names"
+             ng-if="selected_type=='' || selected_type.name==type_name">
+            {{type_name}}
+        </div>
+    </div>
+
+    <button class="unit_type_btn"
+            ng-repeat="type in selected_city.types"
+            ng-click="selectUnit(type)"
+            ng-class="{glowlightgreen:selected_type.name==type.name}">
+        {{type.name}}
+    </button>
+
+    <div class="clear_both"></div>
+
 </dialog>
 
 <dialog id="actions-dlg" title="Actions" ng-controller="ActionsDlg"></dialog>
