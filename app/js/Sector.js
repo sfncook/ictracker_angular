@@ -3,6 +3,7 @@ function Sector(name) // Constructor
 {
     this.name = name;
     this.units = [];
+    this.acctUnit = {'name':'@acct'};
     this.parAvailable = false;
     this.haspar = false;
 }
@@ -21,6 +22,12 @@ Sector.prototype.toggleUnit = function(unit)
         this.parAvailable = false;
     }
 }
+
+Sector.prototype.setAcctUnit = function(unit)
+{
+    this.acctUnit = unit;
+}
+
 
 Sector.prototype.addUnit = function(unit)
 {

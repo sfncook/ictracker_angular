@@ -127,7 +127,7 @@
                     <div class="jspContainer">
                         <div class="jspPane">
                             <div ng-repeat="unit in sector.units">
-                                <button class="personnel_btn" ng-click="showParDlg(unit)">{{unit.par}}</button>
+                                <button class="personnel_btn" ng-click="showPerDlg(unit)">{{unit.par}}</button>
                                 <button class="psi_green psi_btn" ng-click="showPsiDlg(unit)">{{unit.psi}}</button>
                                 <button class="unit_btn"
                                         ng-class="{btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
@@ -140,7 +140,10 @@
             </div>
 
             <div class="action_col_right tbar_col_right_div tbar_col_div">
-                <button class="acct_unit_btn">@acct</button>
+                <button class="acct_unit_btn"
+                        ng-click="showUnitsDlgForAcct(sector)">
+                            {{sector.acctUnit.name}}
+                        </button>
                 <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane jspScrollable">

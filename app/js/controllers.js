@@ -7,7 +7,9 @@ app.factory('dialogSvc', function() {
     var showSectorNameDlg;
     var showBnchDlg;
     var showUnitsDlg;
+    var showUnitsDlgForAcct;
     var showActionsDlg;
+    var showPersonelleDlg;
     var tbar_sectors = [];
 
     return {
@@ -76,8 +78,16 @@ app.controller('TbarContainer', function($scope, dialogSvc){
         dialogSvc.showUnitsDlg(sector);
     }
 
+    $scope.showUnitsDlgForAcct = function(sector) {
+        dialogSvc.showUnitsDlgForAcct(sector);
+    }
+
     $scope.showActionsDlg = function(sector) {
         dialogSvc.showActionsDlg(sector);
+    }
+
+    $scope.showPersonelleDlg = function(sector) {
+        dialogSvc.showPersonelleDlg(sector);
     }
 
 });
@@ -136,6 +146,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
+    $scope.forAcct=false;
 
     $scope.cities = [];
     $scope.type_names = [];
@@ -146,8 +157,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             for(var i = 0; i < data.length; i++) {
                 var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
                 var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                //TODO: use Unit class?
-                var unit = type.units.putIfAbsent(data[i].unit, {'city':data[i].city, 'type':data[i].type, 'name':data[i].unit});
+                var unit = type.units.putIfAbsent(data[i].unit, new Unit(data[i].unit, data[i].type, data[i].city));
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;
@@ -177,24 +187,14 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         }
     };
 
-    $scope.filterByCity = function(city) {
-        if($scope.filter_city != city) {
-            $scope.filter_city = city;
-        } else {
-            $scope.filter_city = "";
-        }
-    };
-
-    $scope.filterByType = function(type) {
-        if($scope.filter_type != type) {
-            $scope.filter_type = type;
-        } else {
-            $scope.filter_type = "";
-        }
-    };
-
     $scope.selectUnit = function(unit) {
-        $scope.selectedSector.toggleUnit(unit);
+        if($scope.forAcct) {
+            $scope.selectedSector.setAcctUnit(unit);
+            $scope.forAcct=false;
+            $("#units_dlg").dialog( "close" );
+        } else {
+            $scope.selectedSector.toggleUnit(unit);
+        }
     };
 
     $scope.selectDispatchedUnit = function(unit) {
@@ -204,6 +204,11 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     dialogSvc.showUnitsDlg = function(sector) {
         $scope.selectedSector = sector;
         $("#units_dlg").dialog( "open" );
+    }
+
+    dialogSvc.showUnitsDlgForAcct = function(sector) {
+        $scope.forAcct=true;
+        dialogSvc.showUnitsDlg(sector);
     }
 });
 
