@@ -37,7 +37,9 @@
         <div>Dispatched</div>
         <div>Units</div>
     </button>
-    <button id="upgrade_btn" class="header_item button">Upgrade</button>
+    <button id="upgrade_btn"
+            class="header_item button"
+            ng-click="showUpgradeDlg()">Upgrade</button>
 
     <div id="header_row2" class="header_row">
         <div class="dialog_vertical_align_cell">
@@ -281,6 +283,21 @@
                 {{catalog_action.name}}
             </button>
         </div>
+    </div>
+</dialog>
+
+<!-- Upgrade Dialog -->
+<dialog id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg">
+    <div id="upgrade_left_col">
+        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn button">En Route</button>
+        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn button">On Scene</button>
+    </div>
+    <div id="upgrade_right_col">
+        <button id="working_upgrade_btn"   class="right_upgrade_btn upgrade_btn button">Working Fire</button>
+        <button id="first_upgrade_btn"     class="right_upgrade_btn upgrade_btn button">1st Alarm</button>
+        <button id="second_upgrade_btn"    class="right_upgrade_btn upgrade_btn button">2nd Alarm</button>
+        <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn button">3rd Alarm</button>
+        <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn button">4th Alarm</button>
     </div>
 </dialog>
 

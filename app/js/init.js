@@ -15,6 +15,8 @@ function initDialogs() {
     $( "#bnch-dlg" ).dialog( "option", "width", 400 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
     $( "#actions_dlg" ).dialog( "option", "width", 545 );
+    $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
+
 
 }
 

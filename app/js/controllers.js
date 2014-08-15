@@ -11,6 +11,8 @@ app.factory('dialogSvc', function() {
     var showUnitsDlgForDispUnits;
     var showActionsDlg;
     var showPersonelleDlg;
+    var showUpgradeDlg;
+
     var tbar_sectors = [];
 
     return {
@@ -26,6 +28,10 @@ app.factory('dialogSvc', function() {
 app.controller('HeaderContainer', function($scope, dialogSvc){
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();
+    }
+
+    $scope.showUpgradeDlg = function() {
+        dialogSvc.showUpgradeDlg();
     }
 });
 
@@ -209,6 +215,8 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         }
     };
 
+    // TODO: On units_dlg close: $scope.forDispUnits = false;
+
     $scope.selectUnit = function(unit) {
         if($scope.forAcct) {
             $scope.selectedSector.setAcctUnit(unit);
@@ -233,7 +241,13 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     };
 
     $scope.selectDispatchedUnit = function(unit) {
-        $scope.selectedSector.addUnit(unit);
+        if($scope.forAcct) {
+            $scope.selectedSector.setAcctUnit(unit);
+            $scope.forAcct=false;
+            $("#units_dlg").dialog( "close" );
+        } else {
+            $scope.selectedSector.addUnit(unit);
+        }
     };
 
     dialogSvc.showUnitsDlg = function(sector) {
@@ -247,6 +261,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     }
 
     dialogSvc.showUnitsDlgForDispUnits = function() {
+        console.log("showUnitsDlgForDispUnits");
         $scope.forDispUnits=true;
         dialogSvc.showUnitsDlg();
     }
@@ -267,6 +282,13 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
     dialogSvc.showActionsDlg = function(sector) {
         $scope.selectedSector = sector;
         $("#actions_dlg").dialog( "open" );
+    }
+});
+
+app.controller('UpgradeDlg', function($scope, dialogSvc){
+    //TODO: Toggle upgrade buttons on click
+    dialogSvc.showUpgradeDlg = function() {
+        $("#upgrade_dlg").dialog( "open" );
     }
 });
 

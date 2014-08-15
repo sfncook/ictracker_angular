@@ -404,3 +404,15 @@ button:active {
 #actions_dlg_grid_container {
     background: white;
 }
+
+.upgrade_btn {
+    width: 150px;
+    margin: 5px;
+    display:block;
+}
+#upgrade_right_col {
+    float:right;
+}
+#upgrade_left_col {
+    float:left;
+}
