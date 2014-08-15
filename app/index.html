@@ -43,7 +43,10 @@
 
     <div id="header_row2" class="header_row">
         <div class="dialog_vertical_align_cell">
-            <button id="osr_header_btn" class="header_item button">
+            <button
+                    id="osr_header_btn"
+                    class="header_item button"
+                    ng-click="showOsrDlg()">
                 <div>OSR</div>
                 <div id="osr_btn_perccomplete">(0% Complete)</div>
             </button>
@@ -300,6 +303,116 @@
         <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn button">4th Alarm</button>
     </div>
 </dialog>
+
+<!-- OSR Dialog -->
+<dialog id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg">
+    <div id="osr_left_col">
+        <button id="unit_osr_btn" class="osr_btn">Unit ID</button>
+        <button id="address_left_osr_btn" class="osr_btn">Address</button>
+        <button id="occupancy_osr_btn" class="osr_btn">Occupancy</button>
+        <button id="construction_osr_btn" class="osr_btn">Construction</button>
+        <button id="conditions_osr_btn" class="osr_btn">Conditions</button>
+        <button id="assumecmd_osr_btn" class="osr_btn">Assume Command</button>
+        <button id="location_osr_btn" class="osr_btn">Location(mobile/cab)</button>
+        <button id="mode_osr_btn" class="osr_btn">Strategy (off./def.)</button>
+        <button class="osr_btn">Attack line</button>
+        <button class="osr_btn">Water supply</button>
+        <button id="iric_osr_btn" class="osr_btn">IRIC</button>
+        <button id="acct_osr_btn" class="osr_btn">Accountability</button>
+    </div>
+    <div id="osr_right_col">
+        <button id="osr_address_btn">Dispatch Address</button>
+        <select id="osr_select_type_of_building" class="osr_select">
+            <option disabled="disabled" selected="selected">Type of building</option>
+            <option>Residential Home</option>
+            <option>Duplex</option>
+            <option>Mobile Home</option>
+            <option>Apartment</option>
+            <option>Hotel</option>
+            <option>Strip Mall</option>
+            <option>Office Complex</option>
+            <option>Big box Retail</option>
+            <option>Specialized/Other</option>
+        </select>
+
+        <select id="osr_number_of_floors" class="osr_select">
+            <option disabled="disabled" selected="selected">Number of floors</option>
+            <option>1 floor</option>
+            <option>2 floors</option>
+            <option>3 floors</option>
+            <option>4 floors</option>
+            <option>5 floors</option>
+            <option>6 floors</option>
+            <option>7 floors</option>
+            <option>8 floors</option>
+            <option>9 floors</option>
+            <option>10 floors</option>
+            <option>11 floors</option>
+            <option>12 floors</option>
+            <option>13 floors</option>
+            <option>14 floors</option>
+            <option>15 floors</option>
+            <option>16 floors</option>
+            <option>17 floors</option>
+            <option>18 floors</option>
+            <option>19 floors</option>
+            <option>20 floors</option>
+            <option>21 floors</option>
+            <option>22 floors</option>
+            <option>23 floors</option>
+            <option>24 floors</option>
+            <option>25 floors</option>
+        </select>
+        <select id="osr_size_of_building" class="osr_select">
+            <option disabled="disabled" selected="selected">Size of building</option>
+            <option>Small building</option>
+            <option>Medium building</option>
+            <option>Large building</option>
+        </select>
+
+        <div class="osr_toggle_container_div">
+            <button id="osr_occupancy_basement_btn" class="osr_toggle_btn">Basement</button>
+            <button id="osr_occupancy_nobasement_btn" class="osr_toggle_btn">No Basement</button>
+        </div>
+
+        <select id="osr_select_type_of_construction" class="osr_select">
+            <option disabled="disabled" selected="selected">Construction type</option>
+            <option>Light weight construction</option>
+            <option>Wood frame construction</option>
+            <option>Block construction</option>
+            <option>Brick construction</option>
+            <option>Tilt slab construction</option>
+            <option>Specialized/Other construction</option>
+        </select>
+
+        <select class="osr_select">
+            <option disabled="disabled" selected="selected">Roof</option>
+            <option>Pitched - tile roof</option>
+            <option>Pitched - asphalt roof</option>
+            <option>Pitched - wood shingle roof</option>
+            <option>Flat roof</option>
+            <option>Arched roof</option>
+        </select>
+
+        <select id="osr_select_conditions" class="osr_select">
+            <option disabled="disabled" selected="selected">Conditions</option>
+            <option>Nothing showing</option>
+            <option>Smoke showing</option>
+            <option>Smoke & Fire showing</option>
+        </select>
+
+        <div class="osr_toggle_container_div">
+            <button id="osr_occupancy_mob_btn" class="osr_toggle_btn">Mobile</button>
+            <button id="osr_occupancy_stat_btn" class="osr_toggle_btn">Stationary</button>
+        </div>
+
+        <div class="osr_toggle_container_div">
+            <button id="osr_occupancy_off_btn" class="osr_toggle_btn">Offensive</button>
+            <button id="osr_occupancy_def_btn" class="osr_toggle_btn">Defensive</button>
+        </div>
+    </div>
+    <div style="width:100%" class="clear_float"></div>
+</dialog> <!-- OSR Dialog -->
 
 <div id="version_text">Version: 0.0</div>
 

@@ -416,3 +416,62 @@ button:active {
 #upgrade_left_col {
     float:left;
 }
+
+
+#osr_header_btn {
+    height: 45px;
+}
+#osr_btn_perccomplete {
+    font-size:0.6rem;
+}
+.osr_btn {
+    width: 165px;
+    margin: 5px 10px 5px 10px;
+    display:block;
+}
+#osr_right_col {
+    float:left;
+    /*padding-top: 15px;*/
+}
+#osr_left_col {
+    float:left;
+}
+#osr_occupancy_right_col_label {
+    margin-top: 10px;
+    margin-right: 5px;
+    float:left;
+}
+#osr_floors {
+    float:left;
+}
+.osr_toggle_container_div {
+    margin: 10px 0 15px 0;
+    height: 25px;
+}
+.osr_toggle_btn  {
+    width: 100px;
+    float:left;
+    margin:0 5px;
+}
+#osr_occupancy_floors_div {
+    margin: 10px 0 15px 0;
+    height: 25px;
+}
+#osr_address_btn {
+    width: 220px;
+    margin:5px 0 15px 0;
+}
+.osr_select {
+    text-align: center;
+    background: #CCC;
+    color: #666;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 4px 4px 4px;
+    text-shadow: 1px 1px #AAA;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px #888;
+    width: 220px;
+    display:block;
+    margin-bottom:15px;
+}

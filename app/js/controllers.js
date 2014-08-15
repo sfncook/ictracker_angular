@@ -12,6 +12,7 @@ app.factory('dialogSvc', function() {
     var showActionsDlg;
     var showPersonelleDlg;
     var showUpgradeDlg;
+    var showOsrDlg;
 
     var tbar_sectors = [];
 
@@ -32,6 +33,10 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
 
     $scope.showUpgradeDlg = function() {
         dialogSvc.showUpgradeDlg();
+    }
+
+    $scope.showOsrDlg = function() {
+        dialogSvc.showOsrDlg();
     }
 });
 
@@ -286,9 +291,15 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
 });
 
 app.controller('UpgradeDlg', function($scope, dialogSvc){
-    //TODO: Toggle upgrade buttons on click
+    //TODO: Toggle buttons on click
     dialogSvc.showUpgradeDlg = function() {
         $("#upgrade_dlg").dialog( "open" );
     }
 });
 
+app.controller('OsrDlg', function($scope, dialogSvc){
+    //TODO: Toggle buttons on click
+    dialogSvc.showOsrDlg = function() {
+        $("#osr_dlg").dialog( "open" );
+    }
+});
