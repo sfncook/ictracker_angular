@@ -21,6 +21,7 @@
     <script src="js/init.js"></script>
     <script src="js/Sector.js"></script>
     <script src="js/Unit.js"></script>
+    <script src="js/Action.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/unique.js"></script>
     <script src="js/sector_units.js"></script>
@@ -166,7 +167,7 @@
                         <div class="jspPane">
                             <div ng-repeat="action in sector.actions">
                                 <button class="action_btn"
-                                        ng-class="{btn_xsmtext: catalog_action.name.length>10}">
+                                        ng-class="{font_red:action.is_warning}">
                                     {{action.name}}
                                 </button>
                             </div>
@@ -282,11 +283,12 @@
 </dialog>
 
 <dialog id="actions_dlg" title="Actions" ng-controller="ActionsDlg">
-    <div id="actions_dlg_grid_container " class="grid">
-        <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_actions">
-            <button class="action_btn"
+    <div class="action_type_dialog_header grid"
+         ng-repeat="catalog_action_type in catalog_action_types">
+        <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
+            <button class="btn_xsmtext action_btn"
                     ng-click="selectAction(catalog_action)"
-                    ng-class="{glowlightgreen: selectedSector.actions.contains(catalog_action), btn_xsmtext: catalog_action.name.length>10}">
+                    ng-class="{glowlightgreen: selectedSector.actions.contains(catalog_action), font_red:catalog_action.is_warning}">
                 {{catalog_action.name}}
             </button>
         </div>

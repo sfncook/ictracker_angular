@@ -382,9 +382,6 @@ button:active {
     float: left;
 }
 
-.btn_xsmtext {
-    font-size:0.7rem !important;
-}
 .btn_smtext {
     font-size:0.8rem !important;
 }
@@ -401,8 +398,16 @@ button:active {
     cursor: pointer !important;
 }
 
-#actions_dlg_grid_container {
-    background: white;
+.action_dialog_btn {
+    margin: 5px !important;
+}
+.action_type_dialog_header {
+    text-align: center;
+    /*font-size: 1.1rem;*/
+    font-weight: bold;
+    color: black;
+    margin-top: 8px;
+    border-top: 1px solid #DDD;
 }
 
 .upgrade_btn {
