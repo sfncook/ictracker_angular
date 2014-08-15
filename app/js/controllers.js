@@ -225,11 +225,21 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     }
 });
 
-app.controller('ActionsDlg', function($scope, dialogSvc){
-    var selectedSector = {};
+app.controller('ActionsDlg', function($scope, $http, dialogSvc){
+    $scope.selectedSector = {};
+
+    $http.get('data/actions.json').
+        success(function(data){
+            $scope.catalog_actions = data;
+        });
+
+    $scope.selectAction = function(action) {
+        $scope.selectedSector.toggleAction(action);
+    };
+
     dialogSvc.showActionsDlg = function(sector) {
-        selectedSector = sector;
-        $("#actions-dlg").dialog( "open" );
+        $scope.selectedSector = sector;
+        $("#actions_dlg").dialog( "open" );
     }
 });
 

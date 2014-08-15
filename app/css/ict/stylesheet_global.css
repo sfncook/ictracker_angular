@@ -378,6 +378,9 @@ button:active {
     float: left;
 }
 
+.btn_xsmtext {
+    font-size:0.7rem !important;
+}
 .btn_smtext {
     font-size:0.8rem !important;
 }
@@ -392,4 +395,8 @@ button:active {
 }
 .clock_icon:hover {
     cursor: pointer !important;
+}
+
+#actions_dlg_grid_container {
+    background: white;
 }

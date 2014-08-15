@@ -152,7 +152,14 @@
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane jspScrollable">
                     <div class="jspContainer">
-                        <div class="jspPane"></div>
+                        <div class="jspPane">
+                            <div ng-repeat="action in sector.actions">
+                                <button class="action_btn"
+                                        ng-class="{btn_xsmtext: catalog_action.name.length>10}">
+                                    {{action.name}}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -263,7 +270,17 @@
 
 </dialog>
 
-<dialog id="actions-dlg" title="Actions" ng-controller="ActionsDlg"></dialog>
+<dialog id="actions_dlg" title="Actions" ng-controller="ActionsDlg">
+    <div id="actions_dlg_grid_container " class="grid">
+        <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_actions">
+            <button class="action_btn"
+                    ng-click="selectAction(catalog_action)"
+                    ng-class="{glowlightgreen: selectedSector.actions.contains(catalog_action), btn_xsmtext: catalog_action.name.length>10}">
+                {{catalog_action.name}}
+            </button>
+        </div>
+    </div>
+</dialog>
 
 <div id="version_text">Version: 0.0</div>
 

@@ -214,3 +214,16 @@ tbar {
     text-align:center;
 }
 
+.action_btn {
+    width: 126px;
+    height: 26px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 4px;
+    box-shadow: none;
+    /*font-size: 0.7rem;*/
+    padding-bottom: 2px;
+    color: black;
+}
+
