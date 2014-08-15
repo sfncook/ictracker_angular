@@ -14,6 +14,7 @@ app.factory('dialogSvc', function() {
     var showUpgradeDlg;
     var showOsrDlg;
     var showObjectivesDlg;
+    var showIapDlg;
 
     var tbar_sectors = [];
 
@@ -42,6 +43,10 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
 
     $scope.showObjectivesDlg = function() {
         dialogSvc.showObjectivesDlg();
+    }
+
+    $scope.showIapDlg = function() {
+        dialogSvc.showIapDlg();
     }
 });
 
@@ -313,5 +318,12 @@ app.controller('ObjectivesDlg', function($scope, dialogSvc){
     //TODO: Toggle buttons on click
     dialogSvc.showObjectivesDlg = function() {
         $("#objectives_dlg").dialog( "open" );
+    }
+});
+
+app.controller('IapDlg', function($scope, dialogSvc){
+    //TODO: Toggle buttons on click
+    dialogSvc.showIapDlg = function() {
+        $("#iap_dlg").dialog( "open" );
     }
 });

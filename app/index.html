@@ -56,7 +56,9 @@
                 <div>Objectives</div>
                 <div id="objectives_btn_perccomplete">(0% Complete)</div>
             </button>
-            <button id="iap_btn" class="header_item button">IAP</button>
+            <button id="iap_btn"
+                    class="header_item button"
+                    ng-click="showIapDlg()">IAP</button>
         </div>
     </div>
 
@@ -433,6 +435,53 @@
         </div>
         <div id="objective_right_col"></div>
 </dialog>
+
+<!-- IAP Dialog -->
+<dialog id="iap_dlg" title="Action Plan = Offensive or Defensive?" ng-controller="IapDlg">
+    <table id="iap_table_main">
+        <tr>
+            <td class="iap_label_td">Critical Fireground Factors:</td>
+            <td>
+                <button class="iap_toggle_btn">Building</button>
+                <button class="iap_toggle_btn">Fire</button>
+                <button class="iap_toggle_btn">Occupancy</button>
+                <button class="iap_toggle_btn">Life Hazard</button>
+                <button class="iap_toggle_btn">Arrangement</button>
+                <button class="iap_toggle_btn">Resources</button>
+                <button class="iap_toggle_btn">Action Effect</button>
+                <button class="iap_toggle_btn">Special</button>
+                <div class="clear_float"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_red_label iap_label_td">Rescue:</td>
+            <td><textarea class="iap_input">Primary search</textarea></td>
+        </tr>
+        <tr>
+            <td class="iap_blue_label iap_label_td">Fire Control:</td>
+            <td>
+                <textarea class="iap_input">Supply line, attack +2</textarea>
+                <button id="iap_sprinkler_toggle_btn" class="iap_toggle_btn">Vent Sprinkler?</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_blue_label iap_label_td">Property/People:</td>
+            <td>
+                <textarea class="iap_input">Salvage</textarea>
+                <button id="iap_btn_evacloc">Show Evacuation Location</button>
+                <div class="clear_both"></div>
+                <div id="iap_evacloc_input_container">
+                    <textarea id="iap_evacloc_input">Evacuation Location</textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_red_label iap_label_td">Firefighter Safety:</td>
+            <td><textarea class="iap_input">IRIC to Recue, Acct. locations, Safety, Rehab +1 unit</textarea></td>
+        </tr>
+    </table>
+</dialog>
+<!-- IAP Dialog -->
 
 <div id="version_text">Version: 0.0</div>
 

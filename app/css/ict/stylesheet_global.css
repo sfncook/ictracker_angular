@@ -481,3 +481,59 @@ button:active {
     margin: 5px 10px 5px 10px;
     display:block;
 }
+
+#iap_table_main td {
+    padding: 5px;
+}
+.iap_label_td {
+    text-align: right;
+}
+.iap_red_label {
+    font-size: 1.25rem;
+    color: red;
+}
+.iap_blue_label {
+    font-size: 1.25rem;
+    color: blue;
+}
+.iap_input {
+    border: #999 2px solid;
+    color: black;
+    width: 300px;
+    height: 60px;
+    font-size:0.9rem;
+    float: left;
+}
+.iap_toggle_btn {
+    width: 100px;
+    float: left;
+    font-size: 0.8rem;
+    margin: 2px;
+    display: block;
+}
+#iap_sprinkler_toggle_btn {
+    width: 120px;
+    float: left;
+    font-size: 0.8rem;
+    margin: 2px;
+    display: block;
+}
+#iap_btn_evacloc {
+    width: 120px;
+    float: left;
+    font-size: 0.8rem;
+    margin: 2px;
+}
+#iap_evacloc_dialog {
+    width: 300px;
+}
+#iap_evacloc_input_container {
+    float: left;
+}
+#iap_evacloc_input {
+    border: #999 2px solid;
+    color: black;
+    width: 300px;
+    height: 60px;
+    font-size:0.9rem;
+}
