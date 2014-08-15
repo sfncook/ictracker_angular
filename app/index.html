@@ -50,7 +50,9 @@
                 <div>OSR</div>
                 <div id="osr_btn_perccomplete">(0% Complete)</div>
             </button>
-            <button id="objectives_header_btn" class="header_item button">
+            <button id="objectives_header_btn"
+                    class="header_item button"
+                    ng-click="showObjectivesDlg()">
                 <div>Objectives</div>
                 <div id="objectives_btn_perccomplete">(0% Complete)</div>
             </button>
@@ -413,6 +415,24 @@
     </div>
     <div style="width:100%" class="clear_float"></div>
 </dialog> <!-- OSR Dialog -->
+
+<!-- Objectives Dialog Unit Component Prototype -->
+<dialog id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg">
+        <div id="objective_left_col">
+            <button id="rescue_objective_btn" class="objective_btn">Upgrade to full recue</button>
+            <button id="safety_objective_btn" class="objective_btn">Assing safety</button>
+            <button id="establish_supply_objective_btn" class="objective_btn">Establish supply line</button>
+            <button class="objective_btn">Secure utilities</button>
+            <button class="objective_btn">Ventilation</button>
+            <button id="ondeck_objective_btn" class="objective_btn">Create "On deck"</button>
+            <button class="objective_btn">Pressurize exposures</button>
+            <button class="objective_btn">Monitor channel 16</button>
+            <button class="objective_btn">Salvage</button>
+            <button id="rehab_objective_btn" class="objective_btn">Establish rehab</button>
+            <button id="custsvc_objective_btn" class="objective_btn">Customer service</button>
+        </div>
+        <div id="objective_right_col"></div>
+</dialog>
 
 <div id="version_text">Version: 0.0</div>
 

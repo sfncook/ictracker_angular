@@ -475,3 +475,9 @@ button:active {
     display:block;
     margin-bottom:15px;
 }
+
+.objective_btn {
+    width: 165px;
+    margin: 5px 10px 5px 10px;
+    display:block;
+}
