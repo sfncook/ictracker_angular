@@ -14,7 +14,7 @@ function initDialogs() {
     $( "#par-dlg" ).dialog( "option", "width", 400 );
     $( "#bnch-dlg" ).dialog( "option", "width", 400 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
-    $( "#actions_dlg" ).dialog( "option", "width", 708 );
+    $( "#actions_dlg" ).dialog( "option", "width", 545 );
 
 }
 

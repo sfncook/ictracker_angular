@@ -312,6 +312,10 @@ button:active {
     height: 25px;
 }
 
+#osr_header_btn {
+    margin-top:100px;
+}
+
 #version_text {
     position:fixed;
     bottom: 10px;

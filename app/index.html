@@ -28,10 +28,12 @@
 </head>
 <body>
 
-<div id="ict_header">
+<div id="ict_header" ng-controller="HeaderContainer">
     <div id="time" class="time_lg header_item">00:00</div>
     <img id="title_icon" class="header_item" src="img/logo/ict_logo_100x100.png"/>
-    <button id="dispatched_units_btn" class="header_item button">
+    <button id="dispatched_units_btn"
+            class="header_item button"
+            ng-click="showUnitsDlgForDispUnits()">
         <div>Dispatched</div>
         <div>Units</div>
     </button>
@@ -223,7 +225,7 @@
         <div id="title_dispatched_units_div">Dispatched Units</div>
         <div id="units_dispatched_units_div">
             <button class="unit_btn"
-                    ng-repeat="unit in tbar_sectors | sector_units"
+                    ng-repeat="unit in dispatechedUnits"
                     ng-click="selectDispatchedUnit(unit)">
                 {{unit.name}}
             </button>

@@ -8,6 +8,7 @@ app.factory('dialogSvc', function() {
     var showBnchDlg;
     var showUnitsDlg;
     var showUnitsDlgForAcct;
+    var showUnitsDlgForDispUnits;
     var showActionsDlg;
     var showPersonelleDlg;
     var tbar_sectors = [];
@@ -20,6 +21,13 @@ app.factory('dialogSvc', function() {
     };
 });
 
+
+
+app.controller('HeaderContainer', function($scope, dialogSvc){
+    $scope.showUnitsDlgForDispUnits = function() {
+        dialogSvc.showUnitsDlgForDispUnits();
+    }
+});
 
 app.controller('TbarContainer', function($scope, dialogSvc){
     var window_width = $(window).width();
@@ -158,6 +166,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};
+    $scope.dispatechedUnits = [];
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
     $scope.forAcct=false;
 
@@ -205,8 +214,21 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             $scope.selectedSector.setAcctUnit(unit);
             $scope.forAcct=false;
             $("#units_dlg").dialog( "close" );
+        } if($scope.forDispUnits) {
+            if($scope.dispatechedUnits.contains(unit)){
+                $scope.dispatechedUnits.remByVal(unit);
+            } else {
+                $scope.dispatechedUnits.push(unit);
+            }
         } else {
-            $scope.selectedSector.toggleUnit(unit);
+            var wasAdded = $scope.selectedSector.toggleUnit(unit);
+            if(wasAdded) {
+                if(!$scope.dispatechedUnits.contains(unit)){
+                    $scope.dispatechedUnits.push(unit);
+                }
+            } else {
+                $scope.dispatechedUnits.remByVal(unit);
+            }
         }
     };
 
@@ -222,6 +244,11 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     dialogSvc.showUnitsDlgForAcct = function(sector) {
         $scope.forAcct=true;
         dialogSvc.showUnitsDlg(sector);
+    }
+
+    dialogSvc.showUnitsDlgForDispUnits = function() {
+        $scope.forDispUnits=true;
+        dialogSvc.showUnitsDlg();
     }
 });
 

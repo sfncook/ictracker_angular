@@ -15,12 +15,18 @@ function Sector(name) // Constructor
     this.hasActions = true;
 }
 
+/*
+ * Return true if unit was added and false if unit was removed.
+ */
 Sector.prototype.toggleUnit = function(unit)
 {
+    var wasAdded;
     if(this.units.contains(unit)) {
         this.units.remByVal(unit);
+        wasAdded = false;
     } else {
         this.units.push(unit);
+        wasAdded = true;
     }
 
     if(this.units.length>0) {
@@ -28,6 +34,7 @@ Sector.prototype.toggleUnit = function(unit)
     } else {
         this.parAvailable = false;
     }
+    return wasAdded;
 }
 
 Sector.prototype.setAcctUnit = function(unit)
