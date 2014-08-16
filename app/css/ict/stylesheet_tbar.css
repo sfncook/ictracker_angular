@@ -1,7 +1,6 @@
 tbar {
     border:1px solid gray;
     margin:10px;
-    width: 278px;
     height: 279px;
     float:left;
     padding: 0;
@@ -56,24 +55,28 @@ tbar {
     border-right: 1px solid #999;
 }
 
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 .scroll-pane {
     width: 140px;
     height: 228px;
-    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
-.left_scroll_pane>.jspContainer>.jspVerticalBar {
-    left: 0;
-    width: 3px;
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
+.left_scroll_pane {
+    direction: rtl;
 }
-.right_scroll_pane>.jspContainer>.jspVerticalBar {
-    right: 0;
-    width: 3px;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
+.left_scroll_pane>div {
+    direction: ltr;
 }
 
 .action_col_right>.right_scroll_pane{
