@@ -230,43 +230,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
     }
 
     $scope.selectBnch = function(bnch) {
-        if(bnch=="bnch_primary") {
-            $scope.selectedSector.toggle_bnch_primary();
-        } else if(bnch=="bnch_underctl") {
-            $scope.selectedSector.toggle_bnch_underctl();
-        } else if(bnch=="bnch_secondary") {
-            $scope.selectedSector.toggle_bnch_secondary();
-        } else if(bnch=="bnch_lossstop") {
-            $scope.selectedSector.toggle_bnch_lossstop();
-        }
-
-        else if(bnch=="bnch_primary_par") {
-            $scope.selectedSector.toggle_bnch_primary_par();
-        } else if(bnch=="bnch_primary_notify") {
-            $scope.selectedSector.toggle_bnch_primary_notify();
-        } else if(bnch=="bnch_primary_challenge") {
-            $scope.selectedSector.toggle_bnch_primary_challenge();
-        }
-
-        else if(bnch=="bnch_underctl_par") {
-            $scope.selectedSector.toggle_bnch_underctl_par();
-        } else if(bnch=="bnch_underctl_notify") {
-            $scope.selectedSector.toggle_bnch_underctl_notify();
-        } else if(bnch=="bnch_underctl_obtain") {
-            $scope.selectedSector.toggle_bnch_underctl_obtain();
-        }
-
-        else if(bnch=="bnch_secondary_par") {
-            $scope.selectedSector.toggle_bnch_secondary_par();
-        } else if(bnch=="bnch_secondary_notify") {
-            $scope.selectedSector.toggle_bnch_secondary_notify();
-        }
-
-        else if(bnch=="bnch_lossstop_par") {
-            $scope.selectedSector.toggle_bnch_lossstop_par();
-        } else if(bnch=="bnch_lossstop_notify") {
-            $scope.selectedSector.toggle_bnch_lossstop_notif();
-        }
+        $scope.selectedSector.toggleBnch(bnch);
     }
 
 });
