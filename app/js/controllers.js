@@ -290,8 +290,6 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         }
     };
 
-    // TODO: On units_dlg close: $scope.forDispUnits = false;
-
     $scope.selectUnit = function(unit) {
         if($scope.forAcct) {
             $scope.selectedSector.setAcctUnit(unit);
@@ -336,10 +334,14 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
     }
 
     dialogSvc.showUnitsDlgForDispUnits = function() {
-        console.log("showUnitsDlgForDispUnits");
         $scope.forDispUnits=true;
         dialogSvc.showUnitsDlg();
     }
+
+    $('#units_dlg').bind('dialogclose', function() {
+        $scope.forDispUnits=false;
+        $scope.forAcct=false;
+    });
 });
 
 app.controller('ActionsDlg', function($scope, $http, dialogSvc){
@@ -422,3 +424,4 @@ app.controller('UnitOptionsDlg', function($scope, dialogSvc){
     }
 
 });
+
