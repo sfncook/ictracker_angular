@@ -148,9 +148,37 @@ app.filter('unitPar', function() {
 });
 app.controller('ParDlg', function($scope, dialogSvc){
     $scope.selectedSector = {};
+
     dialogSvc.openParDlg = function(sector) {
         $scope.selectedSector = sector;
         $("#par-dlg").dialog( "open" );
+    }
+
+    $scope.selectPersonPar = function(unit, i) {
+        unit.setPar(i);
+
+        var allUnitsHavePar = true;
+        for(var i=0; i<$scope.selectedSector.units.length; i++) {
+            allUnitsHavePar = allUnitsHavePar&$scope.selectedSector.units[i].hasPar;
+        }
+        $scope.selectedSector.hasPar = allUnitsHavePar;
+    }
+
+    $scope.selectUnitPar = function(unit) {
+        unit.toggleHasPar();
+
+        var allUnitsHavePar = true;
+        for(var i=0; i<$scope.selectedSector.units.length; i++) {
+            allUnitsHavePar = allUnitsHavePar&$scope.selectedSector.units[i].hasPar;
+        }
+        $scope.selectedSector.hasPar = allUnitsHavePar;
+    }
+
+    $scope.selectSectorPar = function() {
+        $scope.selectedSector.toggleHasPar();
+        for(var i=0; i<$scope.selectedSector.units.length; i++) {
+            $scope.selectedSector.units[i].setHasPar($scope.selectedSector.hasPar);
+        }
     }
 });
 

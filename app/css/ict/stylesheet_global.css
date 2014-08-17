@@ -582,6 +582,8 @@ button:active {
 
 .mayday_par_btn {
     margin: 5px 5px 5px 20px;
+    background:red;
+    color:white;
 }
 
 .par_dialog_unit {

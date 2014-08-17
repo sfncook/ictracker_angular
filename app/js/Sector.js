@@ -6,7 +6,7 @@ function Sector(name) // Constructor
     this.actions = [];
     this.acctUnit = {'name':'@acct'};
     this.parAvailable = false;
-    this.haspar = false;
+    this.hasPar = false;
 
     // Formatting attributes
     this.hasClock = false;
@@ -54,11 +54,6 @@ Sector.prototype.addUnit = function(unit)
     }
 }
 
-Sector.prototype.toggleAction = function(action)
-{
-    if(this.actions.contains(action)) {
-        this.actions.remByVal(action);
-    } else {
-        this.actions.push(action);
-    }
+Sector.prototype.toggleHasPar = function() {
+    this.hasPar = !this.hasPar;
 }
