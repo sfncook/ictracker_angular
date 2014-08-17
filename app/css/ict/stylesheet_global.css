@@ -606,3 +606,25 @@ button:active {
 .par_dlg_left_col {
     width: 138px;
 }
+
+.benchmark_col_container {
+    float: left;
+}
+.benchmark_1st_col_container {
+    border-right: 1px solid #666;
+}
+.benchmark_double_btn {
+    margin-bottom: 10px !important;
+    height: 71px;
+    font-size: 1.1rem;
+    padding-top:10px;
+}
+.benchmark_item_btn {
+    width: 150px;
+    margin: 5px 10px;
+    display: block;
+}
+.benchmark_btn_parent_div {
+    padding: 5px 0 5px 0;
+}
+

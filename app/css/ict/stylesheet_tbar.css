@@ -37,6 +37,7 @@ tbar {
 
 .benchmark_bar_img {
     margin-bottom: 1px;
+    display:block;
 }
 
 .tbar_col_div {
@@ -126,7 +127,7 @@ tbar {
     font-size: 0.6rem;
 }
 .sector_name_btn {
-    width:170px;
+    width:178px;
     height: 22px;
     padding:0;
     margin:2px;
