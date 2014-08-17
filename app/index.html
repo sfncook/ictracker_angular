@@ -522,8 +522,12 @@
 <!-- Benchmarks Dialog Body -->
 <dialog id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg">
     <div class="benchmark_col_container benchmark_0th_col_container">
-        <button class='benchmark_double_btn benchmark_item_btn'>Unable to Obtain Primary</button>
-        <button class='disabled benchmark_double_btn benchmark_item_btn'>Unable to Obtain Secondary</button>
+        <button class='benchmark_double_btn benchmark_item_btn'
+                ng-click="selectUnablePrimary()"
+                ng-class="{glowpink: selectedSector.unable_primary}">Unable to Obtain Primary</button>
+        <button class='disabled benchmark_double_btn benchmark_item_btn'
+                ng-click="selectUnableSecondary()"
+                ng-class="{glowpink: selectedSector.unable_secondary, button_disabled:selectedSector.bnch<1}" ng-disabled="selectedSector.bnch<1">Unable to Obtain Secondary</button>
     </div>
     <div class="benchmark_col_container benchmark_1st_col_container">
         <button ng-click="selectBnch(1)"    class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=1}">Primary All Clear</button>

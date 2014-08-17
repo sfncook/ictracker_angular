@@ -69,5 +69,24 @@ Sector.prototype.toggleBnch = function(newBnch) {
     } else {
         this.bnch = newBnch;
     }
-}
 
+    if(this.bnch>=1) {
+        this.unable_primary = false;
+    }
+
+    if(this.bnch>=9) {
+        this.unable_secondary = false;
+    }
+}
+Sector.prototype.toggleUnablePrimary = function() {
+    this.unable_primary = !this.unable_primary;
+    if(this.unable_primary) {
+        this.bnch = 0;
+    }
+}
+Sector.prototype.toggleUnableSecondary = function() {
+    this.unable_secondary = !this.unable_secondary;
+    if(this.unable_secondary) {
+        this.bnch = 4;
+    }
+}

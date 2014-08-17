@@ -233,6 +233,13 @@ app.controller('BnchDlg', function($scope, dialogSvc){
         $scope.selectedSector.toggleBnch(bnch);
     }
 
+    $scope.selectUnablePrimary = function() {
+        $scope.selectedSector.toggleUnablePrimary();
+    }
+    $scope.selectUnableSecondary = function() {
+        $scope.selectedSector.toggleUnableSecondary();
+    }
+
 });
 
 app.controller('UnitsDlg', function($scope, $http, dialogSvc){
