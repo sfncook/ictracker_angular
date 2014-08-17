@@ -170,7 +170,7 @@
                 <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane">
-                    <div ng-repeat="action in sector.actions">
+                    <div ng-repeat="action in sector.selectedUnit.actions">
                         <button class="action_btn"
                                 ng-class="{font_red:action.is_warning}">
                             {{action.name}}
@@ -303,7 +303,7 @@
         <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
             <button class="btn_xsmtext action_btn"
                     ng-click="selectAction(catalog_action)"
-                    ng-class="{glowlightgreen: selectedSector.actions.contains(catalog_action), font_red:catalog_action.is_warning}">
+                    ng-class="{glowlightgreen: selectedSector.selectedUnit.actions.contains(catalog_action), font_red:catalog_action.is_warning}">
                 {{catalog_action.name}}
             </button>
         </div>

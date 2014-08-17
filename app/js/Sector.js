@@ -3,7 +3,7 @@ function Sector(name) // Constructor
 {
     this.name = name;
     this.units = [];
-    this.actions = [];
+    this.selectedUnit = new Unit();
     this.acctUnit = {'name':'@acct'};
     this.parAvailable = false;
     this.hasPar = false;
@@ -89,4 +89,8 @@ Sector.prototype.toggleUnableSecondary = function() {
     if(this.unable_secondary) {
         this.bnch = 7;
     }
+}
+
+Sector.prototype.toggleAction = function(action) {
+    this.selectedUnit.toggleAction(action);
 }
