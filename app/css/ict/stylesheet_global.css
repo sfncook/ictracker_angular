@@ -315,10 +315,6 @@ button:active {
     height: 25px;
 }
 
-#osr_header_btn {
-    margin-top:100px;
-}
-
 #version_text {
     position:fixed;
     bottom: 10px;
@@ -428,6 +424,7 @@ button:active {
 
 #osr_header_btn {
     height: 45px;
+    margin-top:100px;
 }
 #osr_btn_perccomplete {
     font-size:0.6rem;
@@ -436,6 +433,7 @@ button:active {
     width: 165px;
     margin: 5px 10px 5px 10px;
     display:block;
+
 }
 #osr_right_col {
     float:left;
@@ -460,6 +458,7 @@ button:active {
     width: 100px;
     float:left;
     margin:0 5px;
+    font-size:0.8rem !important;
 }
 #osr_occupancy_floors_div {
     margin: 10px 0 15px 0;
@@ -471,12 +470,10 @@ button:active {
 }
 .osr_select {
     text-align: center;
-    background: #CCC;
-    color: #666;
+    background: #EEE;
     border: none;
     border-radius: 3px;
     padding: 4px 4px 4px 4px;
-    text-shadow: 1px 1px #AAA;
     cursor: pointer;
     box-shadow: 1px 1px 2px #888;
     width: 220px;

@@ -381,7 +381,21 @@ app.controller('UpgradeDlg', function($scope, dialogSvc){
 });
 
 app.controller('OsrDlg', function($scope, dialogSvc){
-    //TODO: Toggle buttons on click
+    
+    $scope.unit_osr = false;
+    $scope.address_left_osr = false;
+    $scope.occupancy_osr = false;
+    $scope.construction_osr = false;
+    $scope.conditions_osr = false;
+    $scope.assumecmd_osr = false;
+    $scope.location_osr = false;
+    $scope.mode_osr = false;
+    $scope.attach_line = false;
+    $scope.water_supply = false;
+    $scope.iric_osr = false;
+    $scope.acct_osr = false;
+
+
     dialogSvc.showOsrDlg = function() {
         $("#osr_dlg").dialog( "open" );
     }
