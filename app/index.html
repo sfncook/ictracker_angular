@@ -315,15 +315,15 @@
 <!-- Upgrade Dialog -->
 <dialog id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg">
     <div id="upgrade_left_col">
-        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn">En Route</button>
-        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn">On Scene</button>
+        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=1" ng-class="{glowlightgreen:upgrade_primary==1}">En Route</button>
+        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=2" ng-class="{glowlightgreen:upgrade_primary==2}">On Scene</button>
     </div>
     <div id="upgrade_right_col">
-        <button id="working_upgrade_btn"   class="right_upgrade_btn upgrade_btn">Working Fire</button>
-        <button id="first_upgrade_btn"     class="right_upgrade_btn upgrade_btn">1st Alarm</button>
-        <button id="second_upgrade_btn"    class="right_upgrade_btn upgrade_btn">2nd Alarm</button>
-        <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn">3rd Alarm</button>
-        <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn">4th Alarm</button>
+        <button id="working_upgrade_btn"   class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=1" ng-class="{glowlightgreen:upgrade_secondary==1, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">Working Fire</button>
+        <button id="first_upgrade_btn"     class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=2" ng-class="{glowlightgreen:upgrade_secondary==2, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">1st Alarm</button>
+        <button id="second_upgrade_btn"    class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=3" ng-class="{glowlightgreen:upgrade_secondary==3, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">2nd Alarm</button>
+        <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=4" ng-class="{glowlightgreen:upgrade_secondary==4, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">3rd Alarm</button>
+        <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=5" ng-class="{glowlightgreen:upgrade_secondary==5, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">4th Alarm</button>
     </div>
 </dialog>
 

@@ -372,7 +372,9 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
 });
 
 app.controller('UpgradeDlg', function($scope, dialogSvc){
-    //TODO: Toggle buttons on click
+    $scope.upgrade_primary = 0;
+    $scope.upgrade_secondary = 0;
+
     dialogSvc.showUpgradeDlg = function() {
         $("#upgrade_dlg").dialog( "open" );
     }
