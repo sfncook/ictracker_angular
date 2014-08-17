@@ -557,3 +557,12 @@ button:active {
 }
 .psi_yellow {background: yellow;}
 .psi_green {background: #3dff00;}
+
+.reset_clock_btn {
+    float:right;
+    width:120px;
+    height:20px;
+    height:22px;
+    margin:4px 10px;
+    padding: 0 4px;
+}
