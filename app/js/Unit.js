@@ -3,7 +3,7 @@ function Unit(name, type, city) // Constructor
     this.name = name;
     this.type = type;
     this.city = city;
-    this.par = 0;
+    this.par = 'P';
     this.psi = 4000;
     this.actions = [];
 }

@@ -137,9 +137,11 @@
                 <div class="clear_both"></div>
                 <div class="left_scroll_pane scroll-pane">
                     <div ng-repeat="unit in sector.units">
-                        <button class="personnel_btn" ng-click="showPerDlg(unit)">{{unit.par}}</button>
+                            <button class="personnel_btn"
+                                    ng-click="showUnitOptionsDlg(unit)">{{unit.par}}</button>
                         <button class="psi_green psi_btn"
-                                ng-click="showPsiDlg(unit)"
+                                ng-click="showUnitOptionsDlg(unit)"
+                                ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
                                 ng-if="sector.hasPsiBtn">{{unit.psi}}</button>
                         <button class="unit_btn"
                                 ng-class="{btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
@@ -290,15 +292,15 @@
 <!-- Upgrade Dialog -->
 <dialog id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg">
     <div id="upgrade_left_col">
-        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn button">En Route</button>
-        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn button">On Scene</button>
+        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn">En Route</button>
+        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn">On Scene</button>
     </div>
     <div id="upgrade_right_col">
-        <button id="working_upgrade_btn"   class="right_upgrade_btn upgrade_btn button">Working Fire</button>
-        <button id="first_upgrade_btn"     class="right_upgrade_btn upgrade_btn button">1st Alarm</button>
-        <button id="second_upgrade_btn"    class="right_upgrade_btn upgrade_btn button">2nd Alarm</button>
-        <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn button">3rd Alarm</button>
-        <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn button">4th Alarm</button>
+        <button id="working_upgrade_btn"   class="right_upgrade_btn upgrade_btn">Working Fire</button>
+        <button id="first_upgrade_btn"     class="right_upgrade_btn upgrade_btn">1st Alarm</button>
+        <button id="second_upgrade_btn"    class="right_upgrade_btn upgrade_btn">2nd Alarm</button>
+        <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn">3rd Alarm</button>
+        <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn">4th Alarm</button>
     </div>
 </dialog>
 
@@ -476,6 +478,22 @@
     </table>
 </dialog>
 <!-- IAP Dialog -->
+
+<!-- Per Dialog -->
+<dialog id="unit_options_dlg" title="Unit" ng-controller="UnitOptionsDlg">
+    <div id="unit_people_dialog_row1" class="unit_people_dialog_row1">
+        <button class="personnel_dlg_btn personnel_btn"
+                ng-repeat="par in pars"
+                ng-click="selectPar(par)"
+                ng-class="{glow_orange: selected_unit.par==par}">{{par}}</button>
+    </div>
+    <div id="unit_people_dialog_row2" class="unit_people_dialog_row2">
+        <button class="psi_dlg_btn psi_btn"
+                ng-repeat="psi in psis"
+                ng-click="selectPsi(psi)"
+                ng-class="{psi_red:psi<1500, psi_yellow:psi<3000&&psi>=1500, psi_green:psi>=3000, glow_orange: selected_unit.psi==psi}">{{psi}}</button>
+    </div>
+</dialog>
 
 <div id="version_text">Version: 0.0</div>
 

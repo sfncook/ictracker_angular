@@ -10,7 +10,7 @@ app.factory('dialogSvc', function() {
     var showUnitsDlgForAcct;
     var showUnitsDlgForDispUnits;
     var showActionsDlg;
-    var showPersonelleDlg;
+    var showUnitOptionsDlg;
     var showUpgradeDlg;
     var showOsrDlg;
     var showObjectivesDlg;
@@ -127,8 +127,8 @@ app.controller('TbarContainer', function($scope, dialogSvc){
         dialogSvc.showActionsDlg(sector);
     }
 
-    $scope.showPersonelleDlg = function(sector) {
-        dialogSvc.showPersonelleDlg(sector);
+    $scope.showUnitOptionsDlg = function(unit) {
+        dialogSvc.showUnitOptionsDlg(unit);
     }
 
 });
@@ -335,4 +335,30 @@ app.controller('IapDlg', function($scope, dialogSvc){
     dialogSvc.showIapDlg = function() {
         $("#iap_dlg").dialog( "open" );
     }
+});
+
+app.controller('UnitOptionsDlg', function($scope, dialogSvc){
+    $scope.pars = [1, 2, 3, 4, 5];
+    $scope.psis = [];
+    $scope.selected_unit = {};
+
+    for(var psiValue=4500; psiValue>=0; psiValue-=100) {
+        $scope.psis.push(psiValue);
+    }
+
+    dialogSvc.showUnitOptionsDlg = function(unit) {
+        $scope.selected_unit = unit;
+        $("#unit_options_dlg").dialog( "open" );
+    }
+
+    $scope.selectPar = function(par) {
+        $scope.selected_unit.par = par;
+        $("#unit_options_dlg").dialog( "close" );
+    }
+
+    $scope.selectPsi = function(psi) {
+        $scope.selected_unit.psi = psi;
+        $("#unit_options_dlg").dialog( "close" );
+    }
+
 });

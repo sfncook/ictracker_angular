@@ -542,3 +542,18 @@ button:active {
     height: 60px;
     font-size:0.9rem;
 }
+
+.personnel_dlg_btn {
+    margin: 5px;
+}
+
+.psi_dlg_btn {
+    font-size: 0.6rem !important;
+    margin: 5px;
+}
+.psi_red {
+    background: red;
+    color: #FFF !important;
+}
+.psi_yellow {background: yellow;}
+.psi_green {background: #3dff00;}
