@@ -131,6 +131,9 @@ app.controller('TbarContainer', function($scope, dialogSvc){
         dialogSvc.showUnitOptionsDlg(unit);
     }
 
+    $scope.selectUnit = function(sector,unit) {
+        sector.selectUnit(unit);
+    }
 });
 
 

@@ -94,3 +94,7 @@ Sector.prototype.toggleUnableSecondary = function() {
 Sector.prototype.toggleAction = function(action) {
     this.selectedUnit.toggleAction(action);
 }
+
+Sector.prototype.selectUnit = function(unit) {
+    this.selectedUnit = unit;
+}
