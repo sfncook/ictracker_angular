@@ -180,6 +180,10 @@ app.controller('ParDlg', function($scope, dialogSvc){
             $scope.selectedSector.units[i].setHasPar($scope.selectedSector.hasPar);
         }
     }
+
+    $scope.showUnitOptionsDlg = function(unit) {
+        dialogSvc.showUnitOptionsDlg(unit);
+    }
 });
 
 app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
