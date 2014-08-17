@@ -87,6 +87,6 @@ Sector.prototype.toggleUnablePrimary = function() {
 Sector.prototype.toggleUnableSecondary = function() {
     this.unable_secondary = !this.unable_secondary;
     if(this.unable_secondary) {
-        this.bnch = 4;
+        this.bnch = 7;
     }
 }

@@ -118,16 +118,16 @@
                 </button>
                 <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
                     <span class="benchmarks_icon">
-                        <img ng-show="sector.bnch<1"    class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=1"    class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
-                        <!--<img ng-show="sector.bnch==2"    class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
+                        <img ng-show="sector.bnch<1 && !sector.unable_primary"    class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=1 && !sector.unable_primary"    class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                        <img ng-show="sector.unable_primary"    class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
 
                         <img ng-show="sector.bnch<5"          class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
                         <img ng-show="sector.bnch>=5"          class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
 
-                        <img ng-show="sector.bnch<9"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=9"  class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
-                        <!--<img ng-show="sector.bnch_secondaryAlClear==2"  class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
+                        <img ng-show="sector.bnch<9 && !sector.unable_secondary"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=9 && !sector.unable_secondary"  class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                        <img ng-show=" sector.unable_secondary"  class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
 
                         <img ng-show="sector.bnch<12"          class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
                         <img ng-show="sector.bnch>=12"          class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
