@@ -106,3 +106,6 @@ Array.prototype.propertiesToArray = function() {
     return array;
 }
 
+Array.prototype.clone = function() {
+    return this.concat();
+}

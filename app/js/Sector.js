@@ -25,6 +25,8 @@ function Sector(name) // Constructor
  */
 Sector.prototype.toggleUnit = function(unit)
 {
+    var isFirstUnit = this.units.length==0;
+
     var wasAdded;
     if(this.units.contains(unit)) {
         this.units.remByVal(unit);
@@ -39,6 +41,12 @@ Sector.prototype.toggleUnit = function(unit)
     } else {
         this.parAvailable = false;
     }
+
+    if(isFirstUnit) {
+        unit.actions = this.selectedUnit.actions.clone();
+        this.selectedUnit = unit;
+    }
+
     return wasAdded;
 }
 
