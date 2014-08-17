@@ -134,6 +134,18 @@ app.controller('TbarContainer', function($scope, dialogSvc){
 });
 
 
+app.filter('unitPar', function() {
+    return function(input, unitPar) {
+        if(unitPar!='P') {
+            unitPar = parseInt(unitPar);
+            for (var i=0; i<unitPar; i++)
+                input.push(i);
+        } else {
+            input.push(1);
+        }
+        return input;
+    };
+});
 app.controller('ParDlg', function($scope, dialogSvc){
     $scope.selectedSector = {};
     dialogSvc.openParDlg = function(sector) {

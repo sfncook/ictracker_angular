@@ -118,8 +118,11 @@ button:active {
     margin:5px;
 }
 
-.unit_btn {
-    margin:5px;
+.unit_tbar_btn {
+    margin: 5px;
+}
+.unit_dlg_btn {
+    margin: 5px;
 }
 
 .glowlightgreen {
@@ -546,10 +549,16 @@ button:active {
 .personnel_dlg_btn {
     margin: 5px;
 }
+.personnel_tbar_btn {
+    margin: 5px;
+}
 
 .psi_dlg_btn {
     font-size: 0.6rem !important;
-    margin: 5px;
+    margin: 0 5px 5px 0;
+}
+.psi_tbar_btn {
+    /*margin: 5px;*/
 }
 .psi_red {
     background: red;
@@ -565,4 +574,33 @@ button:active {
     height:22px;
     margin:4px 10px;
     padding: 0 4px;
+}
+
+.par_dlg_row {
+    padding-left:150px;
+}
+
+.mayday_par_btn {
+    margin: 5px 5px 5px 20px;
+}
+
+.par_dialog_unit {
+    margin-top: 4px;
+    border-top:1px solid #666;
+}
+.par_dialog_unit_leftcol {
+    width:398px;
+    float: left;
+}
+.par_dialog_people {
+    width:398px;
+    float: left;
+}
+
+.par_person_btn  {
+    width: 100px;
+    margin: 5px;
+}
+.par_dlg_left_col {
+    width: 138px;
 }

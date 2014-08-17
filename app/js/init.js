@@ -11,7 +11,7 @@ function initDialogs() {
         modal: true
     });
     $( "#sector_name_dlg" ).dialog( "option", "width", 730 );
-    $( "#par-dlg" ).dialog( "option", "width", 400 );
+    $( "#par-dlg" ).dialog( "option", "width", 475 );
     $( "#bnch-dlg" ).dialog( "option", "width", 400 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
     $( "#actions_dlg" ).dialog( "option", "width", 545 );

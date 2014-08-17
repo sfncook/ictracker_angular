@@ -90,6 +90,7 @@ tbar {
     font-size: 1.0rem;
     padding: 4px 0 0 0;
 }
+
 .acct_unit_btn {
     width:47px;
     height:27px;
@@ -160,10 +161,6 @@ tbar {
     font-size: 0.6rem;
     text-shadow: none;
     padding: 4px 0;
-}
-
-.par_dlg_row {
-    border-bottom:1px solid darkgray;
 }
 
 .par_sector_btn {
