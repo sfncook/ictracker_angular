@@ -16,6 +16,9 @@ app.factory('dialogSvc', function() {
     var showObjectivesDlg;
     var showIapDlg;
 
+    var incOsrPerc;
+    var decOsrPerc;
+
     var tbar_sectors = [];
 
     return {
@@ -29,6 +32,8 @@ app.factory('dialogSvc', function() {
 
 
 app.controller('HeaderContainer', function($scope, dialogSvc){
+    $scope.osrPerc = 0;
+    $scope.manyOsr = 0;
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();
     }
@@ -47,6 +52,15 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
 
     $scope.showIapDlg = function() {
         dialogSvc.showIapDlg();
+    }
+
+    dialogSvc.incOsrPerc = function(perc) {
+        $scope.manyOsr++;
+        $scope.osrPerc = Math.ceil(($scope.manyOsr*100)/12);
+    }
+    dialogSvc.decOsrPerc = function(perc) {
+        $scope.manyOsr--;
+        $scope.osrPerc = Math.ceil(($scope.manyOsr*100)/12);
     }
 });
 
@@ -395,9 +409,26 @@ app.controller('OsrDlg', function($scope, dialogSvc){
     $scope.iric_osr = false;
     $scope.acct_osr = false;
 
+    $scope.type_of_bldg = 'Type of building';
+    $scope.num_floors = 'Number of floors';
+    $scope.size_building = 'Size of building';
+    $scope.basement = 0;
+    $scope.construction = 'Construction type';
+    $scope.roof = 'Roof';
+    $scope.conditions = 'Conditions';
+    $scope.location = 0;
+    $scope.strategy = 0;
 
     dialogSvc.showOsrDlg = function() {
         $("#osr_dlg").dialog( "open" );
+    }
+
+    $scope.updatePerc = function(isOn) {
+        if(isOn) {
+            dialogSvc.incOsrPerc();
+        } else {
+            dialogSvc.decOsrPerc();
+        }
     }
 });
 

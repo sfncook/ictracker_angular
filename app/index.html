@@ -49,7 +49,7 @@
                     class="header_item button"
                     ng-click="showOsrDlg()">
                 <div>OSR</div>
-                <div id="osr_btn_perccomplete">(0% Complete)</div>
+                <div id="osr_btn_perccomplete">({{osrPerc}}% Complete)</div>
             </button>
             <button id="objectives_header_btn"
                     class="header_item button"
@@ -330,22 +330,23 @@
 <!-- OSR Dialog -->
 <dialog id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg">
     <div id="osr_left_col">
-        <button class="osr_btn" ng-click="unit_osr=!unit_osr"               ng-class="{glowlightgreen:unit_osr}">Unit ID</button>
-        <button class="osr_btn" ng-click="address_left_osr=!address_left_osr" ng-class="{glowlightgreen:address_left_osr}">Address</button>
-        <button class="osr_btn" ng-click="occupancy_osr=!occupancy_osr"     ng-class="{glowlightgreen:occupancy_osr}">Occupancy</button>
-        <button class="osr_btn" ng-click="construction_osr=!construction_osr" ng-class="{glowlightgreen:construction_osr}">Construction</button>
-        <button class="osr_btn" ng-click="conditions_osr=!conditions_osr"   ng-class="{glowlightgreen:conditions_osr}">Conditions</button>
-        <button class="osr_btn" ng-click="assumecmd_osr=!assumecmd_osr"     ng-class="{glowlightgreen:assumecmd_osr}">Assume Command</button>
-        <button class="osr_btn" ng-click="location_osr=!location_osr"       ng-class="{glowlightgreen:location_osr}">Location(mobile/cab)</button>
-        <button class="osr_btn" ng-click="mode_osr=!mode_osr"               ng-class="{glowlightgreen:mode_osr}">Strategy (off./def.)</button>
-        <button class="osr_btn" ng-click="attach_line=!attach_line"         ng-class="{glowlightgreen:attach_line}">Attack line</button>
-        <button class="osr_btn" ng-click="water_supply=!water_supply"       ng-class="{glowlightgreen:water_supply}">Water supply</button>
-        <button class="osr_btn" ng-click="iric_osr=!iric_osr"               ng-class="{glowlightgreen:iric_osr}">IRIC</button>
-        <button class="osr_btn" ng-click="acct_osr=!acct_osr"               ng-class="{glowlightgreen:acct_osr}">Accountability</button>
+        <button class="osr_btn" ng-click="unit_osr=!unit_osr; updatePerc(unit_osr)"               ng-class="{glowlightgreen:unit_osr}">Unit ID</button>
+        <button class="osr_btn" ng-click="address_left_osr=!address_left_osr; updatePerc(address_left_osr)" ng-class="{glowlightgreen:address_left_osr}">Address</button>
+        <button class="osr_btn" ng-click="occupancy_osr=!occupancy_osr; updatePerc(occupancy_osr)"     ng-class="{glowlightgreen:occupancy_osr||type_of_bldg!='Type of building'}">Occupancy</button>
+        <button class="osr_btn" ng-click="construction_osr=!construction_osr; updatePerc(construction_osr)" ng-class="{glowlightgreen:construction_osr||construction!='Construction type'}">Construction</button>
+        <button class="osr_btn" ng-click="conditions_osr=!conditions_osr; updatePerc(conditions_osr)"   ng-class="{glowlightgreen:conditions_osr||conditions!='Conditions'}">Conditions</button>
+        <button class="osr_btn" ng-click="assumecmd_osr=!assumecmd_osr; updatePerc(assumecmd_osr)"     ng-class="{glowlightgreen:assumecmd_osr}">Assume Command</button>
+        <button class="osr_btn" ng-click="location_osr=!location_osr; updatePerc(location_osr)"       ng-class="{glowlightgreen:location_osr||location>0}">Location(mobile/cab)</button>
+        <button class="osr_btn" ng-click="mode_osr=!mode_osr; updatePerc(mode_osr)"               ng-class="{glowlightgreen:mode_osr||strategy>0}">Strategy (off./def.)</button>
+        <button class="osr_btn" ng-click="attach_line=!attach_line; updatePerc(attach_line)"         ng-class="{glowlightgreen:attach_line}">Attack line</button>
+        <button class="osr_btn" ng-click="water_supply=!water_supply; updatePerc(water_supply)"       ng-class="{glowlightgreen:water_supply}">Water supply</button>
+        <button class="osr_btn" ng-click="iric_osr=!iric_osr; updatePerc(iric_osr)"               ng-class="{glowlightgreen:iric_osr}">IRIC</button>
+        <button class="osr_btn" ng-click="acct_osr=!acct_osr; updatePerc(acct_osr)"               ng-class="{glowlightgreen:acct_osr}">Accountability</button>
     </div>
     <div id="osr_right_col">
-        <button id="osr_address_btn">Dispatch Address</button>
-        <select id="osr_select_type_of_building" class="osr_select">
+        <!-- TODO: highlight Address if disp address is set -->
+        <button ng-click="disp_address=!disp_address" ng-class="{glowlightgreen:disp_address}" style="margin-bottom:10px; margin-top: 10px;">Dispatch Address</button>
+        <select class="osr_select" ng-class="{glowlightgreen:type_of_bldg!='Type of building'}" ng-model="type_of_bldg">
             <option disabled="disabled" selected="selected">Type of building</option>
             <option>Residential Home</option>
             <option>Duplex</option>
@@ -358,7 +359,7 @@
             <option>Specialized/Other</option>
         </select>
 
-        <select id="osr_number_of_floors" class="osr_select">
+        <select class="osr_select" ng-class="{glowlightgreen:num_floors!='Number of floors'}" ng-model="num_floors">
             <option disabled="disabled" selected="selected">Number of floors</option>
             <option>1 floor</option>
             <option>2 floors</option>
@@ -386,7 +387,7 @@
             <option>24 floors</option>
             <option>25 floors</option>
         </select>
-        <select id="osr_size_of_building" class="osr_select">
+        <select class="osr_select" ng-class="{glowlightgreen:size_building!='Size of building'}" ng-model="size_building">
             <option disabled="disabled" selected="selected">Size of building</option>
             <option>Small building</option>
             <option>Medium building</option>
@@ -394,11 +395,11 @@
         </select>
 
         <div class="osr_toggle_container_div">
-            <button id="osr_occupancy_basement_btn" class="osr_toggle_btn">Basement</button>
-            <button id="osr_occupancy_nobasement_btn" class="osr_toggle_btn">No Basement</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==1}" ng-click="basement=1">Basement</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==2}" ng-click="basement=2">No Basement</button>
         </div>
 
-        <select id="osr_select_type_of_construction" class="osr_select">
+        <select class="osr_select" ng-class="{glowlightgreen:construction!='Construction type'}" ng-model="construction">
             <option disabled="disabled" selected="selected">Construction type</option>
             <option>Light weight construction</option>
             <option>Wood frame construction</option>
@@ -408,7 +409,7 @@
             <option>Specialized/Other construction</option>
         </select>
 
-        <select class="osr_select">
+        <select class="osr_select" ng-class="{glowlightgreen:roof!='Roof'}" ng-model="roof">
             <option disabled="disabled" selected="selected">Roof</option>
             <option>Pitched - tile roof</option>
             <option>Pitched - asphalt roof</option>
@@ -417,7 +418,7 @@
             <option>Arched roof</option>
         </select>
 
-        <select id="osr_select_conditions" class="osr_select">
+        <select class="osr_select" ng-class="{glowlightgreen:conditions!='Conditions'}" ng-model="conditions">
             <option disabled="disabled" selected="selected">Conditions</option>
             <option>Nothing showing</option>
             <option>Smoke showing</option>
@@ -425,13 +426,13 @@
         </select>
 
         <div class="osr_toggle_container_div">
-            <button id="osr_occupancy_mob_btn" class="osr_toggle_btn">Mobile</button>
-            <button id="osr_occupancy_stat_btn" class="osr_toggle_btn">Stationary</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==1}" ng-click="location=1">Mobile</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==2}" ng-click="location=2">Stationary</button>
         </div>
 
         <div class="osr_toggle_container_div">
-            <button id="osr_occupancy_off_btn" class="osr_toggle_btn">Offensive</button>
-            <button id="osr_occupancy_def_btn" class="osr_toggle_btn">Defensive</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==1}" ng-click="strategy=1">Offensive</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==2}" ng-click="strategy=2">Defensive</button>
         </div>
     </div>
     <div style="width:100%" class="clear_float"></div>
