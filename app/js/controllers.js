@@ -20,7 +20,9 @@ app.factory('dialogSvc', function() {
     var setOsrPerc;
     var getDispAddress;
     var setDispAddress;
+
     var setObjPerc;
+    var setCustSvcSector;
 
     var tbar_sectors = [];
 
@@ -257,6 +259,8 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
         $scope.selectedSector.hasAcctBtn=catalog_sector.hasAcctBtn;
         $scope.selectedSector.hasPsiBtn =catalog_sector.hasPsiBtn;
         $scope.selectedSector.hasActions=catalog_sector.hasActions;
+
+        if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
 
         $("#sector_name_dlg").dialog( "close" );
     };
@@ -567,6 +571,11 @@ app.controller('ObjectivesDlg', function($scope, dialogSvc){
     $scope.$watch('obj_salv', function() { updatePerc(); });
     $scope.$watch('obj_rehb', function() { updatePerc(); });
     $scope.$watch('obj_srvc', function() { updatePerc(); });
+
+    dialogSvc.setCustSvcSector = function() {
+        $scope.obj_srvc = true;
+        updatePerc();
+    }
 
     dialogSvc.showObjectivesDlg = function() {
         $("#objectives_dlg").dialog( "open" );
