@@ -345,7 +345,10 @@
     </div>
     <div id="osr_right_col">
         <!-- TODO: highlight Address if disp address is set -->
-        <button class="osr_address_btn" ng-class="{glowlightgreen:disp_address!='Dispatch Address'}" style="margin-bottom:10px; margin-top: 10px;">{{disp_address}}</button>
+        <button class="osr_address_btn"
+                ng-click="showAddressDlg()"
+                ng-class="{glowlightgreen:disp_address!='Dispatch Address'}"
+                style="margin-bottom:10px; margin-top: 10px;">{{disp_address}}</button>
         <select class="osr_select" ng-class="{glowlightgreen:type_of_bldg!='Type of building'}" ng-model="type_of_bldg">
             <option disabled="disabled" selected="selected">Type of building</option>
             <option>Residential Home</option>
@@ -437,6 +440,18 @@
     </div>
     <div style="width:100%" class="clear_float"></div>
 </dialog> <!-- OSR Dialog -->
+
+<!-- Address Dialog -->
+<dialog id="address_dialog" title="Dispatch Address" ng-controller="AddressDlg">
+    <input type="text" ng-model="address" id="address_custom_input">
+    <button ng-click="clickClear()" id="address_dlg_clear">Clear</button>
+    <div class="clear_float"></div>
+    <div>
+        <button ng-click="clickOk()" id="address_dlg_ok" class="confirm_btn">OK</button>
+        <button ng-click="clickCancel()" id="address_dlg_cancel" class="confirm_btn">Cancel</button>
+        <div class="clear_float"></div>
+    </div>
+</dialog>
 
 <!-- Objectives Dialog Unit Component Prototype -->
 <dialog id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg">

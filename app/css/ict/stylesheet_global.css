@@ -625,3 +625,15 @@ button:active {
     padding: 5px 0 5px 0;
 }
 
+#address_dialog>*>input {
+    margin: 5px;
+}
+#address_custom_input {
+    margin:5px;
+    width: 380px;
+}
+
+.confirm_btn {
+    float:left;
+    margin: 10px 20px;
+}

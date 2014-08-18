@@ -15,8 +15,11 @@ app.factory('dialogSvc', function() {
     var showOsrDlg;
     var showObjectivesDlg;
     var showIapDlg;
+    var showAddressDlg;
 
     var setOsrPerc;
+    var getDispAddress;
+    var setDispAddress;
 
     var tbar_sectors = [];
 
@@ -418,6 +421,18 @@ app.controller('OsrDlg', function($scope, dialogSvc){
         $("#osr_dlg").dialog( "open" );
     }
 
+    $scope.showAddressDlg = function() {
+        dialogSvc.showAddressDlg();
+    }
+
+    dialogSvc.getDispAddress = function() {
+        return $scope.disp_address;
+    }
+
+    dialogSvc.setDispAddress = function(address) {
+        $scope.disp_address = address;
+    }
+
     function updatePerc() {
         var count = 0;
         if($scope.unit_osr        ) {count++;}
@@ -455,6 +470,32 @@ app.controller('OsrDlg', function($scope, dialogSvc){
     $scope.$watch('location',           function(newVal) { $scope.location_osr = newVal>0;                          updatePerc(); });
     $scope.$watch('strategy',           function(newVal) { $scope.mode_osr = newVal>0;                              updatePerc(); });
 
+});
+
+app.controller('AddressDlg', function($scope, dialogSvc){
+
+    $scope.address = '';
+
+    dialogSvc.showAddressDlg = function() {
+        $scope.address = dialogSvc.getDispAddress();
+        if($scope.address=='Dispatch Address') $scope.address = '';
+        $("#address_dialog").dialog( "open" );
+    }
+
+    $scope.clickOk = function() {
+        var addy = $scope.address;
+        if(addy=='') addy = 'Dispatch Address';
+        dialogSvc.setDispAddress(addy);
+        $("#address_dialog").dialog( "close" );
+    }
+
+    $scope.clickCancel = function() {
+        $("#address_dialog").dialog( "close" );
+    }
+
+    $scope.clickClear = function() {
+        $scope.address = "";
+    }
 });
 
 app.controller('ObjectivesDlg', function($scope, dialogSvc){

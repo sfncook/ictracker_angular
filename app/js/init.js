@@ -20,6 +20,7 @@ function initDialogs() {
     $( "#objectives_dlg" ).dialog( "option", "width", 185 );
     $( "#iap_dlg" ).dialog( "option", "width", 600 );
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
+    $( "#address_dialog" ).dialog( "option", "width", 450 );
 
 }
 
