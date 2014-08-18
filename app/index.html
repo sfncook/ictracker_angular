@@ -479,14 +479,14 @@
         <tr>
             <td class="iap_label_td">Critical Fireground Factors:</td>
             <td>
-                <button class="iap_toggle_btn">Building</button>
-                <button class="iap_toggle_btn">Fire</button>
-                <button class="iap_toggle_btn">Occupancy</button>
-                <button class="iap_toggle_btn">Life Hazard</button>
-                <button class="iap_toggle_btn">Arrangement</button>
-                <button class="iap_toggle_btn">Resources</button>
-                <button class="iap_toggle_btn">Action Effect</button>
-                <button class="iap_toggle_btn">Special</button>
+                <button ng-click="iap_bldg=!iap_bldg" ng-class="{glowlightgreen:iap_bldg}" class="iap_toggle_btn">Building</button>
+                <button ng-click="iap_fire=!iap_fire" ng-class="{glowlightgreen:iap_fire}" class="iap_toggle_btn">Fire</button>
+                <button ng-click="iap_occu=!iap_occu" ng-class="{glowlightgreen:iap_occu}" class="iap_toggle_btn">Occupancy</button>
+                <button ng-click="iap_hazd=!iap_hazd" ng-class="{glowlightgreen:iap_hazd}" class="iap_toggle_btn">Life Hazard</button>
+                <button ng-click="iap_arrg=!iap_arrg" ng-class="{glowlightgreen:iap_arrg}" class="iap_toggle_btn">Arrangement</button>
+                <button ng-click="iap_rsrc=!iap_rsrc" ng-class="{glowlightgreen:iap_rsrc}" class="iap_toggle_btn">Resources</button>
+                <button ng-click="iap_acte=!iap_acte" ng-class="{glowlightgreen:iap_acte}" class="iap_toggle_btn">Action Effect</button>
+                <button ng-click="iap_spec=!iap_spec" ng-class="{glowlightgreen:iap_spec}" class="iap_toggle_btn">Special</button>
                 <div class="clear_float"></div>
             </td>
         </tr>
@@ -498,16 +498,17 @@
             <td class="iap_blue_label iap_label_td">Fire Control:</td>
             <td>
                 <textarea class="iap_input">Supply line, attack +2</textarea>
-                <button id="iap_sprinkler_toggle_btn" class="iap_toggle_btn">Vent Sprinkler?</button>
+                <button ng-click="iap_vent=!iap_vent" ng-class="{glowlightgreen:iap_vent}" class="iap_toggle_btn">Vent Sprinkler?</button>
             </td>
         </tr>
         <tr>
             <td class="iap_blue_label iap_label_td">Property/People:</td>
             <td>
                 <textarea class="iap_input">Salvage</textarea>
-                <button id="iap_btn_evacloc">Show Evacuation Location</button>
+                <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true"  class="iap_btn_evacloc">Show Evacuation Location</button>
+                <button ng-show="iap_evlc_show"  ng-click="iap_evlc_show=false" class="iap_btn_evacloc">Hide Evacuation Location</button>
                 <div class="clear_both"></div>
-                <div id="iap_evacloc_input_container">
+                <div ng-show="iap_evlc_show">
                     <textarea id="iap_evacloc_input">Evacuation Location</textarea>
                 </div>
             </td>

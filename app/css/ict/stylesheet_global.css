@@ -23,6 +23,11 @@ body {
     /*Get rid of annoying blue outline when you click on anything*/
     outline: none !important;
 }
+
+td {
+    vertical-align: middle;
+}
+
 .ui-dialog {
     padding: 0;
     border-radius: 1px;
@@ -512,7 +517,7 @@ button:active {
 .iap_toggle_btn {
     width: 100px;
     float: left;
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
     margin: 2px;
     display: block;
 }
@@ -523,10 +528,10 @@ button:active {
     margin: 2px;
     display: block;
 }
-#iap_btn_evacloc {
+.iap_btn_evacloc {
     width: 120px;
     float: left;
-    font-size: 0.8rem;
+    font-size: 0.8rem !important;
     margin: 2px;
 }
 #iap_evacloc_dialog {

@@ -629,7 +629,7 @@ app.controller('ObjectivesDlg', function($scope, dialogSvc){
 });
 
 app.controller('IapDlg', function($scope, dialogSvc){
-    //TODO: Toggle buttons on click
+    $scope.iap_evlc_show = false;
     dialogSvc.showIapDlg = function() {
         $("#iap_dlg").dialog( "open" );
     }
