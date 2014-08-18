@@ -23,6 +23,7 @@
     <script src="js/Unit.js"></script>
     <script src="js/Action.js"></script>
     <script src="js/controllers.js"></script>
+    <script src="js/reports.js"></script>
     <script src="js/unique.js"></script>
     <script src="js/sector_units.js"></script>
     <script src="version.js"></script>
@@ -70,14 +71,9 @@
             <!--<div>Command</div>-->
             <!--<div>Terminated</div>-->
         <!--</div>-->
-        <button id="report_btn" class="header_item button">
-            <!--<img class="report_icon" src="images/report.png"/>-->
-            <div>Time</div>
+        <button ng-click="showReportsDlg()" id="sectorreport_btn" class="header_item button">
+            <img class="report_icon" src="img/report.png"/>
             <div>Report</div>
-        </button>
-        <button id="sectorreport_btn" class="header_item button">
-            <!--<img class="report_icon" src="images/report.png"/>-->
-            <div>Sector Report</div>
         </button>
     </div>
 </div><!-- ict_header-->
@@ -540,7 +536,7 @@
     </div>
 </dialog>
 
-<!-- Benchmarks Dialog Body -->
+<!-- Benchmarks Dialog -->
 <dialog id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg">
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
@@ -575,7 +571,16 @@
         <button ng-click="selectBnch(14)"   class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=14}">Notify Alarm</button>
     </div>
 </dialog>
-<!-- Benchmarks Dialog Body -->
+<!-- Benchmarks Dialog -->
+
+<!-- Reports Dialog -->
+<dialog id="reports_dlg" title="Reports" ng-controller="ReportsDlg">
+    <div id="reports_table_container">
+        <table>
+
+        </table>
+    </div>
+</dialog>
 
 <div id="version_text">Version: 0.0</div>
 

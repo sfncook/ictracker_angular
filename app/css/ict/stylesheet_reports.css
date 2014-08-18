@@ -1,0 +1,6 @@
+
+#reports_table_container {
+    height:400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

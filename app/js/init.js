@@ -21,6 +21,7 @@ function initDialogs() {
     $( "#iap_dlg" ).dialog( "option", "width", 616 );
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
+    $( "#reports_dlg" ).dialog( "option", "width", 550 );
 
 }
 

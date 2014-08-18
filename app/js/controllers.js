@@ -16,6 +16,7 @@ app.factory('dialogSvc', function() {
     var showObjectivesDlg;
     var showIapDlg;
     var showAddressDlg;
+    var showReportsDlg;
 
     var setOsrPerc;
     var getDispAddress;
@@ -96,6 +97,10 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
 
     $scope.showIapDlg = function() {
         dialogSvc.showIapDlg();
+    }
+
+    $scope.showReportsDlg = function() {
+        dialogSvc.showReportsDlg();
     }
 
     dialogSvc.setOsrPerc = function(perc) {
@@ -266,6 +271,8 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
         $scope.selectedSector.hasActions=catalog_sector.hasActions;
 
         if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
+
+        addEvent_title_to_sector(catalog_sector.name);
 
         $("#sector_name_dlg").dialog( "close" );
     };
