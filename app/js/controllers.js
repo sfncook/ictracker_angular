@@ -16,8 +16,7 @@ app.factory('dialogSvc', function() {
     var showObjectivesDlg;
     var showIapDlg;
 
-    var incOsrPerc;
-    var decOsrPerc;
+    var setOsrPerc;
 
     var tbar_sectors = [];
 
@@ -54,13 +53,8 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
         dialogSvc.showIapDlg();
     }
 
-    dialogSvc.incOsrPerc = function(perc) {
-        $scope.manyOsr++;
-        $scope.osrPerc = Math.ceil(($scope.manyOsr*100)/12);
-    }
-    dialogSvc.decOsrPerc = function(perc) {
-        $scope.manyOsr--;
-        $scope.osrPerc = Math.ceil(($scope.manyOsr*100)/12);
+    dialogSvc.setOsrPerc = function(perc) {
+        $scope.osrPerc = perc;
     }
 });
 
@@ -409,6 +403,7 @@ app.controller('OsrDlg', function($scope, dialogSvc){
     $scope.iric_osr = false;
     $scope.acct_osr = false;
 
+    $scope.disp_address = 'Dispatch Address';
     $scope.type_of_bldg = 'Type of building';
     $scope.num_floors = 'Number of floors';
     $scope.size_building = 'Size of building';
@@ -423,13 +418,43 @@ app.controller('OsrDlg', function($scope, dialogSvc){
         $("#osr_dlg").dialog( "open" );
     }
 
-    $scope.updatePerc = function(isOn) {
-        if(isOn) {
-            dialogSvc.incOsrPerc();
-        } else {
-            dialogSvc.decOsrPerc();
-        }
+    function updatePerc() {
+        var count = 0;
+        if($scope.unit_osr        ) {count++;}
+        if($scope.address_left_osr) {count++;}
+        if($scope.occupancy_osr   ) {count++;}
+        if($scope.construction_osr) {count++;}
+        if($scope.conditions_osr  ) {count++;}
+        if($scope.assumecmd_osr   ) {count++;}
+        if($scope.location_osr    ) {count++;}
+        if($scope.mode_osr        ) {count++;}
+        if($scope.attach_line     ) {count++;}
+        if($scope.water_supply    ) {count++;}
+        if($scope.iric_osr        ) {count++;}
+        if($scope.acct_osr        ) {count++;}
+        var perc = Math.ceil((count*100)/12)
+        dialogSvc.setOsrPerc(perc);
     }
+
+    $scope.$watch('unit_osr',           function() { updatePerc(); });
+    $scope.$watch('address_left_osr',   function() { updatePerc(); });
+    $scope.$watch('occupancy_osr',      function() { updatePerc(); });
+    $scope.$watch('construction_osr ',  function() { updatePerc(); });
+    $scope.$watch('conditions_osr',     function() { updatePerc(); });
+    $scope.$watch('assumecmd_osr',      function() { updatePerc(); });
+    $scope.$watch('location_osr',       function() { updatePerc(); });
+    $scope.$watch('mode_osr',           function() { updatePerc(); });
+    $scope.$watch('attach_line',        function() { updatePerc(); });
+    $scope.$watch('water_supply',       function() { updatePerc(); });
+    $scope.$watch('iric_osr',           function() { updatePerc(); });
+    $scope.$watch('acct_osr',           function() { updatePerc(); });
+
+    $scope.$watch('type_of_bldg',       function(newVal) { $scope.occupancy_osr = newVal!='Type of building';       updatePerc(); });
+    $scope.$watch('construction',       function(newVal) { $scope.construction_osr = newVal!='Construction type';   updatePerc(); });
+    $scope.$watch('conditions',         function(newVal) { $scope.conditions_osr = newVal!='Conditions';            updatePerc(); });
+    $scope.$watch('location',           function(newVal) { $scope.location_osr = newVal>0;                          updatePerc(); });
+    $scope.$watch('strategy',           function(newVal) { $scope.mode_osr = newVal>0;                              updatePerc(); });
+
 });
 
 app.controller('ObjectivesDlg', function($scope, dialogSvc){

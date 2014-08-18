@@ -464,7 +464,7 @@ button:active {
     margin: 10px 0 15px 0;
     height: 25px;
 }
-#osr_address_btn {
+.osr_address_btn {
     width: 220px;
     margin:5px 0 15px 0;
 }
