@@ -40,7 +40,36 @@ app.controller('HeaderContainer2', function($scope, dialogSvc){
 app.controller('HeaderContainer', function($scope, dialogSvc){
     $scope.osrPerc = 0;
     $scope.objPerc = 0;
-    $scope.mode=1;
+
+    $scope.timer_text = "00:00";
+    $scope.hourRollOverDone = false;
+    var t0 = (new Date()).getTime();
+    function updateTimer() {
+        var t1 = (new Date()).getTime();
+        var elapsed = parseInt(t1-t0);
+        var elapsedSec = parseInt((elapsed/1000)%60);
+        var elapsedMin = parseInt((elapsed/(1000*60))%60);
+        var elapsedHr = parseInt((elapsed/(1000*60*60))%60);
+
+        var secStr = (elapsedSec<10)?("0"+elapsedSec):elapsedSec;
+        var minStr = (elapsedMin<10)?("0"+elapsedMin):elapsedMin;
+        var hrStr = (elapsedHr<10)?("0"+elapsedHr):elapsedHr;
+
+        var new_timer_text = "";
+        if (elapsedHr>0) {
+            if (!$scope.hourRollOverDone) {
+//                $("#time").removeClass("time_lg");
+                $scope.hourRollOverDone = true;
+            }
+            new_timer_text = hrStr+":"+minStr+":"+secStr;
+//            $("#time").html(hrStr+":"+minStr+":"+secStr);
+        } else {
+            new_timer_text = minStr+":"+secStr;
+//            $("#time").html(minStr+":"+secStr);
+        }
+        $scope.$apply(function(){$scope.timer_text = new_timer_text;});
+    }
+    window.setInterval(updateTimer, 1000);
 
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();
