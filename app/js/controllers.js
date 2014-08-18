@@ -24,6 +24,10 @@ app.factory('dialogSvc', function() {
     var setObjPerc;
     var setCustSvcSector;
     var estSupply;
+    var setRescue;
+    var setSafety;
+    var setOnDeck;
+    var setRehab;
 
     var tbar_sectors = [];
 
@@ -362,6 +366,20 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                 if(!$scope.dispatechedUnits.contains(unit)){
                     $scope.dispatechedUnits.push(unit);
                 }
+
+                var sectorName = $scope.selectedSector.name;
+                if(sectorName=="RESCUE") {
+                    dialogSvc.setRescue();
+                }
+                if(sectorName=="Safety") {
+                    dialogSvc.setSafety();
+                }
+                if(sectorName=="On Deck") {
+                    dialogSvc.setOnDeck();
+                }
+                if(sectorName=="ReHab") {
+                    dialogSvc.setRehab();
+                }
             } else {
                 $scope.dispatechedUnits.remByVal(unit);
             }
@@ -582,6 +600,26 @@ app.controller('ObjectivesDlg', function($scope, dialogSvc){
 
     dialogSvc.estSupply = function() {
         $scope.obj_estb = true;
+        updatePerc();
+    }
+
+    dialogSvc.setRescue = function() {
+        $scope.obj_upgd = true;
+        updatePerc();
+    }
+
+    dialogSvc.setSafety = function() {
+        $scope.obj_safe = true;
+        updatePerc();
+    }
+
+    dialogSvc.setOnDeck = function() {
+        $scope.obj_deck = true;
+        updatePerc();
+    }
+
+    dialogSvc.setRehab = function() {
+        $scope.obj_rehb = true;
         updatePerc();
     }
 
