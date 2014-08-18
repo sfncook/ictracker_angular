@@ -577,7 +577,10 @@
 <dialog id="reports_dlg" title="Reports" ng-controller="ReportsDlg">
     <div id="reports_table_container">
         <table>
-
+            <tr ng-repeat="event in events">
+                <td>{{event.datetime}}</td>
+                <td>{{event.sector}}</td>
+            </tr>
         </table>
     </div>
 </dialog>

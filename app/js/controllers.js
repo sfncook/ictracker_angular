@@ -251,7 +251,7 @@ app.controller('ParDlg', function($scope, dialogSvc){
     }
 });
 
-app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
+app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
     $scope.selectedSector = {};
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
 
@@ -272,7 +272,7 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc){
 
         if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
 
-        addEvent_title_to_sector(catalog_sector.name);
+        reportsSvc.addEvent_title_to_sector(catalog_sector.name);
 
         $("#sector_name_dlg").dialog( "close" );
     };
