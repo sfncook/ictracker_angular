@@ -23,6 +23,7 @@ app.factory('dialogSvc', function() {
 
     var setObjPerc;
     var setCustSvcSector;
+    var estSupply;
 
     var tbar_sectors = [];
 
@@ -417,6 +418,8 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
 
     $scope.selectAction = function(action) {
         $scope.selectedSector.toggleAction(action);
+
+        if(action.name=="Take a Line") {dialogSvc.estSupply();}
     };
 
     dialogSvc.showActionsDlg = function(sector) {
@@ -574,6 +577,11 @@ app.controller('ObjectivesDlg', function($scope, dialogSvc){
 
     dialogSvc.setCustSvcSector = function() {
         $scope.obj_srvc = true;
+        updatePerc();
+    }
+
+    dialogSvc.estSupply = function() {
+        $scope.obj_estb = true;
         updatePerc();
     }
 
