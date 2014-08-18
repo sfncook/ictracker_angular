@@ -81,7 +81,7 @@
     </div>
 </div><!-- ict_header-->
 
-<div id="top_header_container">
+<div id="top_header_container" ng-controller="HeaderContainer2">
     <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/medical.png"/></button>
     <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/plane.png"/></button>
     <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/hazmat.png"/></button>
@@ -92,7 +92,8 @@
     <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/structure.png"/></button>
     <button class="top_header_btn button_top button"><img class="top_header_btn_icon" src="img/icons/confined.png"/></button>
 
-    <button id="mode_btn" class="offensive_btn button_top button">OFFENSE</button>
+    <button ng-show="mode==1" ng-click="mode=2" class="mode_btn offensive_btn button_top">OFFENSE</button>
+    <button ng-show="mode==2" ng-click="mode=1" class="mode_btn defensive_btn button_top">DEFENSE</button>
     <div class="clear_float"></div>
 </div>
 <div id="top_header_mayday_container">

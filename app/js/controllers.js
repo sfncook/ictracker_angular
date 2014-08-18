@@ -33,10 +33,15 @@ app.factory('dialogSvc', function() {
 });
 
 
+app.controller('HeaderContainer2', function($scope, dialogSvc){
+    $scope.mode=1;
+});
 
 app.controller('HeaderContainer', function($scope, dialogSvc){
     $scope.osrPerc = 0;
     $scope.objPerc = 0;
+    $scope.mode=1;
+
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();
     }
