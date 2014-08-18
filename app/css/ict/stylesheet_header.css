@@ -118,3 +118,11 @@
     width: 94px;
     padding: 2px;
 }
+
+#objectives_header_btn {
+    margin-top: 10px;
+    height: 45px;
+}
+#objectives_btn_perccomplete {
+    font-size:0.6rem;
+}

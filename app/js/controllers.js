@@ -20,6 +20,7 @@ app.factory('dialogSvc', function() {
     var setOsrPerc;
     var getDispAddress;
     var setDispAddress;
+    var setObjPerc;
 
     var tbar_sectors = [];
 
@@ -35,7 +36,7 @@ app.factory('dialogSvc', function() {
 
 app.controller('HeaderContainer', function($scope, dialogSvc){
     $scope.osrPerc = 0;
-    $scope.manyOsr = 0;
+    $scope.objPerc = 0;
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();
     }
@@ -58,6 +59,10 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
 
     dialogSvc.setOsrPerc = function(perc) {
         $scope.osrPerc = perc;
+    }
+
+    dialogSvc.setObjPerc = function(perc) {
+        $scope.objPerc = perc;
     }
 });
 
@@ -499,7 +504,36 @@ app.controller('AddressDlg', function($scope, dialogSvc){
 });
 
 app.controller('ObjectivesDlg', function($scope, dialogSvc){
-    //TODO: Toggle buttons on click
+
+    function updatePerc() {
+        var count = 0;
+        if($scope.obj_upgd) {count++;}
+        if($scope.obj_safe) {count++;}
+        if($scope.obj_estb) {count++;}
+        if($scope.obj_utes) {count++;}
+        if($scope.obj_vent) {count++;}
+        if($scope.obj_deck) {count++;}
+        if($scope.obj_pres) {count++;}
+        if($scope.obj_moni) {count++;}
+        if($scope.obj_salv) {count++;}
+        if($scope.obj_rehb) {count++;}
+        if($scope.obj_srvc) {count++;}
+        var perc = Math.ceil((count*100)/11)
+        dialogSvc.setObjPerc(perc);
+    }
+
+    $scope.$watch('obj_upgd', function() { updatePerc(); });
+    $scope.$watch('obj_safe', function() { updatePerc(); });
+    $scope.$watch('obj_estb', function() { updatePerc(); });
+    $scope.$watch('obj_utes', function() { updatePerc(); });
+    $scope.$watch('obj_vent', function() { updatePerc(); });
+    $scope.$watch('obj_deck', function() { updatePerc(); });
+    $scope.$watch('obj_pres', function() { updatePerc(); });
+    $scope.$watch('obj_moni', function() { updatePerc(); });
+    $scope.$watch('obj_salv', function() { updatePerc(); });
+    $scope.$watch('obj_rehb', function() { updatePerc(); });
+    $scope.$watch('obj_srvc', function() { updatePerc(); });
+
     dialogSvc.showObjectivesDlg = function() {
         $("#objectives_dlg").dialog( "open" );
     }
