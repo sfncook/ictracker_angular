@@ -45,7 +45,7 @@ app.controller('HeaderContainer2', function($scope, dialogSvc){
     $scope.mode=1;
 });
 
-app.controller('HeaderContainer', function($scope, dialogSvc){
+app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     $scope.osrPerc = 0;
     $scope.objPerc = 0;
 
@@ -66,18 +66,15 @@ app.controller('HeaderContainer', function($scope, dialogSvc){
         var new_timer_text = "";
         if (elapsedHr>0) {
             if (!$scope.hourRollOverDone) {
-//                $("#time").removeClass("time_lg");
                 $scope.hourRollOverDone = true;
             }
             new_timer_text = hrStr+":"+minStr+":"+secStr;
-//            $("#time").html(hrStr+":"+minStr+":"+secStr);
         } else {
             new_timer_text = minStr+":"+secStr;
-//            $("#time").html(minStr+":"+secStr);
         }
-        $scope.$apply(function(){$scope.timer_text = new_timer_text;});
+        $scope.timer_text = new_timer_text;
     }
-    window.setInterval(updateTimer, 1000);
+    $interval(updateTimer, 1000);
 
     $scope.showUnitsDlgForDispUnits = function() {
         dialogSvc.showUnitsDlgForDispUnits();

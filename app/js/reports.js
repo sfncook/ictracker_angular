@@ -120,3 +120,11 @@ app.controller('ReportsDlg', function($scope, dialogSvc, reportsSvc){
     }
 });
 
+app.filter('getDateStr', function () {
+
+    return function (dateStr) {
+        var date = new Date(dateStr);
+        console.log(date);
+        return dateStr;
+    };
+});

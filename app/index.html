@@ -578,7 +578,7 @@
     <div id="reports_table_container">
         <table>
             <tr ng-repeat="event in events">
-                <td>{{event.datetime}}</td>
+                <td>{{event.datetime | date : 'shortTime'}}</td>
                 <td>{{event.sector}}</td>
             </tr>
         </table>
