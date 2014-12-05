@@ -351,11 +351,14 @@ button:active {
 }
 
 #version_text {
-    position:fixed;
-    bottom: 10px;
-    left: 10px;
+    z-index: 150;
     background: white;
-    z-index: 50;
+    margin: 0 10px;
+}
+#copyright_text {
+    z-index: 150;
+    background: white;
+    margin: 0 10px;
 }
 
 .grid {

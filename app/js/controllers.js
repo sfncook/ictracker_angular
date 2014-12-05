@@ -136,7 +136,7 @@ app.controller('TbarContainer', function($scope, dialogSvc){
 
     for(var rowi=0; rowi<init_row_count; rowi++) {
         for(var coli=0; coli<col_count; coli++) {
-            var sector = new Sector("_");
+            var sector = new Sector("Sector Name");
             if(coli==col_count-1) {
                 if(rowi==0) {
                     sector.name = "RESCUE";
