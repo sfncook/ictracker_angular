@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en" ng-app="ictApp">
+<head>
+    <meta charset="utf-8">
+    <title>ICT</title>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.11.0.custom/jquery-ui.css"/>
+    <link rel="stylesheet" href="css/ict/reset.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css"/>
+    <link rel="stylesheet" href="css/ict/stylesheet_global.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_header.css">
+
+    <script src="js/libs/jquery-1.11.0.js"></script>
+    <script src="js/libs/jquery-ui-1.10.4.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+    <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/Sector.js"></script>
+    <script src="js/Unit.js"></script>
+    <script src="js/Action.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/reports.js"></script>
+    <script src="js/unique.js"></script>
+    <script src="js/sector_units.js"></script>
+    <script src="version.js"></script>
+</head>
+<body>
+
+<div id="ict_header" ng-controller="HeaderContainer">
+    <div class="header_item"
+         ng-class="{time_lg:!hourRollOverDone}">{{timer_text}}
+    </div>
+    <button id="dispatched_units_btn"
+            class="header_item button"
+            ng-click="showUnitsDlgForDispUnits()">
+        <div>Dispatched</div>
+        <div>Units</div>
+    </button>
+    <button id="upgrade_btn"
+            class="header_item"
+            ng-click="showUpgradeDlg()">
+        <div>Upgrade</div>
+        <div id="upgrade_btn_sub_label" class="hidden_div"></div>
+    </button>
+
+    <button id="cmdxfer_units_btn"
+            class="header_item button"
+            ng-click="showUpgradeDlg()">
+        <div>Command</div>
+        <div>Transferred</div>
+    </button>
+    <button id="branch_btn"
+            class="disabled header_item button"
+            ng-click="showUpgradeDlg()">Branch
+    </button>
+
+    <button id="osr_header_btn" class="header_item">
+        <div class="perc_horz_bar_bg">
+            <div id="osr_perc_bar" class="perc_horz_bar"></div>
+        </div>
+        <div>OSR</div>
+    </button>
+    <button id="objectives_header_btn" class="header_item">
+        <div class="perc_horz_bar_bg">
+            <div id="objectives_perc_bar" class="perc_horz_bar"></div>
+        </div>
+        <div style="margin-top:-1px">Objectives</div>
+    </button>
+
+    <button id="iap_btn" class="header_item">IAP</button>
+
+    <button id="cmd_term_btn" class="header_item">
+        <img class="terminate_icon" src="img/terminate.png"/>
+
+        <div>Command</div>
+        <div>Terminated</div>
+    </button>
+    <button id="report_btn" class="header_item">
+        <img class="report_icon" src="img/report.png"/>
+
+        <div>Reports</div>
+    </button>
+</div>
+<!-- ict_header-->
+
+<div id="top_header_container">
+    <button id="inc_info_btn" class="button_top">
+        <div id="inc_num">INCIDENT #</div>
+        <div id="inc_address">ADDRESS</div>
+    </button>
+    <img id="inc_type_icon" src=""/>
+    <button id="mode_btn" class="button_top">Strategy</button>
+    <div class="clear_float"></div>
+</div>
+<div id="top_header_mayday_container">
+    <button id="mayday_btn" class="button_top button">MAYDAY</button>
+</div>
+
+
+<div id="tbar_container" ng-controller="TbarContainer">
+    <div gridster="gridsterOpts">
+        <tbar gridster-item="item" ng-repeat="sector in tbar_sectors">
+            <div class="tbar_title_container">
+                <button ng-disabled="!sector.parAvailable"
+                        class="par-btn sector_toprow_btn"
+                        ng-class="{glowlightgreen: sector.hasPar, button_disabled:!sector.parAvailable}"
+                        ng-click="showParDlg(sector)">PAR
+                </button>
+                <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
+                    <table>
+                        <tr>
+                            <td class="tbar_title_dir_td">{{sector.sector_dir}}</td>
+                            <td class="tbar_title_td">{{sector.name}}</td>
+                            <td class="tbar_title_num_td">{{sector.sector_num}}</td>
+                        </tr>
+                    </table>
+                </button>
+                <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
+                    <span class="benchmarks_icon">
+                        <img ng-show="sector.bnch<1 && !sector.unable_primary" class="benchmark_bar_img"
+                             src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=1 && !sector.unable_primary" class="benchmark_bar_img"
+                             src="img/bnch_bar_green.png"/>
+                        <img ng-show="sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
+
+                        <img ng-show="sector.bnch<5" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=5" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+
+                        <img ng-show="sector.bnch<9 && !sector.unable_secondary" class="benchmark_bar_img"
+                             src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=9 && !sector.unable_secondary" class="benchmark_bar_img"
+                             src="img/bnch_bar_green.png"/>
+                        <img ng-show=" sector.unable_secondary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
+
+                        <img ng-show="sector.bnch<12" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.bnch>=12" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                    </span>
+                    BNCH
+                </button>
+                <div class="clear_both"></div>
+            </div>
+
+
+            <div class="clear_both"></div>
+
+            <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
+                <!--<button class="unit_move_cancel_btn">Cancel</button>-->
+                <button class="unit_add_btn" ng-click="showUnitsDlg(sector)">+Unit</button>
+                <div class="clear_both"></div>
+                <div class="left_scroll_pane scroll-pane">
+                    <div ng-repeat="unit in sector.units"
+                         ng-class="{glowlightyellow:sector.selectedUnit==unit}">
+                        <button class="personnel_tbar_btn personnel_btn"
+                                ng-click="showUnitOptionsDlg(unit)">{{unit.par}}
+                        </button>
+                        <button class="psi_tbar_btn psi_btn"
+                                ng-click="showUnitOptionsDlg(unit)"
+                                ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
+                                ng-if="sector.hasPsiBtn">{{unit.psi}}
+                        </button>
+                        <button class="unit_tbar_btn unit_btn"
+                                ng-click="selectUnit(sector,unit)"
+                                ng-class="{btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                            {{unit.name}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action_col_right tbar_col_right_div tbar_col_div"
+                 ng-if="sector.hasActions">
+                <button class="acct_unit_btn"
+                        ng-click="showUnitsDlgForAcct(sector)"
+                        ng-if="sector.hasAcctBtn">
+                    {{sector.acctUnit.name}}
+                </button>
+                <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
+                <div class="clear_float"></div>
+                <div class="right_scroll_pane scroll-pane">
+                    <div ng-repeat="action in sector.selectedUnit.actions">
+                        <button class="action_btn"
+                                ng-class="{font_red:action.is_warning}">
+                            {{action.name}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </tbar>
+    </div>
+</div>
+
+
+<div id="sector_name_dlg" title="Sectors" ng-controller="SectorNamesDlg" class="dialog">
+    <button
+            class="sector_numdir_btn"
+            ng-repeat="sector_dir in sector_dir_btns"
+            ng-class="{glow_orange:selectedSector.sector_dir=='{{sector_dir.tbar}}'}"
+            ng-click="setDir(sector_dir)">{{sector_dir.dialog}}
+    </button>
+    <div id="sector_num_container">
+        <button
+                class="sector_numdir_btn"
+                ng-repeat="sector_num in sector_num_btns"
+                ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
+                ng-click="setNum(sector_num)">{{sector_num}}
+        </button>
+    </div>
+    <div class="clear_both"></div>
+    <div id="sector_name_dlg_grid_container" class="grid">
+        <div class="grid_item_1_4" ng-repeat="catalog_sector in catalog_sectors">
+            <button
+                    class="dlg_sector_name_btn sector_name_btn"
+                    ng-class="{button_hidden: catalog_sector.name=='', glowlightgreen: tbar_sectors.findSectorByName(catalog_sector.name)>-1}"
+                    ng-click="selectSector(catalog_sector)">
+                {{catalog_sector.name}}
+                <img class="clock_icon"
+                     ng-if="catalog_sector.hasClock"
+                     src="img/clock.png"/>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="par-dlg" title="Sector PAR" ng-controller="ParDlg" class="dialog">
+    <div class="par_dlg_row">
+        <button class="par_sector_btn sector_name_btn"
+                ng-click="selectSectorPar()"
+                ng-class="{glowlightgreen:selectedSector.hasPar}">{{selectedSector.name}}
+        </button>
+    </div>
+    <div class="par_dialog_unit" ng-repeat="unit in selectedSector.units">
+        <table>
+            <tr>
+                <td class="par_dlg_left_col">
+                    <button class="personnel_dlg_btn personnel_btn"
+                            ng-click="showUnitOptionsDlg(unit)">{{unit.par}}
+                    </button>
+                    <button class="psi_dlg_btn psi_btn"
+                            ng-click="showUnitOptionsDlg(unit)"
+                            ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}">
+                        {{unit.psi}}
+                    </button>
+                    <button class="unit_btn"
+                            ng-click="selectUnitPar(unit)"
+                            ng-class="{glowlightgreen:unit.manyPeopleHavePar==unit.par}">{{unit.name}}
+                    </button>
+                    <button class="mayday_par_btn">Mayday</button>
+                </td>
+                <td>
+                    <button class='par_person_btn par_dialog_btn'
+                            ng-repeat="i in [] | unitPar:unit.par"
+                            ng-click="selectPersonPar(unit, i+1)"
+                            ng-class="{glowlightgreen:(i+1<=unit.manyPeopleHavePar&&unit.par!='P')||unit.hasPar}">
+                        Firefighter
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="unit-info-dlg" title="Unit" class="dialog"></div>
+
+<div id="units_dlg" title="Units" ng-controller="UnitsDlg" class="dialog">
+    <div id="dispatched_units_div">
+        <div id="title_dispatched_units_div">Dispatched Units</div>
+        <div id="units_dispatched_units_div">
+            <button class="unit_dlg_btn unit_btn"
+                    ng-repeat="unit in dispatechedUnits"
+                    ng-click="selectDispatchedUnit(unit)">
+                {{unit.name}}
+            </button>
+            <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <td></td>
+            <td>
+                <button class="unit_city_btn"
+                        ng-repeat="city in cities"
+                        ng-click="selectCity(city)"
+                        ng-class="{glowlightgreen:selected_city==city}">
+                    {{city.name}}
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:80px">
+                <button class="unit_type_btn"
+                        ng-repeat="type in selected_city.types"
+                        ng-click="selectType(type)"
+                        ng-class="{glowlightgreen:selected_type_name==type.name}">
+                    {{type.name}}
+                </button>
+            </td>
+            <td>
+                <div class="unit_dlg_units_container">
+                    <div class="type_row_for_unit_btns"
+                         ng-repeat="type in selected_city.types"
+                         ng-if="selected_type_name=='' || selected_type_name==type.name">
+                        <button class="unit_dlg_btn unit_btn"
+                                ng-repeat="unit in type.units"
+                                ng-click="selectUnit(unit)"
+                                ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                            {{unit.name}}
+                        </button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
+    <div class="action_type_dialog_header grid"
+         ng-repeat="catalog_action_type in catalog_action_types">
+        <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
+            <button class="btn_xsmtext action_btn"
+                    ng-click="selectAction(catalog_action)"
+                    ng-class="{glowlightgreen: selectedSector.selectedUnit.actions.contains(catalog_action), font_red:catalog_action.is_warning}">
+                {{catalog_action.name}}
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Upgrade Dialog -->
+<div id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg" class="dialog">
+    <div id="upgrade_left_col">
+        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=1"
+                ng-class="{glowlightgreen:upgrade_primary==1}">En Route
+        </button>
+        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=2"
+                ng-class="{glowlightgreen:upgrade_primary==2}">On Scene
+        </button>
+    </div>
+    <div id="upgrade_right_col">
+        <button id="working_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=1"
+                ng-class="{glowlightgreen:upgrade_secondary==1, button_disabled:upgrade_primary==0}"
+                ng-disabled="upgrade_primary==0">Working Fire
+        </button>
+        <button id="first_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=2"
+                ng-class="{glowlightgreen:upgrade_secondary==2, button_disabled:upgrade_primary==0}"
+                ng-disabled="upgrade_primary==0">1st Alarm
+        </button>
+        <button id="second_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=3"
+                ng-class="{glowlightgreen:upgrade_secondary==3, button_disabled:upgrade_primary==0}"
+                ng-disabled="upgrade_primary==0">2nd Alarm
+        </button>
+        <button id="third_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=4"
+                ng-class="{glowlightgreen:upgrade_secondary==4, button_disabled:upgrade_primary==0}"
+                ng-disabled="upgrade_primary==0">3rd Alarm
+        </button>
+        <button id="fourth_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=5"
+                ng-class="{glowlightgreen:upgrade_secondary==5, button_disabled:upgrade_primary==0}"
+                ng-disabled="upgrade_primary==0">4th Alarm
+        </button>
+    </div>
+</div>
+
+<!-- OSR Dialog -->
+<div id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg" class="dialog">
+    <div id="osr_left_col">
+        <button class="osr_btn" ng-click="unit_osr=!unit_osr" ng-class="{glowlightgreen:unit_osr}">Unit ID</button>
+        <button class="osr_btn" ng-click="address_left_osr=!address_left_osr"
+                ng-class="{glowlightgreen:address_left_osr}">Address
+        </button>
+        <button class="osr_btn" ng-click="occupancy_osr=!occupancy_osr" ng-class="{glowlightgreen:occupancy_osr}">
+            Occupancy
+        </button>
+        <button class="osr_btn" ng-click="construction_osr=!construction_osr"
+                ng-class="{glowlightgreen:construction_osr}">Construction
+        </button>
+        <button class="osr_btn" ng-click="conditions_osr=!conditions_osr" ng-class="{glowlightgreen:conditions_osr}">
+            Conditions
+        </button>
+        <button class="osr_btn" ng-click="assumecmd_osr=!assumecmd_osr" ng-class="{glowlightgreen:assumecmd_osr}">Assume
+            Command
+        </button>
+        <button class="osr_btn" ng-click="location_osr=!location_osr" ng-class="{glowlightgreen:location_osr}">
+            Location(mobile/cab)
+        </button>
+        <button class="osr_btn" ng-click="mode_osr=!mode_osr" ng-class="{glowlightgreen:mode_osr}">Strategy
+            (off./def.)
+        </button>
+        <button class="osr_btn" ng-click="attach_line=!attach_line" ng-class="{glowlightgreen:attach_line}">Attack
+            line
+        </button>
+        <button class="osr_btn" ng-click="water_supply=!water_supply" ng-class="{glowlightgreen:water_supply}">Water
+            supply
+        </button>
+        <button class="osr_btn" ng-click="iric_osr=!iric_osr" ng-class="{glowlightgreen:iric_osr}">IRIC</button>
+        <button class="osr_btn" ng-click="acct_osr=!acct_osr" ng-class="{glowlightgreen:acct_osr}">Accountability
+        </button>
+    </div>
+    <div id="osr_right_col">
+        <!-- TODO: highlight Address if disp address is set -->
+        <button class="osr_address_btn"
+                ng-click="showAddressDlg()"
+                ng-class="{glowlightgreen:disp_address!='Dispatch Address'}"
+                style="margin-bottom:10px; margin-top: 10px;">{{disp_address}}
+        </button>
+        <select class="osr_select" ng-class="{glowlightgreen:type_of_bldg!='Type of building'}" ng-model="type_of_bldg">
+            <option disabled="disabled" selected="selected">Type of building</option>
+            <option>Residential Home</option>
+            <option>Duplex</option>
+            <option>Mobile Home</option>
+            <option>Apartment</option>
+            <option>Hotel</option>
+            <option>Strip Mall</option>
+            <option>Office Complex</option>
+            <option>Big box Retail</option>
+            <option>Specialized/Other</option>
+        </select>
+
+        <select class="osr_select" ng-class="{glowlightgreen:num_floors!='Number of floors'}" ng-model="num_floors">
+            <option disabled="disabled" selected="selected">Number of floors</option>
+            <option>1 floor</option>
+            <option>2 floors</option>
+            <option>3 floors</option>
+            <option>4 floors</option>
+            <option>5 floors</option>
+            <option>6 floors</option>
+            <option>7 floors</option>
+            <option>8 floors</option>
+            <option>9 floors</option>
+            <option>10 floors</option>
+            <option>11 floors</option>
+            <option>12 floors</option>
+            <option>13 floors</option>
+            <option>14 floors</option>
+            <option>15 floors</option>
+            <option>16 floors</option>
+            <option>17 floors</option>
+            <option>18 floors</option>
+            <option>19 floors</option>
+            <option>20 floors</option>
+            <option>21 floors</option>
+            <option>22 floors</option>
+            <option>23 floors</option>
+            <option>24 floors</option>
+            <option>25 floors</option>
+        </select>
+        <select class="osr_select" ng-class="{glowlightgreen:size_building!='Size of building'}"
+                ng-model="size_building">
+            <option disabled="disabled" selected="selected">Size of building</option>
+            <option>Small building</option>
+            <option>Medium building</option>
+            <option>Large building</option>
+        </select>
+
+        <div class="osr_toggle_container_div">
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==1}" ng-click="basement=1">Basement
+            </button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==2}" ng-click="basement=2">No Basement
+            </button>
+        </div>
+
+        <select class="osr_select" ng-class="{glowlightgreen:construction!='Construction type'}"
+                ng-model="construction">
+            <option disabled="disabled" selected="selected">Construction type</option>
+            <option>Light weight construction</option>
+            <option>Wood frame construction</option>
+            <option>Block construction</option>
+            <option>Brick construction</option>
+            <option>Tilt slab construction</option>
+            <option>Specialized/Other construction</option>
+        </select>
+
+        <select class="osr_select" ng-class="{glowlightgreen:roof!='Roof'}" ng-model="roof">
+            <option disabled="disabled" selected="selected">Roof</option>
+            <option>Pitched - tile roof</option>
+            <option>Pitched - asphalt roof</option>
+            <option>Pitched - wood shingle roof</option>
+            <option>Flat roof</option>
+            <option>Arched roof</option>
+        </select>
+
+        <select class="osr_select" ng-class="{glowlightgreen:conditions!='Conditions'}" ng-model="conditions">
+            <option disabled="disabled" selected="selected">Conditions</option>
+            <option>Nothing showing</option>
+            <option>Smoke showing</option>
+            <option>Smoke & Fire showing</option>
+        </select>
+
+        <div class="osr_toggle_container_div">
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==1}" ng-click="location=1">Mobile</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==2}" ng-click="location=2">Stationary
+            </button>
+        </div>
+
+        <div class="osr_toggle_container_div">
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==1}" ng-click="strategy=1">Offensive
+            </button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==2}" ng-click="strategy=2">Defensive
+            </button>
+        </div>
+    </div>
+    <div style="width:100%" class="clear_float"></div>
+</div>
+<!-- OSR Dialog -->
+
+<!-- Address Dialog -->
+<div id="address_dialog" title="Dispatch Address" ng-controller="AddressDlg" class="dialog">
+    <input type="text" ng-model="address" id="address_custom_input">
+    <button ng-click="clickClear()" id="address_dlg_clear">Clear</button>
+    <div class="clear_float"></div>
+    <div>
+        <button ng-click="clickOk()" id="address_dlg_ok" class="confirm_btn">OK</button>
+        <button ng-click="clickCancel()" id="address_dlg_cancel" class="confirm_btn">Cancel</button>
+        <div class="clear_float"></div>
+    </div>
+</div>
+
+<!-- Objectives Dialog Unit Component Prototype -->
+<div id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg" class="dialog">
+    <div id="objective_left_col">
+        <button ng-click="obj_upgd=!obj_upgd" ng-class="{glowlightgreen:obj_upgd}" class="objective_btn">Upgrade to full
+            recue
+        </button>
+        <button ng-click="obj_safe=!obj_safe" ng-class="{glowlightgreen:obj_safe}" class="objective_btn">Assing safety
+        </button>
+        <button ng-click="obj_estb=!obj_estb" ng-class="{glowlightgreen:obj_estb}" class="objective_btn">Establish
+            supply line
+        </button>
+        <button ng-click="obj_utes=!obj_utes" ng-class="{glowlightgreen:obj_utes}" class="objective_btn">Secure
+            utilities
+        </button>
+        <button ng-click="obj_vent=!obj_vent" ng-class="{glowlightgreen:obj_vent}" class="objective_btn">Ventilation
+        </button>
+        <button ng-click="obj_deck=!obj_deck" ng-class="{glowlightgreen:obj_deck}" class="objective_btn">Create "On
+            deck"
+        </button>
+        <button ng-click="obj_pres=!obj_pres" ng-class="{glowlightgreen:obj_pres}" class="objective_btn">Pressurize
+            exposures
+        </button>
+        <button ng-click="obj_moni=!obj_moni" ng-class="{glowlightgreen:obj_moni}" class="objective_btn">Monitor channel
+            16
+        </button>
+        <button ng-click="obj_salv=!obj_salv" ng-class="{glowlightgreen:obj_salv}" class="objective_btn">Salvage
+        </button>
+        <button ng-click="obj_rehb=!obj_rehb" ng-class="{glowlightgreen:obj_rehb}" class="objective_btn">Establish
+            rehab
+        </button>
+        <button ng-click="obj_srvc=!obj_srvc" ng-class="{glowlightgreen:obj_srvc}" class="objective_btn">Customer
+            service
+        </button>
+    </div>
+    <div id="objective_right_col"></div>
+</div>
+
+<!-- IAP Dialog -->
+<div id="iap_dlg" title="Action Plan = Offensive or Defensive?" ng-controller="IapDlg" class="dialog">
+    <table id="iap_table_main">
+        <tr>
+            <td class="iap_label_td">Critical Fireground Factors:</td>
+            <td>
+                <button ng-click="iap_bldg=!iap_bldg" ng-class="{glowlightgreen:iap_bldg}" class="iap_toggle_btn">
+                    Building
+                </button>
+                <button ng-click="iap_fire=!iap_fire" ng-class="{glowlightgreen:iap_fire}" class="iap_toggle_btn">Fire
+                </button>
+                <button ng-click="iap_occu=!iap_occu" ng-class="{glowlightgreen:iap_occu}" class="iap_toggle_btn">
+                    Occupancy
+                </button>
+                <button ng-click="iap_hazd=!iap_hazd" ng-class="{glowlightgreen:iap_hazd}" class="iap_toggle_btn">Life
+                    Hazard
+                </button>
+                <button ng-click="iap_arrg=!iap_arrg" ng-class="{glowlightgreen:iap_arrg}" class="iap_toggle_btn">
+                    Arrangement
+                </button>
+                <button ng-click="iap_rsrc=!iap_rsrc" ng-class="{glowlightgreen:iap_rsrc}" class="iap_toggle_btn">
+                    Resources
+                </button>
+                <button ng-click="iap_acte=!iap_acte" ng-class="{glowlightgreen:iap_acte}" class="iap_toggle_btn">Action
+                    Effect
+                </button>
+                <button ng-click="iap_spec=!iap_spec" ng-class="{glowlightgreen:iap_spec}" class="iap_toggle_btn">
+                    Special
+                </button>
+                <div class="clear_float"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_red_label iap_label_td">Rescue:</td>
+            <td><textarea class="iap_input">Primary search</textarea></td>
+        </tr>
+        <tr>
+            <td class="iap_blue_label iap_label_td">Fire Control:</td>
+            <td>
+                <textarea class="iap_input">Supply line, attack +2</textarea>
+                <button ng-click="iap_vent=!iap_vent" ng-class="{glowlightgreen:iap_vent}" class="iap_toggle_btn">Vent
+                    Sprinkler?
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_blue_label iap_label_td">Property/People:</td>
+            <td>
+                <textarea class="iap_input">Salvage</textarea>
+                <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true" class="iap_btn_evacloc">Show Evacuation
+                    Location
+                </button>
+                <button ng-show="iap_evlc_show" ng-click="iap_evlc_show=false" class="iap_btn_evacloc">Hide Evacuation
+                    Location
+                </button>
+                <div class="clear_both"></div>
+                <div ng-show="iap_evlc_show">
+                    <textarea id="iap_evacloc_input">Evacuation Location</textarea>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="iap_red_label iap_label_td">Firefighter Safety:</td>
+            <td><textarea class="iap_input">IRIC to Recue, Acct. locations, Safety, Rehab +1 unit</textarea></td>
+        </tr>
+    </table>
+</div>
+<!-- IAP Dialog -->
+
+<!-- Unit Options Dialog -->
+<div id="unit_options_dlg" title="Unit" ng-controller="UnitOptionsDlg" class="dialog">
+    <div id="unit_people_dialog_row1" class="unit_people_dialog_row1">
+        <button class="personnel_dlg_btn personnel_btn"
+                ng-repeat="par in pars"
+                ng-click="selectPar(par)"
+                ng-class="{glow_orange: selected_unit.par==par}">{{par}}
+        </button>
+        <button class='reset_clock_btn'>
+            <img class='clock_icon' src='img/clock.png'/>Reset Clock
+        </button>
+    </div>
+    <div id="unit_people_dialog_row2" class="unit_people_dialog_row2">
+        <button class="psi_dlg_btn psi_btn"
+                ng-repeat="psi in psis"
+                ng-click="selectPsi(psi)"
+                ng-class="{psi_red:psi<1500, psi_yellow:psi<3000&&psi>=1500, psi_green:psi>=3000, glow_orange: selected_unit.psi==psi}">
+            {{psi}}
+        </button>
+    </div>
+</div>
+
+<!-- Benchmarks Dialog -->
+<div id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container benchmark_0th_col_container">
+        <button class='benchmark_double_btn benchmark_item_btn'
+                ng-click="selectUnablePrimary()"
+                ng-class="{glowpink: selectedSector.unable_primary}">Unable to Obtain Primary
+        </button>
+        <button class='disabled benchmark_double_btn benchmark_item_btn'
+                ng-click="selectUnableSecondary()"
+                ng-class="{glowpink: selectedSector.unable_secondary, button_disabled:selectedSector.bnch<1}"
+                ng-disabled="selectedSector.bnch<1">Unable to Obtain Secondary
+        </button>
+    </div>
+    <div class="benchmark_col_container benchmark_1st_col_container">
+        <button ng-click="selectBnch(1)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=1}">
+            Primary All Clear
+        </button>
+        <button ng-click="selectBnch(5)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=5, button_disabled:selectedSector.bnch<1}"
+                ng-disabled="selectedSector.bnch<1">Under Control
+        </button>
+        <button ng-click="selectBnch(9)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=9, button_disabled:selectedSector.bnch<5}"
+                ng-disabled="selectedSector.bnch<5">Secondary All Clear
+        </button>
+        <button ng-click="selectBnch(12)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=12, button_disabled:selectedSector.bnch<9}"
+                ng-disabled="selectedSector.bnch<9">Loss Stop
+        </button>
+    </div>
+    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=1 && selectedSector.bnch<5">
+        <button ng-click="selectBnch(2)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=2}">
+            PAR
+        </button>
+        <button ng-click="selectBnch(3)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=3}">
+            Notify Alarm
+        </button>
+        <button ng-click="selectBnch(4)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=4}">
+            Challenge Strategy
+        </button>
+    </div>
+    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=5 && selectedSector.bnch<9">
+        <button ng-click="selectBnch(6)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=6}">
+            PAR
+        </button>
+        <button ng-click="selectBnch(7)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=7}">
+            Notify Alarm
+        </button>
+        <button ng-click="selectBnch(8)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=8}">
+            Obtain Secondary
+        </button>
+    </div>
+    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=9 && selectedSector.bnch<12">
+        <button ng-click="selectBnch(10)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=10}">PAR
+        </button>
+        <button ng-click="selectBnch(11)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=11}">Notify Alarm
+        </button>
+    </div>
+    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=12">
+        <button ng-click="selectBnch(13)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=13}">PAR
+        </button>
+        <button ng-click="selectBnch(14)" class="benchmark_item_btn"
+                ng-class="{glowlightgreen: selectedSector.bnch>=14}">Notify Alarm
+        </button>
+    </div>
+</div>
+<!-- Benchmarks Dialog -->
+
+<!-- Reports Dialog -->
+<div id="reports_dlg" title="Reports" ng-controller="ReportsDlg" class="dialog">
+    <div id="reports_table_container">
+        <table>
+            <tr ng-repeat="event in events">
+                <td>{{event.datetime | date : 'shortTime'}}</td>
+                <td>{{event.sector}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="version_text">Version: 0.0</div>
+
+</body>
+</html>
