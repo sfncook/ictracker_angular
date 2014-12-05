@@ -57,12 +57,11 @@ td {
 
 button {
     text-align: center;
-    background: #EEE;
+    background: white;
     color: black;
-    border: none;
+    border: 1px solid #9a9a9a;
     border-radius: 3px;
     padding: 4px 4px 4px 4px;
-    /*text-shadow: 1px 1px #AAA;*/
     cursor: pointer;
     box-shadow: 1px 1px 2px #888;
 }
@@ -92,6 +91,15 @@ button:active {
     border-bottom-right-radius: 3px;
     border-top: none;
     margin: 0 10px;
+
+    /*width: 130px;*/
+    height: 50px;
+    margin-right: 10px;
+    display: inline-block;
+    font-size: 1.45rem;
+    padding: 10px 10px;
+    text-align: center;
+    pointer-events: auto;
 }
 
 #units_dialog_cities_div {
@@ -237,27 +245,27 @@ button:active {
 }
 
 #top_header_container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width:100%;
+    width: 100%;
     z-index: 50;
-    padding-right:100px;
+    padding-right: 100px;
+    padding-bottom: 5px;
+    pointer-events: none;
+}
+#top_header_container>* {
+    pointer-events: auto;
 }
 #top_header_mayday_container {
     position: fixed;
     top: 0;
     left: 0;
-    width:100%;
+    width: 100%;
     text-align: center;
     z-index: 50;
-    padding-right:100px;
+    padding-right: 100px;
     pointer-events: none;
 }
 #mayday_btn {
-    width:130px;
-    margin-left:auto;
-    display: inline-block;
+    margin-left: auto;
     background: red;
     color: white;
     border-top-left-radius: 0;
@@ -268,48 +276,70 @@ button:active {
     border-right: 2px solid orange;
     border-bottom: 2px solid orange;
     border-left: 2px solid orange;
-    font-size: 1.25rem;
-    padding: 0 20px;
-    text-align: center;
-    height:33px;
-    pointer-events:auto;
 }
+
 #mayday_btn:hover {
     background: #FF9696;
 }
+
 #mayday_btn:active {
     background: #C20000;
 }
 
+#mayday_clear_dialog {
+    width: 350px;
+}
 
-.mode_btn {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    z-index: 50;
+.mayday_clear_item_btn {
+    margin: 5px 0 5px 10px;
+    width: 325px;
+}
+
+.mayday_sector_title {
+    width:124px;
+    height: 27px;
+    padding: 4px 0 0 2px;
+    font-size: 0.7rem;
+    float:left;
+    margin:4px 2px;
+}
+.mayday_sector_btn_list {
     float:right;
+}
+.mayday_row_div {
+    margin-top: 10px;
+}
+.mayday_info_tbl_l {
+    font-weight: bold;
+    text-align: right;
+}
+.mayday_info_tbl_r {
+    padding-left: 10px;
+    text-align: left;
+}
+.has_mayday {
+
+}
+
+
+#mode_btn {
+    float: right;
     margin-right: 10px;
-    font-size:1.2rem;
-    padding: 0 20px;
-    height:33px;
+    pointer-events: auto;
+    background: #e4b32d;
+    color: white;
+    font-size: 1.2rem;
 }
 .offensive_btn {
-    background: #66dd65;
-    border-right: 2px #88be54 solid;
-    border-bottom: 2px #88be54 solid;
-    border-left: 2px #88be54 solid;
-    /*color: white;*/
-}
-.offensive_btn:hover {
-    background: #00a400;
-}
-.offensive_btn:active {
-    background: green;
+    background: green !important;
+    color: white;
 }
 .defensive_btn {
     background: #FF2B21 !important;
     color: white;
+}
+#mode_dialog {
+    width: 250px;
 }
 
 .top_header_btn {
@@ -641,4 +671,51 @@ button:active {
 .confirm_btn {
     float:left;
     margin: 10px 20px;
+}
+
+#inc_info_dialog {
+    width: 450px;
+}
+#inc_info_dialog>*>input {
+    margin: 5px;
+}
+#inc_info_box {
+    float: left;
+    margin-left: 10px;
+    background: white;
+}
+#inc_info_btn {
+    font-size: 0.9rem;
+    float:left;
+    margin-right:5px;
+    padding-top: 5px;
+}
+#inc_num_custom_input {
+    margin-top: 5px;
+    width: 380px;
+}
+#inc_num_dlg_clear {
+    float: right;
+    margin: 5px;
+}
+#inc_address_custom_input {
+    margin-top: 5px;
+    width: 380px;
+}
+#inc_address_dlg_clear {
+    float: right;
+    margin: 5px;
+}
+
+#address_dialog {
+    width: 450px;
+}
+
+#address_dialog>*>input {
+    margin: 5px;
+}
+
+#address_custom_input {
+    margin-top: 5px;
+    width: 380px;
 }
