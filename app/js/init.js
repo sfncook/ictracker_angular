@@ -29,6 +29,12 @@ function init() {
     initDialogs();
 }
 
+document.addEventListener('click', function (event) {
+    if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {
+        event.stopPropagation();
+    }
+}, true);
+
 $( document ).ready(init);
 
 Array.prototype.contains = function(obj) {

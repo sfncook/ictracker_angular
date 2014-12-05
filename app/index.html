@@ -33,7 +33,6 @@
 <div id="ict_header" ng-controller="HeaderContainer">
     <div class="header_item"
         ng-class="{time_lg:!hourRollOverDone}">{{timer_text}}</div>
-    <img id="title_icon" class="header_item" src="img/logo/ict_logo_100x100.png"/>
     <button id="dispatched_units_btn"
             class="header_item button"
             ng-click="showUnitsDlgForDispUnits()">
@@ -41,42 +40,50 @@
         <div>Units</div>
     </button>
     <button id="upgrade_btn"
-            class="header_item button"
-            ng-click="showUpgradeDlg()">Upgrade</button>
+            class="header_item"
+            ng-click="showUpgradeDlg()">
+        <div>Upgrade</div>
+        <div id="upgrade_btn_sub_label" class="hidden_div"></div>
+    </button>
 
-    <div id="header_row2" class="header_row">
-        <div class="dialog_vertical_align_cell">
-            <button
-                    id="osr_header_btn"
-                    class="header_item button"
-                    ng-click="showOsrDlg()">
-                <div>OSR</div>
-                <div id="osr_btn_perccomplete">({{osrPerc}}% Complete)</div>
-            </button>
-            <button id="objectives_header_btn"
-                    class="header_item button"
-                    ng-click="showObjectivesDlg()">
-                <div>Objectives</div>
-                <div id="objectives_btn_perccomplete">({{objPerc}}% Complete)</div>
-            </button>
-            <button id="iap_btn"
-                    class="header_item button"
-                    ng-click="showIapDlg()">IAP</button>
+    <button id="cmdxfer_units_btn"
+         class="header_item button"
+         ng-click="showUpgradeDlg()">
+        <div>Command</div>
+        <div>Transferred</div>
+    </button>
+    <button id="branch_btn"
+            class="disabled header_item button"
+            ng-click="showUpgradeDlg()">Branch</button>
+
+    <button id="osr_header_btn" class="header_item">
+        <div class="perc_horz_bar_bg">
+            <div id="osr_perc_bar" class="perc_horz_bar"></div>
         </div>
-    </div>
+        <div>OSR</div>
+    </button>
+    <button id="objectives_header_btn" class="header_item">
+        <div class="perc_horz_bar_bg">
+            <div id="objectives_perc_bar" class="perc_horz_bar"></div>
+        </div>
+        <div style="margin-top:-1px">Objectives</div>
+    </button>
 
-    <div id="header_row3" class="header_row">
-        <!--<div id="cmd_term_btn" class="disabled header_item button">-->
-            <!--<img class="terminate_icon" src="images/terminate.png"/>-->
-            <!--<div>Command</div>-->
-            <!--<div>Terminated</div>-->
-        <!--</div>-->
-        <button ng-click="showReportsDlg()" id="sectorreport_btn" class="header_item button">
-            <img class="report_icon" src="img/report.png"/>
-            <div>Report</div>
-        </button>
-    </div>
-</div><!-- ict_header-->
+    <button id="iap_btn" class="header_item">IAP</button>
+
+    <button id="cmd_term_btn" class="header_item">
+        <img class="terminate_icon" src="img/terminate.png"/>
+
+        <div>Command</div>
+        <div>Terminated</div>
+    </button>
+    <button id="report_btn" class="header_item">
+        <img class="report_icon" src="img/report.png"/>
+
+        <div>Reports</div>
+    </button>
+</div>
+<!-- ict_header-->
 
 <div id="top_header_container">
     <button id="inc_info_btn" class="button_top">

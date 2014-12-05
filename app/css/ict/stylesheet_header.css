@@ -2,13 +2,16 @@
  **** HEADER ITEMS ****
  */
 #ict_header {
-    background: #BBB;
+    background: #DDD;
     position: fixed;
     right: 0;
-    top:0;
+    top: 0;
     height: 100%;
     z-index: 50;
     padding: 4px;
+}
+#ict_header > .button {
+    background: white;
 }
 
 #title_icon {
@@ -39,7 +42,8 @@
 }
 .time_lg {
     font-size: 2.3rem !important;
-    height: 43px;
+    height: 50px;
+    margin-right: 4px;
 }
 #safety_btn_label {
     color: #FFF;
@@ -77,6 +81,8 @@
 #report_btn {
     z-index: 100;
     height: 45px;
+    position: fixed;
+    bottom: 10px;
 }
 #sectorreport_btn {
     z-index: 100;
@@ -95,13 +101,23 @@
     z-index: 100;
     font-size: 0.75rem;
     height: 53px;
+    position: fixed;
+    bottom: 60px;
 }
 #cmd_term_btn > div {
-    height:12px;
+    height: 12px;
 }
 .terminate_icon {
     width: 20px;
     height: 20px;
+}
+#upgrade_btn {
+    height: 46px;
+}
+#cmdxfer_units_btn {
+    z-index: 100;
+    height: 46px;
+    margin: 50px 0 5px 0;
 }
 
 #header_row2 {
@@ -119,10 +135,35 @@
     padding: 2px;
 }
 
+.perc_bar_bg {
+    border: 1px solid black;
+    background: black;
+    width: 3px;
+    height: 15px;
+    float: left;
+}
+.perc_bar_fg {
+    background: lightgreen;
+    width: 1px;
+    height: 13px;
+}
+
+.perc_horz_bar_bg {
+    background: black;
+    border: 1px solid black;
+    height: 3px;
+    width: 80px;
+}
+.perc_horz_bar {
+    background: lightgreen;
+    height: 1px;
+    width: 78px;
+}
+#osr_header_btn {
+    height: 30px;
+    margin-top: 50px;
+}
 #objectives_header_btn {
-    margin-top: 10px;
-    height: 45px;
+    height: 30px;
 }
-#objectives_btn_perccomplete {
-    font-size:0.6rem;
-}
+

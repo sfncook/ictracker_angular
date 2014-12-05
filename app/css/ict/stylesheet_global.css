@@ -719,3 +719,22 @@ button:active {
     margin-top: 5px;
     width: 380px;
 }
+
+.hidden_div {
+    /*
+     *Use opacity rather than show/hide
+     *so the button maintains its space
+    */
+    opacity: 0.0;
+}
+.hidden_div:hover {
+    cursor: default !important;
+    opacity: 0.0;
+}
+
+.disabled, .disabled:hover, .disabled:active {
+    background: #999 !important;
+    color: #EEE;
+    cursor: default;
+    opacity: 0.5;
+}
