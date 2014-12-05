@@ -183,7 +183,7 @@
 </div>
 
 
-<dialog id="sector_name_dlg" title="Sectors" ng-controller="SectorNamesDlg">
+<div id="sector_name_dlg" title="Sectors" ng-controller="SectorNamesDlg" class="dialog">
     <button
             class="sector_numdir_btn"
             ng-repeat="sector_dir in sector_dir_btns"
@@ -210,9 +210,9 @@
             </button>
         </div>
     </div>
-</dialog>
+</div>
 
-<dialog id="par-dlg" title="Sector PAR" ng-controller="ParDlg">
+<div id="par-dlg" title="Sector PAR" ng-controller="ParDlg" class="dialog">
     <div class="par_dlg_row">
         <button class="par_sector_btn sector_name_btn"
                 ng-click="selectSectorPar()"
@@ -241,11 +241,11 @@
             </tr>
         </table>
     </div>
-</dialog>
+</div>
 
-<dialog id="unit-info-dlg" title="Unit"></dialog>
+<div id="unit-info-dlg" title="Unit" class="dialog"></div>
 
-<dialog id="units_dlg" title="Units" ng-controller="UnitsDlg">
+<div id="units_dlg" title="Units" ng-controller="UnitsDlg" class="dialog">
     <div id="dispatched_units_div">
         <div id="title_dispatched_units_div">Dispatched Units</div>
         <div id="units_dispatched_units_div">
@@ -295,9 +295,9 @@
         </tr>
     </table>
 
-</dialog>
+</div>
 
-<dialog id="actions_dlg" title="Actions" ng-controller="ActionsDlg">
+<div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
     <div class="action_type_dialog_header grid"
          ng-repeat="catalog_action_type in catalog_action_types">
         <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
@@ -308,10 +308,10 @@
             </button>
         </div>
     </div>
-</dialog>
+</div>
 
 <!-- Upgrade Dialog -->
-<dialog id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg">
+<div id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg" class="dialog">
     <div id="upgrade_left_col">
         <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=1" ng-class="{glowlightgreen:upgrade_primary==1}">En Route</button>
         <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=2" ng-class="{glowlightgreen:upgrade_primary==2}">On Scene</button>
@@ -323,10 +323,10 @@
         <button id="third_upgrade_btn"     class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=4" ng-class="{glowlightgreen:upgrade_secondary==4, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">3rd Alarm</button>
         <button id="fourth_upgrade_btn"    class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=5" ng-class="{glowlightgreen:upgrade_secondary==5, button_disabled:upgrade_primary==0}" ng-disabled="upgrade_primary==0">4th Alarm</button>
     </div>
-</dialog>
+</div>
 
 <!-- OSR Dialog -->
-<dialog id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg">
+<div id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg" class="dialog">
     <div id="osr_left_col">
         <button class="osr_btn" ng-click="unit_osr=!unit_osr"                   ng-class="{glowlightgreen:unit_osr}">Unit ID</button>
         <button class="osr_btn" ng-click="address_left_osr=!address_left_osr"   ng-class="{glowlightgreen:address_left_osr}">Address</button>
@@ -437,10 +437,10 @@
         </div>
     </div>
     <div style="width:100%" class="clear_float"></div>
-</dialog> <!-- OSR Dialog -->
+</div> <!-- OSR Dialog -->
 
 <!-- Address Dialog -->
-<dialog id="address_dialog" title="Dispatch Address" ng-controller="AddressDlg">
+<div id="address_dialog" title="Dispatch Address" ng-controller="AddressDlg" class="dialog">
     <input type="text" ng-model="address" id="address_custom_input">
     <button ng-click="clickClear()" id="address_dlg_clear">Clear</button>
     <div class="clear_float"></div>
@@ -449,10 +449,10 @@
         <button ng-click="clickCancel()" id="address_dlg_cancel" class="confirm_btn">Cancel</button>
         <div class="clear_float"></div>
     </div>
-</dialog>
+</div>
 
 <!-- Objectives Dialog Unit Component Prototype -->
-<dialog id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg">
+<div id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg" class="dialog">
         <div id="objective_left_col">
             <button ng-click="obj_upgd=!obj_upgd"   ng-class="{glowlightgreen:obj_upgd}" class="objective_btn">Upgrade to full recue</button>
             <button ng-click="obj_safe=!obj_safe"   ng-class="{glowlightgreen:obj_safe}" class="objective_btn">Assing safety</button>
@@ -467,10 +467,10 @@
             <button ng-click="obj_srvc=!obj_srvc"   ng-class="{glowlightgreen:obj_srvc}" class="objective_btn">Customer service</button>
         </div>
         <div id="objective_right_col"></div>
-</dialog>
+</div>
 
 <!-- IAP Dialog -->
-<dialog id="iap_dlg" title="Action Plan = Offensive or Defensive?" ng-controller="IapDlg">
+<div id="iap_dlg" title="Action Plan = Offensive or Defensive?" ng-controller="IapDlg" class="dialog">
     <table id="iap_table_main">
         <tr>
             <td class="iap_label_td">Critical Fireground Factors:</td>
@@ -514,11 +514,11 @@
             <td><textarea class="iap_input">IRIC to Recue, Acct. locations, Safety, Rehab +1 unit</textarea></td>
         </tr>
     </table>
-</dialog>
+</div>
 <!-- IAP Dialog -->
 
 <!-- Unit Options Dialog -->
-<dialog id="unit_options_dlg" title="Unit" ng-controller="UnitOptionsDlg">
+<div id="unit_options_dlg" title="Unit" ng-controller="UnitOptionsDlg" class="dialog">
     <div id="unit_people_dialog_row1" class="unit_people_dialog_row1">
         <button class="personnel_dlg_btn personnel_btn"
                 ng-repeat="par in pars"
@@ -534,10 +534,10 @@
                 ng-click="selectPsi(psi)"
                 ng-class="{psi_red:psi<1500, psi_yellow:psi<3000&&psi>=1500, psi_green:psi>=3000, glow_orange: selected_unit.psi==psi}">{{psi}}</button>
     </div>
-</dialog>
+</div>
 
 <!-- Benchmarks Dialog -->
-<dialog id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg">
+<div id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
                 ng-click="selectUnablePrimary()"
@@ -570,11 +570,11 @@
         <button ng-click="selectBnch(13)"   class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=13}">PAR</button>
         <button ng-click="selectBnch(14)"   class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=14}">Notify Alarm</button>
     </div>
-</dialog>
+</div> 
 <!-- Benchmarks Dialog -->
 
 <!-- Reports Dialog -->
-<dialog id="reports_dlg" title="Reports" ng-controller="ReportsDlg">
+<div id="reports_dlg" title="Reports" ng-controller="ReportsDlg" class="dialog">
     <div id="reports_table_container">
         <table>
             <tr ng-repeat="event in events">
@@ -583,7 +583,7 @@
             </tr>
         </table>
     </div>
-</dialog>
+</div>
 
 <div id="version_text">Version: 0.0</div>
 

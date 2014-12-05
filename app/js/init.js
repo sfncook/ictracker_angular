@@ -6,7 +6,7 @@
  */
 
 function initDialogs() {
-    $( "dialog" ).dialog({
+    $( ".dialog" ).dialog({
         autoOpen: false,
         modal: true
     });
