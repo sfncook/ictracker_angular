@@ -23,6 +23,8 @@ function initDialogs() {
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
 
+    $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
+
 }
 
 function init() {

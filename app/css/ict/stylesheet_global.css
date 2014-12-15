@@ -33,6 +33,7 @@ td {
     border-radius: 1px;
     border: 1px solid #666;
     background: white;
+    overflow: visible;
 }
 .ui-dialog .ui-dialog-content {
     padding: 0;
@@ -53,6 +54,27 @@ td {
 }
 .ui-icon-closethick {
     background-image: none;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    top: .1em;
+    right: -51px;
+    width: 50px;
+    height: 40px;
+    margin: 0;
+
+    color: white;
+    background: #F67574;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top: 1px solid #CCC;
+    border-right: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
+    border-left: 0;
+
+    font-size: 0.8rem;
+    font-weight: normal;
 }
 
 button {
@@ -741,3 +763,4 @@ button:active {
     cursor: default;
     opacity: 0.5;
 }
+
