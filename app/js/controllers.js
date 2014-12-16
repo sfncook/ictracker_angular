@@ -252,7 +252,13 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
     $scope.selectedSector = {};
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
 
-    $scope.sector_dir_btns = [{"dialog":"N","tbar":"North"},{"dialog":"E","tbar":"East"},{"dialog":"S","tbar":"South"},{"dialog":"W","tbar":"West"}];
+    $scope.sector_dir_btns = [
+        {"dialog":"Sub","tbar":"Sub",   "isWide":true},
+        {"dialog":"N",  "tbar":"North", "isWide":false},
+        {"dialog":"E",  "tbar":"East",  "isWide":false},
+        {"dialog":"S",  "tbar":"South", "isWide":false},
+        {"dialog":"W",  "tbar":"West",  "isWide":false}
+    ];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
 
     $http.get('data/sectors.json').

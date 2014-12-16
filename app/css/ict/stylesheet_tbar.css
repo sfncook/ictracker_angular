@@ -200,6 +200,9 @@ tbar {
     font-size:0.7rem;
     padding-top:4px;
 }
+.tbar_title_dir_wide_td {
+    width: 33px;
+}
 .tbar_title_num_td {
     width:10px;
 }
