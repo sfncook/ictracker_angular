@@ -62,13 +62,17 @@
             ng-click="showUpgradeDlg()">Branch
     </button>
 
-    <button id="osr_header_btn" class="header_item">
+    <button id="osr_header_btn"
+            class="header_item"
+            ng-click="showObjectivesDlg()">
         <div class="perc_horz_bar_bg">
             <div id="osr_perc_bar" class="perc_horz_bar"></div>
         </div>
         <div>OSR</div>
     </button>
-    <button id="objectives_header_btn" class="header_item">
+    <button id="objectives_header_btn"
+            class="header_item"
+            ng-click="showObjectivesDlg()">
         <div class="perc_horz_bar_bg">
             <div id="objectives_perc_bar" class="perc_horz_bar"></div>
         </div>
@@ -524,39 +528,17 @@
 
 <!-- Objectives Dialog Unit Component Prototype -->
 <div id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg" class="dialog">
-    <div id="objective_left_col">
-        <button ng-click="obj_upgd=!obj_upgd" ng-class="{glowlightgreen:obj_upgd}" class="objective_btn">Upgrade to full
-            recue
-        </button>
-        <button ng-click="obj_safe=!obj_safe" ng-class="{glowlightgreen:obj_safe}" class="objective_btn">Assing safety
-        </button>
-        <button ng-click="obj_estb=!obj_estb" ng-class="{glowlightgreen:obj_estb}" class="objective_btn">Establish
-            supply line
-        </button>
-        <button ng-click="obj_utes=!obj_utes" ng-class="{glowlightgreen:obj_utes}" class="objective_btn">Secure
-            utilities
-        </button>
-        <button ng-click="obj_vent=!obj_vent" ng-class="{glowlightgreen:obj_vent}" class="objective_btn">Ventilation
-        </button>
-        <button ng-click="obj_deck=!obj_deck" ng-class="{glowlightgreen:obj_deck}" class="objective_btn">Create "On
-            deck"
-        </button>
-        <button ng-click="obj_pres=!obj_pres" ng-class="{glowlightgreen:obj_pres}" class="objective_btn">Pressurize
-            exposures
-        </button>
-        <button ng-click="obj_moni=!obj_moni" ng-class="{glowlightgreen:obj_moni}" class="objective_btn">Monitor channel
-            16
-        </button>
-        <button ng-click="obj_salv=!obj_salv" ng-class="{glowlightgreen:obj_salv}" class="objective_btn">Salvage
-        </button>
-        <button ng-click="obj_rehb=!obj_rehb" ng-class="{glowlightgreen:obj_rehb}" class="objective_btn">Establish
-            rehab
-        </button>
-        <button ng-click="obj_srvc=!obj_srvc" ng-class="{glowlightgreen:obj_srvc}" class="objective_btn">Customer
-            service
-        </button>
-    </div>
-    <div id="objective_right_col"></div>
+    <button ng-click="obj_upgd=!obj_upgd" ng-class="{glowlightgreen:obj_upgd}" class="objective_btn">Upgrade to Full Recue</button>
+    <button ng-click="obj_safe=!obj_safe" ng-class="{glowlightgreen:obj_safe}" class="objective_btn">Assing Safety</button>
+    <button ng-click="obj_estb=!obj_estb" ng-class="{glowlightgreen:obj_estb}" class="objective_btn">Establish Supply Line</button>
+    <button ng-click="obj_utes=!obj_utes" ng-class="{glowlightgreen:obj_utes}" class="objective_btn">Secure Utilities</button>
+    <button ng-click="obj_vent=!obj_vent" ng-class="{glowlightgreen:obj_vent}" class="objective_btn">Ventilation</button>
+    <button ng-click="obj_deck=!obj_deck" ng-class="{glowlightgreen:obj_deck}" class="objective_btn">Create "On Deck"</button>
+    <button ng-click="obj_pres=!obj_pres" ng-class="{glowlightgreen:obj_pres}" class="objective_btn">Pressurize Exposures</button>
+    <button ng-click="obj_moni=!obj_moni" ng-class="{glowlightgreen:obj_moni}" class="objective_btn">Monitor Channel 16</button>
+    <button ng-click="obj_salv=!obj_salv" ng-class="{glowlightgreen:obj_salv}" class="objective_btn">Salvage</button>
+    <button ng-click="obj_rehb=!obj_rehb" ng-class="{glowlightgreen:obj_rehb}" class="objective_btn">Establish Rehab</button>
+    <button ng-click="obj_srvc=!obj_srvc" ng-class="{glowlightgreen:obj_srvc}" class="objective_btn">Customer Service</button>
 </div>
 
 <!-- IAP Dialog -->

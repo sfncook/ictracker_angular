@@ -17,7 +17,7 @@ function initDialogs() {
     $( "#actions_dlg" ).dialog( "option", "width", 545 );
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
     $( "#osr_dlg" ).dialog( "option", "width", 420 );
-    $( "#objectives_dlg" ).dialog( "option", "width", 185 );
+    $( "#objectives_dlg" ).dialog( "option", "width", 230 );
     $( "#iap_dlg" ).dialog( "option", "width", 616 );
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );

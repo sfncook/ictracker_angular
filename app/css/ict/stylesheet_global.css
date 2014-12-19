@@ -89,7 +89,7 @@ button {
     box-shadow: 1px 1px 2px #888;
 }
 button:hover {
-    background: white;
+    background: #EEE;
 }
 button:active {
     background: #CCC;
@@ -537,7 +537,7 @@ button:active {
 }
 
 .objective_btn {
-    width: 165px;
+    width: 210px;
     margin: 5px 10px 5px 10px;
     display:block;
 }
