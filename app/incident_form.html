@@ -178,7 +178,9 @@
                         ng-if="sector.hasAcctBtn">
                     {{sector.acctUnit.name}}
                 </button>
-                <button class="action_add_btn" ng-click="showActionsDlg(sector)">+Action</button>
+                <button class="action_add_btn"
+                        ng-click="showActionsDlg(sector)"
+                        ng-if="sector.units.length>0">+Action</button>
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane">
                     <div ng-repeat="action in sector.selectedUnit.actions">
