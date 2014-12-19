@@ -111,6 +111,15 @@
     width: 20px;
     height: 20px;
 }
+#move_unit_btn {
+    padding-left: 2px;
+}
+.move_btn_img {
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
 #upgrade_btn {
     height: 46px;
 }
