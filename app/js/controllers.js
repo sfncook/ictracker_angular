@@ -12,6 +12,7 @@ app.factory('dialogSvc', function() {
     var showActionsDlg;
     var showUnitOptionsDlg;
     var showUpgradeDlg;
+    var showCmdXferDlg;
     var showOsrDlg;
     var showObjectivesDlg;
     var showIapDlg;
@@ -82,6 +83,10 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
 
     $scope.showUpgradeDlg = function() {
         dialogSvc.showUpgradeDlg();
+    }
+
+    $scope.showCmdXferDlg = function() {
+        dialogSvc.showCmdXferDlg();
     }
 
     $scope.showOsrDlg = function() {
@@ -462,6 +467,15 @@ app.controller('UpgradeDlg', function($scope, dialogSvc){
 
     dialogSvc.showUpgradeDlg = function() {
         $("#upgrade_dlg").dialog( "open" );
+    }
+});
+
+app.controller('CmdXferDlg', function($scope, dialogSvc){
+    $scope.upgrade_primary = 0;
+    $scope.upgrade_secondary = 0;
+
+    dialogSvc.showCmdXferDlg = function() {
+        $("#cmdxfer_dialog").dialog( "open" );
     }
 });
 

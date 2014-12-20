@@ -15,6 +15,7 @@ function initDialogs() {
     $( "#bnch_dlg" ).dialog( "option", "width", 515 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
     $( "#actions_dlg" ).dialog( "option", "width", 545 );
+    $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
     $( "#osr_dlg" ).dialog( "option", "width", 420 );
     $( "#objectives_dlg" ).dialog( "option", "width", 230 );

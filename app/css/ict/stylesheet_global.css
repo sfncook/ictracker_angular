@@ -759,3 +759,12 @@ button:active {
     opacity: 0.5;
 }
 
+.unit_cmdxfer_btn {
+    float: left;
+    margin: 10px;
+}
+#cmdxfer_text {
+    float: left;
+    font-size: 1.05rem;
+    margin-top: 10px;
+}

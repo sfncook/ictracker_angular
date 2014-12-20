@@ -41,7 +41,7 @@
         <div>Units</div>
     </button>
     <button id="move_unit_btn"
-            class="fire arff water header_item">
+            class="disabled header_item">
         <img class="move_btn_img" src="img/move_cross.png"/>Move Unit
     </button>
     <button id="upgrade_btn"
@@ -52,8 +52,8 @@
     </button>
 
     <button id="cmdxfer_units_btn"
-            class="header_item button"
-            ng-click="showUpgradeDlg()">
+            class="header_item"
+            ng-click="showCmdXferDlg()">
         <div>Command</div>
         <div>Transferred</div>
     </button>
@@ -83,7 +83,6 @@
 
     <button id="cmd_term_btn" class="header_item">
         <img class="terminate_icon" src="img/terminate.png"/>
-
         <div>Command</div>
         <div>Terminated</div>
     </button>
@@ -102,7 +101,7 @@
     </button>
     <img id="inc_type_icon" src=""/>
     <button id="mode_btn" class="button_top">Strategy</button>
-    <div class="clear_float"></div>
+    <div class="clear_both"></div>
 </div>
 <div id="top_header_mayday_container">
     <button id="mayday_btn" class="button_top button">MAYDAY</button>
@@ -370,6 +369,15 @@
                 ng-disabled="upgrade_primary==0">4th Alarm
         </button>
     </div>
+</div>
+
+<!-- Command Transfer Dialog -->
+<div id="cmdxfer_dialog" title="Command Transferred" ng-controller="CmdXferDlg" class="dialog">
+    <div id="from_unit_cmdxfer_btn" class="unit_cmdxfer_btn unit_btn dialog_btn button">UNIT</div>
+    <span id="cmdxfer_text">transferred command to</span>
+
+    <div id="to_unit_cmdxfer_btn" class="unit_cmdxfer_btn unit_btn dialog_btn button">UNIT</div>
+    <div class="clear_both"></div>
 </div>
 
 <!-- OSR Dialog -->
