@@ -1,0 +1,58 @@
+[
+    {
+        "hidden": true
+    },
+    {
+        "type": "fire",
+        "icon": "img/icons/fire.png",
+        "text": "Fire Incident"
+    },
+    {
+        "type": "medical",
+        "icon": "img/icons/medical.png",
+        "text": "Medical Incident"
+    },
+    {
+        "hidden": true
+    },
+    {
+        "type": "arff",
+        "icon": "img/icons/plane.png",
+        "text": "ARFF Incident"
+    },
+    {
+        "type": "hazmat",
+        "icon": "img/icons/hazmat.png",
+        "text": "HazMat Incident"
+    },
+    {
+        "type": "water",
+        "icon": "img/icons/water.png",
+        "text": "Water Rescue"
+    },
+    {
+        "type": "trench",
+        "icon": "img/icons/trench.png",
+        "text": "Trench Rescue"
+    },
+    {
+        "type": "mountain",
+        "icon": "img/icons/mountain.png",
+        "text": "Mountain Rescue"
+    },
+    {
+        "type": "palm",
+        "icon": "img/icons/palm.png",
+        "text": "Palm Rescue"
+    },
+    {
+        "type": "struct",
+        "icon": "img/icons/structure.png",
+        "text": "Structural Rescue"
+    },
+    {
+        "type": "confined",
+        "icon": "img/icons/confined.png",
+        "text": "Confined Space Rescue"
+    }
+]
