@@ -18,7 +18,7 @@
 
 </head>
 
-<body class="splashpage">
+<body class="splashpage" ng-controller="SplashCtrl">
 
 <div id="splash_outer_outer_div">
     <div id="splash_outer_inner_div">
@@ -30,19 +30,20 @@
                 <div id="splash_title">Incident Command Tracker</div>
                 <div class="incident_info_entry">
                     <div>Incident #:</div>
-                    <input id="inc_num_input" name="inc_num_input" type="text"/>
+                    <input id="inc_num_input" name="inc_num_input" type="text" ng-model="inc_num" />
                 </div>
                 <div class="incident_info_entry">
                     <div>Address:</div>
-                    <input id="address_input" name="address_input" type="text"/>
+                    <input id="address_input" name="address_input" type="text" ng-model="inc_add" />
                 </div>
             </div>
             <div class="clear_both"></div>
 
-            <div class="splash_start_btns_div" ng-controller="SplashCtrl">
+            <div class="splash_start_btns_div">
                 <button class="splash_start_btn"
                      ng-repeat="incident_btn in incident_start_btns"
-                     ng-class="{hidden_div: incident_btn.hidden}">
+                     ng-class="{hidden_div: incident_btn.hidden}"
+                     ng-click="clickSplashBtn(incident_btn)">
                     <img class="splash_start_btn_icon" ng-src="{{incident_btn.icon}}"/>
                     <div class="splash_start_btn_text">{{incident_btn.text}}</div>
                 </button>
