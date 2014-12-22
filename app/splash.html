@@ -1,1 +1,66 @@
-//TODO
+<!DOCTYPE html>
+<html lang="en" ng-app="ictApp">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title>ICT</title>
+    <meta name="description" content="Incident Command Tracker" />
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css" />
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_splash.css" />
+
+    <!--JS-->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/splash.js"></script>
+    <script src="version.js"></script>
+
+</head>
+
+<body class="splashpage">
+
+<div id="splash_outer_outer_div">
+    <div id="splash_outer_inner_div">
+
+        <div class="splash_row1">
+            <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
+
+            <div id="splash_inc_info_container">
+                <div id="splash_title">Incident Command Tracker</div>
+                <div class="incident_info_entry">
+                    <div>Incident #:</div>
+                    <input id="inc_num_input" name="inc_num_input" type="text"/>
+                </div>
+                <div class="incident_info_entry">
+                    <div>Address:</div>
+                    <input id="address_input" name="address_input" type="text"/>
+                </div>
+            </div>
+            <div class="clear_both"></div>
+
+            <div class="splash_start_btns_div" ng-controller="SplashCtrl">
+                <button class="splash_start_btn"
+                     ng-repeat="incident_btn in incident_start_btns"
+                     ng-class="{hidden_div: incident_btn.hidden}">
+                    <img class="splash_start_btn_icon" ng-src="{{incident_btn.icon}}"/>
+                    <div class="splash_start_btn_text">{{incident_btn.text}}</div>
+                </button>
+                <div class="clear_both"></div>
+            </div>
+            <div class="clear_both"></div>
+        </div>
+
+        <div class="splash_row2">
+            <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
+            <div id="version_text" class="lic_info_splash">Version: 0.0</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+<script>
+
+</script>
