@@ -68,8 +68,22 @@ app.factory('dialogSvc', function() {
 });
 
 
-app.controller('HeaderContainer2', function($scope, dialogSvc){
-    $scope.mode=1;
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc){
+    $scope.inc_num=localStorage['inc_num'];
+    $scope.inc_add=localStorage['inc_add'];
+    $scope.inc_typ=localStorage['inc_typ'];
+
+    if($scope.inc_typ) {
+        $http.get('data/inc_types.json').
+            success(function(data){
+                var inc_types = data;
+                for(var i=0; i<inc_types.length; i++) {
+                    if(inc_types[i].type==$scope.inc_typ) {
+                        $scope.inc_icon =inc_types[i].icon;
+                    }
+                }
+            });
+    }
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){

@@ -18,7 +18,7 @@ app.controller('SplashCtrl', function($scope, $http){
 
     $http.get('data/inc_types.json').
         success(function(data){
-            $scope.incident_start_btns = data;
+            $scope.inc_types = data;
         });
 
 });

@@ -41,7 +41,7 @@
 
             <div class="splash_start_btns_div">
                 <button class="splash_start_btn"
-                     ng-repeat="incident_btn in incident_start_btns"
+                     ng-repeat="incident_btn in inc_types"
                      ng-class="{hidden_div: incident_btn.hidden}"
                      ng-click="clickSplashBtn(incident_btn)">
                     <img class="splash_start_btn_icon" ng-src="{{incident_btn.icon}}"/>

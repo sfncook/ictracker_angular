@@ -287,6 +287,15 @@ button:active {
     padding-right: 100px;
     pointer-events: none;
 }
+
+#inc_type_icon {
+    width: 52px;
+    height: 51px;
+    float:left;
+    border: none;
+    background: white;
+}
+
 #mayday_btn {
     margin-left: auto;
     background: red;

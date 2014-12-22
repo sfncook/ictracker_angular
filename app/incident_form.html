@@ -94,12 +94,12 @@
 </div>
 <!-- ict_header-->
 
-<div id="top_header_container">
+<div id="top_header_container" ng-controller="HeaderContainer2">
     <button id="inc_info_btn" class="button_top">
-        <div id="inc_num">INCIDENT #</div>
-        <div id="inc_address">ADDRESS</div>
+        <div id="inc_num">{{inc_num}}</div>
+        <div id="inc_add">{{inc_add}}</div>
     </button>
-    <img id="inc_type_icon" src=""/>
+    <img id="inc_type_icon" ng-src="{{inc_icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div class="clear_both"></div>
 </div>
