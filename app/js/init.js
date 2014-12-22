@@ -1,44 +1,9 @@
-/**
- * Created with IntelliJ IDEA.
- * User: cooksha
- * Date: 7/27/14
- * Time: 12:30 PM
- */
-
-function initDialogs() {
-    $( ".dialog" ).dialog({
-        autoOpen: false,
-        modal: true
-    });
-    $( "#sector_name_dlg" ).dialog( "option", "width", 730 );
-    $( "#par-dlg" ).dialog( "option", "width", 475 );
-    $( "#bnch_dlg" ).dialog( "option", "width", 515 );
-    $( "#units_dlg" ).dialog( "option", "width", 855 );
-    $( "#actions_dlg" ).dialog( "option", "width", 545 );
-    $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
-    $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
-    $( "#osr_dlg" ).dialog( "option", "width", 420 );
-    $( "#objectives_dlg" ).dialog( "option", "width", 230 );
-    $( "#iap_dlg" ).dialog( "option", "width", 616 );
-    $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
-    $( "#address_dialog" ).dialog( "option", "width", 450 );
-    $( "#reports_dlg" ).dialog( "option", "width", 550 );
-
-    $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
-
-}
-
-function init() {
-    initDialogs();
-}
 
 document.addEventListener('click', function (event) {
     if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {
         event.stopPropagation();
     }
 }, true);
-
-$( document ).ready(init);
 
 Array.prototype.contains = function(obj) {
     var i = this.length;
