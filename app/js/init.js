@@ -85,3 +85,4 @@ Array.prototype.propertiesToArray = function() {
 Array.prototype.clone = function() {
     return this.concat();
 }
+
