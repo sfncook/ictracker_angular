@@ -204,6 +204,8 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                 }
             }
             $scope.tbar_sectors.push(sector);
+            sector.addHandlerForSet(function(){console.log("Hello!");});
+            console.log(sector);
         }//for col
     }//for row
 
@@ -312,11 +314,11 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
         });
 
     $scope.selectSector = function(catalog_sector) {
-        $scope.selectedSector.name      =catalog_sector.name;
-        $scope.selectedSector.hasClock  =catalog_sector.hasClock;
-        $scope.selectedSector.hasAcctBtn=catalog_sector.hasAcctBtn;
-        $scope.selectedSector.hasPsiBtn =catalog_sector.hasPsiBtn;
-        $scope.selectedSector.hasActions=catalog_sector.hasActions;
+        $scope.selectedSector.set('name',       catalog_sector.name);
+        $scope.selectedSector.set('hasClock'  , catalog_sector.hasClock);
+        $scope.selectedSector.set('hasAcctBtn', catalog_sector.hasAcctBtn);
+        $scope.selectedSector.set('hasPsiBtn' , catalog_sector.hasPsiBtn);
+        $scope.selectedSector.set('hasActions', catalog_sector.hasActions);
 
         if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
 
