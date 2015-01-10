@@ -1,6 +1,12 @@
+Sector.prototype = Object.create(MutableObject.prototype);
+Sector.prototype.constructor = Sector;
+
 function Sector(name) // Constructor
 {
-    this.name = name;
+    // super
+    this.init();
+
+    this.set('name', name);
     this.units = [];
     this.selectedUnit = new Unit();
     this.acctUnit = {'name': '@acct'};
@@ -18,8 +24,6 @@ function Sector(name) // Constructor
     this.unable_primary = false;
     this.unable_secondary = false;
 }
-
-Sector.inherits(MutableObject);
 
 /*
  * Return true if unit was added and false if unit was removed.

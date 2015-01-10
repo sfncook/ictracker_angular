@@ -182,6 +182,7 @@ app.controller('TbarContainer', function($scope, dialogSvc){
     for(var rowi=0; rowi<init_row_count; rowi++) {
         for(var coli=0; coli<col_count; coli++) {
             var sector = new Sector("Sector Name");
+
             if(coli==col_count-1) {
                 if(rowi==0) {
                     sector.name = "RESCUE";
@@ -204,8 +205,10 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                 }
             }
             $scope.tbar_sectors.push(sector);
-            sector.addHandlerForSet(function(){console.log("Hello!");});
-            console.log(sector);
+            sector.addHandlerForSet('name', function(attr, value){
+                console.log("Hello! "+attr+" "+value);
+            });
+
         }//for col
     }//for row
 
