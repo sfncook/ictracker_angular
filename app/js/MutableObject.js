@@ -12,9 +12,7 @@ function MutableObject() {
 }
 
 MutableObject.prototype.init = function () {
-    this.handlers = {
-        'set':{}
-    };
+    this.txSwitches = {};
 }
 
 MutableObject.prototype.get = function (attr) {
@@ -24,17 +22,13 @@ MutableObject.prototype.get = function (attr) {
 MutableObject.prototype.set = function (attr, value) {
     this[attr] = value;
 
-    if(this.handlers['set'][attr]) {
-        for(var i=0; i<this.handlers['set'][attr].length; i++) {
-            this.handlers['set'][attr][i](attr, value);
-        }
+    if(this.txSwitches[attr]) {
+        txs.push("set,"+attr+","+value);
     }
+
 }
 
-MutableObject.prototype.addHandlerForSet = function (attr, func) {
-    if(typeof this.handlers['set'][attr]=='undefined') {
-        this.handlers['set'][attr] = [];
-    }
-    this.handlers['set'][attr].push(func);
+MutableObject.prototype.addTxSwitch = function (attr, isOn) {
+    this.txSwitches[attr] = isOn || true;
 }
 

@@ -205,10 +205,6 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                 }
             }
             $scope.tbar_sectors.push(sector);
-            sector.addHandlerForSet('name', function(attr, value){
-                console.log("Hello! "+attr+" "+value);
-            });
-
         }//for col
     }//for row
 

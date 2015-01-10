@@ -23,6 +23,8 @@ function Sector(name) // Constructor
     this.bnch = 0;
     this.unable_primary = false;
     this.unable_secondary = false;
+
+    this.addTxSwitch('name');
 }
 
 /*
