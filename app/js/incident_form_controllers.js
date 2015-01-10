@@ -407,7 +407,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
 
     $scope.selectUnit = function(unit) {
         if($scope.forAcct) {
-            $scope.selectedSector.setAcctUnit(unit);
+            $scope.selectedSector.set('acctUnit',unit);
             $scope.forAcct=false;
             $("#units_dlg").dialog( "close" );
         } if($scope.forDispUnits) {

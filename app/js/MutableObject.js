@@ -23,7 +23,8 @@ MutableObject.prototype.set = function (attr, value) {
     this[attr] = value;
 
     if(this.txSwitches[attr]) {
-        txs.push("set,"+attr+","+value);
+//        txs.push("set,"+attr+","+value);
+        txs.push(new Tx("set", attr, value));
     }
 
 }

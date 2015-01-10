@@ -25,6 +25,8 @@ function Sector(name) // Constructor
     this.unable_secondary = false;
 
     this.addTxSwitch('name');
+    this.addTxSwitch('units');
+    this.addTxSwitch('acctUnit');
 }
 
 /*
