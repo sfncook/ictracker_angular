@@ -3,6 +3,12 @@
 var app = angular.module("ictApp", ['gridster']);
 
 
+var IncidentObject = Parse.Object.extend("IncidentObject");
+var incidentObject = new IncidentObject();
+incidentObject.set("incNum", "inc2345");
+incidentObject.relation("sectors");
+incidentObject.save();
+
 function initDialogs() {
     $( ".dialog" ).dialog({
         autoOpen: false,
@@ -205,6 +211,9 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                 }
             }
             $scope.tbar_sectors.push(sector);
+            var sectors = incidentObject.get("sectors");
+            sectors.push(sector);
+            incidentObject.set("sectors", sectors);
         }//for col
     }//for row
 
