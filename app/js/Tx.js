@@ -7,6 +7,7 @@
  */
 
 function Tx(action, attr, value) {
+    this.timestampe = (new Date()).getTime();
     this.action = action;
     this.attr = attr;
     this.value = value;

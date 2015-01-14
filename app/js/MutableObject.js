@@ -23,10 +23,24 @@ MutableObject.prototype.set = function (attr, value) {
     this[attr] = value;
 
     if(this.txSwitches[attr]) {
-//        txs.push("set,"+attr+","+value);
         txs.push(new Tx("set", attr, value));
     }
+}
 
+MutableObject.prototype.add = function (attr, value) {
+    this[attr].push(value);
+
+    if(this.txSwitches[attr]) {
+        txs.push(new Tx("add", attr, value));
+    }
+}
+
+MutableObject.prototype.remByVal = function (attr, value) {
+    this[attr].remByVal(value);
+
+    if(this.txSwitches[attr]) {
+        txs.push(new Tx("remByVal", attr, value));
+    }
 }
 
 MutableObject.prototype.addTxSwitch = function (attr, isOn) {

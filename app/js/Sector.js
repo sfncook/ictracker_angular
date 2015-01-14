@@ -37,10 +37,10 @@ Sector.prototype.toggleUnit = function (unit) {
 
     var wasAdded;
     if (this.units.contains(unit)) {
-        this.units.remByVal(unit);
+        this.remByVal('units', unit);
         wasAdded = false;
     } else {
-        this.units.push(unit);
+        this.add('units', unit);
         wasAdded = true;
     }
 

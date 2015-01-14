@@ -1,5 +1,11 @@
+Unit.prototype = Object.create(MutableObject.prototype);
+Unit.prototype.constructor = Unit;
+
 function Unit(name, type, city) // Constructor
 {
+    // super
+    this.init();
+
     this.name = name;
     this.type = type;
     this.city = city;
