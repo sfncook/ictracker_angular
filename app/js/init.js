@@ -1,3 +1,5 @@
+Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
+
 document.addEventListener('click', function (event) {
     if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {
         event.stopPropagation();
@@ -82,3 +84,28 @@ Array.prototype.propertiesToArray = function () {
 Array.prototype.clone = function () {
     return this.concat();
 }
+
+//
+//var TestObject = Parse.Object.extend("TestObject");
+//var testObject = new TestObject();
+//testObject.save({foo: "bar"}).then(function(object) {
+//    alert("yay! it worked");
+//});
+//
+//var user = new Parse.User();
+//user.set("username", "my name");
+//user.set("password", "my pass");
+//user.set("email", "email@example.com");
+//
+//// other fields can be set just like with Parse.Object
+//user.set("phone", "650-555-0000");
+//
+//user.signUp(null, {
+//    success: function(user) {
+//        // Hooray! Let them use the app now.
+//    },
+//    error: function(user, error) {
+//        // Show the error message somewhere and let the user try again.
+//        alert("Error: " + error.code + " " + error.message);
+//    }
+//});
