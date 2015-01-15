@@ -2,13 +2,6 @@
 
 var app = angular.module("ictApp", ['gridster']);
 
-
-var IncidentObject = Parse.Object.extend("IncidentObject");
-var incidentObject = new IncidentObject();
-incidentObject.set("incNum", "inc2345");
-incidentObject.relation("sectors");
-incidentObject.save();
-
 function initDialogs() {
     $( ".dialog" ).dialog({
         autoOpen: false,
@@ -211,9 +204,6 @@ app.controller('TbarContainer', function($scope, dialogSvc){
                 }
             }
             $scope.tbar_sectors.push(sector);
-            var sectors = incidentObject.get("sectors");
-            sectors.push(sector);
-            incidentObject.set("sectors", sectors);
         }//for col
     }//for row
 
@@ -384,7 +374,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             for(var i = 0; i < data.length; i++) {
                 var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
                 var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, new Unit(data[i].unit, data[i].type, data[i].city));
+                var unit = type.units.putIfAbsent(data[i].unit, new Unit(data[i].unit, data[i].type, data[i].city, false));
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;

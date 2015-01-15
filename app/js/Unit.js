@@ -1,7 +1,19 @@
 Unit.prototype = Object.create(MutableObject.prototype);
 Unit.prototype.constructor = Unit;
 
-function Unit(name, type, city) // Constructor
+var UnitParseObj = Parse.Object.extend("UnitParseObj");
+
+Unit.prototype.toggleAction = function(action)
+{
+    if(this.actions.contains(action)) {
+        this.actions.remByVal(action);
+    } else {
+        this.actions.push(action);
+    }
+}
+
+// boolean storeObj - true=store object on backend, false=do not
+function Unit(oldUnit, storeObj) // Constructor
 {
     // super
     this.init();
@@ -14,14 +26,47 @@ function Unit(name, type, city) // Constructor
     this.actions = [];
     this.manyPeopleHavePar = 0;
     this.hasPar = false;
+
+    this.storeObj = storeObj||false;
+    if(this.storeObj) {
+        this.parseObj = new UnitParseObj();
+        this.updateParse();
+    }
 }
 
-Unit.prototype.toggleAction = function(action)
+// boolean storeObj - true=store object on backend, false=do not
+function Unit(name, type, city, storeObj) // Constructor
 {
-    if(this.actions.contains(action)) {
-        this.actions.remByVal(action);
-    } else {
-        this.actions.push(action);
+    // super
+    this.init();
+
+    this.name = name;
+    this.type = type;
+    this.city = city;
+    this.par = 'P';
+    this.psi = 4000;
+    this.actions = [];
+    this.manyPeopleHavePar = 0;
+    this.hasPar = false;
+
+    this.storeObj = storeObj||false;
+    if(this.storeObj) {
+        this.parseObj = new UnitParseObj();
+        this.updateParse();
+    }
+}
+
+Unit.prototype.updateParse = function() {
+    if(this.storeObj) {
+        this.parseObj.set("name", this.name);
+        this.parseObj.set("type", this.type);
+        this.parseObj.set("city", this.city);
+        this.parseObj.set("par", this.par);
+        this.parseObj.set("psi", this.psi);
+        this.parseObj.set("actions", this.actions);
+        this.parseObj.set("manyPeopleHavePar", this.manyPeopleHavePar);
+        this.parseObj.set("hasPar", this.hasPar);
+        this.parseObj.save();
     }
 }
 
@@ -33,6 +78,7 @@ Unit.prototype.setPar = function(newPar) {
     } else {
         this.hasPar = false;
     }
+    this.updateParse();
 }
 
 Unit.prototype.toggleHasPar = function() {
@@ -46,6 +92,7 @@ Unit.prototype.toggleHasPar = function() {
     } else {
         this.hasPar = false;
     }
+    this.updateParse();
 }
 
 Unit.prototype.setHasPar = function(newHasPar) {
@@ -55,4 +102,5 @@ Unit.prototype.setHasPar = function(newHasPar) {
     } else {
         this.manyPeopleHavePar = 0;
     }
+    this.updateParse();
 }

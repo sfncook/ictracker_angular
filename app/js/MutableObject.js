@@ -47,3 +47,5 @@ MutableObject.prototype.addTxSwitch = function (attr, isOn) {
     this.txSwitches[attr] = isOn || true;
 }
 
+MutableObject.prototype.updateParse = function() {
+}

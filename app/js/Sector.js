@@ -40,6 +40,7 @@ Sector.prototype.toggleUnit = function (unit) {
         this.remByVal('units', unit);
         wasAdded = false;
     } else {
+        var newUnit = new Unit(data[i].unit, data[i].type, data[i].city, false);
         this.add('units', unit);
         wasAdded = true;
     }
