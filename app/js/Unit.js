@@ -13,28 +13,6 @@ Unit.prototype.toggleAction = function(action)
 }
 
 // boolean storeObj - true=store object on backend, false=do not
-function Unit(oldUnit, storeObj) // Constructor
-{
-    // super
-    this.init();
-
-    this.name = name;
-    this.type = type;
-    this.city = city;
-    this.par = 'P';
-    this.psi = 4000;
-    this.actions = [];
-    this.manyPeopleHavePar = 0;
-    this.hasPar = false;
-
-    this.storeObj = storeObj||false;
-    if(this.storeObj) {
-        this.parseObj = new UnitParseObj();
-        this.updateParse();
-    }
-}
-
-// boolean storeObj - true=store object on backend, false=do not
 function Unit(name, type, city, storeObj) // Constructor
 {
     // super

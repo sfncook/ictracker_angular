@@ -374,7 +374,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             for(var i = 0; i < data.length; i++) {
                 var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
                 var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, new Unit(data[i].unit, data[i].type, data[i].city, false));
+                var unit = type.units.putIfAbsent(data[i].unit, new CatalogUnit(data[i].unit, data[i].type, data[i].city));
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;
@@ -404,22 +404,23 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         }
     };
 
-    $scope.selectUnit = function(unit) {
+    $scope.selectUnit = function(catalogUnit) {
         if($scope.forAcct) {
-            $scope.selectedSector.set('acctUnit',unit);
+            $scope.selectedSector.set('acctUnit',catalogUnit);
             $scope.forAcct=false;
             $("#units_dlg").dialog( "close" );
         } if($scope.forDispUnits) {
-            if($scope.dispatechedUnits.contains(unit)){
-                $scope.dispatechedUnits.remByVal(unit);
+            if($scope.dispatechedUnits.contains(catalogUnit)){
+                $scope.dispatechedUnits.remByVal(catalogUnit);
             } else {
-                $scope.dispatechedUnits.push(unit);
+                $scope.dispatechedUnits.push(catalogUnit);
             }
         } else {
-            var wasAdded = $scope.selectedSector.toggleUnit(unit);
+            var newUnit = new Unit(catalogUnit.unit, catalogUnit.type, catalogUnit.city, true);
+            var wasAdded = $scope.selectedSector.toggleUnit(newUnit);
             if(wasAdded) {
-                if(!$scope.dispatechedUnits.contains(unit)){
-                    $scope.dispatechedUnits.push(unit);
+                if(!$scope.dispatechedUnits.contains(catalogUnit)){
+                    $scope.dispatechedUnits.push(catalogUnit);
                 }
 
                 var sectorName = $scope.selectedSector.name;
@@ -436,7 +437,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                     dialogSvc.setRehab();
                 }
             } else {
-                $scope.dispatechedUnits.remByVal(unit);
+                $scope.dispatechedUnits.remByVal(catalogUnit);
             }
         }
     };

@@ -32,28 +32,28 @@ function Sector(name) // Constructor
 /*
  * Return true if unit was added and false if unit was removed.
  */
-Sector.prototype.toggleUnit = function (unit) {
+Sector.prototype.toggleUnit = function (catalogUnit) {
     var isFirstUnit = this.units.length == 0;
 
     var wasAdded;
-    if (this.units.contains(unit)) {
-        this.remByVal('units', unit);
+    if (this.units.contains(catalogUnit)) {
+        this.remByVal('units', catalogUnit);
         wasAdded = false;
     } else {
-        var newUnit = new Unit(data[i].unit, data[i].type, data[i].city, false);
-        this.add('units', unit);
+        var newUnit = new Unit(catalogUnit.unit, catalogUnit.type, catalogUnit.city, true);
+        this.add('units', newUnit);
         wasAdded = true;
+
+        if (isFirstUnit) {
+            newUnit.actions = this.selectedUnit.actions.clone();
+            this.selectedUnit = newUnit;
+        }
     }
 
     if (this.units.length > 0) {
         this.parAvailable = true;
     } else {
         this.parAvailable = false;
-    }
-
-    if (isFirstUnit) {
-        unit.actions = this.selectedUnit.actions.clone();
-        this.selectedUnit = unit;
     }
 
     return wasAdded;
