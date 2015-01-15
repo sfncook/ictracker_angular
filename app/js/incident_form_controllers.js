@@ -416,8 +416,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                 $scope.dispatechedUnits.push(catalogUnit);
             }
         } else {
-            var newUnit = new Unit(catalogUnit.unit, catalogUnit.type, catalogUnit.city, true);
-            var wasAdded = $scope.selectedSector.toggleUnit(newUnit);
+            var wasAdded = $scope.selectedSector.toggleUnit(catalogUnit);
             if(wasAdded) {
                 if(!$scope.dispatechedUnits.contains(catalogUnit)){
                     $scope.dispatechedUnits.push(catalogUnit);
