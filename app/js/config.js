@@ -1,0 +1,1 @@
+var ENABLE_SERVER_COMM = true;

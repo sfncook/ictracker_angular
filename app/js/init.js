@@ -1,4 +1,3 @@
-Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
 
 document.addEventListener('click', function (event) {
     if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {
@@ -83,6 +82,11 @@ Array.prototype.propertiesToArray = function () {
 
 Array.prototype.clone = function () {
     return this.concat();
+}
+
+if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+    //Parse.initialize - Doesn't do much, only sets key variables.  Does not contact server.
+    Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
 }
 
 //

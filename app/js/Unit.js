@@ -1,7 +1,4 @@
-Unit.prototype = Object.create(MutableObject.prototype);
-Unit.prototype.constructor = Unit;
-
-var UnitParseObj = Parse.Object.extend("UnitParseObj");
+var UnitParseObj = Parse.Object.extend("Unit");
 
 Unit.prototype.toggleAction = function(action)
 {
@@ -15,9 +12,6 @@ Unit.prototype.toggleAction = function(action)
 // boolean storeObj - true=store object on backend, false=do not
 function Unit(name, type, city, storeObj) // Constructor
 {
-    // super
-    this.init();
-
     this.name = name;
     this.type = type;
     this.city = city;
@@ -35,7 +29,7 @@ function Unit(name, type, city, storeObj) // Constructor
 }
 
 Unit.prototype.updateParse = function() {
-    if(this.storeObj) {
+    if(this.storeObj && ENABLE_SERVER_COMM) {
         this.parseObj.set("name", this.name);
         this.parseObj.set("type", this.type);
         this.parseObj.set("city", this.city);
