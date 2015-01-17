@@ -1,3 +1,8 @@
+/*
+ * This file is used to initialize all forms and should not be specialized.
+ *  - Add features to JS object
+ *  - Initialize Parse.com
+ */
 
 document.addEventListener('click', function (event) {
     if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {

@@ -2,6 +2,13 @@
 
 var app = angular.module("ictApp", ['gridster']);
 
+function init() {
+    initDialogs();
+    initIncidentData();
+}
+function initIncidentData() {
+
+}
 function initDialogs() {
     $( ".dialog" ).dialog({
         autoOpen: false,
@@ -24,7 +31,7 @@ function initDialogs() {
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
 }
-$( document ).ready(initDialogs);
+$( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
