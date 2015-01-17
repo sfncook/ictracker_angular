@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module("ictApp", []);
+var app = angular.module("ictApp", ['ParseServices']);
 
-app.controller('SplashCtrl', function($scope, $http){
+app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
     $scope.inc_num = "";
     $scope.inc_add = "";
@@ -16,9 +16,15 @@ app.controller('SplashCtrl', function($scope, $http){
         window.location.href = urlLink;
     };
 
-    $http.get('data/inc_types.json').
-        success(function(data){
-            $scope.inc_types = data;
-        });
+    var query = new Parse.Query(Parse.Object.extend('IncidentType'));
+    ParseQuery(query, {functionToCall:'find'}).then(function(result){
+//        $scope.newContact = new ParseObject(obj, ['firstName','lastName','email']);
+        var data = new Array();
+        for(var i=0; i<result.length; i++) {
+            var obj = new ParseObject(result[i], ['type','icon','text']);
+            data.push(obj);
+        }
+        $scope.inc_types = data;
+    });
 
 });
