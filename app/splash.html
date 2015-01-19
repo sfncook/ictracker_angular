@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="ictApp">
 <head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
     <title>ICT</title>
-    <meta name="description" content="Incident Command Tracker" />
+    <meta name="description" content="Incident Command Tracker"/>
     <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
 
     <!--CSS-->
-    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css" />
-    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_splash.css" />
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_splash.css"/>
 
     <!--JS-->
     <script src="//www.parsecdn.com/js/parse-1.3.3.js"></script>
@@ -33,21 +33,22 @@
                 <div id="splash_title">Incident Command Tracker</div>
                 <div class="incident_info_entry">
                     <div>Incident #:</div>
-                    <input id="inc_num_input" name="inc_num_input" type="text" ng-model="incidentObj.inc_number" />
+                    <input id="inc_num_input" name="inc_num_input" type="text" ng-model="incidentObj.inc_number"/>
                 </div>
                 <div class="incident_info_entry">
                     <div>Address:</div>
-                    <input id="address_input" name="address_input" type="text" ng-model="incidentObj.inc_address" />
+                    <input id="address_input" name="address_input" type="text" ng-model="incidentObj.inc_address"/>
                 </div>
             </div>
             <div class="clear_both"></div>
 
             <div class="splash_start_btns_div">
                 <button class="splash_start_btn"
-                     ng-repeat="incident_btn in inc_types"
-                     ng-class="{hidden_div: incident_btn.hidden}"
-                     ng-click="clickSplashBtn(incident_btn)">
+                        ng-repeat="incident_btn in inc_types"
+                        ng-class="{hidden_div: incident_btn.hidden}"
+                        ng-click="clickSplashBtn(incident_btn)">
                     <img class="splash_start_btn_icon" ng-src="{{incident_btn.icon}}"/>
+
                     <div class="splash_start_btn_text">{{incident_btn.text}}</div>
                 </button>
                 <div class="clear_both"></div>
@@ -57,28 +58,20 @@
 
         <table class="splash_inctable">
             <thead>
-            <tr>
-                <td></td>
-                <td>Number</td>
-                <td>Type</td>
-            </tr>
+                <tr>
+                    <td></td>
+                    <td>Number</td>
+                    <td>Type</td>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td><button class="load_btn">Load</button></td>
-                <td>abc123</td>
-                <td>Fire</td>
-            </tr>
-            <tr>
-                <td><button class="load_btn">Load</button></td>
-                <td>FD12344</td>
-                <td>Medical</td>
-            </tr>
-            <tr>
-                <td><button class="load_btn">Load</button></td>
-                <td>FD48572</td>
-                <td>ARFF</td>
-            </tr>
+                <tr>
+                    <td>
+                        <button class="load_btn">Load</button>
+                    </td>
+                    <td>abc123</td>
+                    <td>Fire</td>
+                </tr>
             </tbody>
         </table>
 
