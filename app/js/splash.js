@@ -48,7 +48,7 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
         var data = new Array();
         for(var i=0; i<result.length; i++) {
             var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
-            obj.rawParseObjId = result[i].id;
+            obj.rawParseObj = result[i];
             data.push(obj);
         }
         $scope.inc_types = data;
@@ -58,7 +58,7 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
     loadIncidentList($scope, ParseObject, ParseQuery);
 
     // Respond to incident type button click
-    $scope.clickIncidentTypeBtn = function(incidentType) {
+    $scope.createAndLoadNewIncident = function(incidentType) {
         var IncidentTypeParseObj = Parse.Object.extend("IncidentType");
         var incidentTypeParseObj = new IncidentTypeParseObj();
         incidentTypeParseObj.id = incidentType.rawParseObjId;
@@ -70,13 +70,14 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
         }
 
         $scope.incidentObj.save();
+        console.log($scope.incidentObj.id);
 
-        $scope.loadIncident($scope.inc_number);
+        $scope.loadIncident($scope.incidentObj.id);
     };
 
 
-    $scope.loadIncident = function(inc_number) {
-        var urlLink = "incident_form.html?inc_num="+inc_number;
+    $scope.loadIncident = function(incident) {
+        var urlLink = "incident_form.html?i="+incident.rawParseObj.id;
         window.location.href = urlLink;
     };
 
