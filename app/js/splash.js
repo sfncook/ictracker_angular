@@ -26,12 +26,27 @@ function loadIncidentList($scope, ParseObject, ParseQuery) {
         for(var i=0; i<result.length; i++) {
 
             var incident = new ParseObject(result[i], ['inc_number','inc_address','inc_type']);
-            incident.rawParseObj = result[i];
             fetchTypeForIncident(incident, $scope);
 
             data.push(incident);
         }
         $scope.incident_list = data;
+    });
+}
+
+function loadIncidentTypes($scope, ParseObject, ParseQuery) {
+    // reset list
+    $scope.inc_types = new Array();
+
+    var query = new Parse.Query(Parse.Object.extend('IncidentType'));
+    query.ascending("order");
+    ParseQuery(query, {functionToCall:'find'}).then(function(result){
+        var data = new Array();
+        for(var i=0; i<result.length; i++) {
+            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
+            data.push(obj);
+        }
+        $scope.inc_types = data;
     });
 }
 
@@ -41,18 +56,7 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
     $scope.incidentObj = new ParseObject(new IncidentParseObj(), ['inc_number','inc_address','inc_type']);
 
     // Incident Types
-    $scope.inc_types = new Array();
-    var query = new Parse.Query(Parse.Object.extend('IncidentType'));
-    query.ascending("order");
-    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-        var data = new Array();
-        for(var i=0; i<result.length; i++) {
-            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
-            obj.rawParseObj = result[i];
-            data.push(obj);
-        }
-        $scope.inc_types = data;
-    });
+    loadIncidentTypes($scope, ParseObject, ParseQuery);
 
     // Load incident list
     loadIncidentList($scope, ParseObject, ParseQuery);
@@ -77,14 +81,14 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
 
     $scope.loadIncident = function(incident) {
-        var urlLink = "incident_form.html?i="+incident.rawParseObj.id;
+        var urlLink = "incident_form.html?i="+incident.data.id;
         window.location.href = urlLink;
     };
 
     $scope.deleIncident = function(incident) {
         var response = confirm("Are you sure you want to delete incident "+incident.inc_number+"?");
         if (response == true) {
-            incident.rawParseObj.destroy({
+            incident.data.destroy({
                 success: function(myObject) {
                     loadIncidentList($scope, ParseObject, ParseQuery);
                 },
