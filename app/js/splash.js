@@ -9,7 +9,7 @@ function fetchTypeForIncident(incident, $scope) {
             success: function(type) {
                 $scope.$apply(function(){
 //                console.log(incident.inc_number+' - '+ type.get('icon')+" "+type.get('text')+" "+type.get('type'));
-                    incident.inc_type_text = type.get('text');
+                    incident.inc_type_text = type.get('nameLong');
                 });
             }
         });
@@ -63,20 +63,19 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
     // Respond to incident type button click
     $scope.createAndLoadNewIncident = function(incidentType) {
-        var IncidentTypeParseObj = Parse.Object.extend("IncidentType");
-        var incidentTypeParseObj = new IncidentTypeParseObj();
-        incidentTypeParseObj.id = incidentType.rawParseObjId;
-        $scope.incidentObj.type = incidentTypeParseObj;
+        $scope.incidentObj.inc_type = incidentType.data;
 
         // Default value for inc_number
         if(!$scope.incidentObj.inc_number) {
             $scope.incidentObj.inc_number = "[Incident Number]"
         }
 
-        $scope.incidentObj.save();
-        console.log($scope.incidentObj.id);
-
-        $scope.loadIncident($scope.incidentObj.id);
+        $scope.incidentObj.save().then(function(obj) {
+            var incidentObj = new ParseObject(obj, ['inc_number','inc_address','inc_type']);
+            $scope.loadIncident(incidentObj);
+        }, function(error) {
+            console.log("Error saving new incident: "+error);
+        });;
     };
 
 
