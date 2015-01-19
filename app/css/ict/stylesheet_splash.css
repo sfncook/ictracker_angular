@@ -57,6 +57,12 @@ body.splashpage {
 .splash_start_btns_div {
     float:left;
 }
+.splash_start_btn:nth-of-type(1){
+    margin-left: 210px;
+}
+.splash_start_btn:nth-of-type(2){
+    margin-right: 210px;
+}
 .splash_start_btn {
     height: 70px;
     width: 180px;
@@ -89,12 +95,18 @@ body.splashpage {
 .splash_inctable td{
     padding:5px;
     border: 1px solid #666;
+    text-align: left;
+    background: #C3E3FD;
 }
 .load_btn {
     background: lightgreen;
 }
 .delt_btn {
     background: pink;
+}
+.inc_type_icon {
+    width: 30px;
+    height: 30px;
 }
 
 .copyright_div {

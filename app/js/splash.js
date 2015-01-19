@@ -10,6 +10,7 @@ function fetchTypeForIncident(incident, $scope) {
                 $scope.$apply(function(){
 //                console.log(incident.inc_number+' - '+ type.get('icon')+" "+type.get('text')+" "+type.get('type'));
                     incident.inc_type_text = type.get('nameLong');
+                    incident.inc_type_icon = type.get('icon');
                 });
             }
         });
