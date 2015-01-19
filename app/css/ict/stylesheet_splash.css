@@ -93,6 +93,9 @@ body.splashpage {
 .load_btn {
     background: lightgreen;
 }
+.delt_btn {
+    background: pink;
+}
 
 .copyright_div {
     position: fixed;

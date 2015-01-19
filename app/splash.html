@@ -44,12 +44,11 @@
 
             <div class="splash_start_btns_div">
                 <button class="splash_start_btn"
-                        ng-repeat="incident_btn in inc_types"
-                        ng-class="{hidden_div: incident_btn.hidden}"
-                        ng-click="clickSplashBtn(incident_btn)">
-                    <img class="splash_start_btn_icon" ng-src="{{incident_btn.icon}}"/>
+                        ng-repeat="incidentType in inc_types"
+                        ng-click="clickIncidentTypeBtn(incidentType)">
+                    <img class="splash_start_btn_icon" ng-src="{{incidentType.icon}}"/>
 
-                    <div class="splash_start_btn_text">{{incident_btn.text}}</div>
+                    <div class="splash_start_btn_text">{{incidentType.nameLong}}</div>
                 </button>
                 <div class="clear_both"></div>
             </div>
@@ -60,6 +59,7 @@
             <thead>
                 <tr>
                     <td></td>
+                    <td></td>
                     <td>Number</td>
                     <td>Type</td>
                 </tr>
@@ -67,7 +67,12 @@
             <tbody>
                 <tr ng-repeat="incident in incident_list">
                     <td>
-                        <button class="load_btn">Load</button>
+                        <button class="load_btn"
+                                ng-click="loadIncident(incident)">Load</button>
+                    </td>
+                    <td>
+                        <button class="delt_btn"
+                                ng-click="deleIncident(incident)">Delete</button>
                     </td>
                     <td>{{incident.inc_number}}</td>
                     <td>{{incident.inc_type_text}}</td>
