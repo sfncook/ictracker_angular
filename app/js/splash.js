@@ -71,12 +71,13 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
         $scope.incidentObj.save();
 
-//        var urlLink = "incident_form.html?inc_num="+$scope.incidentObj.inc_number;
-//        window.location.href = urlLink;
+        $scope.loadIncident($scope.inc_number);
     };
 
 
-    $scope.loadIncident = function(incident) {
+    $scope.loadIncident = function(inc_number) {
+        var urlLink = "incident_form.html?inc_num="+inc_number;
+        window.location.href = urlLink;
     };
 
     $scope.deleIncident = function(incident) {
