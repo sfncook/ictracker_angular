@@ -4,14 +4,16 @@ var app = angular.module("ictApp", ['ParseServices']);
 
 function fetchTypeForIncident(incident, $scope) {
     var type = incident.inc_type;
-    type.fetch({
-        success: function(type) {
-            $scope.$apply(function(){
+    if(type) {
+        type.fetch({
+            success: function(type) {
+                $scope.$apply(function(){
 //                console.log(incident.inc_number+' - '+ type.get('icon')+" "+type.get('text')+" "+type.get('type'));
-                incident.inc_type_text = type.get('text');
-            });
-        }
-    });
+                    incident.inc_type_text = type.get('text');
+                });
+            }
+        });
+    }
 }
 
 app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
@@ -55,6 +57,12 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
         var incidentTypeParseObj = new IncidentTypeParseObj();
         incidentTypeParseObj.id = incident_btn.rawParseObjId;
         $scope.incidentObj.type = incidentTypeParseObj;
+
+        // Default value for inc_number
+        if(!$scope.incidentObj.inc_number) {
+            $scope.incidentObj.inc_number = "[Incident Number]"
+        }
+
         $scope.incidentObj.save();
 
 //        var urlLink = "incident_form.html?inc_num="+$scope.inc_num;

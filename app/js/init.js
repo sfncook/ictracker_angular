@@ -89,6 +89,10 @@ Array.prototype.clone = function () {
     return this.concat();
 }
 
+String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+};
+
 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
     //Parse.initialize - Doesn't do much, only sets key variables.  Does not contact server.
     Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
