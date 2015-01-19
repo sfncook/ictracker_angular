@@ -65,12 +65,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr ng-repeat="incident in incident_list">
                     <td>
                         <button class="load_btn">Load</button>
                     </td>
-                    <td>abc123</td>
-                    <td>Fire</td>
+                    <td>{{incident.inc_number}}</td>
+                    <td>{{incident.inc_type_text}}</td>
                 </tr>
             </tbody>
         </table>

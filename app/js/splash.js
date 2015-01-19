@@ -2,12 +2,25 @@
 
 var app = angular.module("ictApp", ['ParseServices']);
 
+function fetchTypeForIncident(incident, $scope) {
+    var type = incident.inc_type;
+    type.fetch({
+        success: function(type) {
+            $scope.$apply(function(){
+//                console.log(incident.inc_number+' - '+ type.get('icon')+" "+type.get('text')+" "+type.get('type'));
+                incident.inc_type_text = type.get('text');
+            });
+        }
+    });
+}
+
 app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
     var IncidentParseObj = Parse.Object.extend('Incident');
     $scope.incidentObj = new ParseObject(new IncidentParseObj(), ['inc_number','inc_address','inc_type']);
 
-    // Incident Type Buttons
+    // Incident Types
+    $scope.inc_types = new Array();
     var query = new Parse.Query(Parse.Object.extend('IncidentType'));
     query.ascending("order");
     ParseQuery(query, {functionToCall:'find'}).then(function(result){
@@ -21,19 +34,19 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
     });
 
     // Previous Incidents List
+    $scope.incident_list = new Array();
     query = new Parse.Query(Parse.Object.extend('Incident'));
 //    query.ascending("order");
     ParseQuery(query, {functionToCall:'find'}).then(function(result){
         var data = new Array();
         for(var i=0; i<result.length; i++) {
-            var type = result[i].get("inc_type");
-            type.fetch({
-                success: function(type) {
-                    console.log(type.get('icon')+" "+type.get('text')+" "+type.get('type'));
-                }
-            });
+
+            var incident = new ParseObject(result[i], ['inc_number','inc_address','inc_type']);
+            fetchTypeForIncident(incident, $scope);
+
+            data.push(incident);
         }
-//        $scope.inc_types = data;
+        $scope.incident_list = data;
     });
 
     // Respond to incident type button click
