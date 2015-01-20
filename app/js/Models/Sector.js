@@ -1,7 +1,7 @@
 function Sector(name) // Constructor
 {
     this.name = name;
-    this.units = [];
+    this.units = new Array();
     this.selectedUnit = new Unit();
     this.acctUnit = {'name': '@acct'};
     this.parAvailable = false;
@@ -26,9 +26,9 @@ Sector.prototype.toggleUnit = function (catalogUnit) {
     var isFirstUnit = this.units.length == 0;
 
     var wasAdded;
-    if (this.units.contains(catalogUnit)) {
-        // TODO: Not working yet
-        this.units.remByVal(catalogUnit);
+    var unit = this.findUnitByName(catalogUnit.name);
+    if (unit!=null) {
+        this.units.remByVal(unit);
         wasAdded = false;
     } else {
         var newUnit = new Unit(catalogUnit.name, catalogUnit.type, catalogUnit.city, true);
@@ -48,6 +48,17 @@ Sector.prototype.toggleUnit = function (catalogUnit) {
     }
 
     return wasAdded;
+}
+
+// Utility method for above
+Sector.prototype.findUnitByName = function (unitName) {
+    for(var i=0; i<this.units.length; i++) {
+        var unit = this.units[i];
+        if(unit.name==unitName) {
+            return unit;
+        }
+    }
+    return null;
 }
 
 Sector.prototype.setAcctUnit = function (unit) {
