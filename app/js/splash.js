@@ -44,7 +44,7 @@ function loadIncidentTypes($scope, ParseObject, ParseQuery) {
     ParseQuery(query, {functionToCall:'find'}).then(function(result){
         var data = new Array();
         for(var i=0; i<result.length; i++) {
-            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
+            var obj = new ParseObject(result[i], IncidentType.model);
             data.push(obj);
         }
         $scope.inc_types = data;
