@@ -75,21 +75,25 @@ app.factory('dialogSvc', function() {
 
 
 app.controller('HeaderContainer2', function($scope, $http, dialogSvc){
-    $scope.inc_num=localStorage['inc_num'];
-    $scope.inc_add=localStorage['inc_add'];
-    $scope.inc_typ=localStorage['inc_typ'];
+    var incidentId = getHttpRequestByName('i');
 
-    if($scope.inc_typ) {
-        $http.get('data/inc_types.json').
-            success(function(data){
-                var inc_types = data;
-                for(var i=0; i<inc_types.length; i++) {
-                    if(inc_types[i].type==$scope.inc_typ) {
-                        $scope.inc_icon =inc_types[i].icon;
-                    }
+    var Incident = Parse.Object.extend("Incident");
+    var query = new Parse.Query(Incident);
+    query.get(incidentId, {
+        success: function(obj) {
+            $scope.inc_num=obj.get('inc_number');
+            $scope.inc_add=obj.get('inc_address');
+            var inc_type = obj.get('inc_type');
+            inc_type.fetch({
+                success: function(inc_type) {
+                    $scope.inc_icon = inc_type.get('icon');
                 }
             });
-    }
+        },
+        error: function(object, error) {
+            console.log("Error "+error);
+        }
+    });
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
