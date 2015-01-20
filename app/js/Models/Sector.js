@@ -1,12 +1,6 @@
-Sector.prototype = Object.create(MutableObject.prototype);
-Sector.prototype.constructor = Sector;
-
 function Sector(name) // Constructor
 {
-    // super
-    this.init();
-
-    this.set('name', name);
+    this.name = name;
     this.units = [];
     this.selectedUnit = new Unit();
     this.acctUnit = {'name': '@acct'};
@@ -23,10 +17,6 @@ function Sector(name) // Constructor
     this.bnch = 0;
     this.unable_primary = false;
     this.unable_secondary = false;
-
-    this.addTxSwitch('name');
-    this.addTxSwitch('units');
-    this.addTxSwitch('acctUnit');
 }
 
 /*
@@ -37,11 +27,12 @@ Sector.prototype.toggleUnit = function (catalogUnit) {
 
     var wasAdded;
     if (this.units.contains(catalogUnit)) {
-        this.remByVal('units', catalogUnit);
+        // TODO: Not working yet
+        this.units.remByVal(catalogUnit);
         wasAdded = false;
     } else {
         var newUnit = new Unit(catalogUnit.name, catalogUnit.type, catalogUnit.city, true);
-        this.add('units', newUnit);
+        this.units.push(newUnit);
         wasAdded = true;
 
         if (isFirstUnit) {
