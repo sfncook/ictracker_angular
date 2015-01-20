@@ -19,6 +19,8 @@ function Sector(name) // Constructor
     this.unable_secondary = false;
 }
 
+Sector.model = ['name','incident','units'];
+
 /*
  * Return true if unit was added and false if unit was removed.
  */

@@ -21,6 +21,7 @@
     <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="js/config.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
     <script src="js/models/Incident.js"></script>
     <script src="js/models/IncidentType.js"></script>
     <script src="js/models/Sector.js"></script>
@@ -101,10 +102,10 @@
 
 <div id="top_header_container" ng-controller="HeaderContainer2">
     <button id="inc_info_btn" class="button_top">
-        <div id="inc_num">{{inc_num}}</div>
-        <div id="inc_add">{{inc_add}}</div>
+        <div id="inc_num">{{incident.inc_number}}</div>
+        <div id="inc_add">{{incident.inc_address}}</div>
     </button>
-    <img id="inc_type_icon" ng-src="{{inc_icon}}"/>
+    <img id="inc_type_icon" ng-src="{{incident.inc_type_icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div class="clear_both"></div>
 </div>

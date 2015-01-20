@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module("ictApp", ['gridster']);
+var app = angular.module("ictApp", ['gridster','ParseServices']);
 
 function init() {
     initDialogs();
@@ -76,27 +76,14 @@ app.factory('dialogSvc', function() {
 });
 
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc){
-    var incidentId = getHttpRequestByName('i');
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery){
+    var incidentObjectId = getHttpRequestByName('i');
 
-    var Incident = Parse.Object.extend("Incident");
-    var query = new Parse.Query(Incident);
-    query.get(incidentId, {
-        success: function(obj) {
-            var incident = new ParseObject(result[i], ['inc_number','inc_address','inc_type']);
-
-            $scope.inc_num=obj.get('inc_number');
-            $scope.inc_add=obj.get('inc_address');
-            var inc_type = obj.get('inc_type');
-            inc_type.fetch({
-                success: function(inc_type) {
-                    $scope.inc_icon = inc_type.get('icon');
-                }
-            });
-        },
-        error: function(object, error) {
-            console.log("Error "+error);
-        }
+    var query = new Parse.Query(Parse.Object.extend('Incident'));
+    query.equalTo("objectId", incidentObjectId);
+    ParseQuery(query, {functionToCall:'first'}).then(function(obj){
+        $scope.incident = new ParseObject(obj, Incident.model);
+        fetchTypeForIncident($scope.incident, $scope);
     });
 });
 
@@ -182,16 +169,16 @@ app.controller('TbarContainer', function($scope, dialogSvc){
 
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
 
-    var query = new Parse.Query(Parse.Object.extend('Sector'));
-    query.equalTo("incident", dialogSvc.inc_number);
-    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-        var data = new Array();
-        for(var i=0; i<result.length; i++) {
-            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
-            data.push(obj);
-        }
-        $scope.inc_types = data;
-    });
+//    var query = new Parse.Query(Parse.Object.extend('Sector'));
+//    query.equalTo("incident", dialogSvc.inc_number);
+//    ParseQuery(query, {functionToCall:'find'}).then(function(result){
+//        var data = new Array();
+//        for(var i=0; i<result.length; i++) {
+//            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
+//            data.push(obj);
+//        }
+//        $scope.inc_types = data;
+//    });
 
     $scope.gridsterOpts = {
         columns:col_count,
