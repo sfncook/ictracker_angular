@@ -35,6 +35,8 @@ $( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
+    var incident;
+
     var openParDlg;
     var showSectorNameDlg;
     var showBnchDlg;
@@ -81,6 +83,8 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc){
     var query = new Parse.Query(Incident);
     query.get(incidentId, {
         success: function(obj) {
+            var incident = new ParseObject(result[i], ['inc_number','inc_address','inc_type']);
+
             $scope.inc_num=obj.get('inc_number');
             $scope.inc_add=obj.get('inc_address');
             var inc_type = obj.get('inc_type');
@@ -177,6 +181,17 @@ app.controller('TbarContainer', function($scope, dialogSvc){
     $("#tbar_container").css("padding-left", left_margin);
 
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
+
+    var query = new Parse.Query(Parse.Object.extend('Sector'));
+    query.equalTo("incident", dialogSvc.inc_number);
+    ParseQuery(query, {functionToCall:'find'}).then(function(result){
+        var data = new Array();
+        for(var i=0; i<result.length; i++) {
+            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
+            data.push(obj);
+        }
+        $scope.inc_types = data;
+    });
 
     $scope.gridsterOpts = {
         columns:col_count,

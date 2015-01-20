@@ -26,7 +26,7 @@ function loadIncidentList($scope, ParseObject, ParseQuery) {
         var data = new Array();
         for(var i=0; i<result.length; i++) {
 
-            var incident = new ParseObject(result[i], ['inc_number','inc_address','inc_type']);
+            var incident = new ParseObject(result[i], Incident.model);
             fetchTypeForIncident(incident, $scope);
 
             data.push(incident);
@@ -54,7 +54,7 @@ function loadIncidentTypes($scope, ParseObject, ParseQuery) {
 app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
 
     var IncidentParseObj = Parse.Object.extend('Incident');
-    $scope.incidentObj = new ParseObject(new IncidentParseObj(), ['inc_number','inc_address','inc_type']);
+    $scope.incidentObj = new ParseObject(new IncidentParseObj(), Incident.model);
 
     // Incident Types
     loadIncidentTypes($scope, ParseObject, ParseQuery);
@@ -72,7 +72,7 @@ app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
         }
 
         $scope.incidentObj.save().then(function(obj) {
-            var incidentObj = new ParseObject(obj, ['inc_number','inc_address','inc_type']);
+            var incidentObj = new ParseObject(obj, Incident.model);
             $scope.loadIncident(incidentObj);
         }, function(error) {
             console.log("Error saving new incident: "+error);
