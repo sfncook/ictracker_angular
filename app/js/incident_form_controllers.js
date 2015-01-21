@@ -81,9 +81,18 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObjec
 
     var query = new Parse.Query(Parse.Object.extend('Incident'));
     query.equalTo("objectId", incidentObjectId);
-    ParseQuery(query, {functionToCall:'first'}).then(function(obj){
-        $scope.incident = new ParseObject(obj, Incident.model);
+    ParseQuery(query, {functionToCall:'first'}).then(function(incidentObj){
+        $scope.incident = new ParseObject(incidentObj, Incident.model);
+        dialogSvc.incident = $scope.incident;
         fetchTypeForIncident($scope.incident, $scope);
+
+        var query2 = new Parse.Query(Parse.Object.extend('Sector'));
+        query2.equalTo("incident", incidentObj);
+        ParseQuery(query2, {functionToCall:'find'}).then(function(sectorsObj){
+            for(var i=0; i<sectorsObj.length; i++) {
+                console.log(sectorsObj[i].get('incident'));
+            }
+        });
     });
 });
 
@@ -155,7 +164,7 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc){
+app.controller('TbarContainer', function($scope, dialogSvc, ParseObject, ParseQuery){
     var window_width = $(window).width();
     var window_height = $(window).height();
     var tbar_width = 290;
@@ -168,17 +177,6 @@ app.controller('TbarContainer', function($scope, dialogSvc){
     $("#tbar_container").css("padding-left", left_margin);
 
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
-
-//    var query = new Parse.Query(Parse.Object.extend('Sector'));
-//    query.equalTo("incident", dialogSvc.inc_number);
-//    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-//        var data = new Array();
-//        for(var i=0; i<result.length; i++) {
-//            var obj = new ParseObject(result[i], ['nameLong','nameShort','icon']);
-//            data.push(obj);
-//        }
-//        $scope.inc_types = data;
-//    });
 
     $scope.gridsterOpts = {
         columns:col_count,

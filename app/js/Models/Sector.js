@@ -19,7 +19,7 @@ function Sector(name) // Constructor
     this.unable_secondary = false;
 }
 
-Sector.model = ['name','incident','units'];
+Sector.model = ['name', 'incident', 'units', 'row', 'col'];
 
 /*
  * Return true if unit was added and false if unit was removed.
