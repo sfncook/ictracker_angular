@@ -1,4 +1,4 @@
-angular.module('TbarServices', [])
+angular.module('TbarServices', ['ParseServices'])
 
     .factory('TbarSectors', function() {
         return new Array();
@@ -29,11 +29,21 @@ angular.module('TbarServices', [])
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', function (GridsterOpts, TbarSectors) {
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', function (GridsterOpts, TbarSectors, ParseObject) {
         return function () {
-            var rescuSector = new Sector("RESCUE");
-            var rehabSector = new Sector("ReHab");
-            var safetSector = new Sector("Safety");
+            var SectorParseObj = Parse.Object.extend('Sector');
+
+            var rescuSector = new ParseObject(new SectorParseObj(), Sector.model);
+            var rehabSector = new ParseObject(new SectorParseObj(), Sector.model);
+            var safetSector = new ParseObject(new SectorParseObj(), Sector.model);
+
+//            var rescuSector = new Sector("RESCUE");
+//            var rehabSector = new Sector("ReHab");
+//            var safetSector = new Sector("Safety");
+
+            rescuSector.name = "RESCUE";
+            rehabSector.name = "ReHab";
+            safetSector.name = "Safety";
 
             rescuSector.col = GridsterOpts.columns - 1;
             rescuSector.row = 0;
@@ -48,7 +58,8 @@ angular.module('TbarServices', [])
 
             var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
             for (var i = 0; i < manySectors; i++) {
-                var sector = new Sector("Sector Name");
+                var sector = new ParseObject(new SectorParseObj(), Sector.model);
+                sector.name = "Sector Name";
                 TbarSectors.push(sector);
             }
         }
@@ -61,7 +72,7 @@ angular.module('TbarServices', [])
     }])
 
     .factory('SaveTbars', ['TbarSectors', function (TbarSectors) {
-        return function (newSector) {
+        return function () {
             for(var i=0; i<TbarSectors.length; i++) {
                 var sector = TbarSectors[i];
                 sector.save();

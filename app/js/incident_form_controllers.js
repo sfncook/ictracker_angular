@@ -68,7 +68,7 @@ app.factory('dialogSvc', function() {
 });
 
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar, SaveTbars){
     var incidentObjectId = getHttpRequestByName('i');
 
     var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
@@ -82,6 +82,7 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObjec
             success: function(sectors) {
                 if(sectors.length==0) {
                     AddDefaultTbars();
+                    SaveTbars();
                 } else {
                     for(var i=0; i<sectors.length; i++) {
                         var sector = new ParseObject(sectors[i], Sector.model);
