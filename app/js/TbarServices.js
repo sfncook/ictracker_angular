@@ -1,5 +1,9 @@
 angular.module('TbarServices', [])
 
+    .factory('TbarSectors', function() {
+        return new Array();
+    })
+
     .factory('GridsterOpts', function () {
         var window_width = $(window).width();
         var window_height = $(window).height();
@@ -25,9 +29,8 @@ angular.module('TbarServices', [])
         };
     })
 
-    .factory('TbarLayout', ['GridsterOpts', function (GridsterOpts) {
-        return function ($scope) {
-
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', function (GridsterOpts, TbarSectors) {
+        return function () {
             var rescuSector = new Sector("RESCUE");
             var rehabSector = new Sector("ReHab");
             var safetSector = new Sector("Safety");
@@ -39,14 +42,29 @@ angular.module('TbarServices', [])
             safetSector.col = GridsterOpts.columns - 1;
             safetSector.row = 2;
 
-            $scope.tbar_sectors.push(rescuSector);
-            $scope.tbar_sectors.push(rehabSector);
-            $scope.tbar_sectors.push(safetSector);
+            TbarSectors.push(rescuSector);
+            TbarSectors.push(rehabSector);
+            TbarSectors.push(safetSector);
 
             var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
             for (var i = 0; i < manySectors; i++) {
                 var sector = new Sector("Sector Name");
-                $scope.tbar_sectors.push(sector);
+                TbarSectors.push(sector);
+            }
+        }
+    }])
+
+    .factory('AddTbar', ['TbarSectors', function (TbarSectors) {
+        return function (newSector) {
+            TbarSectors.push(newSector);
+        }
+    }])
+
+    .factory('SaveTbars', ['TbarSectors', function (TbarSectors) {
+        return function (newSector) {
+            for(var i=0; i<TbarSectors.length; i++) {
+                var sector = TbarSectors[i];
+                sector.save();
             }
         }
     }])

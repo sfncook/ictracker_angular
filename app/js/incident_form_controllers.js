@@ -35,8 +35,6 @@ $( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
-    var incident;
-
     var openParDlg;
     var showSectorNameDlg;
     var showBnchDlg;
@@ -65,41 +63,34 @@ app.factory('dialogSvc', function() {
     var setOnDeck;
     var setRehab;
 
-    var tbar_sectors = [];
-
     return {
-        "tbar_sectors":[]
     };
 });
 
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, TbarLayout){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar){
     var incidentObjectId = getHttpRequestByName('i');
-    $scope.incident = dialogSvc.incident;
 
     var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
     queryIncident.equalTo("objectId", incidentObjectId);
     queryIncident.include('inc_type');
     ParseQuery(queryIncident, {functionToCall:'first', synchronous:true, relations:['sectors'],pointers:['sectorType']}).then(function(incidentObj){
+        var incident = new ParseObject(incidentObj, Incident.model);
         var querySectors = incidentObj.relation("sectors").query();
         querySectors.include('sectorType');
         querySectors.find({
             success: function(sectors) {
-//                console.log(sectors);
+                if(sectors.length==0) {
+                    AddDefaultTbars();
+                } else {
+                    for(var i=0; i<sectors.length; i++) {
+                        var sector = new ParseObject(sectors[i], Sector.model);
+                        AddTbar(new ParseObject(sectors[i], Sector.model));
+                    }
+                }
             }
         });
-        var incident = new ParseObject(incidentObj, Incident.model);
-        var sectors = new Array();
-        for(var i=0; i<incident.sectors.length; i++) {
-            var sector = new ParseObject(incident.sectors[i], Sector.model);
-            sectors.push(sector);
-        }
-        incident.sectors = sectors;
         $scope.incident = incident;
-
-        $scope.tbar_sectors = dialogSvc.tbar_sectors;
-        TbarLayout($scope);
-
     });
 });
 
@@ -171,8 +162,8 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts){
-    $scope.tbar_sectors=dialogSvc.tbar_sectors;
+app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSectors){
+    $scope.tbar_sectors=TbarSectors;
     $scope.gridsterOpts = GridsterOpts;
 
     $scope.showParDlg = function(sector) {
