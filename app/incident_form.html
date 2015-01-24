@@ -29,6 +29,7 @@
     <script src="js/models/CatalogUnit.js"></script>
     <script src="js/models/Unit.js"></script>
     <script src="js/models/Action.js"></script>
+    <script src="js/TbarServices.js"></script>
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/reports.js"></script>
     <script src="js/unique.js"></script>
@@ -117,7 +118,7 @@
 
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
-        <tbar gridster-item="item" ng-repeat="sector in tbar_sectors">
+        <tbar gridster-item="sector" ng-repeat="sector in tbar_sectors">
             <div class="tbar_title_container">
                 <button ng-disabled="!sector.parAvailable"
                         class="par-btn sector_toprow_btn"
