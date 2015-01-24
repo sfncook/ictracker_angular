@@ -78,22 +78,46 @@ app.factory('dialogSvc', function() {
 
 app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery){
     var incidentObjectId = getHttpRequestByName('i');
+    $scope.incident = dialogSvc.incident;
 
-    var query = new Parse.Query(Parse.Object.extend('Incident'));
-    query.equalTo("objectId", incidentObjectId);
-    ParseQuery(query, {functionToCall:'first'}).then(function(incidentObj){
-        $scope.incident = new ParseObject(incidentObj, Incident.model);
-        dialogSvc.incident = $scope.incident;
-        fetchTypeForIncident($scope.incident, $scope);
-
-        var query2 = new Parse.Query(Parse.Object.extend('Sector'));
-        query2.equalTo("incident", incidentObj);
-        ParseQuery(query2, {functionToCall:'find'}).then(function(sectorsObj){
-            for(var i=0; i<sectorsObj.length; i++) {
-                console.log(sectorsObj[i].get('incident'));
+    var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
+    queryIncident.equalTo("objectId", incidentObjectId);
+    queryIncident.include('inc_type');
+    ParseQuery(queryIncident, {functionToCall:'first', synchronous:true, relations:['sectors'],pointers:['sectorType']}).then(function(incidentObj){
+        var querySectors = incidentObj.relation("sectors").query();
+        querySectors.include('sectorType');
+        querySectors.find({
+            success: function(sectors) {
+                console.log(sectors);
             }
         });
+        var incident = new ParseObject(incidentObj, Incident.model);
+        var sectors = new Array();
+        for(var i=0; i<incident.sectors.length; i++) {
+            var sector = new ParseObject(incident.sectors[i], Sector.model);
+            sectors.push(sector);
+        }
+        incident.sectors = sectors;
+        $scope.incident = incident;
+
     });
+
+
+//    var query = new Parse.Query(Parse.Object.extend('Incident'));
+//    query.equalTo("objectId", incidentObjectId);
+//    ParseQuery(query, {functionToCall:'first'}).then(function(incidentObj){
+//        $scope.incident = new ParseObject(incidentObj, Incident.model);
+//        dialogSvc.incident = $scope.incident;
+//        fetchTypeForIncident($scope.incident, $scope);
+//
+//        var query2 = new Parse.Query(Parse.Object.extend('Sector'));
+//        query2.equalTo("incident", incidentObj);
+//        ParseQuery(query2, {functionToCall:'find'}).then(function(sectorsObj){
+//            for(var i=0; i<sectorsObj.length; i++) {
+//                console.log(sectorsObj[i].get('incident'));
+//            }
+//        });
+//    });
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){

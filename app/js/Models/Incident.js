@@ -2,7 +2,7 @@ function Incident() // Constructor
 {
 }
 
-Incident.model = ['inc_number','inc_address','inc_type','inc_startDate'];
+Incident.model = ['inc_number','inc_address','inc_type','inc_startDate', 'sectors'];
 
 function fetchTypeForIncident(incident, $scope) {
     var type = incident.inc_type;

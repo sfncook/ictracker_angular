@@ -9,12 +9,28 @@ angular.module('ParseServices', [])
 	return function(query, options){
 		var defer = $q.defer();
 
-		//default function call to find
-		var functionToCall = 'find';
-		if(options != undefined && options.functionToCall != undefined)
-			functionToCall = options.functionToCall;
+        // Get options
+        var functionToCall = 'find';
+        var synchronous = false;
+        var relations = [];
+        var pointers = [];
+        if(options) {
+            if(options.functionToCall) {
+                functionToCall = options.functionToCall;
+            }
 
-		console.log(functionToCall, query);
+            if(options.synchronous) {
+                synchronous = options.synchronous;
+            }
+
+            if(options.relations) {
+                relations = options.relations;
+            }
+
+            if(options.pointers) {
+                pointers = options.pointers;
+            }
+        }
 
 		//wrap defer resolve/reject in $apply so angular updates watch listeners
   		var defaultParams = [{
@@ -37,6 +53,32 @@ angular.module('ParseServices', [])
 
 
 		query[functionToCall].apply(query, defaultParams);
+
+        if(synchronous) {
+            defer.promise.then(
+                function(result) {
+                    if(relations.length>0) {
+                        for(var i=0; i<relations.length; i++) {
+                            var relation = relations[i];
+                            var relationObj = result.relation(relation);
+                        }
+                    }
+                }
+            );
+        } else {
+            return defer.promise;
+        }
+//        //Check for loading relations
+//        if(options && options.relations) {
+//            for(var i=0; i<options.relations.length; i++) {
+//                var relation =
+//            }
+//        }
+//
+//        //Check for loading pointers
+//        if(options && options.pointers) {
+//
+//        }
 
 		return defer.promise;
 	}
