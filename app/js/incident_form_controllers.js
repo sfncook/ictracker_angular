@@ -69,9 +69,6 @@ app.factory('dialogSvc', function() {
 
     return {
         "tbar_sectors":[]
-//        getSelectedSector: function () {
-//            return selectedSector;
-//        }
     };
 });
 
@@ -88,7 +85,7 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObjec
         querySectors.include('sectorType');
         querySectors.find({
             success: function(sectors) {
-                console.log(sectors);
+//                console.log(sectors);
             }
         });
         var incident = new ParseObject(incidentObj, Incident.model);
@@ -104,23 +101,6 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObjec
         TbarLayout($scope);
 
     });
-
-
-//    var query = new Parse.Query(Parse.Object.extend('Incident'));
-//    query.equalTo("objectId", incidentObjectId);
-//    ParseQuery(query, {functionToCall:'first'}).then(function(incidentObj){
-//        $scope.incident = new ParseObject(incidentObj, Incident.model);
-//        dialogSvc.incident = $scope.incident;
-//        fetchTypeForIncident($scope.incident, $scope);
-//
-//        var query2 = new Parse.Query(Parse.Object.extend('Sector'));
-//        query2.equalTo("incident", incidentObj);
-//        ParseQuery(query2, {functionToCall:'find'}).then(function(sectorsObj){
-//            for(var i=0; i<sectorsObj.length; i++) {
-//                console.log(sectorsObj[i].get('incident'));
-//            }
-//        });
-//    });
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
@@ -191,85 +171,9 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc){
+app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts){
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
-
-    var window_width = $(window).width();
-    var window_height = $(window).height();
-    var tbar_width = 290;
-    var tbar_height = 300;
-    var header_width = 100;
-    var col_count = Math.floor((window_width - header_width)/tbar_width);
-    var init_row_count = Math.floor(window_height/tbar_height);
-    init_row_count = Math.max(init_row_count, 3);
-    var left_margin = Math.floor((window_width - (col_count*tbar_width) - header_width )/2);
-    $("#tbar_container").css("padding-left", left_margin);
-
-    $scope.tbar_sectors=dialogSvc.tbar_sectors;
-
-    $scope.gridsterOpts = {
-        columns:col_count,
-        margins: [10, 10],
-        outerMargin: true,
-        colWidth: tbar_width,
-        rowHeight: tbar_height,
-        defaultSizeX: 1,
-        draggable: {enabled: false},
-        resizable: {enabled: false}
-    };
-//
-//    var rescuSector = new Sector("RESCUE");
-//    var rehabSector = new Sector("ReHab");
-//    var safetSector = new Sector("Safety");
-//
-//    rescuSector.col = col_count-1;
-//    rescuSector.row = 0;
-//    rehabSector.col = col_count-1;
-//    rehabSector.row = 1;
-//    safetSector.col = col_count-1;
-//    safetSector.row = 2;
-//
-//    $scope.tbar_sectors.push(rescuSector);
-//    $scope.tbar_sectors.push(rehabSector);
-//    $scope.tbar_sectors.push(safetSector);
-//
-//    var manySectors = (init_row_count*col_count)-3;
-//    for(var i=0; i<manySectors; i++) {
-//        var sector = new Sector("Sector Name");
-//        $scope.tbar_sectors.push(sector);
-//    }
-
-
-//    for(var rowi=0; rowi<init_row_count; rowi++) {
-//        for(var coli=0; coli<col_count; coli++) {
-//            var sector = new Sector("Sector Name");
-//            if(coli==col_count-1) {
-//                if(rowi==0) {
-//                    sector.name = "";
-//                    sector.hasClock = true;
-//                    sector.hasAcctBtn = true;
-//                    sector.hasPsiBtn = true;
-//                    sector.hasActions = true;
-//                    sector.row = 0;
-//                } else if(rowi==1) {
-//                    sector.name = "";
-//                    sector.hasClock = false;
-//                    sector.hasAcctBtn = false;
-//                    sector.hasPsiBtn = false;
-//                    sector.hasActions = false;
-//                    sector.row = 1;
-//                } else if(rowi==2) {
-//                    sector.name = "";
-//                    sector.hasClock = true;
-//                    sector.hasAcctBtn = true;
-//                    sector.hasPsiBtn = true;
-//                    sector.hasActions = true;
-//                    sector.row = 2;
-//                }
-//            }
-//            $scope.tbar_sectors.push(sector);
-//        }//for col
-//    }//for row
+    $scope.gridsterOpts = GridsterOpts;
 
     $scope.showParDlg = function(sector) {
         dialogSvc.openParDlg(sector);

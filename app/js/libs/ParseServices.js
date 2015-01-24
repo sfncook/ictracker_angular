@@ -15,7 +15,7 @@ angular.module('ParseServices', [])
 		if(options != undefined && options.functionToCall != undefined)
 			functionToCall = options.functionToCall;
 
-		console.log(functionToCall, query);
+//		console.log(functionToCall, query);
 
 		//wrap defer resolve/reject in $apply so angular updates watch listeners
   		var defaultParams = [{
