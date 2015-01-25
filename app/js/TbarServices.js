@@ -1,4 +1,4 @@
-angular.module('TbarServices', ['ParseServices'])
+angular.module('TbarServices', ['ParseServices', 'DataTypes'])
 
     .factory('TbarSectors', function() {
         return new Array();
@@ -29,21 +29,21 @@ angular.module('TbarServices', ['ParseServices'])
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', function (GridsterOpts, TbarSectors, ParseObject) {
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', 'SectorTypes', 'Sector', function (GridsterOpts, TbarSectors, ParseObject, SectorTypes, Sector) {
         return function () {
             var SectorParseObj = Parse.Object.extend('Sector');
 
-            var rescuSector = new ParseObject(new SectorParseObj(), Sector.model);
-            var rehabSector = new ParseObject(new SectorParseObj(), Sector.model);
-            var safetSector = new ParseObject(new SectorParseObj(), Sector.model);
+//            var rescuSector = new ParseObject(new SectorParseObj(), Sector.model);
+//            var rehabSector = new ParseObject(new SectorParseObj(), Sector.model);
+//            var safetSector = new ParseObject(new SectorParseObj(), Sector.model);
 
-//            var rescuSector = new Sector("RESCUE");
-//            var rehabSector = new Sector("ReHab");
-//            var safetSector = new Sector("Safety");
+            var rescuSector = new Sector();
+            var rehabSector = new Sector();
+            var safetSector = new Sector();
 
-            rescuSector.name = "RESCUE";
-            rehabSector.name = "ReHab";
-            safetSector.name = "Safety";
+            rescuSector.sectorType = SectorTypes.RESCUE.parseObject;
+            rehabSector.sectorType = SectorTypes.REHAB.parseObject;
+            safetSector.sectorType = SectorTypes.SAFETY.parseObject;
 
             rescuSector.col = GridsterOpts.columns - 1;
             rescuSector.row = 0;
@@ -58,9 +58,9 @@ angular.module('TbarServices', ['ParseServices'])
 
             var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
             for (var i = 0; i < manySectors; i++) {
-                var sector = new ParseObject(new SectorParseObj(), Sector.model);
-                sector.name = "Sector Name";
-                TbarSectors.push(sector);
+                var blankSector = new Sector();
+                blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.parseObject;
+                TbarSectors.push(blankSector);
             }
         }
     }])

@@ -14,14 +14,25 @@ angular.module('DataTypes', ['DataTypes'])
                     SectorTypes.push(sectorType);
 
                     //Create constants from sectorType names.  ex: "Sector 1"==>obj.SECTOR_1
-                    var sectorTypeName = sectorType.name;
-                    sectorTypeName = sectorTypeName.toUpperCase();
-                    sectorTypeName.replace(" ", "_");
+                    if(sectorType.name=="Sector Name") {
+                        var sectorTypeName = "DEFAULT_SECTOR_TYPE";
+                    } else {
+                        var sectorTypeName = sectorType.name;
+                        sectorTypeName = sectorTypeName.toUpperCase();
+                        sectorTypeName.replace(" ", "_");
+                    }
                     Object.defineProperty(SectorTypes, sectorTypeName, {
                         value: sectorType,
                         writable: false
                     });
-                }
+                }//for
+                var defaultSectorType = new SectorType();
+                defaultSectorType.name = "Sector Name";
+                defaultSectorType.hasClock = true;
+                defaultSectorType.hasAcctBtn = true;
+                defaultSectorType.hasPsiBtn = true;
+                defaultSectorType.hasActions = true;
+                SectorTypes.DEFAULT_SECTOR_TYPE = defaultSectorType;
             });
         }
     }])
@@ -31,15 +42,40 @@ angular.module('DataTypes', ['DataTypes'])
         var fields = ["name", "hasClock", "hasAcctBtn", "hasPsiBtn", "hasActions"];
 
         return function (parseObject) {
-            createParseObject(this, fields, parseObject)
+            if(parseObject) {
+                convertParseObject(this, fields, parseObject);
+            } else {
+                createParseObject(this, fields, 'SectorType');
+            }
+        };
+
+    }])
+
+    .factory('Sector', [function () {
+
+        var fields = ['sectorType', 'incident', 'units', 'row', 'col'];
+
+        return function (parseObject) {
+            if(parseObject) {
+                convertParseObject(this, fields, parseObject);
+            } else {
+                createParseObject(this, fields, 'Sector');
+            }
         };
 
     }])
 
 ;
 
-function createParseObject(object, fields, parseObject) {
-    Object.defineProperty(object, 'data', { get: function () {
+function createParseObject(object, fields, className) {
+    var ParseModel = Parse.Object.extend(className);
+    parseObject = new ParseModel();
+    return convertParseObject(object, fields, parseObject);
+}
+
+function convertParseObject(object, fields, parseObject) {
+
+    Object.defineProperty(object, 'parseObject', { get: function () {
         return parseObject;
     } });
 
@@ -61,12 +97,12 @@ function createParseObject(object, fields, parseObject) {
 
     //instance methods
     object.save = function () {
-        return ParseQuery(parseObject, {functionToCall: 'save', params: [null]})
+        return parseObject.save();
     }
     object.delete = function () {
-        return ParseQuery(parseObject, {functionToCall: 'destroy'});
+        return parseObject.destroy();
     }
     object.fetch = function () {
-        return ParseQuery(parseObject, {functionToCall: 'fetch'});
+        return parseObject.fetch();
     }
 }
