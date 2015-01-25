@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module("ictApp", ['gridster','ParseServices','TbarServices']);
+var app = angular.module("ictApp", ['gridster', 'ParseServices', 'TbarServices', 'DataTypes']);
 
 function init() {
     initDialogs();
@@ -68,8 +68,10 @@ app.factory('dialogSvc', function() {
 });
 
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar, SaveTbars){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar, SaveTbars, LoadDataTypes){
     var incidentObjectId = getHttpRequestByName('i');
+
+    LoadDataTypes();
 
     var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
     queryIncident.equalTo("objectId", incidentObjectId);
