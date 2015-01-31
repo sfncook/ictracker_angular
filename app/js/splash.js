@@ -1,24 +1,24 @@
 'use strict';
 
-var app = angular.module("ictApp", ['ParseServices']);
+var app = angular.module("ictApp", ['DataServices']);
 
-function loadIncidentList($scope, ParseObject, ParseQuery) {
-    // reset list
-    $scope.incident_list = new Array();
-
-    var query = new Parse.Query(Parse.Object.extend('Incident'));
-    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-        var data = new Array();
-        for(var i=0; i<result.length; i++) {
-
-            var incident = new ParseObject(result[i], Incident.model);
-            fetchTypeForIncident(incident, $scope);
-
-            data.push(incident);
-        }
-        $scope.incident_list = data;
-    });
-}
+//function loadIncidentList($scope, ParseObject, ParseQuery) {
+//    // reset list
+//    $scope.incident_list = new Array();
+//
+//    var query = new Parse.Query(Parse.Object.extend('Incident'));
+//    ParseQuery(query, {functionToCall:'find'}).then(function(result){
+//        var data = new Array();
+//        for(var i=0; i<result.length; i++) {
+//
+//            var incident = new ParseObject(result[i], Incident.model);
+//            fetchTypeForIncident(incident, $scope);
+//
+//            data.push(incident);
+//        }
+//        $scope.incident_list = data;
+//    });
+//}
 
 function loadIncidentTypes($scope, ParseObject, ParseQuery) {
     // reset list
@@ -36,20 +36,20 @@ function loadIncidentTypes($scope, ParseObject, ParseQuery) {
     });
 }
 
-app.controller('SplashCtrl', function($scope, ParseObject, ParseQuery){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents){
 
-    var IncidentParseObj = Parse.Object.extend('Incident');
-    $scope.incidentObj = new ParseObject(new IncidentParseObj(), Incident.model);
+    LoadAllIncidents($scope);
+    $scope.incident_list = Incidents;
 
-    // Incident Types
-    loadIncidentTypes($scope, ParseObject, ParseQuery);
-
-    // Load incident list
-    loadIncidentList($scope, ParseObject, ParseQuery);
+//    var IncidentParseObj = Parse.Object.extend('Incident');
+//    $scope.incidentObj = new ParseObject(new IncidentParseObj(), Incident.model);
+//
+//    // Incident Types
+//    loadIncidentTypes($scope, ParseObject, ParseQuery);
 
     // Respond to incident type button click
     $scope.createAndLoadNewIncident = function(incidentType) {
-        $scope.incidentObj.inc_type = incidentType.data;
+        $scope.incidentObj.incidentType = incidentType.data;
 
         // Default value for inc_number
         if(!$scope.incidentObj.inc_number) {

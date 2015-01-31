@@ -1,19 +1,14 @@
 
-var INCIDENT_DEF = ['inc_number','inc_address','inc_type','inc_startDate'];
-var INCIDENT_TYPE_DEF = ['icon','nameLong','nameShort'];
+var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate'];
+var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 
 angular.module('DataServices', ['ParseServices'])
 
-    .factory('Incidents', function() {
-        return new Array();
-    })
-
     .factory('DataStore', function() {
         return {incident:{}};
     })
-
     .factory('LoadIncident', ['AddDefaultTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
@@ -21,7 +16,7 @@ angular.module('DataServices', ['ParseServices'])
             queryIncident.include('inc_type');
             ParseQuery(queryIncident, {functionToCall:'first'}).then(function(parseObj){
                 DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
-                DataStore.incident.inc_type.fetch().then(function(incidentTypeObj){
+                DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
                     DataStore.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
                 });
 
@@ -42,10 +37,49 @@ angular.module('DataServices', ['ParseServices'])
         }
     }])
 
+    .factory('Incidents', function() {
+        return new Array();
+    })
+    .factory('LoadAllIncidents', ['ParseObject', 'ParseQuery', 'Incidents', function (ParseObject, ParseQuery, Incidents) {
+        return function ($scope) {
+            var query = new Parse.Query(Parse.Object.extend('Incident'));
+            ParseQuery(query, {functionToCall:'find'}).then(function(incidents){
+                for(var i=0; i<incidents.length; i++) {
+                    var incident = new ParseObject(incidents[i], INCIDENT_DEF);
+                    fetchTypeForIncident(incident, $scope, ParseObject);
+                    Incidents.push(incident);
+                }
+            });
+        }
+
+    }])
+
+
 ;
+
+
+function fetchTypeForIncident(incident, $scope, ParseObject) {
+    var type = incident.incidentType;
+    if(type) {
+        type.fetch({
+            success: function(type) {
+                $scope.$apply(function(){
+                    incident.inc_type_obj = new ParseObject(type, INCIDENT_TYPE_DEF);
+                });
+            }
+        });
+    }
+}
 
 function loadSectorType(ParseObject, sector) {
     return function(sectorTypeObj){
         sector.sectorTypeObj= new ParseObject(sectorTypeObj, SECTOR_TYPE_DEF);
+    };
+}
+
+function loadIncidentType(ParseObject, incident) {
+    return function(incidentTypeObj){
+        incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+        incident.test = 'xyz';
     };
 }
