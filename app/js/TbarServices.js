@@ -1,4 +1,4 @@
-angular.module('TbarServices', ['ParseServices'])
+angular.module('TbarServices', ['ParseServices', 'DataServices'])
 
     .factory('TbarSectors', function() {
         return new Array();
@@ -29,7 +29,7 @@ angular.module('TbarServices', ['ParseServices'])
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', 'SectorTypes', 'Sector', function (GridsterOpts, TbarSectors, ParseObject, SectorTypes, Sector) {
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ParseObject, SectorTypes) {
         return function () {
             var SectorParseObj = Parse.Object.extend('Sector');
 
@@ -37,9 +37,9 @@ angular.module('TbarServices', ['ParseServices'])
             var rehabSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
             var safetSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
 
-            rescuSector.sectorType = SectorTypes.RESCUE.parseObject;
-            rehabSector.sectorType = SectorTypes.REHAB.parseObject;
-            safetSector.sectorType = SectorTypes.SAFETY.parseObject;
+            rescuSector.sectorType = SectorTypes.RESCUE.data;
+            rehabSector.sectorType = SectorTypes.REHAB.data;
+            safetSector.sectorType = SectorTypes.SAFETY.data;
 
             rescuSector.col = GridsterOpts.columns - 1;
             rescuSector.row = 0;

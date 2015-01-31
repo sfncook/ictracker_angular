@@ -6,6 +6,19 @@ var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBt
 
 angular.module('DataServices', ['ParseServices'])
 
+    .factory('SectorTypes', function() {
+        return new Array();
+    })
+    .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ParseObject', function (SectorTypes, ParseQuery, ParseObject) {
+        return function () {
+            var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
+            ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(parseObj){
+                var sectorType = new ParseObject(parseObj, SECTOR_TYPE_DEF);
+                SectorTypes.push(sectorType);
+            });
+        }
+    }])
+
     .factory('DataStore', function() {
         return {incident:{}};
     })
