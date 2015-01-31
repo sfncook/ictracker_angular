@@ -33,13 +33,9 @@ angular.module('TbarServices', ['ParseServices'])
         return function () {
             var SectorParseObj = Parse.Object.extend('Sector');
 
-//            var rescuSector = new ParseObject(new SectorParseObj(), Sector.model);
-//            var rehabSector = new ParseObject(new SectorParseObj(), Sector.model);
-//            var safetSector = new ParseObject(new SectorParseObj(), Sector.model);
-
-            var rescuSector = new Sector();
-            var rehabSector = new Sector();
-            var safetSector = new Sector();
+            var rescuSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
+            var rehabSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
+            var safetSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
 
             rescuSector.sectorType = SectorTypes.RESCUE.parseObject;
             rehabSector.sectorType = SectorTypes.REHAB.parseObject;
@@ -58,7 +54,7 @@ angular.module('TbarServices', ['ParseServices'])
 
             var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
             for (var i = 0; i < manySectors; i++) {
-                var blankSector = new Sector();
+                var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
                 blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.parseObject;
                 TbarSectors.push(blankSector);
             }

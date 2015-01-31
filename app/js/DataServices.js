@@ -6,11 +6,15 @@ var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBt
 
 angular.module('DataServices', ['ParseServices'])
 
+    .factory('Incidents', function() {
+        return new Array();
+    })
+
     .factory('DataStore', function() {
         return {incident:{}};
     })
 
-    .factory('LoadIncident', ['TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (TbarSectors, ParseObject, ParseQuery, DataStore) {
+    .factory('LoadIncident', ['AddDefaultTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -24,10 +28,14 @@ angular.module('DataServices', ['ParseServices'])
                 var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
                 querySectors.equalTo("incident", DataStore.incident.data);
                 ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
-                    for(var i=0; i<sectors.length; i++) {
-                        var sector = new ParseObject(sectors[i], SECTOR_DEF);
-                        sector.sectorType.fetch().then(loadSectorType(ParseObject, sector));
-                        TbarSectors.push(sector);
+                    if(sectors.length==0) {
+                        AddDefaultTbars();
+                    } else {
+                        for(var i=0; i<sectors.length; i++) {
+                            var sector = new ParseObject(sectors[i], SECTOR_DEF);
+                            sector.sectorType.fetch().then(loadSectorType(ParseObject, sector));
+                            TbarSectors.push(sector);
+                        }
                     }
                 });
             });
