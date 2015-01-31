@@ -1,11 +1,6 @@
 'use strict';
 
-var INCIDENT_DEF = ['inc_number','inc_address','inc_type','inc_startDate'];
-var INCIDENT_TYPE_DEF = ['icon','nameLong','nameShort'];
-var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
-var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
-
-var app = angular.module("ictApp", ['gridster', 'ParseServices', 'TbarServices']);
+var app = angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices']);
 
 function init() {
     initDialogs();
@@ -40,9 +35,6 @@ $( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
-    var incident;
-    var tbar_sectors;
-
     var openParDlg;
     var showSectorNameDlg;
     var showBnchDlg;
@@ -77,34 +69,12 @@ app.factory('dialogSvc', function() {
     return obj;
 });
 
-function loadSectorType(ParseObject, sector) {
-    return function(sectorTypeObj){
-        sector.sectorTypeObj= new ParseObject(sectorTypeObj, SECTOR_TYPE_DEF);
-    };
-}
-
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncident){
     var incidentObjectId = getHttpRequestByName('i');
 
-    var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
-    queryIncident.equalTo("objectId", incidentObjectId);
-    queryIncident.include('inc_type');
-    ParseQuery(queryIncident, {functionToCall:'first'}).then(function(incidentObj){
-        dialogSvc.incident = $scope.incident = new ParseObject(incidentObj, INCIDENT_DEF);
-        $scope.incident.inc_type.fetch().then(function(incidentTypeObj){
-            $scope.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
-        });
-
-        var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-        querySectors.equalTo("incident", dialogSvc.incident.data);
-        ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
-            for(var i=0; i<sectors.length; i++) {
-                var sector = new ParseObject(sectors[i], SECTOR_DEF);
-                sector.sectorType.fetch().then(loadSectorType(ParseObject, sector));
-                dialogSvc.tbar_sectors.push(sector);
-            }
-        });
-    });
+    $scope.incident = {};
+    LoadIncident(incidentObjectId, $scope.incident);
+//    DataStore.incident.inc_number = 'abc';
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
@@ -175,10 +145,10 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts){
+app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSectors){
 
     $scope.gridsterOpts = GridsterOpts;
-    $scope.tbar_sectors = dialogSvc.tbar_sectors;
+    $scope.tbar_sectors = TbarSectors;
 
     $scope.showParDlg = function(sector) {
         dialogSvc.openParDlg(sector);
