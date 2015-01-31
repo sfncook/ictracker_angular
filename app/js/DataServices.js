@@ -6,19 +6,23 @@ var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBt
 
 angular.module('DataServices', ['ParseServices'])
 
-    .factory('LoadIncident', ['TbarSectors', 'ParseObject', 'ParseQuery', function (TbarSectors, ParseObject, ParseQuery) {
-        return function (incidentObjectId, incidentObj) {
+    .factory('DataStore', function() {
+        return {incident:{}};
+    })
+
+    .factory('LoadIncident', ['TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (TbarSectors, ParseObject, ParseQuery, DataStore) {
+        return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('inc_type');
-            ParseQuery(queryIncident, {functionToCall:'first'}).then(function(incidentObj){
-                incidentObj = new ParseObject(incidentObj, INCIDENT_DEF);
-                incidentObj.inc_type.fetch().then(function(incidentTypeObj){
-                    incidentObj.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+            ParseQuery(queryIncident, {functionToCall:'first'}).then(function(parseObj){
+                DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
+                DataStore.incident.inc_type.fetch().then(function(incidentTypeObj){
+                    DataStore.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
                 });
 
                 var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                querySectors.equalTo("incident", incidentObj.data);
+                querySectors.equalTo("incident", DataStore.incident.data);
                 ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
                     for(var i=0; i<sectors.length; i++) {
                         var sector = new ParseObject(sectors[i], SECTOR_DEF);

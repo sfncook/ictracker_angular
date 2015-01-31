@@ -98,10 +98,10 @@
 
 <div id="top_header_container" ng-controller="HeaderContainer2">
     <button id="inc_info_btn" class="button_top">
-        <div id="inc_num">{{incident.inc_number}}</div>
-        <div id="inc_add">{{incident.inc_address}}</div>
+        <div id="inc_num">{{dataStore.incident.inc_number}}</div>
+        <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
-    <img id="inc_type_icon" ng-src="{{incident.inc_type_obj.icon}}"/>
+    <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div class="clear_both"></div>
 </div>

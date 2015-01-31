@@ -69,12 +69,11 @@ app.factory('dialogSvc', function() {
     return obj;
 });
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncident){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncident, DataStore){
     var incidentObjectId = getHttpRequestByName('i');
 
-    $scope.incident = {};
-    LoadIncident(incidentObjectId, $scope.incident);
-//    DataStore.incident.inc_number = 'abc';
+    $scope.dataStore = DataStore;
+    LoadIncident(incidentObjectId);
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
