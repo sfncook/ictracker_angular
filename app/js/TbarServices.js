@@ -1,4 +1,4 @@
-angular.module('TbarServices', ['ParseServices', 'DataTypes'])
+angular.module('TbarServices', ['ParseServices'])
 
     .factory('TbarSectors', function() {
         return new Array();

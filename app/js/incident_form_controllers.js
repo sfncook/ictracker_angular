@@ -1,6 +1,11 @@
 'use strict';
 
-var app = angular.module("ictApp", ['gridster', 'ParseServices', 'TbarServices', 'DataTypes']);
+var INCIDENT_DEF = ['inc_number','inc_address','inc_type','inc_startDate'];
+var INCIDENT_TYPE_DEF = ['icon','nameLong','nameShort'];
+var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
+var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
+
+var app = angular.module("ictApp", ['gridster', 'ParseServices', 'TbarServices']);
 
 function init() {
     initDialogs();
@@ -35,6 +40,9 @@ $( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
+    var incident;
+    var tbar_sectors;
+
     var openParDlg;
     var showSectorNameDlg;
     var showBnchDlg;
@@ -63,37 +71,39 @@ app.factory('dialogSvc', function() {
     var setOnDeck;
     var setRehab;
 
-    return {
+    var obj = {
+        tbar_sectors: new Array()
     };
+    return obj;
 });
 
+function loadSectorType(ParseObject, sector) {
+    return function(sectorTypeObj){
+        sector.sectorTypeObj= new ParseObject(sectorTypeObj, SECTOR_TYPE_DEF);
+    };
+}
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery, AddDefaultTbars, TbarSectors, AddTbar, SaveTbars, LoadDataTypes){
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, ParseObject, ParseQuery){
     var incidentObjectId = getHttpRequestByName('i');
-
-    LoadDataTypes();
 
     var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
     queryIncident.equalTo("objectId", incidentObjectId);
     queryIncident.include('inc_type');
-    ParseQuery(queryIncident, {functionToCall:'first', synchronous:true, relations:['sectors'],pointers:['sectorType']}).then(function(incidentObj){
-        var incident = new ParseObject(incidentObj, Incident.model);
-        var querySectors = incidentObj.relation("sectors").query();
-        querySectors.include('sectorType');
-        querySectors.find({
-            success: function(sectors) {
-                if(sectors.length==0) {
-                    AddDefaultTbars();
-                    SaveTbars();
-                } else {
-                    for(var i=0; i<sectors.length; i++) {
-                        var sector = new ParseObject(sectors[i], Sector.model);
-                        AddTbar(new ParseObject(sectors[i], Sector.model));
-                    }
-                }
+    ParseQuery(queryIncident, {functionToCall:'first'}).then(function(incidentObj){
+        dialogSvc.incident = $scope.incident = new ParseObject(incidentObj, INCIDENT_DEF);
+        $scope.incident.inc_type.fetch().then(function(incidentTypeObj){
+            $scope.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+        });
+
+        var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+        querySectors.equalTo("incident", dialogSvc.incident.data);
+        ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
+            for(var i=0; i<sectors.length; i++) {
+                var sector = new ParseObject(sectors[i], SECTOR_DEF);
+                sector.sectorType.fetch().then(loadSectorType(ParseObject, sector));
+                dialogSvc.tbar_sectors.push(sector);
             }
         });
-        $scope.incident = incident;
     });
 });
 
@@ -165,9 +175,10 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSectors){
-    $scope.tbar_sectors=TbarSectors;
+app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts){
+
     $scope.gridsterOpts = GridsterOpts;
+    $scope.tbar_sectors = dialogSvc.tbar_sectors;
 
     $scope.showParDlg = function(sector) {
         dialogSvc.openParDlg(sector);
@@ -336,7 +347,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
             for(var i = 0; i < data.length; i++) {
                 var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
                 var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, new CatalogUnit(data[i].unit, data[i].type, data[i].city));
+//                var unit = type.units.putIfAbsent(data[i].unit, new CatalogUnit(data[i].unit, data[i].type, data[i].city));
 
                 if( typeof data[i].default != 'undefined') {
                     $scope.selected_city = city;
@@ -444,7 +455,7 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
             var action_types_local = [];
             for(var i = 0; i < data.length; i++) {
                 var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
+//                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
             }
 
             // Convert everything to arrays

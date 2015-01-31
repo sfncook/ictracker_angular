@@ -22,13 +22,6 @@
     <script src="js/config.js"></script>
     <script src="js/init.js"></script>
     <script src="js/libs/ParseServices.js"></script>
-    <script src="js/models/DataTypes.js"></script>
-    <script src="js/models/Incident.js"></script>
-    <script src="js/models/IncidentType.js"></script>
-    <script src="js/models/Sector.js"></script>
-    <script src="js/models/CatalogUnit.js"></script>
-    <script src="js/models/Unit.js"></script>
-    <script src="js/models/Action.js"></script>
     <script src="js/TbarServices.js"></script>
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/reports.js"></script>
@@ -107,7 +100,7 @@
         <div id="inc_num">{{incident.inc_number}}</div>
         <div id="inc_add">{{incident.inc_address}}</div>
     </button>
-    <img id="inc_type_icon" ng-src="{{incident.inc_type_icon}}"/>
+    <img id="inc_type_icon" ng-src="{{incident.inc_type_obj.icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div class="clear_both"></div>
 </div>
@@ -129,7 +122,7 @@
                     <table>
                         <tr>
                             <td class="tbar_title_dir_td">{{sector.sector_dir}}</td>
-                            <td class="tbar_title_td">{{sector.name}}</td>
+                            <td class="tbar_title_td">{{sector.sectorTypeObj.name}}</td>
                             <td class="tbar_title_num_td">{{sector.sector_num}}</td>
                         </tr>
                     </table>
