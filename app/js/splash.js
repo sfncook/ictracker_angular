@@ -2,41 +2,7 @@
 
 var app = angular.module("ictApp", ['DataServices']);
 
-//function loadIncidentList($scope, ParseObject, ParseQuery) {
-//    // reset list
-//    $scope.incident_list = new Array();
-//
-//    var query = new Parse.Query(Parse.Object.extend('Incident'));
-//    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-//        var data = new Array();
-//        for(var i=0; i<result.length; i++) {
-//
-//            var incident = new ParseObject(result[i], Incident.model);
-//            fetchTypeForIncident(incident, $scope);
-//
-//            data.push(incident);
-//        }
-//        $scope.incident_list = data;
-//    });
-//}
-
-function loadIncidentTypes($scope, ParseObject, ParseQuery) {
-    // reset list
-    $scope.inc_types = new Array();
-
-    var query = new Parse.Query(Parse.Object.extend('IncidentType'));
-    query.ascending("order");
-    ParseQuery(query, {functionToCall:'find'}).then(function(result){
-        var data = new Array();
-        for(var i=0; i<result.length; i++) {
-            var obj = new ParseObject(result[i], IncidentType.model);
-            data.push(obj);
-        }
-        $scope.inc_types = data;
-    });
-}
-
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ParseObject){
 
     LoadIncidentTypes();
     $scope.incidentTypes = IncidentTypes;
@@ -44,11 +10,8 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
     LoadAllIncidents($scope);
     $scope.incident_list = Incidents;
 
-//    var IncidentParseObj = Parse.Object.extend('Incident');
-//    $scope.incidentObj = new ParseObject(new IncidentParseObj(), Incident.model);
-//
-//    // Incident Types
-//    loadIncidentTypes($scope, ParseObject, ParseQuery);
+    var IncidentParseObj = Parse.Object.extend('Incident');
+    $scope.incidentObj = new ParseObject(new IncidentParseObj(), INCIDENT_DEF);
 
     // Respond to incident type button click
     $scope.createAndLoadNewIncident = function(incidentType) {
@@ -60,16 +23,16 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         }
 
         $scope.incidentObj.save().then(function(obj) {
-            var incidentObj = new ParseObject(obj, Incident.model);
-            $scope.loadIncident(incidentObj);
+            var incidentObj = new ParseObject(obj, INCIDENT_DEF);
+            $scope.loadIncident(incidentObj.data.id);
         }, function(error) {
             console.log("Error saving new incident: "+error);
         });;
     };
 
 
-    $scope.loadIncident = function(incident) {
-        var urlLink = "incident_form.html?i="+incident.data.id;
+    $scope.loadIncident = function(incidentId) {
+        var urlLink = "incident_form.html?i="+incidentId;
         window.location.href = urlLink;
     };
 

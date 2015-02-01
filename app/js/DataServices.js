@@ -50,7 +50,7 @@ angular.module('DataServices', ['ParseServices'])
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
-            queryIncident.include('inc_type');
+            queryIncident.include('incidentType');
             ParseQuery(queryIncident, {functionToCall:'first'}).then(function(parseObj){
                 DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
                 DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
