@@ -41,6 +41,10 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
             rehabSector.sectorType = SectorTypes.REHAB.data;
             safetSector.sectorType = SectorTypes.SAFETY.data;
 
+            rescuSector.sectorTypeObj = SectorTypes.RESCUE;
+            rehabSector.sectorTypeObj = SectorTypes.REHAB;
+            safetSector.sectorTypeObj = SectorTypes.SAFETY;
+
             rescuSector.col = GridsterOpts.columns - 1;
             rescuSector.row = 0;
             rehabSector.col = GridsterOpts.columns - 1;
@@ -69,6 +73,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
                     } else {
                         var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
                         blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.data;
+                        blankSector.sectorTypeObj = SectorTypes.DEFAULT_SECTOR_TYPE;
                         blankSector.row = row;
                         blankSector.col = col;
                         blankSector.incident = incident.data;
