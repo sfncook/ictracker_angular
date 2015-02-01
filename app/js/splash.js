@@ -36,7 +36,10 @@ function loadIncidentTypes($scope, ParseObject, ParseQuery) {
     });
 }
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes){
+
+    LoadIncidentTypes();
+    $scope.incidentTypes = IncidentTypes;
 
     LoadAllIncidents($scope);
     $scope.incident_list = Incidents;

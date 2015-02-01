@@ -6,6 +6,23 @@ var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBt
 
 angular.module('DataServices', ['ParseServices'])
 
+    .factory('IncidentTypes', function() {
+        return new Array();
+    })
+    .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ParseObject', function (IncidentTypes, ParseQuery, ParseObject) {
+        return function () {
+            var queryIncidentTypes = new Parse.Query(Parse.Object.extend('IncidentType'));
+            ParseQuery(queryIncidentTypes, {functionToCall:'find'}).then(function(incidentTypes){
+                for(var i=0; i<incidentTypes.length; i++) {
+                    var incidentType = new ParseObject(incidentTypes[i], INCIDENT_TYPE_DEF);
+                    IncidentTypes.push(incidentType);
+                    var nameRefor = incidentType.nameShort.toUpperCase();
+                    IncidentTypes[nameRefor] = incidentType;
+                }
+            });
+        }
+    }])
+
     .factory('SectorTypes', function() {
         return new Array();
     })
