@@ -30,7 +30,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
     })
 
     .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ParseObject, SectorTypes) {
-        return function () {
+        return function (incident) {
             var SectorParseObj = Parse.Object.extend('Sector');
 
             var rescuSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
@@ -48,15 +48,33 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
             safetSector.col = GridsterOpts.columns - 1;
             safetSector.row = 2;
 
+            rescuSector.incident = incident.data;
+            rehabSector.incident = incident.data;
+            safetSector.incident = incident.data;
+
             TbarSectors.push(rescuSector);
             TbarSectors.push(rehabSector);
             TbarSectors.push(safetSector);
 
-            var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
-            for (var i = 0; i < manySectors; i++) {
-                var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
-                blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.data;
-                TbarSectors.push(blankSector);
+//            var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
+//            for (var i = 0; i < manySectors; i++) {
+            for(var col=0; col<GridsterOpts.columns; col++) {
+                for(var row=0; row<GridsterOpts.rows; row++) {
+                    if(
+                        (row==rescuSector.row && col==rescuSector.col) ||
+                            (row==rehabSector.row && col==rehabSector.col) ||
+                            (row==safetSector.row && col==safetSector.col)
+                        ) {
+                        console.log('');
+                    } else {
+                        var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
+                        blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.data;
+                        blankSector.row = row;
+                        blankSector.col = col;
+                        blankSector.incident = incident.data;
+                        TbarSectors.push(blankSector);
+                    }
+                }
             }
         }
     }])

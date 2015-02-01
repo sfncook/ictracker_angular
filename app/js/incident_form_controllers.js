@@ -74,7 +74,7 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncide
 
     $scope.dataStore = DataStore;
     LoadSectorTypes();
-    LoadIncident(incidentObjectId);
+    LoadIncident(incidentObjectId, $scope);
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){

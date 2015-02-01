@@ -30,7 +30,7 @@ angular.module('DataServices', ['ParseServices'])
         return {incident:{}};
     })
     .factory('LoadIncident', ['AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
-        return function (incidentObjectId) {
+        return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('inc_type');
@@ -44,12 +44,12 @@ angular.module('DataServices', ['ParseServices'])
                 querySectors.equalTo("incident", DataStore.incident.data);
                 ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
                     if(sectors.length==0) {
-                        AddDefaultTbars();
+                        AddDefaultTbars(DataStore.incident);
                         SaveTbars();
                     } else {
                         for(var i=0; i<sectors.length; i++) {
                             var sector = new ParseObject(sectors[i], SECTOR_DEF);
-                            sector.sectorType.fetch().then(loadSectorType(ParseObject, sector));
+                            fetchTypeForSector(sector, $scope, ParseObject);
                             TbarSectors.push(sector);
                         }
                     }
@@ -92,10 +92,17 @@ function fetchTypeForIncident(incident, $scope, ParseObject) {
     }
 }
 
-function loadSectorType(ParseObject, sector) {
-    return function(sectorTypeObj){
-        sector.sectorTypeObj= new ParseObject(sectorTypeObj, SECTOR_TYPE_DEF);
-    };
+function fetchTypeForSector(sector, $scope, ParseObject) {
+    var type = sector.sectorType;
+    if(type) {
+        type.fetch({
+            success: function(type) {
+                $scope.$apply(function(){
+                    sector.sectorTypeObj= new ParseObject(type, SECTOR_TYPE_DEF);
+                });
+            }
+        });
+    }
 }
 
 function loadIncidentType(ParseObject, incident) {
