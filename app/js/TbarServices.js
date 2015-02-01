@@ -55,7 +55,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
             var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
             for (var i = 0; i < manySectors; i++) {
                 var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
-                blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.parseObject;
+                blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.data;
                 TbarSectors.push(blankSector);
             }
         }

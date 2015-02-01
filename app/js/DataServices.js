@@ -12,9 +12,16 @@ angular.module('DataServices', ['ParseServices'])
     .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ParseObject', function (SectorTypes, ParseQuery, ParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
-            ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(parseObj){
-                var sectorType = new ParseObject(parseObj, SECTOR_TYPE_DEF);
-                SectorTypes.push(sectorType);
+            ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(sectorTypes){
+                for(var i=0; i<sectorTypes.length; i++) {
+                    var sectorType = new ParseObject(sectorTypes[i], SECTOR_TYPE_DEF);
+                    SectorTypes.push(sectorType);
+                    var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
+                    SectorTypes[nameRefor] = sectorType;
+                    if (sectorType.name=="Sector Name") {
+                        SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
+                    }
+                }
             });
         }
     }])
@@ -22,7 +29,7 @@ angular.module('DataServices', ['ParseServices'])
     .factory('DataStore', function() {
         return {incident:{}};
     })
-    .factory('LoadIncident', ['AddDefaultTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
+    .factory('LoadIncident', ['AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -38,6 +45,7 @@ angular.module('DataServices', ['ParseServices'])
                 ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
                     if(sectors.length==0) {
                         AddDefaultTbars();
+                        SaveTbars();
                     } else {
                         for(var i=0; i<sectors.length; i++) {
                             var sector = new ParseObject(sectors[i], SECTOR_DEF);
