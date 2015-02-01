@@ -44,7 +44,11 @@ angular.module('DataServices', ['ParseServices'])
     }])
 
     .factory('DataStore', function() {
-        return {incident:{}};
+        return {
+            incident:{},
+            waitingToLoad:true,
+            loadSuccess:false
+        };
     })
     .factory('LoadIncident', ['AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId, $scope) {
@@ -52,25 +56,27 @@ angular.module('DataServices', ['ParseServices'])
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('incidentType');
             ParseQuery(queryIncident, {functionToCall:'first'}).then(function(parseObj){
-                DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
-                DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
-                    DataStore.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
-                });
+                if(parseObj) {
+                    DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
+                    DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
+                        DataStore.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+                    });
 
-                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                querySectors.equalTo("incident", DataStore.incident.data);
-                ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
-                    if(sectors.length==0) {
-                        AddDefaultTbars(DataStore.incident);
-                        SaveTbars();
-                    } else {
-                        for(var i=0; i<sectors.length; i++) {
-                            var sector = new ParseObject(sectors[i], SECTOR_DEF);
-                            fetchTypeForSector(sector, $scope, ParseObject);
-                            TbarSectors.push(sector);
+                    var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+                    querySectors.equalTo("incident", DataStore.incident.data);
+                    ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
+                        if(sectors.length==0) {
+                            AddDefaultTbars(DataStore.incident);
+                            SaveTbars();
+                        } else {
+                            for(var i=0; i<sectors.length; i++) {
+                                var sector = new ParseObject(sectors[i], SECTOR_DEF);
+                                fetchTypeForSector(sector, $scope, ParseObject);
+                                TbarSectors.push(sector);
+                            }
                         }
-                    }
-                });
+                    });
+                }// if(parseObj)
             });
         }
     }])
