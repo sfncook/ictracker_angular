@@ -273,16 +273,13 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc, 
     ];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
 
-    $scope.selectSector = function(catalog_sector) {
-        $scope.selectedSector.set('name',       catalog_sector.name);
-        $scope.selectedSector.set('hasClock'  , catalog_sector.hasClock);
-        $scope.selectedSector.set('hasAcctBtn', catalog_sector.hasAcctBtn);
-        $scope.selectedSector.set('hasPsiBtn' , catalog_sector.hasPsiBtn);
-        $scope.selectedSector.set('hasActions', catalog_sector.hasActions);
+    $scope.selectSectorType = function(sectorType) {
+        $scope.selectedSector.sectorType = sectorType.data;
+        $scope.selectedSector.sectorTypeObj = sectorType;
 
-        if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
+        if(sectorType.name=="Customer Service") {dialogSvc.setCustSvcSector();}
 
-        reportsSvc.addEvent_title_to_sector(catalog_sector.name);
+        reportsSvc.addEvent_title_to_sector(sectorType.name);
 
         $("#sector_name_dlg").dialog( "close" );
     };
