@@ -104,7 +104,10 @@
     <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
-    <div id="db_status_msg_success" class="button_top db_status" ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess">Load Succeeded</div>
+    <div id="db_status_msg_success"
+         class="button_top db_status"
+         ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess"
+         ng-class="{fadeout:!dataStore.waitingToLoad && dataStore.loadSuccess}">Load Succeeded</div>
     <div id="db_status_msg_failed" class="button_top db_status" ng-show="!dataStore.waitingToLoad && !dataStore.loadSuccess">Load Failed</div>
     <div class="clear_both"></div>
 </div>
