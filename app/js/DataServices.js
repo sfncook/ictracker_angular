@@ -29,7 +29,7 @@ angular.module('DataServices', ['ParseServices'])
     .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ParseObject', function (SectorTypes, ParseQuery, ParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
-            ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(sectorTypes){
+            return ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(sectorTypes){
                 for(var i=0; i<sectorTypes.length; i++) {
                     var sectorType = new ParseObject(sectorTypes[i], SECTOR_TYPE_DEF);
                     SectorTypes.push(sectorType);
@@ -38,7 +38,10 @@ angular.module('DataServices', ['ParseServices'])
                     if (sectorType.name=="Sector Name") {
                         SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
                     }
-                }
+                    if (sectorType.name=="Sector ####") {
+                        SectorTypes.SECTOR_NUM = sectorType;
+                    }
+                }//for
             });
         }
     }])

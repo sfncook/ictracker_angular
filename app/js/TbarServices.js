@@ -99,4 +99,13 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+    .factory('CreateBlankSectorType', ['ParseObject', function (ParseObject) {
+        return function () {
+            var SectorTypeParseObj = Parse.Object.extend('SectorType');
+            var BLANK_SECTOR_TYPE = new ParseObject(new SectorTypeParseObj(), SECTOR_TYPE_DEF);
+            BLANK_SECTOR_TYPE.isVisible = false;
+            return BLANK_SECTOR_TYPE;
+        }
+    }])
+
 ;

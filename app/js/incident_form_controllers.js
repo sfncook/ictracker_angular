@@ -14,7 +14,7 @@ function initDialogs() {
         autoOpen: false,
         modal: true
     });
-    $( "#sector_name_dlg" ).dialog( "option", "width", 730 );
+    $( "#sector_name_dlg" ).dialog( "option", "width", 900 );
     $( "#par-dlg" ).dialog( "option", "width", 475 );
     $( "#bnch_dlg" ).dialog( "option", "width", 515 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
@@ -73,7 +73,6 @@ app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncide
     var incidentObjectId = getHttpRequestByName('i');
 
     $scope.dataStore = DataStore;
-    LoadSectorTypes();
     LoadIncident(incidentObjectId, $scope);
 });
 
@@ -236,9 +235,34 @@ app.controller('ParDlg', function($scope, dialogSvc){
     }
 });
 
-app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
+app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType){
     $scope.selectedSector = {};
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
+
+    LoadSectorTypes().then(
+        function() {
+            // Make all sector_types visible
+            for(var i=0; i<SectorTypes.length; i++) {
+                SectorTypes[i].isVisible = true;
+            }
+
+            var orderedSectorTypes = [
+                SectorTypes.INTERIOR,       SectorTypes.SECTOR_1,       SectorTypes.ALPHA_SECTOR,       SectorTypes.SALVAGE,            SectorTypes.TRIAGE,
+                SectorTypes.VENTILATION,    SectorTypes.SECTOR_2,       SectorTypes.BRAVO_SECTOR,       SectorTypes.OVERHAUL,           SectorTypes.EXTRICATION,
+                SectorTypes.ROOF,           SectorTypes.SECTOR_3,       SectorTypes.CHARLIE_SECTOR,     SectorTypes.EVACUATION,         SectorTypes.TREATMENT,
+                SectorTypes.ON_DECK,        SectorTypes.SECTOR_4,       SectorTypes.DELTA_SECTOR,       SectorTypes.CUSTOMER_SERVICE,   SectorTypes.TRANSPORTATION,
+                SectorTypes.STAGING,        SectorTypes.SECTOR_5,       CreateBlankSectorType(),        CreateBlankSectorType(),        CreateBlankSectorType(),
+                CreateBlankSectorType(),    SectorTypes.SECTOR_6,       SectorTypes.NORTH_SECTOR,       SectorTypes.REHAB,              SectorTypes.LZ,
+                SectorTypes.IRIC,           SectorTypes.SECTOR_7,       SectorTypes.EAST_SECTOR,        SectorTypes.LOBBY,              CreateBlankSectorType(),
+                SectorTypes.RIC,            SectorTypes.SECTOR_8,       SectorTypes.SOUTH_SECTOR,       SectorTypes.RESOURCE,           CreateBlankSectorType(),
+                SectorTypes.RESCUE,         SectorTypes.SECTOR_9,       SectorTypes.WEST_SECTOR,        SectorTypes.ACCOUNTABILITY,     CreateBlankSectorType(),
+                SectorTypes.SAFETY,         SectorTypes.SECTOR_NUM
+
+            ];
+
+            $scope.OrderedSectorTypes = orderedSectorTypes;
+        }
+    );
 
     $scope.sector_dir_btns = [
         {"dialog":"Sub","tbar":"Sub",   "isWide":true},
@@ -248,11 +272,6 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
         {"dialog":"W",  "tbar":"West",  "isWide":false}
     ];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
-
-    $http.get('data/sectors.json').
-        success(function(data){
-            $scope.catalog_sectors = data;
-        });
 
     $scope.selectSector = function(catalog_sector) {
         $scope.selectedSector.set('name',       catalog_sector.name);
