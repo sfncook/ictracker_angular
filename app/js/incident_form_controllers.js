@@ -319,27 +319,29 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 });
 
-app.controller('UnitsDlg', function($scope, $http, dialogSvc){
+app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes){
     $scope.selectedSector = {};
     $scope.dispatechedUnits = [];
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
     $scope.forAcct=false;
 
-    $scope.cities = [];
-    $scope.type_names = [];
-    $http.get('data/units.json').
-        success(function(data){
+    $scope.cities = new Array();
+    $scope.type_names = new Array();
+
+    LoadUnitTypes().then(
+        function() {
             // In order to eliminate duplicates write everything to objects
             var cities_local = [];
-            for(var i = 0; i < data.length; i++) {
-                var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
-                var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-//                var unit = type.units.putIfAbsent(data[i].unit, new CatalogUnit(data[i].unit, data[i].type, data[i].city));
+            for(var i = 0; i < UnitTypes.length; i++) {
+                var unitType = UnitTypes[i];
+                var city = cities_local.putIfAbsent(unitType.city, {'name':unitType.city, 'types':[]});
+                var type = city.types.putIfAbsent(unitType.type, {'city':unitType.city, 'name':unitType.type, 'units':[]});
+//                var unit = type.units.putIfAbsent(dunitType.unit, new CatalogUnit(unitType.unit, unitType.type, unitType.city));
 
-                if( typeof data[i].default != 'undefined') {
-                    $scope.selected_city = city;
-                    $scope.selected_type_name = '';
-                }
+//                if( typeof unitType.default != 'undefined') {
+//                    $scope.selected_city = city;
+//                    $scope.selected_type_name = '';
+//                }
             }
 
             // Convert everything to arrays
@@ -350,7 +352,8 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                     type.units= type.units.propertiesToArray();
                 });
             });
-        });
+        }
+    );
 
     $scope.selectCity = function(city) {
         $scope.selected_city = city;

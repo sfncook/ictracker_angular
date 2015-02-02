@@ -3,6 +3,7 @@ var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate'
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
+var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 
 angular.module('DataServices', ['ParseServices'])
 
@@ -46,6 +47,26 @@ angular.module('DataServices', ['ParseServices'])
         }
     }])
 
+    .factory('UnitTypes', function() {
+        return new Array();
+    })
+    .factory('LoadUnitTypes', ['UnitTypes', 'ParseQuery', 'ParseObject', function (UnitTypes, ParseQuery, ParseObject) {
+        return function () {
+            var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
+            queryUniTypes.limit(1000);
+            return ParseQuery(queryUniTypes, {functionToCall:'find'}).then(function(unitTypes){
+                for(var i=0; i<unitTypes.length; i++) {
+                    var unitType = new ParseObject(unitTypes[i], UNIT_TYPE_DEF);
+                    UnitTypes.push(unitType);
+                    var nameRefor = unitType.name.toUpperCase();
+                    UnitTypes[nameRefor] = unitType;
+                }
+            });
+        }
+    }])
+
+
+
     .factory('DataStore', function() {
         return {
             incident:{},
@@ -88,6 +109,7 @@ angular.module('DataServices', ['ParseServices'])
             });
         }
     }])
+
 
     .factory('Incidents', function() {
         return new Array();
