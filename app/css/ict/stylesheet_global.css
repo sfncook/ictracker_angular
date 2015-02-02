@@ -143,15 +143,18 @@ button:active {
 }
 
 .unit_city_btn {
-    width:80px;
+    height: 18px;
+    width: 80px;
     margin:5px;
+    font-size: 0.85rem;
 }
 
 .unit_type_btn {
     width:80px;
     height:20px;
-    font-size:0.85rem !important;
+    font-size:0.8rem !important;
     margin:5px;
+    padding: 0px;
 }
 
 .unit_tbar_btn {

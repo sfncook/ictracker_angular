@@ -295,7 +295,8 @@
                 <button class="unit_city_btn"
                         ng-repeat="city in cities"
                         ng-click="selectCity(city)"
-                        ng-class="{glowlightgreen:selected_city==city}">
+                        ng-class="{glow_blue:selected_city==city}"
+                        style="font-size:0.8rem; padding:0">
                     {{city.name}}
                 </button>
             </td>
@@ -305,7 +306,7 @@
                 <button class="unit_type_btn"
                         ng-repeat="type in selected_city.types"
                         ng-click="selectType(type)"
-                        ng-class="{glowlightgreen:selected_type_name==type.name}">
+                        ng-class="{glow_blue:selected_type_name==type.name}">
                     {{type.name}}
                 </button>
             </td>
