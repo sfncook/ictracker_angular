@@ -2,7 +2,7 @@
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
-var SECTOR_TYPE_DEF = ['name', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
+var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 
 angular.module('DataServices', ['ParseServices'])
 
