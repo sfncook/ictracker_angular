@@ -777,3 +777,20 @@ button:active {
     font-size: 1.05rem;
     margin-top: 10px;
 }
+
+.db_status {
+    float: right;
+    width: 120px;
+    padding: 5px;
+    font-size: 1.0rem;
+    color: white;
+}
+#db_status_msg {
+    background: blue;
+}
+#db_status_msg_success {
+    background: green;
+}
+#db_status_msg_failed {
+    background: red;
+}

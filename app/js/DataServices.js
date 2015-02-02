@@ -74,9 +74,14 @@ angular.module('DataServices', ['ParseServices'])
                                 fetchTypeForSector(sector, $scope, ParseObject);
                                 TbarSectors.push(sector);
                             }
+                            DataStore.loadSuccess = true;
+                            DataStore.waitingToLoad = false;
                         }
                     });
-                }// if(parseObj)
+                } else {
+                    DataStore.loadSuccess = false;
+                    DataStore.waitingToLoad = false;
+                }
             });
         }
     }])
