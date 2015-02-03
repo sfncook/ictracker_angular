@@ -7,6 +7,10 @@ var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 
 angular.module('DataServices', ['ParseServices'])
 
+    .factory('DefaultCity', function() {
+        return "Mesa";
+    })
+
     .factory('IncidentTypes', function() {
         return new Array();
     })
@@ -60,7 +64,7 @@ angular.module('DataServices', ['ParseServices'])
                     UnitTypes.push(unitType);
                     var nameRefor = unitType.name.toUpperCase();
                     UnitTypes[nameRefor] = unitType;
-                }
+                }//for
             });
         }
     }])

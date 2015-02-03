@@ -336,13 +336,8 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                 var unitType = UnitTypes[i];
                 var city = cities_local.putIfAbsent(unitType.city, {'name':unitType.city, 'types':[]});
                 var type = city.types.putIfAbsent(unitType.type, {'city':unitType.city, 'name':unitType.type, 'units':[]});
-//                var unit = type.units.putIfAbsent(dunitType.unit, new CatalogUnit(unitType.unit, unitType.type, unitType.city));
-
-//                if( typeof unitType.default != 'undefined') {
-//                    $scope.selected_city = city;
-//                    $scope.selected_type_name = '';
-//                }
-            }
+                type.units.putIfAbsent(unitType.name, unitType);
+            }//for
 
             // Convert everything to arrays
             $scope.cities = cities_local.propertiesToArray();
@@ -352,6 +347,9 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                     type.units= type.units.propertiesToArray();
                 });
             });
+
+            // Select default city
+
         }
     );
 
