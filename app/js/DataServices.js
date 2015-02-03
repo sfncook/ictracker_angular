@@ -4,6 +4,7 @@ var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
+var UNIT_DEF = ['actions', 'hasPar', 'manyPeople', 'par', 'psi', 'sector', 'type'];
 
 angular.module('DataServices', ['ParseServices'])
 
@@ -129,9 +130,20 @@ angular.module('DataServices', ['ParseServices'])
                 }
             });
         }
-
     }])
 
+    .factory('CreateNewUnit', ['ParseObject', function (ParseObject) {
+        return function () {
+            var SectorTypeParseObj = Parse.Object.extend('Unit');
+            var newUnit = new ParseObject(new SectorTypeParseObj(), UNIT_DEF);
+            newUnit.actions = new Array();
+            newUnit.hasPar = false;
+            newUnit.manyPeople = 0;
+            newUnit.par = 0;
+            newUnit.psi = 0;
+            return newUnit;
+        }
+    }])
 
 ;
 

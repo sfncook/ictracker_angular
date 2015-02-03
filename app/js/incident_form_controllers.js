@@ -319,7 +319,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 });
 
-app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes, DefaultCity){
+app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector){
     $scope.selectedSector = {};
     $scope.dispatechedUnits = [];
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
@@ -367,22 +367,23 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
         }
     };
 
-    $scope.selectUnit = function(catalogUnit) {
+    $scope.selectUnit = function(unitType) {
         if($scope.forAcct) {
-            $scope.selectedSector.set('acctUnit',catalogUnit);
+            $scope.selectedSector.set('acctUnit',unitType);
             $scope.forAcct=false;
             $("#units_dlg").dialog( "close" );
         } if($scope.forDispUnits) {
-            if($scope.dispatechedUnits.contains(catalogUnit)){
-                $scope.dispatechedUnits.remByVal(catalogUnit);
+            if($scope.dispatechedUnits.contains(unitType)){
+                $scope.dispatechedUnits.remByVal(unitType);
             } else {
-                $scope.dispatechedUnits.push(catalogUnit);
+                $scope.dispatechedUnits.push(unitType);
             }
         } else {
-            var wasAdded = $scope.selectedSector.toggleUnit(catalogUnit);
+//            var wasAdded = $scope.selectedSector.toggleUnit(unitType);
+            var wasAdded = ToggleUnitTypeForSector($scope.selectedSector, unitType);
             if(wasAdded) {
-                if(!$scope.dispatechedUnits.contains(catalogUnit)){
-                    $scope.dispatechedUnits.push(catalogUnit);
+                if(!$scope.dispatechedUnits.contains(unitType)){
+                    $scope.dispatechedUnits.push(unitType);
                 }
 
                 var sectorName = $scope.selectedSector.name;
@@ -399,7 +400,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                     dialogSvc.setRehab();
                 }
             } else {
-                $scope.dispatechedUnits.remByVal(catalogUnit);
+                $scope.dispatechedUnits.remByVal(unitType);
             }
         }
     };

@@ -108,4 +108,32 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+    .factory('ToggleUnitTypeForSector', ['CreateNewUnit', function (CreateNewUnit) {
+        return function (sector, unitType) {
+            if(sector.units) {
+                // search for unitType already in sector
+                for(var i=0; i<sector.units.length; i++) {
+                    var unit = sector.units[i];
+                    if(unit.type.name==unitType.name) {
+                        //Remove unit from sector
+                        console.log("remove");
+                        return false;
+                    }
+                }//for
+                // Add unit to sector
+                console.log("add");
+                return true;
+            } else {
+                // Add unit to sector
+                console.log("create and add");
+                sector.units = new Array();
+                var newUnit = CreateNewUnit();
+                newUnit.type = unitType;
+                newUnit.sector = sector;
+                sector.units.push(newUnit);
+                return true;
+            }
+        }
+    }])
+
 ;
