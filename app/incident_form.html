@@ -288,7 +288,43 @@
             <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
         </div>
     </div>
-    <table>
+    <div id="units_dialog_cities_div">
+        <button class="unit_city_btn"
+                ng-repeat="city in cities"
+                ng-click="selectCity(city)"
+                ng-class="{glow_blue:selected_city==city}"
+                style="font-size:0.8rem; padding:0">
+            {{city.name}}
+        </button>
+    </div>
+
+    <div id="units_dialog_types_div">
+        <button class="unit_type_btn"
+                ng-repeat="type in selected_city.types"
+                ng-click="selectType(type)"
+                ng-class="{glow_blue:selected_type_name==type.name}">
+            {{type.name}}
+        </button>
+    </div>
+
+    <div class="units_dialog_citybtns_div">
+        <div class="unit_dlg_units_container">
+            <div class="type_row_for_unit_btns"
+                 ng-repeat="type in selected_city.types"
+                 ng-if="selected_type_name=='' || selected_type_name==type.name">
+                <button class="unit_dlg_btn unit_btn"
+                        ng-repeat="unit in type.units"
+                        ng-click="selectUnit(unit)"
+                        ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                    {{unit.name}}
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear_both"></div>
+
+    <!--<table>
         <tr>
             <td></td>
             <td>
@@ -325,7 +361,7 @@
                 </div>
             </td>
         </tr>
-    </table>
+    </table>-->
 
 </div>
 

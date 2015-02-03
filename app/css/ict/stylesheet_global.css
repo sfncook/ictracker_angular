@@ -150,8 +150,8 @@ button:active {
 }
 
 .unit_type_btn {
-    width:80px;
-    height:20px;
+    width:70px;
+    height:25px;
     font-size:0.8rem !important;
     margin:5px;
     padding: 0px;
@@ -429,12 +429,13 @@ button:active {
 }
 
 .unit_dlg_units_container {
-    overflow: scroll;
-    height: 590px;
-    width:760px;
+    overflow: hidden;
+    /*height: 590px;*/
+    /*width:760px;*/
 }
 .type_row_for_unit_btns {
-    margin: 20px auto;
+    margin: 0 auto;
+    padding-bottom: 15px;
 }
 #dispatched_units_div {
     width: 846px;
@@ -813,4 +814,24 @@ button:active {
 .fadeout {
     -webkit-animation:fadeout 5s linear;
     visibility:hidden;
+}
+
+#units_dialog_cities_div {
+    display: block;
+    padding-left: 170px;
+    border-bottom: 1px solid #999;
+}
+#units_dialog_types_div {
+    display: block;
+    float: left;
+    width: 165px;
+    height: 450px;
+    border-right: 1px solid #999;
+}
+.units_dialog_citybtns_div {
+    display: block;
+    width: 688px;
+    height: 450px;
+    float: left;
+    overflow: scroll;
 }
