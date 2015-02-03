@@ -319,7 +319,7 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 });
 
-app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes){
+app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes, DefaultCity){
     $scope.selectedSector = {};
     $scope.dispatechedUnits = [];
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
@@ -337,6 +337,11 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                 var city = cities_local.putIfAbsent(unitType.city, {'name':unitType.city, 'types':[]});
                 var type = city.types.putIfAbsent(unitType.type, {'city':unitType.city, 'name':unitType.type, 'units':[]});
                 type.units.putIfAbsent(unitType.name, unitType);
+
+                if(city.name==DefaultCity) {
+                    $scope.selected_city = city;
+                    $scope.selected_type_name = '';
+                }
             }//for
 
             // Convert everything to arrays
@@ -347,9 +352,6 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                     type.units= type.units.propertiesToArray();
                 });
             });
-
-            // Select default city
-
         }
     );
 
