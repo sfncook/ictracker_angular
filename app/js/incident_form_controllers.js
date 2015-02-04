@@ -402,6 +402,7 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
             } else {
                 $scope.dispatechedUnits.remByVal(unitType);
             }
+            $("#units_dlg").dialog( "close" );
         }
     };
 
