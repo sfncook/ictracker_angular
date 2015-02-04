@@ -115,17 +115,17 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
                 for(var i=0; i<sector.units.length; i++) {
                     var unit = sector.units[i];
                     if(unit.type.name==unitType.name) {
-                        //Remove unit from sector
-                        console.log("remove");
+                        sector.units.remByVal(unit);
                         return false;
                     }
                 }//for
-                // Add unit to sector
-                console.log("add");
+                var newUnit = CreateNewUnit();
+                newUnit.type = unitType;
+                newUnit.sector = sector;
+                sector.units.push(newUnit);
                 return true;
             } else {
                 // Add unit to sector
-                console.log("create and add");
                 sector.units = new Array();
                 var newUnit = CreateNewUnit();
                 newUnit.type = unitType;
