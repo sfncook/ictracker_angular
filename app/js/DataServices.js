@@ -69,6 +69,30 @@ angular.module('DataServices', ['ParseServices'])
             });
         }
     }])
+    .factory('LoadUnitsForSector', ['ParseQuery', 'ParseObject', function (ParseQuery, ParseObject) {
+        return function (sector) {
+            sector.units = new Array();
+            var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
+            queryUnits.equalTo("type", sector.data);
+            ParseQuery(queryUnits, {functionToCall:'find'}).then(function(units){
+                for(var i=0; i<units.length; i++) {
+                    var unit = new ParseObject(units[i], UNIT_DEF);
+                    sector.units.push(unit);
+                }
+            });
+
+//            var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
+//            queryUniTypes.limit(1000);
+//            return ParseQuery(queryUniTypes, {functionToCall:'find'}).then(function(unitTypes){
+//                for(var i=0; i<unitTypes.length; i++) {
+//                    var unitType = new ParseObject(unitTypes[i], UNIT_TYPE_DEF);
+//                    UnitTypes.push(unitType);
+//                    var nameRefor = unitType.name.toUpperCase();
+//                    UnitTypes[nameRefor] = unitType;
+//                }//for
+//            });
+        }
+    }])
 
 
 
@@ -79,7 +103,9 @@ angular.module('DataServices', ['ParseServices'])
             loadSuccess:false
         };
     })
-    .factory('LoadIncident', ['AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore', function (AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
+    .factory('LoadIncident', [
+        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore',
+        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -102,6 +128,7 @@ angular.module('DataServices', ['ParseServices'])
                                 var sector = new ParseObject(sectors[i], SECTOR_DEF);
                                 fetchTypeForSector(sector, $scope, ParseObject);
                                 TbarSectors.push(sector);
+                                LoadUnitsForSector(sector);
                             }
                             DataStore.loadSuccess = true;
                             DataStore.waitingToLoad = false;
@@ -133,7 +160,7 @@ angular.module('DataServices', ['ParseServices'])
     }])
 
     .factory('CreateNewUnit', ['ParseObject', function (ParseObject) {
-        return function () {
+        return function (sector, unitType) {
             var SectorTypeParseObj = Parse.Object.extend('Unit');
             var newUnit = new ParseObject(new SectorTypeParseObj(), UNIT_DEF);
             newUnit.actions = new Array();
@@ -141,6 +168,10 @@ angular.module('DataServices', ['ParseServices'])
             newUnit.manyPeople = 0;
             newUnit.par = 0;
             newUnit.psi = 0;
+            newUnit.type = unitType.data;
+            newUnit.sector = sector.data;
+            newUnit.save();
+            sector.units.push(newUnit);
             return newUnit;
         }
     }])
