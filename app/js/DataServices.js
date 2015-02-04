@@ -15,12 +15,13 @@ angular.module('DataServices', ['ParseServices'])
     .factory('IncidentTypes', function() {
         return new Array();
     })
-    .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ParseObject', function (IncidentTypes, ParseQuery, ParseObject) {
+    .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ConvertParseObject', function (IncidentTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var queryIncidentTypes = new Parse.Query(Parse.Object.extend('IncidentType'));
             ParseQuery(queryIncidentTypes, {functionToCall:'find'}).then(function(incidentTypes){
                 for(var i=0; i<incidentTypes.length; i++) {
-                    var incidentType = new ParseObject(incidentTypes[i], INCIDENT_TYPE_DEF);
+                    var incidentType = incidentTypes[i];
+                    ConvertParseObject(incidentType, INCIDENT_TYPE_DEF);
                     IncidentTypes.push(incidentType);
                     var nameRefor = incidentType.nameShort.toUpperCase();
                     IncidentTypes[nameRefor] = incidentType;
@@ -32,12 +33,13 @@ angular.module('DataServices', ['ParseServices'])
     .factory('SectorTypes', function() {
         return new Array();
     })
-    .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ParseObject', function (SectorTypes, ParseQuery, ParseObject) {
+    .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
             return ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(sectorTypes){
                 for(var i=0; i<sectorTypes.length; i++) {
-                    var sectorType = new ParseObject(sectorTypes[i], SECTOR_TYPE_DEF);
+                    var sectorType = sectorTypes[i];
+                    ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
                     SectorTypes.push(sectorType);
                     var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
                     SectorTypes[nameRefor] = sectorType;
@@ -55,13 +57,14 @@ angular.module('DataServices', ['ParseServices'])
     .factory('UnitTypes', function() {
         return new Array();
     })
-    .factory('LoadUnitTypes', ['UnitTypes', 'ParseQuery', 'ParseObject', function (UnitTypes, ParseQuery, ParseObject) {
+    .factory('LoadUnitTypes', ['UnitTypes', 'ParseQuery', 'ConvertParseObject', function (UnitTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
             queryUniTypes.limit(1000);
             return ParseQuery(queryUniTypes, {functionToCall:'find'}).then(function(unitTypes){
                 for(var i=0; i<unitTypes.length; i++) {
-                    var unitType = new ParseObject(unitTypes[i], UNIT_TYPE_DEF);
+                    var unitType = unitTypes[i];
+                    ConvertParseObject(unitType, UNIT_TYPE_DEF);
                     UnitTypes.push(unitType);
                     var nameRefor = unitType.name.toUpperCase();
                     UnitTypes[nameRefor] = unitType;
@@ -69,14 +72,15 @@ angular.module('DataServices', ['ParseServices'])
             });
         }
     }])
-    .factory('LoadUnitsForSector', ['ParseQuery', 'ParseObject', function (ParseQuery, ParseObject) {
+    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
         return function (sector) {
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
-            queryUnits.equalTo("type", sector.data);
+            queryUnits.equalTo("type", sector);
             ParseQuery(queryUnits, {functionToCall:'find'}).then(function(units){
                 for(var i=0; i<units.length; i++) {
-                    var unit = new ParseObject(units[i], UNIT_DEF);
+                    var unit = units[i];
+                    ConvertParseObject(unit, UNIT_DEF);
                     sector.units.push(unit);
                 }
             });
@@ -104,29 +108,32 @@ angular.module('DataServices', ['ParseServices'])
         };
     })
     .factory('LoadIncident', [
-        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseObject', 'ParseQuery', 'DataStore',
-        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseObject, ParseQuery, DataStore) {
+        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ConvertParseObject', 'ParseQuery', 'DataStore',
+        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, ParseQuery, DataStore) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('incidentType');
-            ParseQuery(queryIncident, {functionToCall:'first'}).then(function(parseObj){
-                if(parseObj) {
-                    DataStore.incident = new ParseObject(parseObj, INCIDENT_DEF);
+            ParseQuery(queryIncident, {functionToCall:'first'}).then(function(incident){
+                if(incident) {
+                    ConvertParseObject(incident, INCIDENT_DEF);
+                    DataStore.incident = incident;
                     DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
-                        DataStore.incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+                        ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+                        DataStore.incident.inc_type_obj= incidentTypeObj;
                     });
 
                     var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                    querySectors.equalTo("incident", DataStore.incident.data);
+                    querySectors.equalTo("incident", DataStore.incident);
                     ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
                         if(sectors.length==0) {
                             AddDefaultTbars(DataStore.incident);
                             SaveTbars();
                         } else {
                             for(var i=0; i<sectors.length; i++) {
-                                var sector = new ParseObject(sectors[i], SECTOR_DEF);
-                                fetchTypeForSector(sector, $scope, ParseObject);
+                                var sector = sectors[i];
+                                ConvertParseObject(sector, SECTOR_DEF);
+                                fetchTypeForSector(sector, $scope, ConvertParseObject);
                                 TbarSectors.push(sector);
                                 LoadUnitsForSector(sector);
                             }
@@ -146,68 +153,92 @@ angular.module('DataServices', ['ParseServices'])
     .factory('Incidents', function() {
         return new Array();
     })
-    .factory('LoadAllIncidents', ['ParseObject', 'ParseQuery', 'Incidents', function (ParseObject, ParseQuery, Incidents) {
+    .factory('LoadAllIncidents', ['ConvertParseObject', 'ParseQuery', 'Incidents', function (ConvertParseObject, ParseQuery, Incidents) {
         return function ($scope) {
             var query = new Parse.Query(Parse.Object.extend('Incident'));
             ParseQuery(query, {functionToCall:'find'}).then(function(incidents){
                 for(var i=0; i<incidents.length; i++) {
-                    var incident = new ParseObject(incidents[i], INCIDENT_DEF);
-                    fetchTypeForIncident(incident, $scope, ParseObject);
+                    var incident = new ConvertParseObject(incidents[i], INCIDENT_DEF);
+                    fetchTypeForIncident(incident, $scope, ConvertParseObject);
                     Incidents.push(incident);
                 }
             });
         }
     }])
 
-    .factory('CreateNewUnit', ['ParseObject', function (ParseObject) {
+    .factory('CreateNewUnit', ['ConvertParseObject', function (ConvertParseObject) {
         return function (sector, unitType) {
-            var SectorTypeParseObj = Parse.Object.extend('Unit');
-            var newUnit = new ParseObject(new SectorTypeParseObj(), UNIT_DEF);
+            var UnitParseObj = Parse.Object.extend('Unit');
+            var newUnit = new UnitParseObj();
+            ConvertParseObject(newUnit, UNIT_DEF);
             newUnit.actions = new Array();
             newUnit.hasPar = false;
             newUnit.manyPeople = 0;
             newUnit.par = 0;
             newUnit.psi = 0;
-            newUnit.type = unitType.data;
-            newUnit.sector = sector.data;
+            newUnit.type = unitType;
+            newUnit.sector = sector;
             newUnit.save();
             sector.units.push(newUnit);
             return newUnit;
         }
     }])
 
+    .factory('ConvertParseObject', [function () {
+        return function (parseObject, fields) {
+            //add dynamic properties from fields array
+            for (var i = 0; i < fields.length; i++) {
+                //add closure
+                (function () {
+                    var propName = fields[i];
+                    Object.defineProperty(parseObject, propName, {
+                        get: function () {
+                            return parseObject.get(propName);
+                        },
+                        set: function (value) {
+                            parseObject.set(propName, value);
+                        }
+                    });
+                })();
+            }
+        }
+    }])
+
 ;
 
 
-function fetchTypeForIncident(incident, $scope, ParseObject) {
+function fetchTypeForIncident(incident, $scope, ConvertParseObject) {
     var type = incident.incidentType;
     if(type) {
         type.fetch({
             success: function(type) {
                 $scope.$apply(function(){
-                    incident.inc_type_obj = new ParseObject(type, INCIDENT_TYPE_DEF);
+                    ConvertParseObject(type, INCIDENT_TYPE_DEF);
+                    incident.inc_type_obj = type;
                 });
             }
         });
     }
 }
 
-function fetchTypeForSector(sector, $scope, ParseObject) {
+function fetchTypeForSector(sector, $scope, ConvertParseObject) {
     var type = sector.sectorType;
     if(type) {
         type.fetch({
             success: function(type) {
                 $scope.$apply(function(){
-                    sector.sectorTypeObj= new ParseObject(type, SECTOR_TYPE_DEF);
+                    ConvertParseObject(type, SECTOR_TYPE_DEF);
+                    sector.sectorTypeObj= type;
                 });
             }
         });
     }
 }
 
-function loadIncidentType(ParseObject, incident) {
+function loadIncidentType(ConvertParseObject, incident) {
     return function(incidentTypeObj){
-        incident.inc_type_obj= new ParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+        ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+        incident.inc_type_obj= incidentTypeObj;
         incident.test = 'xyz';
     };
 }

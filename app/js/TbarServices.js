@@ -29,21 +29,21 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ParseObject, SectorTypes) {
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ConvertParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ConvertParseObject, SectorTypes) {
         return function (incident) {
             var SectorParseObj = Parse.Object.extend('Sector');
 
-            var rescuSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
-            var rehabSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
-            var safetSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
+            var rescuSector = new SectorParseObj()
+            var rehabSector = new SectorParseObj()
+            var safetSector = new SectorParseObj()
 
-            rescuSector.sectorType = SectorTypes.RESCUE.data;
-            rehabSector.sectorType = SectorTypes.REHAB.data;
-            safetSector.sectorType = SectorTypes.SAFETY.data;
+            new ConvertParseObject(rescuSector, SECTOR_DEF);
+            new ConvertParseObject(rehabSector, SECTOR_DEF);
+            new ConvertParseObject(safetSector, SECTOR_DEF);
 
-            rescuSector.sectorTypeObj = SectorTypes.RESCUE;
-            rehabSector.sectorTypeObj = SectorTypes.REHAB;
-            safetSector.sectorTypeObj = SectorTypes.SAFETY;
+            rescuSector.sectorType = SectorTypes.RESCUE;
+            rehabSector.sectorType = SectorTypes.REHAB;
+            safetSector.sectorType = SectorTypes.SAFETY;
 
             rescuSector.col = GridsterOpts.columns - 1;
             rescuSector.row = 0;
@@ -52,9 +52,9 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
             safetSector.col = GridsterOpts.columns - 1;
             safetSector.row = 2;
 
-            rescuSector.incident = incident.data;
-            rehabSector.incident = incident.data;
-            safetSector.incident = incident.data;
+            rescuSector.incident = incident;
+            rehabSector.incident = incident;
+            safetSector.incident = incident;
 
             TbarSectors.push(rescuSector);
             TbarSectors.push(rehabSector);
@@ -69,14 +69,13 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
                             (row==rehabSector.row && col==rehabSector.col) ||
                             (row==safetSector.row && col==safetSector.col)
                         ) {
-                        console.log('');
                     } else {
-                        var blankSector = new ParseObject(new SectorParseObj(), SECTOR_DEF);
-                        blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE.data;
-                        blankSector.sectorTypeObj = SectorTypes.DEFAULT_SECTOR_TYPE;
+                        var blankSector = new SectorParseObj();
+                        ConvertParseObject(blankSector, SECTOR_DEF);
+                        blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE;
                         blankSector.row = row;
                         blankSector.col = col;
-                        blankSector.incident = incident.data;
+                        blankSector.incident = incident;
                         TbarSectors.push(blankSector);
                     }
                 }
@@ -99,10 +98,11 @@ angular.module('TbarServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('CreateBlankSectorType', ['ParseObject', function (ParseObject) {
+    .factory('CreateBlankSectorType', ['ConvertParseObject', function (ConvertParseObject) {
         return function () {
             var SectorTypeParseObj = Parse.Object.extend('SectorType');
-            var BLANK_SECTOR_TYPE = new ParseObject(new SectorTypeParseObj(), SECTOR_TYPE_DEF);
+            var BLANK_SECTOR_TYPE = new SectorTypeParseObj();
+            ConvertParseObject(BLANK_SECTOR_TYPE, SECTOR_TYPE_DEF);
             BLANK_SECTOR_TYPE.isVisible = false;
             return BLANK_SECTOR_TYPE;
         }

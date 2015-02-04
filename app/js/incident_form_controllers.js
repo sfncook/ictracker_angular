@@ -274,8 +274,7 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc, 
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
 
     $scope.selectSectorType = function(sectorType) {
-        $scope.selectedSector.sectorType = sectorType.data;
-        $scope.selectedSector.sectorTypeObj = sectorType;
+        $scope.selectedSector.sectorType = sectorType;
         $scope.selectedSector.save();
 
         if(sectorType.name=="Customer Service") {dialogSvc.setCustSvcSector();}
