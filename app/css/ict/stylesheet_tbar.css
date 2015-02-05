@@ -139,6 +139,7 @@ tbar {
     padding: 2px 0;
     border-radius: 15px;
     font-size: 0.8rem;
+    background: #CCC;
 }
 
 .psi_red {
@@ -228,4 +229,19 @@ tbar {
     background: #FFFF88;
     border-top:1px solid #999;
     border-bottom:1px solid #999;
+}
+
+.tbar_unit_info_btn {
+    border:1px solid #EEE;
+    float:left;
+    border-radius: 5px;
+    margin-left: 0;
+}
+.tbar_unit_info_btn:hover {
+    background:#9ad1ff;
+    cursor: pointer;
+}
+.tbar_unit_info_btn:active {
+    background:#6BACE3;
+    cursor: pointer;
 }

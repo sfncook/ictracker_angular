@@ -450,6 +450,15 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
         $scope.forAcct=false;
     });
 });
+app.filter('getUnitPar', function() {
+    return function(unitPar) {
+        if(unitPar==0) {
+            return "P";
+        } else {
+            return unitPar;
+        }
+    };
+});
 
 app.controller('ActionsDlg', function($scope, $http, dialogSvc){
     $scope.selectedSector = {};

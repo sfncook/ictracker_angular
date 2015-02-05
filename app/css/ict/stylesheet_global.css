@@ -615,6 +615,7 @@ button:active {
     margin: 5px;
 }
 .personnel_tbar_btn {
+    float: left;
     margin: 5px;
 }
 
@@ -623,7 +624,8 @@ button:active {
     margin: 0 5px 5px 0;
 }
 .psi_tbar_btn {
-    /*margin: 5px;*/
+    float:left;
+    margin: 4px;
 }
 .psi_red {
     background: red;
