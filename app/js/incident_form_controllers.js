@@ -178,7 +178,7 @@ app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSe
     }
 
     $scope.selectUnit = function(sector,unit) {
-        sector.selectUnit(unit);
+        sector.selectedUnit = unit;
     }
 
 });
