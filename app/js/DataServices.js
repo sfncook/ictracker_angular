@@ -158,7 +158,8 @@ angular.module('DataServices', ['ParseServices'])
             var query = new Parse.Query(Parse.Object.extend('Incident'));
             ParseQuery(query, {functionToCall:'find'}).then(function(incidents){
                 for(var i=0; i<incidents.length; i++) {
-                    var incident = new ConvertParseObject(incidents[i], INCIDENT_DEF);
+                    var incident = incidents[i];
+                    ConvertParseObject(incident, INCIDENT_DEF);
                     fetchTypeForIncident(incident, $scope, ConvertParseObject);
                     Incidents.push(incident);
                 }
@@ -214,7 +215,7 @@ function fetchTypeForIncident(incident, $scope, ConvertParseObject) {
             success: function(type) {
                 $scope.$apply(function(){
                     ConvertParseObject(type, INCIDENT_TYPE_DEF);
-                    incident.inc_type_obj = type;
+                    incident.incidentType = type;
                 });
             }
         });
