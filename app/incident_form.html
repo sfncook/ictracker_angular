@@ -182,18 +182,18 @@
                 </div>
             </div>
 
-            <div class="action_col_right tbar_col_right_div tbar_col_div"
-                 ng-if="sector.hasActions">
+            <div class="action_col_right tbar_col_right_div tbar_col_div">
                 <button class="acct_unit_btn"
                         ng-click="showUnitsDlgForAcct(sector)"
-                        ng-if="sector.hasAcctBtn">
-                    {{sector.acctUnit.name}}
+                        ng-if="sector.sectorType.hasAcctBtn">
+                    {{sector.acctUnit | acctUnitName}}
                 </button>
                 <button class="action_add_btn"
                         ng-click="showActionsDlg(sector)"
-                        ng-if="sector.units.length>0">+Action</button>
+                        ng-if="sector.units.length>0 && sector.sectorType.hasActions"">+Action</button>
                 <div class="clear_float"></div>
-                <div class="right_scroll_pane scroll-pane">
+                <div class="right_scroll_pane scroll-pane"
+                     ng-if="sector.units.length>0">
                     <div ng-repeat="action in sector.selectedUnit.actions">
                         <button class="action_btn"
                                 ng-class="{font_red:action.is_warning}">

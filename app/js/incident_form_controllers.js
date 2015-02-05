@@ -180,6 +180,20 @@ app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSe
     $scope.selectUnit = function(sector,unit) {
         sector.selectUnit(unit);
     }
+
+    $scope.selectUnit = function(sector,unit) {
+        sector.selectUnit(unit);
+    }
+
+});
+app.filter('acctUnitName', function() {
+    return function(acctUnit) {
+        if(acctUnit) {
+            return acctUnit.name;
+        } else {
+            return "@acct";
+        }
+    };
 });
 
 
