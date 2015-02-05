@@ -84,6 +84,10 @@ angular.module('DataServices', ['ParseServices'])
                     fetchTypeForUnit(unit, $scope, ConvertParseObject);
                     sector.units.push(unit);
                 }
+
+                if(units.length>0) {
+                    sector.selectedUnit=units[0];
+                }
             });
         }
     }])

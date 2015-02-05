@@ -395,6 +395,11 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, Uni
                     $scope.dispatechedUnits.push(unitType);
                 }
 
+                // Update sector.selectedUnit
+                if(!$scope.selectedSector.selectedUnit) {
+                    $scope.selectedSector.selectedUnit=$scope.selectedSector.units[0];
+                }
+
                 var sectorName = $scope.selectedSector.name;
                 if(sectorName=="RESCUE") {
                     dialogSvc.setRescue();
