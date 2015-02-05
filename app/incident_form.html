@@ -164,7 +164,7 @@
                 <div class="clear_both"></div>
                 <div class="left_scroll_pane scroll-pane">
                     <div ng-repeat="unit in sector.units"
-                         ng-class="{glowlightyellow:sector.selectedUnit==unit}">
+                         ng-class="{unit_selected:sector.selectedUnit==unit}">
                         <button class="personnel_tbar_btn personnel_btn"
                                 ng-click="showUnitOptionsDlg(unit)">{{unit.par}}
                         </button>
