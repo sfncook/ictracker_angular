@@ -703,11 +703,13 @@ app.controller('UnitOptionsDlg', function($scope, dialogSvc){
 
     $scope.selectPar = function(par) {
         $scope.selected_unit.par = par;
+        $scope.selected_unit.save();
         $("#unit_options_dlg").dialog( "close" );
     }
 
     $scope.selectPsi = function(psi) {
         $scope.selected_unit.psi = psi;
+        $scope.selected_unit.save();
         $("#unit_options_dlg").dialog( "close" );
     }
 
