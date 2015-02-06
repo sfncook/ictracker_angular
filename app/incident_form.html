@@ -332,6 +332,7 @@
 <div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
     <div class="action_type_dialog_header grid"
          ng-repeat="catalog_action_type in catalog_action_types">
+        <div class="action_type_label">{{catalog_action_type.name}}</div>
         <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
             <button class="btn_xsmtext action_btn"
                     ng-click="selectAction(catalog_action)"

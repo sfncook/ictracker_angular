@@ -473,7 +473,7 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc, LoadActionTypes,
             var action_types_local = [];
             for(var i = 0; i < data.length; i++) {
                 var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
+                var action = action_type.actions.push({name:data[i].name, action_type:data[i].action_type, is_warning:data[i].is_warning});
             }
 
             // Convert everything to arrays
