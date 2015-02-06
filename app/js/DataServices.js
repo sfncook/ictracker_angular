@@ -5,6 +5,7 @@ var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'hasPar', 'manyPeople', 'par', 'psi', 'sector', 'type'];
+var ACTION_TYPE_DEF = ['name', 'category', 'is_warning'];
 
 angular.module('DataServices', ['ParseServices'])
 
@@ -88,6 +89,25 @@ angular.module('DataServices', ['ParseServices'])
                 if(units.length>0) {
                     sector.selectedUnit=units[0];
                 }
+            });
+        }
+    }])
+
+    .factory('ActionTypes', function() {
+        return new Array();
+    })
+    .factory('LoadActionTypes', ['ActionTypes', 'ParseQuery', 'ConvertParseObject', function (ActionTypes, ParseQuery, ConvertParseObject) {
+        return function () {
+            var queryActionTypes = new Parse.Query(Parse.Object.extend('ActionType'));
+            queryActionTypes.limit(1000);
+            return ParseQuery(queryActionTypes, {functionToCall:'find'}).then(function(actionTypes){
+                for(var i=0; i<actionTypes.length; i++) {
+                    var actionType = actionTypes[i];
+                    ConvertParseObject(actionType, ACTION_TYPE_DEF);
+                    ActionTypes.push(actionType);
+                    var nameRefor = actionType.name.toUpperCase();
+                    ActionTypes[nameRefor] = actionType;
+                }//for
             });
         }
     }])

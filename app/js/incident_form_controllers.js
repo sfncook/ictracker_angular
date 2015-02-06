@@ -460,9 +460,12 @@ app.filter('getUnitPar', function() {
     };
 });
 
-app.controller('ActionsDlg', function($scope, $http, dialogSvc){
+app.controller('ActionsDlg', function($scope, $http, dialogSvc, LoadActionTypes, ActionTypes){
     $scope.selectedSector = {};
-    $scope.catalog_action_types = [];
+//    $scope.actionTypes = ActionTypes;
+//    LoadActionTypes();
+
+    $scope.actionTypes = [];
 
     $http.get('data/actions.json').
         success(function(data){
@@ -470,7 +473,7 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
             var action_types_local = [];
             for(var i = 0; i < data.length; i++) {
                 var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-//                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
+                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
             }
 
             // Convert everything to arrays
