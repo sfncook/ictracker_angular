@@ -165,8 +165,9 @@
                 <div class="left_scroll_pane scroll-pane">
                     <div ng-repeat="unit in sector.units"
                          ng-class="{unit_selected:sector.selectedUnit==unit}"
-                         ng-click="showUnitOptionsDlg(unit)">
-                        <div class="tbar_unit_info_btn">
+                         class="tbar_unit_row">
+                        <div class="tbar_unit_info_btn"
+                             ng-click="showUnitOptionsDlg(unit)">
                             <div class="personnel_tbar_btn personnel_btn">{{unit.par|getUnitPar}}
                             </div>
                             <div class="psi_tbar_btn psi_btn"

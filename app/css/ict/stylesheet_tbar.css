@@ -8,6 +8,9 @@ tbar {
     z-index:0;
 }
 
+.unit_tbar_btn {
+    margin: 2px;
+}
 .unit_add_btn {
     width:57px;
     height:27px;
@@ -244,4 +247,8 @@ tbar {
 .tbar_unit_info_btn:active {
     background:#6BACE3;
     cursor: pointer;
+}
+
+.tbar_unit_row {
+    height: 35px;
 }
