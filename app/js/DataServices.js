@@ -170,7 +170,7 @@ angular.module('DataServices', ['ParseServices'])
             newUnit.hasPar = false;
             newUnit.manyPeople = 0;
             newUnit.par = 0;
-            newUnit.psi = 0;
+            newUnit.psi = 4000;
             newUnit.type = unitType;
             newUnit.sector = sector;
             newUnit.save();
