@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices']);
+var app = angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices']);
 
 function init() {
     initDialogs();
