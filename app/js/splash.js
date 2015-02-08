@@ -1,24 +1,56 @@
 'use strict';
 
-var app = angular.module("ictApp", []);
+var app = angular.module("ictApp", ['DataServices']);
 
-app.controller('SplashCtrl', function($scope, $http){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject){
 
-    $scope.inc_num = "";
-    $scope.inc_add = "";
+    LoadIncidentTypes();
+    $scope.incidentTypes = IncidentTypes;
 
-    $scope.clickSplashBtn = function(incident_btn) {
-        localStorage.setItem('inc_num', $scope.inc_num);
-        localStorage.setItem('inc_add', $scope.inc_add);
-        localStorage.setItem('inc_typ', incident_btn.type);
+    LoadAllIncidents($scope);
+    $scope.incident_list = Incidents;
 
-        var urlLink = "incident_form.html?inc_num="+$scope.inc_num;
+    var IncidentParseObj = Parse.Object.extend('Incident');
+    $scope.incidentObj = new IncidentParseObj();
+    ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+
+    // Respond to incident type button click
+    $scope.createAndLoadNewIncident = function(incidentType) {
+        $scope.incidentObj.incidentType = incidentType;
+
+        // Default value for inc_number
+        if(!$scope.incidentObj.inc_number) {
+            $scope.incidentObj.inc_number = "[Incident Number]"
+        }
+
+        $scope.incidentObj.save().then(function(incidentObj) {
+            ConvertParseObject(incidentObj, INCIDENT_DEF);
+            $scope.loadIncident(incidentObj.id);
+        }, function(error) {
+            console.log("Error saving new incident: "+error);
+        });;
+    };
+
+
+    $scope.loadIncident = function(incidentId) {
+        var urlLink = "incident_form.html?i="+incidentId;
         window.location.href = urlLink;
     };
 
-    $http.get('data/inc_types.json').
-        success(function(data){
-            $scope.inc_types = data;
-        });
+    $scope.deleIncident = function(incident) {
+        var response = confirm("Are you sure you want to delete incident "+incident.inc_number+"?");
+        if (response == true) {
+            incident.destroy({
+                success: function(myObject) {
+                    loadIncidentList($scope, ConvertParseObject, ParseQuery);
+                },
+                error: function(myObject, error) {
+                    console.log("Error:"+error);
+                    loadIncidentList($scope, ConvertParseObject, ParseQuery);
+                }
+            });
+        }
+    };
+
 
 });

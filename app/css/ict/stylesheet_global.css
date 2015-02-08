@@ -143,20 +143,20 @@ button:active {
 }
 
 .unit_city_btn {
-    width:80px;
+    height: 18px;
+    width: 80px;
     margin:5px;
+    font-size: 0.85rem;
 }
 
 .unit_type_btn {
-    width:80px;
-    height:20px;
-    font-size:0.85rem !important;
+    width:70px;
+    height:25px;
+    font-size:0.8rem !important;
     margin:5px;
+    padding: 0px;
 }
 
-.unit_tbar_btn {
-    margin: 5px;
-}
 .unit_dlg_btn {
     margin: 5px;
 }
@@ -183,10 +183,7 @@ button:active {
     /*background: #FFFF99;*/
     background: #FFFF88;
 }
-.glowlightyellow.unit_row_div {
-    border-top:1px solid #999;
-    border-bottom:1px solid #999;
-}
+
 /*.unit_row_div.glowlightyellow>.unit_btn{
     margin-right:2px;
 }*/
@@ -407,6 +404,9 @@ button:active {
 .grid_item_1_4 {
     width:25%;
 }
+.grid_item_1_5 {
+    width:20%;
+}
 
 .dlg_sector_name_btn {
     margin: 5px !important;
@@ -423,12 +423,13 @@ button:active {
 }
 
 .unit_dlg_units_container {
-    overflow: scroll;
-    height: 590px;
-    width:760px;
+    overflow: hidden;
+    /*height: 590px;*/
+    /*width:760px;*/
 }
 .type_row_for_unit_btns {
-    margin: 20px auto;
+    margin: 0 auto;
+    padding-bottom: 15px;
 }
 #dispatched_units_div {
     width: 846px;
@@ -611,6 +612,7 @@ button:active {
     margin: 5px;
 }
 .personnel_tbar_btn {
+    float: left;
     margin: 5px;
 }
 
@@ -619,7 +621,8 @@ button:active {
     margin: 0 5px 5px 0;
 }
 .psi_tbar_btn {
-    /*margin: 5px;*/
+    float:left;
+    margin: 4px;
 }
 .psi_red {
     background: red;
@@ -776,4 +779,55 @@ button:active {
     float: left;
     font-size: 1.05rem;
     margin-top: 10px;
+}
+
+.db_status {
+    float: right;
+    width: 120px;
+    padding: 5px;
+    font-size: 1.0rem;
+    color: white;
+    border: 1px solid #9a9a9a;
+    padding: 4px 4px 4px 4px;
+    box-shadow: 1px 1px 2px #888;
+}
+#db_status_msg {
+    background: blue;
+}
+#db_status_msg_success {
+    background: green;
+}
+#db_status_msg_failed {
+    background: red;
+}
+
+@-webkit-keyframes fadeout{
+    0%{opacity:1;visibility:visible;}
+    90%{opacity:1;visibility:visible;}
+    99%{opacity:0;}
+    100%{opacity:0;visibility: hidden;}
+}
+.fadeout {
+    -webkit-animation:fadeout 5s linear;
+    visibility:hidden;
+}
+
+#units_dialog_cities_div {
+    display: block;
+    padding-left: 170px;
+    border-bottom: 1px solid #999;
+}
+#units_dialog_types_div {
+    display: block;
+    float: left;
+    width: 165px;
+    height: 450px;
+    border-right: 1px solid #999;
+}
+.units_dialog_citybtns_div {
+    display: block;
+    width: 688px;
+    height: 450px;
+    float: left;
+    overflow: scroll;
 }

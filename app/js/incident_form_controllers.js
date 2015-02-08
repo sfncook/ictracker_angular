@@ -1,14 +1,20 @@
 'use strict';
 
-var app = angular.module("ictApp", ['gridster']);
+var app = angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices']);
 
+function init() {
+    initDialogs();
+    initIncidentData();
+}
+function initIncidentData() {
 
+}
 function initDialogs() {
     $( ".dialog" ).dialog({
         autoOpen: false,
         modal: true
     });
-    $( "#sector_name_dlg" ).dialog( "option", "width", 730 );
+    $( "#sector_name_dlg" ).dialog( "option", "width", 900 );
     $( "#par-dlg" ).dialog( "option", "width", 475 );
     $( "#bnch_dlg" ).dialog( "option", "width", 515 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
@@ -25,7 +31,7 @@ function initDialogs() {
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
 }
-$( document ).ready(initDialogs);
+$( document ).ready(init);
 
 
 app.factory('dialogSvc', function() {
@@ -57,33 +63,17 @@ app.factory('dialogSvc', function() {
     var setOnDeck;
     var setRehab;
 
-    var tbar_sectors = [];
-
-    return {
-        "tbar_sectors":[]
-//        getSelectedSector: function () {
-//            return selectedSector;
-//        }
+    var obj = {
+        tbar_sectors: new Array()
     };
+    return obj;
 });
 
+app.controller('HeaderContainer2', function($scope, $http, dialogSvc, LoadIncident, DataStore, LoadSectorTypes){
+    var incidentObjectId = getHttpRequestByName('i');
 
-app.controller('HeaderContainer2', function($scope, $http, dialogSvc){
-    $scope.inc_num=localStorage['inc_num'];
-    $scope.inc_add=localStorage['inc_add'];
-    $scope.inc_typ=localStorage['inc_typ'];
-
-    if($scope.inc_typ) {
-        $http.get('data/inc_types.json').
-            success(function(data){
-                var inc_types = data;
-                for(var i=0; i<inc_types.length; i++) {
-                    if(inc_types[i].type==$scope.inc_typ) {
-                        $scope.inc_icon =inc_types[i].icon;
-                    }
-                }
-            });
-    }
+    $scope.dataStore = DataStore;
+    LoadIncident(incidentObjectId, $scope);
 });
 
 app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
@@ -154,59 +144,10 @@ app.controller('HeaderContainer', function($scope, $interval, dialogSvc){
     }
 });
 
-app.controller('TbarContainer', function($scope, dialogSvc){
-    var window_width = $(window).width();
-    var window_height = $(window).height();
-    var tbar_width = 290;
-    var tbar_height = 300;
-    var header_width = 100;
-    var col_count = Math.floor((window_width - header_width)/tbar_width);
-    var init_row_count = Math.floor(window_height/tbar_height);
-    init_row_count = Math.max(init_row_count, 3);
-    var left_margin = Math.floor((window_width - (col_count*tbar_width) - header_width )/2);
-    $("#tbar_container").css("padding-left", left_margin);
+app.controller('TbarContainer', function($scope, dialogSvc, GridsterOpts, TbarSectors){
 
-    $scope.tbar_sectors=dialogSvc.tbar_sectors;
-
-    $scope.gridsterOpts = {
-        columns:col_count,
-        margins: [10, 10],
-        outerMargin: true,
-        colWidth: tbar_width,
-        rowHeight: tbar_height,
-        defaultSizeX: 1,
-        draggable: {enabled: false},
-        resizable: {enabled: false}
-    };
-
-    for(var rowi=0; rowi<init_row_count; rowi++) {
-        for(var coli=0; coli<col_count; coli++) {
-            var sector = new Sector("Sector Name");
-
-            if(coli==col_count-1) {
-                if(rowi==0) {
-                    sector.name = "RESCUE";
-                    sector.hasClock = true;
-                    sector.hasAcctBtn = true;
-                    sector.hasPsiBtn = true;
-                    sector.hasActions = true;
-                } else if(rowi==1) {
-                    sector.name = "ReHab";
-                    sector.hasClock = false;
-                    sector.hasAcctBtn = false;
-                    sector.hasPsiBtn = false;
-                    sector.hasActions = false;
-                } else if(rowi==2) {
-                    sector.name = "Safety";
-                    sector.hasClock = true;
-                    sector.hasAcctBtn = true;
-                    sector.hasPsiBtn = true;
-                    sector.hasActions = true;
-                }
-            }
-            $scope.tbar_sectors.push(sector);
-        }//for col
-    }//for row
+    $scope.gridsterOpts = GridsterOpts;
+    $scope.tbar_sectors = TbarSectors;
 
     $scope.showParDlg = function(sector) {
         dialogSvc.openParDlg(sector);
@@ -237,8 +178,18 @@ app.controller('TbarContainer', function($scope, dialogSvc){
     }
 
     $scope.selectUnit = function(sector,unit) {
-        sector.selectUnit(unit);
+        sector.selectedUnit = unit;
     }
+
+});
+app.filter('acctUnitName', function() {
+    return function(acctUnit) {
+        if(acctUnit) {
+            return acctUnit.name;
+        } else {
+            return "@acct";
+        }
+    };
 });
 
 
@@ -294,9 +245,34 @@ app.controller('ParDlg', function($scope, dialogSvc){
     }
 });
 
-app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
+app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType){
     $scope.selectedSector = {};
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
+
+    LoadSectorTypes().then(
+        function() {
+            // Make all sector_types visible
+            for(var i=0; i<SectorTypes.length; i++) {
+                SectorTypes[i].isVisible = true;
+            }
+
+            var orderedSectorTypes = [
+                SectorTypes.INTERIOR,       SectorTypes.SECTOR_1,       SectorTypes.ALPHA_SECTOR,       SectorTypes.SALVAGE,            SectorTypes.TRIAGE,
+                SectorTypes.VENTILATION,    SectorTypes.SECTOR_2,       SectorTypes.BRAVO_SECTOR,       SectorTypes.OVERHAUL,           SectorTypes.EXTRICATION,
+                SectorTypes.ROOF,           SectorTypes.SECTOR_3,       SectorTypes.CHARLIE_SECTOR,     SectorTypes.EVACUATION,         SectorTypes.TREATMENT,
+                SectorTypes.ON_DECK,        SectorTypes.SECTOR_4,       SectorTypes.DELTA_SECTOR,       SectorTypes.CUSTOMER_SERVICE,   SectorTypes.TRANSPORTATION,
+                SectorTypes.STAGING,        SectorTypes.SECTOR_5,       CreateBlankSectorType(),        CreateBlankSectorType(),        CreateBlankSectorType(),
+                CreateBlankSectorType(),    SectorTypes.SECTOR_6,       SectorTypes.NORTH_SECTOR,       SectorTypes.REHAB,              SectorTypes.LZ,
+                SectorTypes.IRIC,           SectorTypes.SECTOR_7,       SectorTypes.EAST_SECTOR,        SectorTypes.LOBBY,              CreateBlankSectorType(),
+                SectorTypes.RIC,            SectorTypes.SECTOR_8,       SectorTypes.SOUTH_SECTOR,       SectorTypes.RESOURCE,           CreateBlankSectorType(),
+                SectorTypes.RESCUE,         SectorTypes.SECTOR_9,       SectorTypes.WEST_SECTOR,        SectorTypes.ACCOUNTABILITY,     CreateBlankSectorType(),
+                SectorTypes.SAFETY,         SectorTypes.SECTOR_NUM
+
+            ];
+
+            $scope.OrderedSectorTypes = orderedSectorTypes;
+        }
+    );
 
     $scope.sector_dir_btns = [
         {"dialog":"Sub","tbar":"Sub",   "isWide":true},
@@ -307,21 +283,13 @@ app.controller('SectorNamesDlg', function($scope, $http, dialogSvc, reportsSvc){
     ];
     $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
 
-    $http.get('data/sectors.json').
-        success(function(data){
-            $scope.catalog_sectors = data;
-        });
+    $scope.selectSectorType = function(sectorType) {
+        $scope.selectedSector.sectorType = sectorType;
+        $scope.selectedSector.save();
 
-    $scope.selectSector = function(catalog_sector) {
-        $scope.selectedSector.set('name',       catalog_sector.name);
-        $scope.selectedSector.set('hasClock'  , catalog_sector.hasClock);
-        $scope.selectedSector.set('hasAcctBtn', catalog_sector.hasAcctBtn);
-        $scope.selectedSector.set('hasPsiBtn' , catalog_sector.hasPsiBtn);
-        $scope.selectedSector.set('hasActions', catalog_sector.hasActions);
+        if(sectorType.name=="Customer Service") {dialogSvc.setCustSvcSector();}
 
-        if(catalog_sector.name=="Customer Service") {dialogSvc.setCustSvcSector();}
-
-        reportsSvc.addEvent_title_to_sector(catalog_sector.name);
+        reportsSvc.addEvent_title_to_sector(sectorType.name);
 
         $("#sector_name_dlg").dialog( "close" );
     };
@@ -360,28 +328,30 @@ app.controller('BnchDlg', function($scope, dialogSvc){
 
 });
 
-app.controller('UnitsDlg', function($scope, $http, dialogSvc){
+app.controller('UnitsDlg', function($scope, $http, dialogSvc, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector){
     $scope.selectedSector = {};
     $scope.dispatechedUnits = [];
     $scope.tbar_sectors=dialogSvc.tbar_sectors;
     $scope.forAcct=false;
 
-    $scope.cities = [];
-    $scope.type_names = [];
-    $http.get('data/units.json').
-        success(function(data){
+    $scope.cities = new Array();
+    $scope.type_names = new Array();
+
+    LoadUnitTypes().then(
+        function() {
             // In order to eliminate duplicates write everything to objects
             var cities_local = [];
-            for(var i = 0; i < data.length; i++) {
-                var city = cities_local.putIfAbsent(data[i].city, {'name':data[i].city, 'types':[]});
-                var type = city.types.putIfAbsent(data[i].type, {'city':data[i].city, 'name':data[i].type, 'units':[]});
-                var unit = type.units.putIfAbsent(data[i].unit, new Unit(data[i].unit, data[i].type, data[i].city));
+            for(var i = 0; i < UnitTypes.length; i++) {
+                var unitType = UnitTypes[i];
+                var city = cities_local.putIfAbsent(unitType.city, {'name':unitType.city, 'types':[]});
+                var type = city.types.putIfAbsent(unitType.type, {'city':unitType.city, 'name':unitType.type, 'units':[]});
+                type.units.putIfAbsent(unitType.name, unitType);
 
-                if( typeof data[i].default != 'undefined') {
+                if(city.name==DefaultCity) {
                     $scope.selected_city = city;
                     $scope.selected_type_name = '';
                 }
-            }
+            }//for
 
             // Convert everything to arrays
             $scope.cities = cities_local.propertiesToArray();
@@ -391,7 +361,8 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                     type.units= type.units.propertiesToArray();
                 });
             });
-        });
+        }
+    );
 
     $scope.selectCity = function(city) {
         $scope.selected_city = city;
@@ -405,22 +376,28 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         }
     };
 
-    $scope.selectUnit = function(unit) {
+    $scope.selectUnit = function(unitType) {
         if($scope.forAcct) {
-            $scope.selectedSector.set('acctUnit',unit);
+            $scope.selectedSector.set('acctUnit',unitType);
             $scope.forAcct=false;
             $("#units_dlg").dialog( "close" );
         } if($scope.forDispUnits) {
-            if($scope.dispatechedUnits.contains(unit)){
-                $scope.dispatechedUnits.remByVal(unit);
+            if($scope.dispatechedUnits.contains(unitType)){
+                $scope.dispatechedUnits.remByVal(unitType);
             } else {
-                $scope.dispatechedUnits.push(unit);
+                $scope.dispatechedUnits.push(unitType);
             }
         } else {
-            var wasAdded = $scope.selectedSector.toggleUnit(unit);
+//            var wasAdded = $scope.selectedSector.toggleUnit(unitType);
+            var wasAdded = ToggleUnitTypeForSector($scope.selectedSector, unitType);
             if(wasAdded) {
-                if(!$scope.dispatechedUnits.contains(unit)){
-                    $scope.dispatechedUnits.push(unit);
+                if(!$scope.dispatechedUnits.contains(unitType)){
+                    $scope.dispatechedUnits.push(unitType);
+                }
+
+                // Update sector.selectedUnit
+                if(!$scope.selectedSector.selectedUnit) {
+                    $scope.selectedSector.selectedUnit=$scope.selectedSector.units[0];
                 }
 
                 var sectorName = $scope.selectedSector.name;
@@ -437,8 +414,9 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
                     dialogSvc.setRehab();
                 }
             } else {
-                $scope.dispatechedUnits.remByVal(unit);
+                $scope.dispatechedUnits.remByVal(unitType);
             }
+            $("#units_dlg").dialog( "close" );
         }
     };
 
@@ -472,10 +450,22 @@ app.controller('UnitsDlg', function($scope, $http, dialogSvc){
         $scope.forAcct=false;
     });
 });
+app.filter('getUnitPar', function() {
+    return function(unitPar) {
+        if(unitPar==0) {
+            return "P";
+        } else {
+            return unitPar;
+        }
+    };
+});
 
-app.controller('ActionsDlg', function($scope, $http, dialogSvc){
+app.controller('ActionsDlg', function($scope, $http, dialogSvc, LoadActionTypes, ActionTypes){
     $scope.selectedSector = {};
-    $scope.catalog_action_types = [];
+//    $scope.actionTypes = ActionTypes;
+//    LoadActionTypes();
+
+    $scope.actionTypes = [];
 
     $http.get('data/actions.json').
         success(function(data){
@@ -483,7 +473,7 @@ app.controller('ActionsDlg', function($scope, $http, dialogSvc){
             var action_types_local = [];
             for(var i = 0; i < data.length; i++) {
                 var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-                var action = action_type.actions.push(new Action(data[i].name, data[i].action_type, data[i].is_warning));
+                var action = action_type.actions.push({name:data[i].name, action_type:data[i].action_type, is_warning:data[i].is_warning});
             }
 
             // Convert everything to arrays
@@ -716,11 +706,13 @@ app.controller('UnitOptionsDlg', function($scope, dialogSvc){
 
     $scope.selectPar = function(par) {
         $scope.selected_unit.par = par;
+        $scope.selected_unit.save();
         $("#unit_options_dlg").dialog( "close" );
     }
 
     $scope.selectPsi = function(psi) {
         $scope.selected_unit.psi = psi;
+        $scope.selected_unit.save();
         $("#unit_options_dlg").dialog( "close" );
     }
 

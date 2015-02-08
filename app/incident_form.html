@@ -13,17 +13,17 @@
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
     <link rel="stylesheet" href="css/ict/stylesheet_header.css">
 
+    <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/init.js"></script>
-    <script src="js/Tx.js"></script>
-    <script src="js/MutableObject.js"></script>
-    <script src="js/Sector.js"></script>
-    <script src="js/Unit.js"></script>
-    <script src="js/Action.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/TbarServices.js"></script>
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/reports.js"></script>
     <script src="js/unique.js"></script>
@@ -98,11 +98,17 @@
 
 <div id="top_header_container" ng-controller="HeaderContainer2">
     <button id="inc_info_btn" class="button_top">
-        <div id="inc_num">{{inc_num}}</div>
-        <div id="inc_add">{{inc_add}}</div>
+        <div id="inc_num">{{dataStore.incident.inc_number}}</div>
+        <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
-    <img id="inc_type_icon" ng-src="{{inc_icon}}"/>
+    <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
+    <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
+    <div id="db_status_msg_success"
+         class="button_top db_status"
+         ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess"
+         ng-class="{fadeout:!dataStore.waitingToLoad && dataStore.loadSuccess}">Load Succeeded</div>
+    <div id="db_status_msg_failed" class="button_top db_status" ng-show="!dataStore.waitingToLoad && !dataStore.loadSuccess">Load Failed</div>
     <div class="clear_both"></div>
 </div>
 <div id="top_header_mayday_container">
@@ -112,7 +118,7 @@
 
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
-        <tbar gridster-item="item" ng-repeat="sector in tbar_sectors">
+        <tbar gridster-item="sector" ng-repeat="sector in tbar_sectors">
             <div class="tbar_title_container">
                 <button ng-disabled="!sector.parAvailable"
                         class="par-btn sector_toprow_btn"
@@ -123,30 +129,26 @@
                     <table>
                         <tr>
                             <td class="tbar_title_dir_td">{{sector.sector_dir}}</td>
-                            <td class="tbar_title_td">{{sector.name}}</td>
+                            <td class="tbar_title_td">{{sector.sectorType.name}}</td>
                             <td class="tbar_title_num_td">{{sector.sector_num}}</td>
                         </tr>
                     </table>
                 </button>
-                <button class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
+                <button ng-show="sector.sectorType.manyBenchmarkBars>0" class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
                     <span class="benchmarks_icon">
-                        <img ng-show="sector.bnch<1 && !sector.unable_primary" class="benchmark_bar_img"
-                             src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=1 && !sector.unable_primary" class="benchmark_bar_img"
-                             src="img/bnch_bar_green.png"/>
-                        <img ng-show="sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <!--<img ng-show="sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
 
-                        <img ng-show="sector.bnch<5" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=5" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=2" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
 
-                        <img ng-show="sector.bnch<9 && !sector.unable_secondary" class="benchmark_bar_img"
-                             src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=9 && !sector.unable_secondary" class="benchmark_bar_img"
-                             src="img/bnch_bar_green.png"/>
-                        <img ng-show=" sector.unable_secondary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=3" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <!--<img ng-show=" sector.unable_secondary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
 
-                        <img ng-show="sector.bnch<12" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.bnch>=12" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars==4" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <!--<img ng-show="sector.bnch>=12" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
                     </span>
                     BNCH
                 </button>
@@ -162,36 +164,39 @@
                 <div class="clear_both"></div>
                 <div class="left_scroll_pane scroll-pane">
                     <div ng-repeat="unit in sector.units"
-                         ng-class="{glowlightyellow:sector.selectedUnit==unit}">
-                        <button class="personnel_tbar_btn personnel_btn"
-                                ng-click="showUnitOptionsDlg(unit)">{{unit.par}}
-                        </button>
-                        <button class="psi_tbar_btn psi_btn"
-                                ng-click="showUnitOptionsDlg(unit)"
-                                ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
-                                ng-if="sector.hasPsiBtn">{{unit.psi}}
-                        </button>
+                         ng-class="{unit_selected:sector.selectedUnit==unit}"
+                         class="tbar_unit_row">
+                        <div class="tbar_unit_info_btn"
+                             ng-click="showUnitOptionsDlg(unit)">
+                            <div class="personnel_tbar_btn personnel_btn">{{unit.par|getUnitPar}}
+                            </div>
+                            <div class="psi_tbar_btn psi_btn"
+                                    ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
+                                    ng-if="sector.sectorType.hasPsiBtn">{{unit.psi}}
+                            </div>
+                            <div class="clear_float"></div>
+                        </div>
                         <button class="unit_tbar_btn unit_btn"
                                 ng-click="selectUnit(sector,unit)"
                                 ng-class="{btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
-                            {{unit.name}}
+                            {{unit.type.name}}
                         </button>
                     </div>
                 </div>
             </div>
 
-            <div class="action_col_right tbar_col_right_div tbar_col_div"
-                 ng-if="sector.hasActions">
+            <div class="action_col_right tbar_col_right_div tbar_col_div">
                 <button class="acct_unit_btn"
                         ng-click="showUnitsDlgForAcct(sector)"
-                        ng-if="sector.hasAcctBtn">
-                    {{sector.acctUnit.name}}
+                        ng-if="sector.sectorType.hasAcctBtn">
+                    {{sector.acctUnit | acctUnitName}}
                 </button>
                 <button class="action_add_btn"
                         ng-click="showActionsDlg(sector)"
-                        ng-if="sector.units.length>0">+Action</button>
+                        ng-if="sector.units.length>0 && sector.sectorType.hasActions"">+Action</button>
                 <div class="clear_float"></div>
-                <div class="right_scroll_pane scroll-pane">
+                <div class="right_scroll_pane scroll-pane"
+                     ng-if="sector.units.length>0">
                     <div ng-repeat="action in sector.selectedUnit.actions">
                         <button class="action_btn"
                                 ng-class="{font_red:action.is_warning}">
@@ -220,14 +225,14 @@
     </button>
     <div class="clear_both"></div>
     <div id="sector_name_dlg_grid_container" class="grid">
-        <div class="grid_item_1_4" ng-repeat="catalog_sector in catalog_sectors">
+        <div class="grid_item_1_5" ng-repeat="sectorType in OrderedSectorTypes">
             <button
                     class="dlg_sector_name_btn sector_name_btn"
-                    ng-class="{button_hidden: catalog_sector.name=='', glowlightgreen: tbar_sectors.findSectorByName(catalog_sector.name)>-1}"
-                    ng-click="selectSector(catalog_sector)">
-                {{catalog_sector.name}}
+                    ng-class="{button_hidden:!sectorType.isVisible, glowlightgreen: tbar_sectors.findSectorByName(sectorType.name)>-1}"
+                    ng-click="selectSectorType(sectorType)">
+                {{sectorType.name}}
                 <img class="clock_icon"
-                     ng-if="catalog_sector.hasClock"
+                     ng-if="sectorType.hasClock"
                      src="img/clock.png"/>
             </button>
         </div>
@@ -286,49 +291,48 @@
             <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
         </div>
     </div>
-    <table>
-        <tr>
-            <td></td>
-            <td>
-                <button class="unit_city_btn"
-                        ng-repeat="city in cities"
-                        ng-click="selectCity(city)"
-                        ng-class="{glowlightgreen:selected_city==city}">
-                    {{city.name}}
+    <div id="units_dialog_cities_div">
+        <button class="unit_city_btn"
+                ng-repeat="city in cities"
+                ng-click="selectCity(city)"
+                ng-class="{glow_blue:selected_city==city}"
+                style="font-size:0.8rem; padding:0">
+            {{city.name}}
+        </button>
+    </div>
+
+    <div id="units_dialog_types_div">
+        <button class="unit_type_btn"
+                ng-repeat="type in selected_city.types"
+                ng-click="selectType(type)"
+                ng-class="{glow_blue:selected_type_name==type.name}">
+            {{type.name}}
+        </button>
+    </div>
+
+    <div class="units_dialog_citybtns_div">
+        <div class="unit_dlg_units_container">
+            <div class="type_row_for_unit_btns"
+                 ng-repeat="type in selected_city.types"
+                 ng-if="selected_type_name=='' || selected_type_name==type.name">
+                <button class="unit_dlg_btn unit_btn"
+                        ng-repeat="unit in type.units"
+                        ng-click="selectUnit(unit)"
+                        ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                    {{unit.name}}
                 </button>
-            </td>
-        </tr>
-        <tr>
-            <td style="width:80px">
-                <button class="unit_type_btn"
-                        ng-repeat="type in selected_city.types"
-                        ng-click="selectType(type)"
-                        ng-class="{glowlightgreen:selected_type_name==type.name}">
-                    {{type.name}}
-                </button>
-            </td>
-            <td>
-                <div class="unit_dlg_units_container">
-                    <div class="type_row_for_unit_btns"
-                         ng-repeat="type in selected_city.types"
-                         ng-if="selected_type_name=='' || selected_type_name==type.name">
-                        <button class="unit_dlg_btn unit_btn"
-                                ng-repeat="unit in type.units"
-                                ng-click="selectUnit(unit)"
-                                ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
-                            {{unit.name}}
-                        </button>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear_both"></div>
 
 </div>
 
 <div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
     <div class="action_type_dialog_header grid"
          ng-repeat="catalog_action_type in catalog_action_types">
+        <div class="action_type_label">{{catalog_action_type.name}}</div>
         <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
             <button class="btn_xsmtext action_btn"
                     ng-click="selectAction(catalog_action)"
