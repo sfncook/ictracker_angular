@@ -1,5 +1,5 @@
 
-var app = angular.module("ictApp", ['DataServices']);
+var app = angular.module("ReportServices", ['DataServices']);
 
 app.factory('reportsSvc', function() {
     var addEvent_title_to_sector;

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module("ictApp", ['DataServices', 'IncidentServices']);
+var app = angular.module("SplashController", ['DataServices', 'IncidentServices']);
 
 app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject){
 
