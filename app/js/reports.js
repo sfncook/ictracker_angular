@@ -1,5 +1,5 @@
 
-var app = angular.module("ictApp");
+var app = angular.module("ReportServices", ['DataServices']);
 
 app.factory('reportsSvc', function() {
     var addEvent_title_to_sector;
@@ -8,7 +8,7 @@ app.factory('reportsSvc', function() {
     };
 });
 
-app.controller('ReportsDlg', function($scope, dialogSvc, reportsSvc){
+app.controller('ReportsDlg', function($scope, DataStore, reportsSvc){
     $scope.events = [];
 
     reportsSvc.addEvent_title_to_sector = function(sector) {
@@ -115,7 +115,7 @@ app.controller('ReportsDlg', function($scope, dialogSvc, reportsSvc){
         $scope.events.push(event);
     }
 
-    dialogSvc.showReportsDlg = function() {
+    DataStore.showReportsDlg = function() {
         $("#reports_dlg").dialog( "open" );
     }
 });
