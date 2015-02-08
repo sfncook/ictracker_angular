@@ -133,27 +133,27 @@ if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
     Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
 }
 
-//
-//var TestObject = Parse.Object.extend("TestObject");
-//var testObject = new TestObject();
-//testObject.save({foo: "bar"}).then(function(object) {
-//    alert("yay! it worked");
-//});
-//
-//var user = new Parse.User();
-//user.set("username", "my name");
-//user.set("password", "my pass");
-//user.set("email", "email@example.com");
-//
-//// other fields can be set just like with Parse.Object
-//user.set("phone", "650-555-0000");
-//
-//user.signUp(null, {
-//    success: function(user) {
-//        // Hooray! Let them use the app now.
-//    },
-//    error: function(user, error) {
-//        // Show the error message somewhere and let the user try again.
-//        alert("Error: " + error.code + " " + error.message);
-//    }
-//});
+
+function initDialogs() {
+    $( ".dialog" ).dialog({
+        autoOpen: false,
+        modal: true
+    });
+    $( "#sector_name_dlg" ).dialog( "option", "width", 900 );
+    $( "#par-dlg" ).dialog( "option", "width", 475 );
+    $( "#bnch_dlg" ).dialog( "option", "width", 515 );
+    $( "#units_dlg" ).dialog( "option", "width", 855 );
+    $( "#actions_dlg" ).dialog( "option", "width", 545 );
+    $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
+    $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
+    $( "#osr_dlg" ).dialog( "option", "width", 420 );
+    $( "#objectives_dlg" ).dialog( "option", "width", 230 );
+    $( "#iap_dlg" ).dialog( "option", "width", 616 );
+    $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
+    $( "#address_dialog" ).dialog( "option", "width", 450 );
+    $( "#reports_dlg" ).dialog( "option", "width", 550 );
+
+    $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
+
+}
+$( document ).ready(initDialogs);
