@@ -99,7 +99,7 @@
 <!-- ict_header-->
 
 <div id="top_header_container" ng-controller="HeaderContainer2">
-    <button id="inc_info_btn" class="button_top">
+    <button id="inc_info_btn" class="button_top" ng-click="showIncDataDlg()">
         <div id="inc_num">{{dataStore.incident.inc_number}}</div>
         <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
@@ -113,8 +113,10 @@
     <div id="db_status_msg_failed" class="button_top db_status" ng-show="!dataStore.waitingToLoad && !dataStore.loadSuccess">Load Failed</div>
     <div class="clear_both"></div>
 </div>
-<div id="top_header_mayday_container">
-    <button id="mayday_btn" class="button_top button">MAYDAY</button>
+
+
+<div id="top_header_mayday_container" ng-controller="MaydayDlg">
+    <button id="mayday_btn" class="button_top button" ng-click="showMaydayDlg()">MAYDAY</button>
 </div>
 
 
@@ -719,6 +721,7 @@
 </div>
 <!-- Benchmarks Dialog -->
 
+
 <!-- Reports Dialog -->
 <div id="reports_dlg" title="Reports" ng-controller="ReportsDlg" class="dialog">
     <div id="reports_table_container">
@@ -730,6 +733,11 @@
         </table>
     </div>
 </div>
+
+<!-- Mayday Dialog -->
+<div id="mayday_dlg" title="Mayday" ng-controller="MaydayDlg" class="dialog">
+</div>
+<!-- Mayday Dialog -->
 
 <div id="copyright_text">&copy; Copyright 2014 White Helmet Tech, LLC</div>
 <div id="version_text">Version: 0.0</div>

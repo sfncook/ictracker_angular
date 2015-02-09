@@ -2,11 +2,22 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
 
+    .controller('MaydayDlg', function($scope){
+        $scope.showMaydayDlg = function () {
+            $("#mayday_dlg").dialog("open");
+        }
+    })
+
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
+
+        $scope.showIncDataDlg = function () {
+            console.log("click showIncDataDlg");
+            $("#mayday_dlg").dialog("open");
+        }
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore){
@@ -78,6 +89,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('TbarContainer', function($scope, DataStore, GridsterOpts, TbarSectors){
+
+        $scope.openMaydayDlg = function () {
+            console.log("click TbarContainer");
+            $("#mayday_dlg").dialog("open");
+        }
 
         $scope.gridsterOpts = GridsterOpts;
         $scope.tbar_sectors = TbarSectors;
@@ -671,6 +687,7 @@ function initDialogs() {
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
+    $( "#mayday_dlg" ).dialog( "option", "width", 600);
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
