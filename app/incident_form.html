@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="css/ict/stylesheet_global.css">
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
     <link rel="stylesheet" href="css/ict/stylesheet_header.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_mayday.css">
 
     <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
@@ -736,6 +737,226 @@
 
 <!-- Mayday Dialog -->
 <div id="mayday_dlg" title="Mayday" ng-controller="MaydayDlg" class="dialog">
+    <table id="mayday_table_main">
+    <tr>
+    <td id="mayday_left_td">
+        <div id="new_mayday_btn" class="glowpink button">
+            <img id="new_mayday_btn_icon" class='plus_icon' src='images/plus.png'/>
+
+            <div id="new_mayday_btn_text">New Mayday</div>
+            <div class="clear_float"></div>
+        </div>
+        <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div">
+            <div id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn button">Clear</div>
+            <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #</div>
+            <div id="mayday_timer" class="mayday_timer">00:00</div>
+            <div class="clear_float"></div>
+            <div>
+                <span class="mayday_name_label">Name:</span>
+                <input id="mayday_name_input" class="mayday_name_input" type="text"/>
+
+                <div id="mayday_edit_psi_btn" class="mayday_psi_btn psi_btn button">PSI</div>
+                <div class="clear_float"></div>
+            </div>
+
+            <div id="mayday_units_all" class="mayday_row_div mayday_units_div"></div>
+            <select id="mayday_unit_select" class="mayday_select_half mayday_select">
+                <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>Unit</option>
+            </select>
+            <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
+
+            <div id="mayday_sectors_all" class="mayday_row_div"></div>
+            <select id="mayday_sectors_select" class="mayday_select_half mayday_select">
+                <option id="mayday_sector_opt_default" disabled='disabled' selected='mayday_sector_opt selected' class='default_option'>Sector</option>
+            </select>
+            <div class="clear_float"></div>
+
+            <select id="mayday_channel_select" class="mayday_select_half mayday_channel_select mayday_select">
+                <option id="mayday_channel_opt_default" disabled='disabled' selected='selected' class='default_option'>Channel</option>
+                <option class='mayday_channel_1'>Channel 1</option>
+                <option class='mayday_channel_2'>Channel 2</option>
+                <option class='mayday_channel_3'>Channel 3</option>
+                <option class='mayday_channel_4'>Channel 4</option>
+                <option class='mayday_channel_5'>Channel 5</option>
+                <option class='mayday_channel_6'>Channel 6</option>
+                <option class='mayday_channel_7'>Channel 7</option>
+                <option class='mayday_channel_8'>Channel 8</option>
+                <option class='mayday_channel_9'>Channel 9</option>
+                <option class='mayday_channel_10'>Channel 10</option>
+                <option class='mayday_channel_11'>Channel 11</option>
+                <option class='mayday_channel_12'>Channel 12</option>
+                <option class='mayday_channel_13'>Channel 13</option>
+                <option class='mayday_channel_14'>Channel 14</option>
+                <option class='mayday_channel_15'>Channel 15</option>
+                <option class='mayday_channel_16'>Channel 16</option>
+            </select>
+
+            <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select">
+                <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
+                <option class='mayday_rank_capt'>Captain</option>
+                <option class='mayday_rank_eng'>Engineer</option>
+                <option class='mayday_rank_ff'>Fire Fighter</option>
+            </select>
+            <div class="clear_float"></div>
+
+            <div class="mayday_row_div">
+                <div id="hoseline_mayday_btn" class="hoseline_mayday_btn mayday_toggle button">ON Hoseline</div>
+                <div id="offhoseline_mayday_btn" class="offhoseline_mayday_btn mayday_toggle button">OFF Hoseline</div>
+
+                <div id="uninjured_mayday_btn" class="uninjured_mayday_btn mayday_toggle button">UNinjured</div>
+                <div id="injured_mayday_btn" class="injured_mayday_btn mayday_toggle button">Injured</div>
+                <div class="clear_float"></div>
+            </div>
+
+            <div class="mayday_row_div">
+                <div id="lost_mayday_btn" class="lost_mayday_btn mayday_single_toggle mayday_toggle button">Lost</div>
+                <div id="trap_mayday_btn" class="trap_mayday_btn mayday_single_toggle mayday_toggle button">Trapped</div>
+                <div id="oair_mayday_btn" class="oair_mayday_btn mayday_single_toggle mayday_toggle button">Out of Air</div>
+                <div id="regi_mayday_btn" class="regi_mayday_btn mayday_single_toggle mayday_toggle button">Regulator Issue</div>
+                <div id="lair_mayday_btn" class="lair_mayday_btn mayday_single_toggle mayday_toggle button">Low Air</div>
+                <div id="pack_mayday_btn" class="pack_mayday_btn mayday_single_toggle mayday_toggle button">Pack Issue</div>
+                <div class="clear_float"></div>
+            </div>
+        </div>
+    </td>
+    <td id="mayday_right_td">
+        <div id="mayday_list_box">
+            <div id="mayday_prototype" class="mayday_saved">
+                <div class="mayday_box_title">Mayday:</div>
+                <div class="mayday_timer">00:00</div>
+                <div class="clear_float"></div>
+
+                <table>
+                    <tr>
+                        <td class="mayday_info_tbl_l">Name:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_name_value mayday_value"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="mayday_info_tbl_l">PSI:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_psi_value mayday_value"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="mayday_info_tbl_l">Unit:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_unit_value mayday_value"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="mayday_info_tbl_l">Sector:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_sector_value mayday_value"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="mayday_info_tbl_l">Channel:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_channel_value mayday_value"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="mayday_info_tbl_l">Rank:</td>
+                        <td class="mayday_info_tbl_r"><div class="mayday_rank_value mayday_value"></div></td>
+                    </tr>
+                </table>
+                <div class="mayday_misc_onhs mayday_misc_value">ON Hoseline</div>
+                <div class="mayday_misc_ofhs mayday_misc_value">OFF Hoseline</div>
+                <div class="mayday_misc_unjr mayday_misc_value">UNinjured</div>
+                <div class="mayday_misc_injr mayday_misc_value">Injured</div>
+                <div class="mayday_misc_lost mayday_misc_value">Lost</div>
+                <div class="mayday_misc_trap mayday_misc_value">Trapped</div>
+                <div class="mayday_misc_oair mayday_misc_value">Out of Air</div>
+                <div class="mayday_misc_regi mayday_misc_value">Regulator Issue</div>
+                <div class="mayday_misc_lair mayday_misc_value">Low Air</div>
+                <div class="mayday_misc_pack mayday_misc_value">Pack Issue</div>
+                <div class="clear_float"></div>
+            </div>
+            <div class="clear_float"></div>
+        </div>
+        <div class="clear_float"></div>
+        <div id="mayday_right_tab_div">
+            <div id="mayday_right_tab_radio" class="mayday_right_tab_text tan_bg   button">Radio
+                Transition
+            </div>
+            <div id="mayday_right_tab_grab" class="mayday_right_tab_text green_bg button">GRAB-LIVES</div>
+            <div id="mayday_right_tab_deploy" class="mayday_right_tab_text gray_bg  button">Deployment</div>
+            <div id="mayday_right_tab_build" class="mayday_right_tab_text blue_bg  button">Build Out</div>
+            <div class="clear_float"></div>
+        </div>
+        <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg">
+            <span class="mayday_list_title">Radio Transition and Alert</span>
+            <ul class="mayday_list">
+                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Emergency Traffic Declaration: Alert fireground that a MAYDAY has been
+                    declared
+                </li>
+                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">If needed move non-affected units to secondary radio channel</li>
+                <li class="list_med_font_size list_level_2"><input type="checkbox" class="mayday_check">Support officer/runs ongiong operations</li>
+                <li class="list_med_font_size list_level_2"><input type="checkbox" class="mayday_check">Fireground channel/command directs rescue</li>
+                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">PAR conducted by Operations on secondary channel</li>
+                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Immediately request additional alarm(s)</li>
+            </ul>
+        </div>
+        <div id="mayday_tab_div_grab" class="mayday_tab_div green_bg">
+            <span class="mayday_list_title">GRAB-LIVES</span>
+            <ul id="mayday_list_grablives" class="mayday_list">
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Gauge <span class="sm_font">(CHECK AIR)</span>
+                </li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Radio <span
+                        class="sm_font">(CALL for Help)</span></li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Activate <span class="sm_font">(Pass)</span>
+                </li>
+                <li class="list_space_below first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Breathing <span
+                        class="sm_font">(Control)</span></li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Low <span class="sm_font">(Stay Low)</span>
+                </li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Illuminate <span
+                        class="sm_font">(Flashlight)</span></li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Volume <span
+                        class="sm_font">(Make Noise)</span></li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Exit <span class="sm_font">(Find Exit)</span>
+                </li>
+                <li class="list_space_below first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Shield Airway</li>
+                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Air Level:_______</li>
+            </ul>
+        </div>
+        <div id="mayday_tab_div_deploy" class="mayday_tab_div gray_bg">
+            <span class="mayday_list_title">Deployment Considerations</span>
+            <ul class="mayday_list">
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Deploy Rescue</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Commit additional resources to the Rapid
+                    Intervention Team
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Change Plan to a high priority rescue
+                    effort
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Consider withdrawing companies from affected
+                    areas
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Re-enforce firefighting positions</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Open / Unlock all doors</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Ventilate - maintain tenability</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Provide additional lighting</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Closely coordinate and control search
+                    efforts
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Special call for TRT teams if needed</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Monitor structural stability</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Maintain strong supervision and control of
+                    crews
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Assign additional chief officers to area of
+                    rescue
+                </li>
+            </ul>
+        </div>
+        <div id="mayday_tab_div_build" class="mayday_tab_div blue_bg">
+            <span class="mayday_list_title">Build out command and Control</span>
+            <ul class="mayday_list">
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Use chief officers is critical location,
+                    fill out command team
+                </li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Build/effective rehab</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Control the media</li>
+                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Put medical sector in place</li>
+            </ul>
+        </div>
+        <div class="clear_float"></div>
+    </td>
+    </tr>
+    </table>
 </div>
 <!-- Mayday Dialog -->
 

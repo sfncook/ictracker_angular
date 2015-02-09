@@ -1,0 +1,166 @@
+
+#mayday_dialog_body {
+    padding: 0;
+    background: #EEE;
+}
+
+.mayday_list li {
+    margin: 0;
+    cursor: default;
+    padding-top: 2px;
+}
+
+#new_mayday_btn_icon {
+    float: left;
+}
+
+#new_mayday_btn_text {
+    float: left;
+}
+
+.mayday_toggle {
+    display: inline-block;
+    float: left;
+    padding: 6px 0 0 0;
+    height: 35px;
+    width: 120px;
+    font-size: 0.9rem;
+    margin: 5px;
+}
+
+#mayday_table_main {
+    height:95%;
+}
+#mayday_table_main td {
+    vertical-align: top;
+}
+
+#mayday_left_td {
+    padding: 0;
+    width: 285px !important;
+    background: #EEE;
+}
+
+#mayday_units_div {
+    width: 100%;
+    margin: 4px 4px 10px 4px;
+    min-height: 1px;
+}
+
+.mayday_name_label {
+    float: left;
+    font-weight: bold;
+}
+.mayday_value {
+    padding-left:5px;
+}
+.mayday_psi_btn {
+    margin-top: 1px;
+    margin-right: 4px;
+    float: right;
+}
+
+.mayday_box_title_edit {
+    margin-left:40px;
+}
+.mayday_box_title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100px;
+    float:left;
+}
+
+.mayday_clear_btn {
+    height: 24px;
+    padding: 2px;
+    margin-right: 4px;
+    float: left;
+}
+
+#new_mayday_btn {
+    width: 272px;
+    margin: 4px;
+}
+.mayday_timer {
+    font-size: 1.1rem;
+    color: #666;
+    float: right;
+    margin-right: 5px;
+}
+#new_mayday_btn_icon {
+    height: 12px;
+    width: 12px;
+    margin: 4px;
+}
+
+#mayday_info_edit_div {
+    padding: 5px;
+    border: 1px solid #666;
+    margin: 4px 4;
+    width: 272px;
+}
+
+#mayday_right_td {
+    width: 100%;
+    height: 100%;
+}
+
+.mayday_tab_div {
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    float: left;
+}
+
+#mayday_right_tab_div {
+    width: 100%;
+    background: #EEE;
+}
+
+.mayday_right_tab_text {
+    float: left;
+    margin: 3px 8px 0 0;
+    box-shadow: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#mayday_list_box {
+    width: 100%;
+    background: #EEE;
+    float: left;
+}
+.mayday_saved {
+    width: 228px;
+    background: #fff8f3;
+    float: left;
+    margin: 10px;
+    padding: 4px;
+    border: 3px double #999;
+}
+.mayday_saved_selected {
+    box-shadow: 0 0 25px blue;
+    border: 4px solid red;
+    background: lightpink;
+}
+.mayday_saved:hover {
+    background: white;
+    cursor: pointer;
+}
+.mayday_saved:active {
+    background: darkgray;
+    cursor: pointer;
+}
+.mayday_misc_value {
+    width:104px;
+    height: 20px;
+    font-size: 0.8rem;
+    float:left;
+    text-align: center;
+    border: 1px solid darkgray;
+    background: #EEE;
+    margin: 1px;
+    border-radius: 3px;
+}

@@ -687,7 +687,11 @@ function initDialogs() {
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
-    $( "#mayday_dlg" ).dialog( "option", "width", 600);
+
+    //Because JQuery UI lib is a piece of shit - height:100% doesn't work
+    var wHeight = $(window).height();
+    var wWidth = $(window).width();
+    $( "#mayday_dlg" ).dialog( {height: wHeight, width:wWidth, resizable:false} );
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
