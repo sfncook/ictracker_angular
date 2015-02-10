@@ -133,3 +133,9 @@ if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
     Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
 }
 
+$(document).keyup(function (e) {
+    //Esc Key Press
+    if (e.keyCode == 27) {
+        $("#mayday_form").hide();
+    }
+});

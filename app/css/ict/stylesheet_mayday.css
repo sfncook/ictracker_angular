@@ -265,3 +265,9 @@
     top: 3px;
     right: 5px;
 }
+#mayday_form_close_btn:hover {
+    background: #ffacb0;
+}
+#mayday_form_close_btn:active {
+    background: #bb797d;
+}

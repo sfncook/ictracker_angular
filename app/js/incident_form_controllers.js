@@ -2,12 +2,6 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
 
-    .controller('MaydayDlg', function($scope){
-        $scope.showMaydayDlg = function () {
-            $("#mayday_form").show();
-        }
-    })
-
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
         var incidentObjectId = getHttpRequestByName('i');
 

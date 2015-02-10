@@ -29,8 +29,8 @@
     <script src="js/SectorServices.js"></script>
     <script src="js/IncidentServices.js"></script>
     <script src="js/TbarServices.js"></script>
-    <script src="js/MaydayDialog.js"></script>
     <script src="js/incident_form_controllers.js"></script>
+    <script src="js/MaydayDialog.js"></script>
     <script src="js/reports.js"></script>
     <script src="version.js"></script>
 </head>
@@ -737,9 +737,10 @@
 </div>
 
 <!-- Mayday Dialog -->
-<div id="mayday_form">
+<div id="mayday_form" ng-controller="MaydayDlg">
     <div id="mayday_form_title_bar">Mayday</div>
-    <button id="mayday_form_close_btn">Close</button>
+    <button id="mayday_form_close_btn" ng-click="closeMaydayDlg()">Close</button>
+
     <table id="mayday_table_main">
     <tr>
     <td id="mayday_left_td">
