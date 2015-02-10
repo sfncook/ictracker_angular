@@ -4,7 +4,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     .controller('MaydayDlg', function($scope){
         $scope.showMaydayDlg = function () {
-            $("#mayday_dlg").dialog("open");
+            $("#mayday_form").show();
         }
     })
 
@@ -15,8 +15,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         LoadIncident(incidentObjectId, $scope);
 
         $scope.showIncDataDlg = function () {
-            console.log("click showIncDataDlg");
-            $("#mayday_dlg").dialog("open");
         }
     })
 
@@ -688,10 +686,7 @@ function initDialogs() {
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
 
-    //Because JQuery UI lib is a piece of shit - height:100% doesn't work
-    var wHeight = $(window).height();
-    var wWidth = $(window).width();
-    var dlg = $( "#mayday_dlg" ).dialog( {height: wHeight, width:wWidth, resizable:false} );
+    $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 

@@ -225,3 +225,43 @@
     color: black;
     float: left;
 }
+
+
+#mayday_form{
+    height: 100%;
+    width: 100%;
+    background: #EEE;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 150;
+}
+
+#mayday_form_title_bar {
+    background: #999;
+    color: white;
+    border: 1px black solid;
+    font-size: 1.4rem;
+    height: 51px;
+    text-align: center;
+    padding-top: 7px;
+}
+
+#mayday_form_close_btn {
+    background: #F67574;
+    height: 42px;
+    padding-top: 4px;
+    padding-left: 2px;
+    line-height: 1.0em;
+    margin: 2px;
+    color: white;
+    border-radius: 15px;
+    border: 1px solid #CCC;
+    text-shadow: none;
+    width: 40px;
+    float: right;
+    font-size: 0.8rem;
+    position: fixed;
+    top: 3px;
+    right: 5px;
+}
