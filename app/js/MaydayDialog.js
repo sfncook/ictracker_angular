@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('ictApp')
-
+angular.module("MaydayDialogServices", ['DataServices', 'TbarServices'])
 
 
 ;

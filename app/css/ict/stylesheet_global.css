@@ -78,6 +78,22 @@ td {
     font-weight: normal;
 }
 
+.dialog_close_btn_inside {
+    background: #F67574;
+    height: 42px;
+    padding-top: 13px;
+    padding-left: 2px;
+    line-height: 1.0em;
+    margin: 2px;
+    color: white;
+    border-radius: 15px;
+    border: 1px solid #CCC;
+    text-shadow: none;
+    width: 40px;
+    float: right;
+    font-size: 0.8rem;
+}
+
 button {
     text-align: center;
     background: white;
@@ -256,6 +272,9 @@ button:active {
 }
 
 .clear_both {
+    clear: both;
+}
+.clear_float {
     clear: both;
 }
 

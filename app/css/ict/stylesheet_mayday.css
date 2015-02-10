@@ -50,6 +50,7 @@
 .mayday_name_label {
     float: left;
     font-weight: bold;
+    font-size:14px;
 }
 .mayday_value {
     padding-left:5px;
@@ -78,6 +79,7 @@
     padding: 2px;
     margin-right: 4px;
     float: left;
+    font-size: 14px !important;
 }
 
 #new_mayday_btn {
@@ -99,7 +101,7 @@
 #mayday_info_edit_div {
     padding: 5px;
     border: 1px solid #666;
-    margin: 4px 4;
+    margin: 4px 4 !important;
     width: 272px;
 }
 
@@ -163,4 +165,63 @@
     background: #EEE;
     margin: 1px;
     border-radius: 3px;
+}
+
+.yellow_bg {
+    background: #E7E5B0;
+}
+
+.mayday_select {
+    text-align: center;
+    background: #FFF;
+    color: #000;
+    border: 1px solid #9a9a9a;
+    border-radius: 3px;
+    padding: 4px 4px 4px 4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 2px #888;
+    display: block;
+    margin-bottom: 15px;
+    width: 250px;
+    height: 25px;
+    margin: 15px 4px 5px 4px;
+}
+
+.mayday_select_half {
+    float:left;
+    width:120px;
+}
+
+.yellow_bg {
+    background: #E7E5B0;
+}
+
+.tan_bg {
+    background: #E7C9B0;
+}
+
+.green_bg {
+    background: #B0E7B0;
+}
+
+.gray_bg {
+    background: #D6D6D6;
+}
+
+.blue_bg {
+    background: #BDDFFC;
+}
+
+.red_bg {
+    background: #F27272;
+}
+
+.mayday_name_input {
+    width: 175px;
+    margin: 0 4px;
+    border-left: #EEE 2px solid;
+    border-top: #EEE 2px solid;
+    border-right: #EEE 2px solid;
+    color: black;
+    float: left;
 }

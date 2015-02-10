@@ -155,7 +155,7 @@ tbar {
     width:  25px;
     color: #666;
     font-weight: normal;
-    font-size: 0.6rem;
+    font-size: 0.6rem !important;
     text-shadow: none;
     padding: 4px 0;
 }

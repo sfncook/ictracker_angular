@@ -691,7 +691,7 @@ function initDialogs() {
     //Because JQuery UI lib is a piece of shit - height:100% doesn't work
     var wHeight = $(window).height();
     var wWidth = $(window).width();
-    $( "#mayday_dlg" ).dialog( {height: wHeight, width:wWidth, resizable:false} );
+    var dlg = $( "#mayday_dlg" ).dialog( {height: wHeight, width:wWidth, resizable:false} );
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 

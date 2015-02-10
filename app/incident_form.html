@@ -29,6 +29,7 @@
     <script src="js/SectorServices.js"></script>
     <script src="js/IncidentServices.js"></script>
     <script src="js/TbarServices.js"></script>
+    <script src="js/MaydayDialog.js"></script>
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/reports.js"></script>
     <script src="version.js"></script>
@@ -740,14 +741,14 @@
     <table id="mayday_table_main">
     <tr>
     <td id="mayday_left_td">
-        <div id="new_mayday_btn" class="glowpink button">
-            <img id="new_mayday_btn_icon" class='plus_icon' src='images/plus.png'/>
+        <button id="new_mayday_btn" class="glowpink">
+            <img id="new_mayday_btn_icon" class='plus_icon' src='img/plus.png'/>
 
             <div id="new_mayday_btn_text">New Mayday</div>
             <div class="clear_float"></div>
-        </div>
+        </button>
         <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div">
-            <div id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn button">Clear</div>
+            <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn">Clear</button>
             <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #</div>
             <div id="mayday_timer" class="mayday_timer">00:00</div>
             <div class="clear_float"></div>
@@ -755,7 +756,7 @@
                 <span class="mayday_name_label">Name:</span>
                 <input id="mayday_name_input" class="mayday_name_input" type="text"/>
 
-                <div id="mayday_edit_psi_btn" class="mayday_psi_btn psi_btn button">PSI</div>
+                <button id="mayday_edit_psi_btn" class="mayday_psi_btn psi_btn">PSI</button>
                 <div class="clear_float"></div>
             </div>
 
@@ -800,21 +801,21 @@
             <div class="clear_float"></div>
 
             <div class="mayday_row_div">
-                <div id="hoseline_mayday_btn" class="hoseline_mayday_btn mayday_toggle button">ON Hoseline</div>
-                <div id="offhoseline_mayday_btn" class="offhoseline_mayday_btn mayday_toggle button">OFF Hoseline</div>
+                <button id="hoseline_mayday_btn" class="hoseline_mayday_btn mayday_toggle">ON Hoseline</button>
+                <button id="offhoseline_mayday_btn" class="offhoseline_mayday_btn mayday_toggle">OFF Hoseline</button>
 
-                <div id="uninjured_mayday_btn" class="uninjured_mayday_btn mayday_toggle button">UNinjured</div>
-                <div id="injured_mayday_btn" class="injured_mayday_btn mayday_toggle button">Injured</div>
+                <button id="uninjured_mayday_btn" class="uninjured_mayday_btn mayday_toggle">UNinjured</button>
+                <button id="injured_mayday_btn" class="injured_mayday_btn mayday_toggle">Injured</button>
                 <div class="clear_float"></div>
             </div>
 
             <div class="mayday_row_div">
-                <div id="lost_mayday_btn" class="lost_mayday_btn mayday_single_toggle mayday_toggle button">Lost</div>
-                <div id="trap_mayday_btn" class="trap_mayday_btn mayday_single_toggle mayday_toggle button">Trapped</div>
-                <div id="oair_mayday_btn" class="oair_mayday_btn mayday_single_toggle mayday_toggle button">Out of Air</div>
-                <div id="regi_mayday_btn" class="regi_mayday_btn mayday_single_toggle mayday_toggle button">Regulator Issue</div>
-                <div id="lair_mayday_btn" class="lair_mayday_btn mayday_single_toggle mayday_toggle button">Low Air</div>
-                <div id="pack_mayday_btn" class="pack_mayday_btn mayday_single_toggle mayday_toggle button">Pack Issue</div>
+                <button id="lost_mayday_btn" class="lost_mayday_btn mayday_single_toggle mayday_toggle">Lost</button>
+                <button id="trap_mayday_btn" class="trap_mayday_btn mayday_single_toggle mayday_toggle">Trapped</button>
+                <button id="oair_mayday_btn" class="oair_mayday_btn mayday_single_toggle mayday_toggle">Out of Air</button>
+                <button id="regi_mayday_btn" class="regi_mayday_btn mayday_single_toggle mayday_toggle">Regulator Issue</button>
+                <button id="lair_mayday_btn" class="lair_mayday_btn mayday_single_toggle mayday_toggle">Low Air</button>
+                <button id="pack_mayday_btn" class="pack_mayday_btn mayday_single_toggle mayday_toggle">Pack Issue</button>
                 <div class="clear_float"></div>
             </div>
         </div>
@@ -868,12 +869,10 @@
         </div>
         <div class="clear_float"></div>
         <div id="mayday_right_tab_div">
-            <div id="mayday_right_tab_radio" class="mayday_right_tab_text tan_bg   button">Radio
-                Transition
-            </div>
-            <div id="mayday_right_tab_grab" class="mayday_right_tab_text green_bg button">GRAB-LIVES</div>
-            <div id="mayday_right_tab_deploy" class="mayday_right_tab_text gray_bg  button">Deployment</div>
-            <div id="mayday_right_tab_build" class="mayday_right_tab_text blue_bg  button">Build Out</div>
+            <button id="mayday_right_tab_radio" class="mayday_right_tab_text tan_bg">Radio Transition</button>
+            <button id="mayday_right_tab_grab" class="mayday_right_tab_text green_bg">GRAB-LIVES</button>
+            <button id="mayday_right_tab_deploy" class="mayday_right_tab_text gray_bg">Deployment</button>
+            <button id="mayday_right_tab_build" class="mayday_right_tab_text blue_bg">Build Out</button>
             <div class="clear_float"></div>
         </div>
         <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg">
