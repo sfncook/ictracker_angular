@@ -131,4 +131,21 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
+    /*
+     * This is a getter, do not count on the array to be updated dynamically.
+     */
+    .factory('GetIncidentUnits', ['TbarSectors', function (TbarSectors) {
+        return function () {
+            var incidentUnits = new Array();
+            for(var t=0; t<TbarSectors.length; t++) {
+                var sector = TbarSectors[t];
+                for(var u=0; u<sector.units.length; u++) {
+                    var unit = sector.units[u];
+                    incidentUnits.push(unit);
+                }
+            }//for
+            return incidentUnits;
+        }
+    }])
+
 ;
