@@ -1,5 +1,4 @@
 'use strict';
-
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
@@ -393,29 +392,33 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
     })
 
-    .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes){
+    .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
         $scope.selectedSector = {};
-    //    $scope.actionTypes = ActionTypes;
-    //    LoadActionTypes();
-
-        $scope.actionTypes = [];
-
-        $http.get('data/actions.json').
-            success(function(data){
+		$scope.actionTypes = ActionTypes;
+		LoadActionTypes().then(
+            function(){
                 // In order to eliminate duplicates write everything to objects
                 var action_types_local = [];
-                for(var i = 0; i < data.length; i++) {
-                    var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-                    var action = action_type.actions.push({name:data[i].name, action_type:data[i].action_type, is_warning:data[i].is_warning});
+                for(var i = 0; i < ActionTypes.length; i++) {
+                    var action_type = action_types_local.putIfAbsent(ActionTypes[i].category, {'name':ActionTypes[i].category, 'actions':[]});
+                    var action = action_type.actions.push({name:ActionTypes[i].name, action_type:ActionTypes[i].category, is_warning:ActionTypes[i].isWarning});
                 }
 
                 // Convert everything to arrays
                 $scope.catalog_action_types = action_types_local.propertiesToArray();
-            });
+        });
 
         $scope.selectAction = function(action) {
-            $scope.selectedSector.toggleAction(action);
-
+        	console.log($scope.selectedSector.selectedUnit);
+            // $scope.selectedSector.toggleAction(action);
+				var wasAdded = ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, action);
+                if(wasAdded) {
+                    if(!$scope.selectedSector.selectedUnit.actions.contains(action)){
+                        $scope.selectedSector.selectedUnit.actions.push(action);
+                    }
+                } else {
+                    $scope.selectedSector.selectedUnit.actions.remByVal(unitType);
+                }
             if(action.name=="Take a Line") {DataStore.estSupply();}
         };
 
@@ -627,30 +630,30 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.pars = [1, 2, 3, 4, 5];
         $scope.psis = [];
         $scope.selected_unit = {};
-    
+
         for(var psiValue=4500; psiValue>=0; psiValue-=100) {
             $scope.psis.push(psiValue);
         }
-    
+
         DataStore.showUnitOptionsDlg = function(unit) {
             $scope.selected_unit = unit;
             $("#unit_options_dlg").dialog( "open" );
         }
-    
+
         $scope.selectPar = function(par) {
             $scope.selected_unit.par = par;
             $scope.selected_unit.save();
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
         $scope.selectPsi = function(psi) {
             $scope.selected_unit.psi = psi;
             $scope.selected_unit.save();
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
     })
-    
+
 ;
 
 function initDialogs() {

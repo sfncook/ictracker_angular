@@ -5,7 +5,7 @@ var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'hasPar', 'manyPeople', 'par', 'psi', 'sector', 'type'];
-var ACTION_TYPE_DEF = ['name', 'category', 'is_warning'];
+var ACTION_TYPE_DEF = ['name', 'category', 'isWarning'];
 
 angular.module('DataServices', ['ParseServices'])
 
