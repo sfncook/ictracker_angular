@@ -131,25 +131,24 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('ToggleActionTypeForUnit', function (unit, actionType) {
+    .factory('ToggleActionTypeForUnit', [function () {
+        return function (unit, actionType) {
             if(unit.actions) {
-                // search for actionType already in unit
-                for(var i=0; i<unit.actions.length; i++) {
-                    var action = unit.actions[i];
-                    if(action.type.name==actionType.name) {
-                        unit.actions.remByVal(action);
-                        action.destroy();
-                        return false;
-                    }
-                }//for
-                var newAction = CreateNewAction(unit, actionType);
+                if(unit.actions.indexOf(actionType)>=0) {
+                    unit.actions.remByVal(actionType);
+                    return false;
+                } else {
+                    unit.actions.push(actionType);
+                    return true;
+                }
                 return true;
             } else {
                 // Add unit to sector
                 unit.actions = new Array();
-                var newAction = CreateNewAction(unit, actionType);
+                unit.actions.push(actionType);
                 return true;
             }
-    })
+        }
+    }])
 
 ;
