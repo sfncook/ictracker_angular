@@ -411,14 +411,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.selectAction = function(action) {
         	console.log($scope.selectedSector.selectedUnit);
             // $scope.selectedSector.toggleAction(action);
-				var wasAdded = ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, action);
-                if(wasAdded) {
-                    if(!$scope.selectedSector.selectedUnit.actions.contains(action)){
-                        $scope.selectedSector.selectedUnit.actions.push(action);
-                    }
-                } else {
-                    $scope.selectedSector.selectedUnit.actions.remByVal(unitType);
-                }
+				ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, action);
             if(action.name=="Take a Line") {DataStore.estSupply();}
         };
 

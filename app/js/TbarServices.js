@@ -136,17 +136,13 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
             if(unit.actions) {
                 if(unit.actions.indexOf(actionType)>=0) {
                     unit.actions.remByVal(actionType);
-                    return false;
                 } else {
                     unit.actions.push(actionType);
-                    return true;
                 }
-                return true;
             } else {
                 // Add unit to sector
                 unit.actions = new Array();
                 unit.actions.push(actionType);
-                return true;
             }
         }
     }])
