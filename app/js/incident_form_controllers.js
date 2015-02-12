@@ -409,9 +409,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         });
 
         $scope.selectAction = function(action) {
-        	console.log($scope.selectedSector.selectedUnit);
-            // $scope.selectedSector.toggleAction(action);
-				ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, action);
+        	// console.log($scope.selectedSector.selectedUnit);
+			ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, action);
             if(action.name=="Take a Line") {DataStore.estSupply();}
         };
 
