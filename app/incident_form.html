@@ -885,78 +885,54 @@
         <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg"    ng-show="selectedTab=='rdio'">
             <span class="mayday_list_title">Radio Transition and Alert</span>
             <ul class="mayday_list">
-                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Emergency Traffic Declaration: Alert fireground that a MAYDAY has been
-                    declared
-                </li>
-                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">If needed move non-affected units to secondary radio channel</li>
-                <li class="list_med_font_size list_level_2"><input type="checkbox" class="mayday_check">Support officer/runs ongiong operations</li>
-                <li class="list_med_font_size list_level_2"><input type="checkbox" class="mayday_check">Fireground channel/command directs rescue</li>
-                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">PAR conducted by Operations on secondary channel</li>
-                <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Immediately request additional alarm(s)</li>
+                <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_01}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_01=!mydaychck_01">Emergency Traffic Declaration: Alert fireground that a MAYDAY has been declared</li>
+                <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_02}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_02=!mydaychck_02">If needed move non-affected units to secondary radio channel</li>
+                <li class="list_med_font_size list_level_2" ng-class="{glowlightgreen:mydaychck_03}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_03=!mydaychck_03">Support officer/runs ongiong operations</li>
+                <li class="list_med_font_size list_level_2" ng-class="{glowlightgreen:mydaychck_04}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_04=!mydaychck_04">Fireground channel/command directs rescue</li>
+                <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_05}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_05=!mydaychck_05">PAR conducted by Operations on secondary channel</li>
+                <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_06}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_06=!mydaychck_06">Immediately request additional alarm(s)</li>
             </ul>
         </div>
         <div id="mayday_tab_div_grab" class="mayday_tab_div green_bg"   ng-show="selectedTab=='grab'">
             <span class="mayday_list_title">GRAB-LIVES</span>
             <ul id="mayday_list_grablives" class="mayday_list">
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Gauge <span class="sm_font">(CHECK AIR)</span>
-                </li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Radio <span
-                        class="sm_font">(CALL for Help)</span></li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Activate <span class="sm_font">(Pass)</span>
-                </li>
-                <li class="list_space_below first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Breathing <span
-                        class="sm_font">(Control)</span></li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Low <span class="sm_font">(Stay Low)</span>
-                </li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Illuminate <span
-                        class="sm_font">(Flashlight)</span></li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Volume <span
-                        class="sm_font">(Make Noise)</span></li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Exit <span class="sm_font">(Find Exit)</span>
-                </li>
-                <li class="list_space_below first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Shield Airway</li>
-                <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Air Level:_______</li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_07}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_07=!mydaychck_07">Gauge <span class="sm_font">(CHECK AIR)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_08}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_08=!mydaychck_08">Radio <span class="sm_font">(CALL for Help)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_09}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_09=!mydaychck_09">Activate <span class="sm_font">(Pass)</span></li>
+                <li class="list_space_below first_char_red list_med_font_size"  ng-class="{glowlightgreen:mydaychck_10}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_10=!mydaychck_10">Breathing <span class="sm_font">(Control)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_11}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_11=!mydaychck_11">Low <span class="sm_font">(Stay Low)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_12}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_12=!mydaychck_12">Illuminate <span class="sm_font">(Flashlight)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_13}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_13=!mydaychck_13">Volume <span class="sm_font">(Make Noise)</span></li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_14}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_14=!mydaychck_14">Exit <span class="sm_font">(Find Exit)</span></li>
+                <li class="list_space_below first_char_red list_med_font_size"  ng-class="{glowlightgreen:mydaychck_15}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_15=!mydaychck_15">Shield Airway</li>
+                <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_16}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_16=!mydaychck_16">Air Level:_______</li>
             </ul>
         </div>
         <div id="mayday_tab_div_deploy" class="mayday_tab_div gray_bg"  ng-show="selectedTab=='dply'">
             <span class="mayday_list_title">Deployment Considerations</span>
             <ul class="mayday_list">
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Deploy Rescue</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Commit additional resources to the Rapid
-                    Intervention Team
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Change Plan to a high priority rescue
-                    effort
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Consider withdrawing companies from affected
-                    areas
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Re-enforce firefighting positions</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Open / Unlock all doors</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Ventilate - maintain tenability</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Provide additional lighting</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Closely coordinate and control search
-                    efforts
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Special call for TRT teams if needed</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Monitor structural stability</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Maintain strong supervision and control of
-                    crews
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Assign additional chief officers to area of
-                    rescue
-                </li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_17}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_17=!mydaychck_17">Deploy Rescue</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_18}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_18=!mydaychck_18">Commit additional resources to the Rapid Intervention Team</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_19}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_19=!mydaychck_19">Change Plan to a high priority rescue effort</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_20}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_20=!mydaychck_20">Consider withdrawing companies from affected areas</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_21}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_21=!mydaychck_21">Re-enforce firefighting positions</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_22}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_22=!mydaychck_22">Open / Unlock all doors</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_23}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_23=!mydaychck_23">Ventilate - maintain tenability</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_24}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_24=!mydaychck_24">Provide additional lighting</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_25}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_25=!mydaychck_25">Closely coordinate and control search efforts</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_26}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_26=!mydaychck_26">Special call for TRT teams if needed</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_27}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_27=!mydaychck_27">Monitor structural stability</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_28}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_28=!mydaychck_28">Maintain strong supervision and control of crews</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_29}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_29=!mydaychck_29">Assign additional chief officers to area of rescue</li>
             </ul>
         </div>
         <div id="mayday_tab_div_build" class="mayday_tab_div blue_bg"   ng-show="selectedTab=='bldo'">
             <span class="mayday_list_title">Build out command and Control</span>
             <ul class="mayday_list">
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Use chief officers is critical location,
-                    fill out command team
-                </li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Build/effective rehab</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Control the media</li>
-                <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Put medical sector in place</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_30}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_30=!mydaychck_30">Use chief officers is critical location, fill out command team</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_31}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_31=!mydaychck_31">Build/effective rehab</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_32}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_32=!mydaychck_32">Control the media</li>
+                <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_33}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_33=!mydaychck_33">Put medical sector in place</li>
             </ul>
         </div>
         <div class="clear_float"></div>

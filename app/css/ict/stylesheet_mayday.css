@@ -271,3 +271,24 @@
 #mayday_form_close_btn:active {
     background: #bb797d;
 }
+
+.list_med_font_size {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.mayday_list li {
+    margin: 0;
+    cursor: default;
+    padding-top: 2px;
+}
+
+.mayday_check {
+    width: 15px;
+    height: 15px;
+    margin: 5px !important;
+}
+
+.list_level_2 {
+    margin-left: 15px !important;
+}
