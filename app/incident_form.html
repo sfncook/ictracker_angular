@@ -875,14 +875,14 @@
             <div class="clear_float"></div>
         </div>
         <div class="clear_float"></div>
-        <div id="mayday_right_tab_div">
-            <button id="mayday_right_tab_radio" class="mayday_right_tab_text tan_bg">Radio Transition</button>
-            <button id="mayday_right_tab_grab" class="mayday_right_tab_text green_bg">GRAB-LIVES</button>
-            <button id="mayday_right_tab_deploy" class="mayday_right_tab_text gray_bg">Deployment</button>
-            <button id="mayday_right_tab_build" class="mayday_right_tab_text blue_bg">Build Out</button>
+        <div id="mayday_right_tab_div"  ng-init="selectedTab='rdio'">
+            <button id="mayday_right_tab_radio"     class="mayday_right_tab_text tan_bg"    ng-click="selectedTab='rdio'" >Radio Transition</button>
+            <button id="mayday_right_tab_grab"      class="mayday_right_tab_text green_bg"  ng-click="selectedTab='grab'" >GRAB-LIVES</button>
+            <button id="mayday_right_tab_deploy"    class="mayday_right_tab_text gray_bg"   ng-click="selectedTab='dply'" >Deployment</button>
+            <button id="mayday_right_tab_build"     class="mayday_right_tab_text blue_bg"   ng-click="selectedTab='bldo'" >Build Out</button>
             <div class="clear_float"></div>
         </div>
-        <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg">
+        <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg"    ng-show="selectedTab=='rdio'">
             <span class="mayday_list_title">Radio Transition and Alert</span>
             <ul class="mayday_list">
                 <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Emergency Traffic Declaration: Alert fireground that a MAYDAY has been
@@ -895,7 +895,7 @@
                 <li class="list_med_font_size"><input type="checkbox" class="mayday_check">Immediately request additional alarm(s)</li>
             </ul>
         </div>
-        <div id="mayday_tab_div_grab" class="mayday_tab_div green_bg">
+        <div id="mayday_tab_div_grab" class="mayday_tab_div green_bg"   ng-show="selectedTab=='grab'">
             <span class="mayday_list_title">GRAB-LIVES</span>
             <ul id="mayday_list_grablives" class="mayday_list">
                 <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Gauge <span class="sm_font">(CHECK AIR)</span>
@@ -918,7 +918,7 @@
                 <li class="first_char_red list_med_font_size"><input type="checkbox" class="mayday_check">Air Level:_______</li>
             </ul>
         </div>
-        <div id="mayday_tab_div_deploy" class="mayday_tab_div gray_bg">
+        <div id="mayday_tab_div_deploy" class="mayday_tab_div gray_bg"  ng-show="selectedTab=='dply'">
             <span class="mayday_list_title">Deployment Considerations</span>
             <ul class="mayday_list">
                 <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Deploy Rescue</li>
@@ -948,7 +948,7 @@
                 </li>
             </ul>
         </div>
-        <div id="mayday_tab_div_build" class="mayday_tab_div blue_bg">
+        <div id="mayday_tab_div_build" class="mayday_tab_div blue_bg"   ng-show="selectedTab=='bldo'">
             <span class="mayday_list_title">Build out command and Control</span>
             <ul class="mayday_list">
                 <li class="list_space_below list_med_font_size"><input type="checkbox" class="mayday_check">Use chief officers is critical location,
