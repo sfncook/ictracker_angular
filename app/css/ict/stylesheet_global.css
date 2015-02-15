@@ -230,7 +230,7 @@ button:active {
     color: white;
 }
 .glowgreen {
-    background: green;
+    background: green !important;
     color: white;
 }
 .glowgreen:hover {

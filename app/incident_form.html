@@ -828,21 +828,21 @@
                 <div class="clear_float"></div>
 
                 <div class="mayday_row_div">
-                    <button id="hoseline_mayday_btn" class="hoseline_mayday_btn mayday_toggle">ON Hoseline</button>
-                    <button id="offhoseline_mayday_btn" class="offhoseline_mayday_btn mayday_toggle">OFF Hoseline</button>
+                    <button id="hoseline_mayday_btn"    ng-class="{glowgreen:selectedMayday.isOnHoseline}"  ng-click="selectedMayday.isOnHoseline=!selectedMayday.isOnHoseline" class="hoseline_mayday_btn mayday_toggle">ON Hoseline</button>
+                    <button id="offhoseline_mayday_btn" ng-class="{glowgreen:!selectedMayday.isOnHoseline}" ng-click="selectedMayday.isOnHoseline=!selectedMayday.isOnHoseline" class="offhoseline_mayday_btn mayday_toggle">OFF Hoseline</button>
 
-                    <button id="uninjured_mayday_btn" class="uninjured_mayday_btn mayday_toggle">UNinjured</button>
-                    <button id="injured_mayday_btn" class="injured_mayday_btn mayday_toggle">Injured</button>
+                    <button id="uninjured_mayday_btn"   ng-class="{glowgreen:selectedMayday.isUnInjured}"  ng-click="selectedMayday.isUnInjured=!selectedMayday.isUnInjured" class="uninjured_mayday_btn mayday_toggle">UNinjured</button>
+                    <button id="injured_mayday_btn"     ng-class="{glowgreen:!selectedMayday.isUnInjured}" ng-click="selectedMayday.isUnInjured=!selectedMayday.isUnInjured" class="injured_mayday_btn mayday_toggle">Injured</button>
                     <div class="clear_float"></div>
                 </div>
 
                 <div class="mayday_row_div">
-                    <button id="lost_mayday_btn" class="lost_mayday_btn mayday_single_toggle mayday_toggle">Lost</button>
-                    <button id="trap_mayday_btn" class="trap_mayday_btn mayday_single_toggle mayday_toggle">Trapped</button>
-                    <button id="oair_mayday_btn" class="oair_mayday_btn mayday_single_toggle mayday_toggle">Out of Air</button>
-                    <button id="regi_mayday_btn" class="regi_mayday_btn mayday_single_toggle mayday_toggle">Regulator Issue</button>
-                    <button id="lair_mayday_btn" class="lair_mayday_btn mayday_single_toggle mayday_toggle">Low Air</button>
-                    <button id="pack_mayday_btn" class="pack_mayday_btn mayday_single_toggle mayday_toggle">Pack Issue</button>
+                    <button id="lost_mayday_btn" ng-class="{glowgreen:selectedMayday.isLost}"               ng-click="selectedMayday.isLost=!selectedMayday.isLost"                     class="lost_mayday_btn mayday_single_toggle mayday_toggle">Lost</button>
+                    <button id="trap_mayday_btn" ng-class="{glowgreen:!selectedMayday.isTrapped}"           ng-click="selectedMayday.isTrapped=!selectedMayday.isTrapped"               class="trap_mayday_btn mayday_single_toggle mayday_toggle">Trapped</button>
+                    <button id="oair_mayday_btn" ng-class="{glowgreen:selectedMayday.isOutOfAir}"           ng-click="selectedMayday.isOutOfAir=!selectedMayday.isOutOfAir"             class="oair_mayday_btn mayday_single_toggle mayday_toggle">Out of Air</button>
+                    <button id="regi_mayday_btn" ng-class="{glowgreen:!selectedMayday.isRegulatorIssue}"    ng-click="selectedMayday.isRegulatorIssue=!selectedMayday.isRegulatorIssue" class="regi_mayday_btn mayday_single_toggle mayday_toggle">Regulator Issue</button>
+                    <button id="lair_mayday_btn" ng-class="{glowgreen:selectedMayday.isLowAir}"             ng-click="selectedMayday.isLowAir=!selectedMayday.isLowAir"                 class="lair_mayday_btn mayday_single_toggle mayday_toggle">Low Air</button>
+                    <button id="pack_mayday_btn" ng-class="{glowgreen:!selectedMayday.isPackIssue}"         ng-click="selectedMayday.isPackIssue=!selectedMayday.isPackIssue"           class="pack_mayday_btn mayday_single_toggle mayday_toggle">Pack Issue</button>
                     <div class="clear_float"></div>
                 </div>
             </div>
@@ -883,16 +883,16 @@
                             <td class="mayday_info_tbl_r"><div class="mayday_rank_value mayday_value">{{mayday.rank}}</div></td>
                         </tr>
                     </table>
-                    <div class="mayday_misc_onhs mayday_misc_value">ON Hoseline</div>
-                    <div class="mayday_misc_ofhs mayday_misc_value">OFF Hoseline</div>
-                    <div class="mayday_misc_unjr mayday_misc_value">UNinjured</div>
-                    <div class="mayday_misc_injr mayday_misc_value">Injured</div>
-                    <div class="mayday_misc_lost mayday_misc_value">Lost</div>
-                    <div class="mayday_misc_trap mayday_misc_value">Trapped</div>
-                    <div class="mayday_misc_oair mayday_misc_value">Out of Air</div>
-                    <div class="mayday_misc_regi mayday_misc_value">Regulator Issue</div>
-                    <div class="mayday_misc_lair mayday_misc_value">Low Air</div>
-                    <div class="mayday_misc_pack mayday_misc_value">Pack Issue</div>
+                    <div class="mayday_misc_onhs mayday_misc_value" ng-class="{glowgreen:mayday.isOnHoseline}" >ON Hoseline</div>
+                    <div class="mayday_misc_ofhs mayday_misc_value" ng-class="{glowgreen:!mayday.isOnHoseline}">OFF Hoseline</div>
+                    <div class="mayday_misc_unjr mayday_misc_value" ng-class="{glowgreen:mayday.isUnInjured}" >UNinjured</div>
+                    <div class="mayday_misc_injr mayday_misc_value" ng-class="{glowgreen:!mayday.isUnInjured}">Injured</div>
+                    <div class="mayday_misc_lost mayday_misc_value" ng-class="{glowgreen:mayday.isLost}">Lost</div>
+                    <div class="mayday_misc_trap mayday_misc_value" ng-class="{glowgreen:!mayday.isTrapped}">Trapped</div>
+                    <div class="mayday_misc_oair mayday_misc_value" ng-class="{glowgreen:mayday.isOutOfAir}">Out of Air</div>
+                    <div class="mayday_misc_regi mayday_misc_value" ng-class="{glowgreen:!mayday.isRegulatorIssue}">Regulator Issue</div>
+                    <div class="mayday_misc_lair mayday_misc_value" ng-class="{glowgreen:mayday.isLowAir}">Low Air</div>
+                    <div class="mayday_misc_pack mayday_misc_value" ng-class="{glowgreen:!mayday.isPackIssue}">Pack Issue</div>
                     <div class="clear_float"></div>
                 </div>
                 <div class="clear_float"></div>
