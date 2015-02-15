@@ -748,6 +748,7 @@
     <div id="mayday_form_title_bar">Mayday</div>
     <button id="mayday_form_close_btn" ng-click="closeMaydayDlg()">Close</button>
 
+    <h1>TESTING {{selectedMayday.unitType.name}}</h1>
     <table id="mayday_table_main">
     <tr>
         <td id="mayday_left_td">
@@ -773,12 +774,15 @@
                     <div class="clear_float"></div>
                 </div>
 
-                <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnits.length<=12">
-                    <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unit in incidentUnits">{{unit}}</button>
+                <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
+                    <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unitType in incidentUnitTypes">{{unitType.name}}</button>
                 </div>
-                <select id="mayday_unit_select" class="mayday_select" ng-show="incidentUnits.length>12">
+                <select
+                        id="mayday_unit_select"
+                        class="mayday_select"
+                        ng-show="incidentUnitTypes.length>12"
+                        ng-options="unitType.name for unitType in incidentUnitTypes" ng-model="selectedMayday.unitType">
                     <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>Unit</option>
-                    <option ng-repeat="unit in incidentUnits">{{unit}}</option>
                 </select>
 
                 <div id="clear_float_between_units_and_sectors" class="clear_float"></div>

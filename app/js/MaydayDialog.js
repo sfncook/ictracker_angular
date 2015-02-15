@@ -6,7 +6,7 @@ angular.module("ictApp")
 
         $scope.dataStore = DataStore;
         $scope.tbarSectors = TbarSectors;
-        $scope.incidentUnits = [];
+        $scope.incidentUnitTypes = [];
         $scope.selectedMayday;
         $scope.maydays = new Array();
 
@@ -27,7 +27,10 @@ angular.module("ictApp")
             var unitNames = Object.keys(unitsMap);
             unitNames.sort();
             for(var u=0; u<unitNames.length; u++) {
-                $scope.incidentUnits.push(unitNames[u]);
+                var unitName = unitNames[u];
+                var unit = unitsMap[unitName];
+                var unitType = unit.type;
+                $scope.incidentUnitTypes.push(unitType);
             }
 
             // Create new Mayday object, if needed
