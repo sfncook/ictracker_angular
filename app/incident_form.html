@@ -758,15 +758,12 @@
             </button>
             <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div" style="margin-left:4px;">
                 <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn">Clear</button>
-                <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #</div>
+                <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #<span>{{selectedMayday.number}}</span></div>
                 <div id="mayday_timer" class="mayday_timer">00:00</div>
                 <div class="clear_float"></div>
-                <div>
+                <div class="mayday_topstuff">
                     <span class="mayday_name_label">Name:</span>
-                    <input id="mayday_name_input"
-                           class="mayday_name_input"
-                           ng-model="selectedMayday.nameFFighter"
-                           type="text"/>
+                    <input id="mayday_name_input" class="mayday_name_input" ng-model="selectedMayday.nameFFighter" type="text"/>
 
                     <button class="mayday_psi_btn psi_btn"
                          ng-class="{psi_red:selectedMayday.psi<1500, psi_yellow:selectedMayday.psi<3000&&selectedMayday.psi>=1500, psi_green:selectedMayday.psi>=3000}">
@@ -778,22 +775,31 @@
                 <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
                     <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unitType in incidentUnitTypes">{{unitType.name}}</button>
                 </div>
-                <select id="mayday_unit_select" class="mayday_select" ng-show="incidentUnitTypes.length>12"
-                        ng-options="unitType.name for unitType in incidentUnitTypes" ng-model="selectedMayday.unitType">
-                </select>
+                <div>
+                    <label for="mayday_unit_select" class="mayday_select_label">Unit:</label>
+                    <select id="mayday_unit_select" style="float:left" class="mayday_select" ng-show="incidentUnitTypes.length>12"
+                            ng-options="unitType.name for unitType in incidentUnitTypes" ng-model="selectedMayday.unitType">
+                    </select>
+                    <div class="clear_float"></div>
+                </div>
+
 
                 <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
 
                 <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidSectorTypes()<=6">
                     <button ng-repeat="sectorType in incidentSectorTypes" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sectorType.name!='Sector Name'">{{sectorType.name}}</button>
                 </div>
-                <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidSectorTypes()>6"
-                        ng-options="sectorType.name for sectorType in incidentSectorTypes" ng-model="selectedMayday.sectorType">
-                </select>
+                <div>
+                    <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
+                    <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidSectorTypes()>6"
+                            ng-options="sectorType.name for sectorType in incidentSectorTypes" ng-model="selectedMayday.sectorType">
+                    </select>
+                    <div class="clear_float"></div>
+                </div>
 
                 <div class="clear_float"></div>
 
-                <select id="mayday_channel_select" class="mayday_select_half mayday_channel_select mayday_select">
+                <select id="mayday_channel_select" class="mayday_select_half mayday_channel_select mayday_select" ng-model="selectedMayday.channel">
                     <option id="mayday_channel_opt_default" disabled='disabled' selected='selected' class='default_option'>Channel</option>
                     <option class='mayday_channel_1'>Channel 1</option>
                     <option class='mayday_channel_2'>Channel 2</option>
@@ -813,7 +819,7 @@
                     <option class='mayday_channel_16'>Channel 16</option>
                 </select>
 
-                <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select">
+                <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select" ng-model="selectedMayday.rank">
                     <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
                     <option class='mayday_rank_capt'>Captain</option>
                     <option class='mayday_rank_eng'>Engineer</option>
@@ -847,7 +853,7 @@
                      class="mayday_saved"
                      ng-class="{mayday_saved_selected:selectedMayday==mayday}"
                      ng-click="selectMayday(mayday)">
-                    <div class="mayday_box_title">Mayday:</div>
+                    <div class="mayday_box_title">Mayday #<span>{{mayday.number}}</span></div>
                     <div class="mayday_timer">00:00</div>
                     <div class="clear_float"></div>
 
@@ -870,11 +876,11 @@
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Channel:</td>
-                            <td class="mayday_info_tbl_r"><div class="mayday_channel_value mayday_value"></div></td>
+                            <td class="mayday_info_tbl_r"><div class="mayday_channel_value mayday_value">{{mayday.channel}}</div></td>
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Rank:</td>
-                            <td class="mayday_info_tbl_r"><div class="mayday_rank_value mayday_value"></div></td>
+                            <td class="mayday_info_tbl_r"><div class="mayday_rank_value mayday_value">{{mayday.rank}}</div></td>
                         </tr>
                     </table>
                     <div class="mayday_misc_onhs mayday_misc_value">ON Hoseline</div>

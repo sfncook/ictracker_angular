@@ -2,12 +2,16 @@
 
 angular.module("ictApp")
 
-    .controller('MaydayDlg', function($scope, DataStore, TbarSectors, CreateNewMayday){
+    .factory('Maydays', [function () {
+        return new Array();
+    }])
+
+    .controller('MaydayDlg', function($scope, DataStore, TbarSectors, Maydays, CreateNewMayday){
 
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
         $scope.selectedMayday;
-        $scope.maydays = new Array();
+        $scope.maydays = Maydays;
 
         $scope.showMaydayDlg = function () {
 
@@ -94,13 +98,19 @@ angular.module("ictApp")
 
     })
 
-    .factory('CreateNewMayday', ['ConvertParseObject', function (ConvertParseObject) {
+    .factory('GetNextMaydayId', ['Maydays', function (Maydays) {
+        return function () {
+            return Maydays.length+1;
+        }
+    }])
+
+    .factory('CreateNewMayday', ['ConvertParseObject', 'GetNextMaydayId', function (ConvertParseObject, GetNextMaydayId) {
         return function (incident) {
             var MaydayParseObj = Parse.Object.extend('Mayday');
             var newMayday = new MaydayParseObj();
             ConvertParseObject(newMayday, MAYDAY_DEF);
             newMayday.incident          = incident;
-            //newMayday.number          = ;
+            newMayday.number            = GetNextMaydayId();
             newMayday.unitType          = {};
             newMayday.sectorType        = {};
             newMayday.isOnHoseline      = true;

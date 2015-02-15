@@ -339,7 +339,7 @@ button:active {
     float:right;
 }
 .mayday_row_div {
-    margin-top: 10px;
+    /*margin-top: 10px;*/
 }
 .mayday_info_tbl_l {
     font-weight: bold;
