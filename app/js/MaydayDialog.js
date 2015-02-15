@@ -141,7 +141,9 @@ angular.module("ictApp")
         }
     }])
 
-    .factory('LoadAllMaydays', ['Maydays', 'DataStore', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', function (Maydays, DataStore, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday) {
+    .factory('LoadAllMaydays', [
+        'Maydays', 'DataStore', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday',
+        function (Maydays, DataStore, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
         return function ($scope) {
             var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
             queryMaydays.equalTo("incident", DataStore.incident);
@@ -153,6 +155,7 @@ angular.module("ictApp")
                     ConvertParseObject(mayday, MAYDAY_DEF);
                     Maydays.push(mayday);
                     FetchUnitTypeForMayday($scope, mayday);
+                    FetchSectorTypeForMayday($scope, mayday);
                 }
             });
         }
@@ -166,6 +169,21 @@ angular.module("ictApp")
                         $scope.$apply(function(){
                             ConvertParseObject(unitType, UNIT_TYPE_DEF);
                             mayday.unitType = unitType;
+                        });
+                    }
+                });
+            }
+        }
+    }])
+
+    .factory('FetchSectorTypeForMayday', ['ConvertParseObject', function (ConvertParseObject) {
+        return function ($scope, mayday) {
+            if(mayday.sectorType) {
+                mayday.sectorType.fetch({
+                    success: function(sectorType) {
+                        $scope.$apply(function(){
+                            ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+                            mayday.sectorType = sectorType;
                         });
                     }
                 });

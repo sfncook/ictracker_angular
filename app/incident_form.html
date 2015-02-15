@@ -792,7 +792,7 @@
                 <div>
                     <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
                     <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidSectorTypes()>6"
-                            ng-options="sectorType.name for sectorType in incidentSectorTypes" ng-model="selectedMayday.sectorType">
+                            ng-options="sectorType.name for sectorType in incidentSectorTypes track by sectorType.name" ng-model="selectedMayday.sectorType">
                     </select>
                     <div class="clear_float"></div>
                 </div>
