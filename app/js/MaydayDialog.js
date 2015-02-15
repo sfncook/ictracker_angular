@@ -13,6 +13,10 @@ angular.module("ictApp")
         $scope.selectedMayday;
         $scope.maydays = Maydays;
 
+        var keyUpEvent = function (e) {
+            if (e.which == 27) $scope.closeMaydayDlg();
+        };
+
         $scope.showMaydayDlg = function () {
 
             $scope.refreshIncidentSectorTypes();
@@ -27,11 +31,15 @@ angular.module("ictApp")
                 $scope.selectedMayday = $scope.maydays[0];
             }
 
+            // Bind the escape key
+            jQuery('body').bind('keyup', keyUpEvent);
+
             // Show the Mayday dialog
             $("#mayday_form").show();
         }
 
         $scope.closeMaydayDlg = function () {
+            jQuery('body').unbind('keyup', keyUpEvent);
             SaveAllMaydays();
             $("#mayday_form").hide();
         }
@@ -98,6 +106,10 @@ angular.module("ictApp")
                 $scope.incidentUnitTypes.push(unitType);
             }
         }// refreshIncidentUnitTypes()
+
+        $scope.keyUp = function () {
+            console.log("keyUp");
+        }
 
     })
 

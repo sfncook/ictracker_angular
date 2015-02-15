@@ -135,7 +135,7 @@ if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
 
 $(document).keyup(function (e) {
     //Esc Key Press
-    if (e.keyCode == 27) {
-        $("#mayday_form").hide();
-    }
+//    if (e.keyCode == 27) {
+//        $("#mayday_form").hide();
+//    }
 });
