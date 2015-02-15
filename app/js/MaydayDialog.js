@@ -4,19 +4,77 @@ angular.module("ictApp")
 
     .controller('MaydayDlg', function($scope, DataStore, TbarSectors, CreateNewMayday){
 
-        $scope.dataStore = DataStore;
-        $scope.tbarSectors = TbarSectors;
+        $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
         $scope.selectedMayday;
         $scope.maydays = new Array();
 
         $scope.showMaydayDlg = function () {
 
-            // Update the list of units. - This should be a unique list of unitTypes along and they should be sorted
+            $scope.refreshIncidentSectorTypes();
+            $scope.refreshIncidentUnitTypes();
+
+            // Create new Mayday object, if needed
+            if(!$scope.selectedMayday) {
+                var newMayday = CreateNewMayday(DataStore.incident);
+                $scope.maydays.push(newMayday);
+                $scope.selectedMayday = newMayday;
+            }
+
+            // Show the Mayday dialog
+            $("#mayday_form").show();
+        }
+
+        $scope.closeMaydayDlg = function () {
+            $("#mayday_form").hide();
+        }
+
+        $scope.addNewMayday = function () {
+            var newMayday = CreateNewMayday(DataStore.incident);
+            $scope.maydays.push(newMayday);
+            $scope.selectedMayday = newMayday;
+        }
+
+        $scope.selectMayday = function (mayday) {
+            $scope.selectedMayday = mayday;
+        }
+
+        $scope.manyValidSectorTypes = function () {
+            var manyValidSectorTypes = 0;
+            var sectorTypes = $scope.incidentSectorTypes;
+            for(var s=0; s<sectorTypes.length; s++) {
+                var sectorType = sectorTypes[s];
+                if(sectorType.name != "Sector Name") {
+                    manyValidSectorTypes++;
+                }
+            }//for
+            return manyValidSectorTypes;
+        }
+
+        $scope.refreshIncidentSectorTypes = function () {
+            $scope.incidentSectorTypes = [];
+            var sectorTypesMap = {};
+            for(var s=0; s<TbarSectors.length; s++) {
+                var sector = TbarSectors[s];
+                sectorTypesMap[sector.sectorType.name] = sector.sectorType;
+            }//for
+            var sectorTypeNames = Object.keys(sectorTypesMap);
+            sectorTypeNames.sort();
+            for(var u=0; u<sectorTypeNames.length; u++) {
+                var sectorTypeName = sectorTypeNames[u];
+                var sectorType = sectorTypesMap[sectorTypeName];
+                if(sectorType.name != "Sector Name") {
+                    $scope.incidentSectorTypes.push(sectorType);
+                }
+            }
+        }// refreshIncidentSectorTypes
+
+
+        $scope.refreshIncidentUnitTypes = function () {
             $scope.incidentUnitTypes = [];
             var unitsMap = {};
-            for(var s=0; s<$scope.tbarSectors.length; s++) {
-                var sector = $scope.tbarSectors[s];
+            for(var s=0; s<TbarSectors.length; s++) {
+                var sector = TbarSectors[s];
                 if(sector.units) {
                     for(var u=0; u<sector.units.length; u++) {
                         var unit = sector.units[u];
@@ -32,43 +90,7 @@ angular.module("ictApp")
                 var unitType = unit.type;
                 $scope.incidentUnitTypes.push(unitType);
             }
-
-            // Create new Mayday object, if needed
-            if(!$scope.selectedMayday) {
-                var newMayday = CreateNewMayday($scope.dataStore.incident);
-                $scope.maydays.push(newMayday);
-                $scope.selectedMayday = newMayday;
-            }
-
-            // Show the Mayday dialog
-            $("#mayday_form").show();
-        }
-
-        $scope.closeMaydayDlg = function () {
-            $("#mayday_form").hide();
-        }
-
-        $scope.addNewMayday = function () {
-            var newMayday = CreateNewMayday($scope.dataStore.incident);
-            $scope.maydays.push(newMayday);
-            $scope.selectedMayday = newMayday;
-        }
-
-        $scope.selectMayday = function (mayday) {
-            $scope.selectedMayday = mayday;
-        }
-
-        $scope.manyValidTbars = function () {
-            var manyValidTbars = 0;
-            var sectors = $scope.tbarSectors;
-            for(var s=0; s<sectors.length; s++) {
-                var sector = sectors[s];
-                if(sector.sectorType.name != "Sector Name") {
-                    manyValidTbars++;
-                }
-            }//for
-            return manyValidTbars;
-        }
+        }// refreshIncidentUnitTypes()
 
     })
 
@@ -79,8 +101,8 @@ angular.module("ictApp")
             ConvertParseObject(newMayday, MAYDAY_DEF);
             newMayday.incident          = incident;
             //newMayday.number          = ;
-            //newMayday.unitType        = ;
-            //newMayday.sectorType      = ;
+            newMayday.unitType          = {};
+            newMayday.sectorType        = {};
             newMayday.isOnHoseline      = true;
             newMayday.isUnInjured       = true;
             newMayday.isLost            = false;

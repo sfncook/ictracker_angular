@@ -747,7 +747,7 @@
     <div id="mayday_form">
     <div id="mayday_form_title_bar">Mayday</div>
     <button id="mayday_form_close_btn" ng-click="closeMaydayDlg()">Close</button>
-    
+
     <table id="mayday_table_main">
     <tr>
         <td id="mayday_left_td">
@@ -756,7 +756,7 @@
                 <div id="new_mayday_btn_text">New Mayday</div>
                 <div class="clear_float"></div>
             </button>
-            <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div">
+            <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div" style="margin-left:4px;">
                 <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn">Clear</button>
                 <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #</div>
                 <div id="mayday_timer" class="mayday_timer">00:00</div>
@@ -768,29 +768,27 @@
                            ng-model="selectedMayday.nameFFighter"
                            type="text"/>
 
-                    <button id="mayday_edit_psi_btn" class="mayday_psi_btn psi_btn">PSI</button>
+                    <button class="mayday_psi_btn psi_btn"
+                         ng-class="{psi_red:selectedMayday.psi<1500, psi_yellow:selectedMayday.psi<3000&&selectedMayday.psi>=1500, psi_green:selectedMayday.psi>=3000}">
+                        {{selectedMayday.psi}}
+                    </button>
                     <div class="clear_float"></div>
                 </div>
 
                 <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
                     <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unitType in incidentUnitTypes">{{unitType.name}}</button>
                 </div>
-                <select
-                        id="mayday_unit_select"
-                        class="mayday_select"
-                        ng-show="incidentUnitTypes.length>12"
+                <select id="mayday_unit_select" class="mayday_select" ng-show="incidentUnitTypes.length>12"
                         ng-options="unitType.name for unitType in incidentUnitTypes" ng-model="selectedMayday.unitType">
-                    <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>Unit</option>
                 </select>
 
                 <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
 
-                <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidTbars()<=6">
-                    <button ng-repeat="sector in tbarSectors" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sector.sectorType.name!='Sector Name'">{{sector.sectorType.name}}</button>
+                <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidSectorTypes()<=6">
+                    <button ng-repeat="sectorType in incidentSectorTypes" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sectorType.name!='Sector Name'">{{sectorType.name}}</button>
                 </div>
-                <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidTbars()>6">
-                    <option id="mayday_sector_opt_default" disabled='disabled' selected='mayday_sector_opt selected' class='default_option'>Sector</option>
-                    <option ng-repeat="sector in tbarSectors" ng-show="sector.sectorType.name!='Sector Name'">{{sector.sectorType.name}}</option>
+                <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidSectorTypes()>6"
+                        ng-options="sectorType.name for sectorType in incidentSectorTypes" ng-model="selectedMayday.sectorType">
                 </select>
 
                 <div class="clear_float"></div>
@@ -860,7 +858,7 @@
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">PSI:</td>
-                            <td class="mayday_info_tbl_r"><div class="mayday_psi_value mayday_value"></div></td>
+                            <td class="mayday_info_tbl_r"><div class="mayday_psi_value mayday_value">{{mayday.psi}}</div></td>
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Unit:</td>
@@ -868,7 +866,7 @@
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Sector:</td>
-                            <td class="mayday_info_tbl_r"><div class="mayday_sector_value mayday_value"></div></td>
+                            <td class="mayday_info_tbl_r"><div class="mayday_sector_value mayday_value">{{mayday.sectorType.name}}</div></td>
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Channel:</td>
