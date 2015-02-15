@@ -778,7 +778,7 @@
                 <div>
                     <label for="mayday_unit_select" class="mayday_select_label">Unit:</label>
                     <select id="mayday_unit_select" style="float:left" class="mayday_select" ng-show="incidentUnitTypes.length>12"
-                            ng-options="unitType.name for unitType in incidentUnitTypes" ng-model="selectedMayday.unitType">
+                            ng-options="unitType.name for unitType in incidentUnitTypes track by unitType.name" ng-model="selectedMayday.unitType">
                     </select>
                     <div class="clear_float"></div>
                 </div>

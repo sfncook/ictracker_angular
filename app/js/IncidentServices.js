@@ -21,8 +21,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('LoadIncident', [
-        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ConvertParseObject', 'ParseQuery', 'DataStore',
-        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, ParseQuery, DataStore) {
+        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydays',
+        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, ParseQuery, DataStore, LoadAllMaydays) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -50,9 +50,12 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
                                 TbarSectors.push(sector);
                                 LoadUnitsForSector(sector, $scope);
                             }
-                            DataStore.loadSuccess = true;
-                            DataStore.waitingToLoad = false;
                         }
+
+                        LoadAllMaydays($scope);
+
+                        DataStore.loadSuccess = true;
+                        DataStore.waitingToLoad = false;
                     });
                 } else {
                     DataStore.loadSuccess = false;

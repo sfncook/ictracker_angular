@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, DataStore, TbarSectors, Maydays, CreateNewMayday){
+    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays){
 
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
@@ -19,10 +19,12 @@ angular.module("ictApp")
             $scope.refreshIncidentUnitTypes();
 
             // Create new Mayday object, if needed
-            if(!$scope.selectedMayday) {
-                var newMayday = CreateNewMayday(DataStore.incident);
+            if($scope.maydays.length==0) {
+                var newMayday = CreateNewMayday();
                 $scope.maydays.push(newMayday);
-                $scope.selectedMayday = newMayday;
+            }
+            if(!$scope.selectedMayday) {
+                $scope.selectedMayday = $scope.maydays[0];
             }
 
             // Show the Mayday dialog
@@ -30,11 +32,12 @@ angular.module("ictApp")
         }
 
         $scope.closeMaydayDlg = function () {
+            SaveAllMaydays();
             $("#mayday_form").hide();
         }
 
         $scope.addNewMayday = function () {
-            var newMayday = CreateNewMayday(DataStore.incident);
+            var newMayday = CreateNewMayday();
             $scope.maydays.push(newMayday);
             $scope.selectedMayday = newMayday;
         }
@@ -104,12 +107,12 @@ angular.module("ictApp")
         }
     }])
 
-    .factory('CreateNewMayday', ['ConvertParseObject', 'GetNextMaydayId', function (ConvertParseObject, GetNextMaydayId) {
-        return function (incident) {
+    .factory('CreateNewMayday', ['ConvertParseObject', 'GetNextMaydayId', 'DataStore', function (ConvertParseObject, GetNextMaydayId, DataStore) {
+        return function () {
             var MaydayParseObj = Parse.Object.extend('Mayday');
             var newMayday = new MaydayParseObj();
             ConvertParseObject(newMayday, MAYDAY_DEF);
-            newMayday.incident          = incident;
+            newMayday.incident          = DataStore.incident;
             newMayday.number            = GetNextMaydayId();
             newMayday.unitType          = {};
             newMayday.sectorType        = {};
@@ -125,8 +128,48 @@ angular.module("ictApp")
             newMayday.psi               = 4000;
             newMayday.channel           = "";
             newMayday.rank              = "";
-            newMayday.save();
             return newMayday;
+        }
+    }])
+
+    .factory('SaveAllMaydays', ['Maydays', function (Maydays) {
+        return function () {
+            for(var m=0; m<Maydays.length; m++) {
+                var mayday = Maydays[m];
+                mayday.save();
+            }
+        }
+    }])
+
+    .factory('LoadAllMaydays', ['Maydays', 'DataStore', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', function (Maydays, DataStore, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday) {
+        return function ($scope) {
+            var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
+            queryMaydays.equalTo("incident", DataStore.incident);
+            queryMaydays.include('unitType');
+            queryMaydays.include('sectorType');
+            ParseQuery(queryMaydays, {functionToCall:'find'}).then(function(maydays){
+                for(var i=0; i<maydays.length; i++) {
+                    var mayday = maydays[i];
+                    ConvertParseObject(mayday, MAYDAY_DEF);
+                    Maydays.push(mayday);
+                    FetchUnitTypeForMayday($scope, mayday);
+                }
+            });
+        }
+    }])
+
+    .factory('FetchUnitTypeForMayday', ['ConvertParseObject', function (ConvertParseObject) {
+        return function ($scope, mayday) {
+            if(mayday.unitType) {
+                mayday.unitType.fetch({
+                    success: function(unitType) {
+                        $scope.$apply(function(){
+                            ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                            mayday.unitType = unitType;
+                        });
+                    }
+                });
+            }
         }
     }])
 
