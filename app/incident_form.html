@@ -763,18 +763,22 @@
                 <div class="clear_float"></div>
             </div>
 
-            <div id="mayday_units_all" class="mayday_row_div mayday_units_div"></div>
+            <div id="mayday_units_all" class="mayday_row_div mayday_units_div">
+                <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unit in incidentUnits()">{{unit.type.name}}</button>
+            </div>
             <select id="mayday_unit_select" class="mayday_select_half mayday_select">
                 <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>Unit</option>
-                <option ng-repeat="unit in incidentUnits">{{unit.type.name}}</option>
+                <option ng-repeat="unit in incidentUnits()">{{unit.type.name}}</option>
             </select>
-<div style="float:left; background:red;">{{test}}</div>
+
             <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
 
-            <div id="mayday_sectors_all" class="mayday_row_div"></div>
-            <select id="mayday_sectors_select" class="mayday_select_half mayday_select">
+            <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidTbars()<=6">
+                <button ng-repeat="sector in tbarSectors" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sector.sectorType.name!='Sector Name'">{{sector.sectorType.name}}</button>
+            </div>
+            <select id="mayday_sectors_select" class="mayday_select_half mayday_select" ng-show="manyValidTbars()>6">
                 <option id="mayday_sector_opt_default" disabled='disabled' selected='mayday_sector_opt selected' class='default_option'>Sector</option>
-                <option ng-repeat="sector in tbarSectors">{{sector.sectorType.name}}</option>
+                <option ng-repeat="sector in tbarSectors" ng-show="sector.sectorType.name!='Sector Name'">{{sector.sectorType.name}}</option>
             </select>
 
             <div class="clear_float"></div>

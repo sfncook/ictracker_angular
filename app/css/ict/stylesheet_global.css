@@ -834,3 +834,8 @@ button:active {
     float: left;
     overflow: scroll;
 }
+
+.mayday_unit_btn {
+    float: left;
+    margin: 4px;
+}

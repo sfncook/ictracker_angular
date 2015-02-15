@@ -41,7 +41,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             }
             $scope.timer_text = new_timer_text;
         }
-        $interval(updateTimer, 1000);
+//        $interval(updateTimer, 1000);
 
         $scope.showUnitsDlgForDispUnits = function() {
             DataStore.showUnitsDlgForDispUnits();
