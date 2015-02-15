@@ -840,7 +840,9 @@
         </td>
         <td id="mayday_right_td">
             <div id="mayday_list_box">
-                <div id="mayday_prototype" class="mayday_saved" ng-repeat="mayday in maydays">
+                <div ng-repeat="mayday in maydays"
+                     class="mayday_saved"
+                     ng-class="{mayday_saved_selected:selectedMayday==mayday}">
                     <div class="mayday_box_title">Mayday:</div>
                     <div class="mayday_timer">00:00</div>
                     <div class="clear_float"></div>
@@ -856,7 +858,7 @@
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Unit:</td>
-                            <td class="mayday_info_tbl_r"><div class="mayday_unit_value mayday_value"></div></td>
+                            <td class="mayday_info_tbl_r"><div class="mayday_unit_value mayday_value">{{mayday.unitType.name}}</div></td>
                         </tr>
                         <tr>
                             <td class="mayday_info_tbl_l">Sector:</td>
