@@ -752,9 +752,8 @@
     <table id="mayday_table_main">
     <tr>
         <td id="mayday_left_td">
-            <button id="new_mayday_btn" class="glowpink">
+            <button id="new_mayday_btn" class="glowpink" ng-click="addNewMayday()">
                 <img id="new_mayday_btn_icon" class='plus_icon' src='img/plus.png'/>
-
                 <div id="new_mayday_btn_text">New Mayday</div>
                 <div class="clear_float"></div>
             </button>
@@ -849,7 +848,8 @@
             <div id="mayday_list_box">
                 <div ng-repeat="mayday in maydays"
                      class="mayday_saved"
-                     ng-class="{mayday_saved_selected:selectedMayday==mayday}">
+                     ng-class="{mayday_saved_selected:selectedMayday==mayday}"
+                     ng-click="selectMayday(mayday)">
                     <div class="mayday_box_title">Mayday:</div>
                     <div class="mayday_timer">00:00</div>
                     <div class="clear_float"></div>

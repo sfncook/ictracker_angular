@@ -13,7 +13,7 @@ angular.module("ictApp")
         $scope.showMaydayDlg = function () {
 
             // Update the list of units. - This should be a unique list of unitTypes along and they should be sorted
-            $scope.incidentUnits = [];
+            $scope.incidentUnitTypes = [];
             var unitsMap = {};
             for(var s=0; s<$scope.tbarSectors.length; s++) {
                 var sector = $scope.tbarSectors[s];
@@ -48,6 +48,16 @@ angular.module("ictApp")
             $("#mayday_form").hide();
         }
 
+        $scope.addNewMayday = function () {
+            var newMayday = CreateNewMayday($scope.dataStore.incident);
+            $scope.maydays.push(newMayday);
+            $scope.selectedMayday = newMayday;
+        }
+
+        $scope.selectMayday = function (mayday) {
+            $scope.selectedMayday = mayday;
+        }
+
         $scope.manyValidTbars = function () {
             var manyValidTbars = 0;
             var sectors = $scope.tbarSectors;
@@ -79,7 +89,7 @@ angular.module("ictApp")
             newMayday.isRegulatorIssue  = false;
             newMayday.isLowAir          = false;
             newMayday.isPackIssue       = false;
-            newMayday.nameFFighter      = "XXXYYYZZZ";
+            newMayday.nameFFighter      = "";
             newMayday.psi               = 4000;
             newMayday.channel           = "";
             newMayday.rank              = "";
