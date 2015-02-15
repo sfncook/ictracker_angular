@@ -8,9 +8,8 @@ angular.module("ictApp")
         $scope.incidentUnits = [];
 
         $scope.showMaydayDlg = function () {
-            console.log('showMaydayDlg');
-
             // Update the list of units. - This should be a unique list of unitTypes along and they should be sorted
+            $scope.incidentUnits = [];
             var unitsMap = {};
             for(var s=0; s<$scope.tbarSectors.length; s++) {
                 var sector = $scope.tbarSectors[s];
