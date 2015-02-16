@@ -680,10 +680,19 @@ function initDialogs() {
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
+    $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
 
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
+    $( ".dialog" ).on( "dialogbeforeclose", function( event, ui ) {
+        if(onDialogBeforeCloseFunc) {
+            onDialogBeforeCloseFunc();
+            onDialogBeforeCloseFunc = 0;
+        }
+    } );
+
 }
+var onDialogBeforeCloseFunc; // function
 $( document ).ready(initDialogs);

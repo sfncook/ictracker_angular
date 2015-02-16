@@ -247,7 +247,7 @@
     position: fixed;
     top: 0px;
     left: 0px;
-    z-index: 150;
+    z-index: 99;
 }
 
 #mayday_form_title_bar {
@@ -304,4 +304,10 @@
 
 .list_level_2 {
     margin-left: 15px !important;
+}
+
+.clear_mayday_dlg_button {
+    width: 325px;
+    height: 30px;
+    margin: 5px;
 }

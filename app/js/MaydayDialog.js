@@ -107,8 +107,13 @@ angular.module("ictApp")
             }
         }// refreshIncidentUnitTypes()
 
-        $scope.keyUp = function () {
-            console.log("keyUp");
+
+        $scope.clearSelectedMayday = function () {
+            $("#clear_mayday_dlg").dialog( "open" );
+        }
+
+        $scope.closeClearMaydayDlg = function () {
+            $("#clear_mayday_dlg").dialog( "close" );
         }
 
     })
@@ -200,6 +205,12 @@ angular.module("ictApp")
                     }
                 });
             }
+        }
+    }])
+
+    .factory('DeleteMayday', ['Maydays', function (Maydays) {
+        return function (mayday) {
+
         }
     }])
 
