@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday){
+    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore){
 
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
@@ -130,6 +130,14 @@ angular.module("ictApp")
             } else {
                 $("#clear_mayday_dlg").dialog( "open" );
             }
+        }
+
+        $scope.openPsiDialog = function () {
+            DataStore.showPsiDlg($scope.setPsiSelectedMayday);
+        }
+
+        $scope.setPsiSelectedMayday = function (psi) {
+            $scope.selectedMayday.psi = psi;
         }
 
     })

@@ -660,6 +660,29 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     
     })
 
+    .controller('PsiDlg', function($scope, DataStore){
+        $scope.psis = [];
+        $scope.selected_unit = 0;
+
+        for(var psiValue=4500; psiValue>=0; psiValue-=100) {
+            $scope.psis.push(psiValue);
+        }
+
+        // selectPsiCallback = function to callback with selected psi(string) as argument
+        DataStore.showPsiDlg = function(selectPsiCallback) {
+            $scope.selectPsiCallback = selectPsiCallback;
+            $("#psi_dlg").dialog( "open" );
+        }
+
+        $scope.selectPsi = function(psi) {
+            if($scope.selectPsiCallback) {
+                $scope.selectPsiCallback(psi);
+            }
+            $("#psi_dlg").dialog( "close" );
+        }
+
+    })
+
     .factory('SetBeforeDialogClose', [function () {
         return function (func) {
             beforeDialogCloseFunc = func;
@@ -689,6 +712,7 @@ function initDialogs() {
     $( "#objectives_dlg" ).dialog( "option", "width", 230 );
     $( "#iap_dlg" ).dialog( "option", "width", 616 );
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
+    $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
