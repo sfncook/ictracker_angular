@@ -781,11 +781,14 @@
                     </div>
 
                     <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
-                        <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn" ng-repeat="unitType in incidentUnitTypes">{{unitType.name}}</button>
+                        <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn"
+                                ng-class="{btn_smtext: unitType.name.length>5, btn_medtext: unitType.name.length>4}"
+                                ng-repeat="unitType in incidentUnitTypes"
+                                ng-click="selectedMayday.unitType=unitType">{{unitType.name}}</button>
                     </div>
-                    <div>
+                    <div ng-show="incidentUnitTypes.length>12">
                         <label for="mayday_unit_select" class="mayday_select_label">Unit:</label>
-                        <select id="mayday_unit_select" style="float:left" class="mayday_select" ng-show="incidentUnitTypes.length>12"
+                        <select id="mayday_unit_select" style="float:left" class="mayday_select"
                                 ng-options="unitType.name for unitType in incidentUnitTypes track by unitType.name" ng-model="selectedMayday.unitType">
                         </select>
                         <div class="clear_float"></div>
@@ -797,9 +800,9 @@
                     <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidSectorTypes()<=6">
                         <button ng-repeat="sectorType in incidentSectorTypes" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sectorType.name!='Sector Name'">{{sectorType.name}}</button>
                     </div>
-                    <div>
+                    <div ng-show="manyValidSectorTypes()>6">
                         <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
-                        <select id="mayday_sectors_select" class="mayday_select" ng-show="manyValidSectorTypes()>6"
+                        <select id="mayday_sectors_select" class="mayday_select"
                                 ng-options="sectorType.name for sectorType in incidentSectorTypes track by sectorType.name" ng-model="selectedMayday.sectorType">
                         </select>
                         <div class="clear_float"></div>
