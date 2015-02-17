@@ -402,11 +402,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
     })
 
-    .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes){
+    .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
         $scope.selectedSector = {};
-    //    $scope.actionTypes = ActionTypes;
-    //    LoadActionTypes();
-
         $scope.actionTypes = [];
 
         $http.get('data/actions.json').
@@ -422,10 +419,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 $scope.catalog_action_types = action_types_local.propertiesToArray();
             });
 
-        $scope.selectAction = function(action) {
-            $scope.selectedSector.toggleAction(action);
+        $scope.selectAction = function(actionType) {
+            ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, actionType);
 
-            if(action.name=="Take a Line") {DataStore.estSupply();}
+            if(actionType.name=="Take a Line") {DataStore.estSupply();}
         };
 
         DataStore.showActionsDlg = function(sector) {
