@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays){
+    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday){
 
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
@@ -108,12 +108,28 @@ angular.module("ictApp")
         }// refreshIncidentUnitTypes()
 
 
-        $scope.clearSelectedMayday = function () {
-            $("#clear_mayday_dlg").dialog( "open" );
-        }
-
-        $scope.closeClearMaydayDlg = function () {
-            $("#clear_mayday_dlg").dialog( "close" );
+        $scope.clearMayday = function (method) {
+            if(method) {
+                switch(method) {
+                    case 'slfrs':
+                        // TODO: log event for report
+                        DeleteMayday($scope.selectedMayday);
+                        break;
+                    case 'rescu':
+                        // TODO: log event for report
+                        DeleteMayday($scope.selectedMayday);
+                        break;
+                    case 'ffmia':
+                        // TODO: log event for report
+                        DeleteMayday($scope.selectedMayday);
+                        break;
+                    case 'cancl':
+                        break;
+                }
+                $("#clear_mayday_dlg").dialog( "close" );
+            } else {
+                $("#clear_mayday_dlg").dialog( "open" );
+            }
         }
 
     })
@@ -131,8 +147,8 @@ angular.module("ictApp")
             ConvertParseObject(newMayday, MAYDAY_DEF);
             newMayday.incident          = DataStore.incident;
             newMayday.number            = GetNextMaydayId();
-            newMayday.unitType          = {};
-            newMayday.sectorType        = {};
+//            newMayday.unitType          = ;
+//            newMayday.sectorType        = ;
             newMayday.isOnHoseline      = true;
             newMayday.isUnInjured       = true;
             newMayday.isLost            = false;
@@ -210,7 +226,8 @@ angular.module("ictApp")
 
     .factory('DeleteMayday', ['Maydays', function (Maydays) {
         return function (mayday) {
-
+            Maydays.remByVal(mayday);
+            mayday.destroy();
         }
     }])
 

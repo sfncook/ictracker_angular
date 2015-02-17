@@ -659,6 +659,17 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     
     })
+
+    .factory('SetBeforeDialogClose', [function () {
+        return function (func) {
+            beforeDialogCloseFunc = func;
+        }
+    }])
+    .factory('ClearBeforeDialogClose', [function () {
+        return function () {
+            beforeDialogCloseFunc = 0;
+        }
+    }])
     
 ;
 
@@ -687,12 +698,17 @@ function initDialogs() {
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
     $( ".dialog" ).on( "dialogbeforeclose", function( event, ui ) {
-        if(onDialogBeforeCloseFunc) {
-            onDialogBeforeCloseFunc();
-            onDialogBeforeCloseFunc = 0;
+        if(nextDialogEl) {
+            nextDialogEl.dialog('open');
+        }
+
+        if(beforeDialogCloseFunc) {
+            beforeDialogCloseFunc();
+            beforeDialogCloseFunc = 0;
         }
     } );
 
 }
-var onDialogBeforeCloseFunc; // function
+var nextDialogEl; // DOM element - sequentially open dialogs
+var beforeDialogCloseFunc; // function
 $( document ).ready(initDialogs);

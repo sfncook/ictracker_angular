@@ -744,10 +744,10 @@
 
     <!-- Clear Mayday Dialog -->
     <div id="clear_mayday_dlg" title="Clear Mayday" class="dialog">
-        <button class="clear_mayday_dlg_button" ng-click="closeClearMaydayDlg()">"Fighter self rescued"</button>
-        <button class="clear_mayday_dlg_button" ng-click="closeClearMaydayDlg()">"Fighter rescued"</button>
-        <button class="clear_mayday_dlg_button" ng-click="closeClearMaydayDlg()">"Fighter MIA"</button>
-        <button class="clear_mayday_dlg_button" ng-click="closeClearMaydayDlg()">Cancel</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('slfrs')"  >"Fighter self rescued"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('rescu')"      >"Fighter rescued"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('ffmia')"          >"Fighter MIA"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('cancl')"       >Cancel</button>
     </div>
 
     <!-- Mayday Dialog -->
@@ -765,7 +765,7 @@
                     <div class="clear_float"></div>
                 </button>
                 <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div" style="margin-left:4px;">
-                    <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn" ng-click="clearSelectedMayday()">Clear</button>
+                    <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn" ng-click="clearMayday()">Clear</button>
                     <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #<span>{{selectedMayday.number}}</span></div>
                     <div id="mayday_timer" class="mayday_timer">00:00</div>
                     <div class="clear_float"></div>
