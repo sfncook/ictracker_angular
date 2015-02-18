@@ -21,7 +21,7 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', 'LoadActionsForUnit', function (ParseQuery, ConvertParseObject, LoadActionsForUnit) {
+    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', 'LoadActionsForUnit', 'FetchTypeForUnit', function (ParseQuery, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit) {
         return function (sector, $scope) {
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
@@ -30,7 +30,7 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                 for(var i=0; i<units.length; i++) {
                     var unit = units[i];
                     ConvertParseObject(unit, UNIT_DEF);
-                    fetchTypeForUnit(unit, $scope, ConvertParseObject);
+                    FetchTypeForUnit($scope, unit);
                     LoadActionsForUnit($scope, unit);
                     sector.units.push(unit);
                 }
@@ -42,13 +42,35 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+    .factory('FetchTypeForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+        return function ($scope, unit) {
+            var type = unit.type;
+            if(type) {
+                type.fetch({
+                    success: function(type) {
+                        $scope.$apply(function(){
+                            ConvertParseObject(type, UNIT_TYPE_DEF);
+                            unit.type= type;
+                        });
+                    }
+                });
+            }
+        }
+    }])
+
     .factory('LoadActionsForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
         return function ($scope, unit) {
             var relation = unit.relation("actions");
             relation.query().find({
                 success: function(actions) {
-                    console.log(actions);
-                    unit.actions = actions;
+                    if(!unit.actions) {
+                        unit.actions = new Array();
+                    }
+                    for(var i=0; i<actions.length; i++) {
+                        var action = actions[i];
+                        ConvertParseObject(action, ACTION_TYPE_DEF);
+                        unit.actions.push(action);
+                    }
                 }
             });
         }
@@ -73,18 +95,4 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
     }])
 
 ;
-
-function fetchTypeForUnit(unit, $scope, ConvertParseObject) {
-    var type = unit.type;
-    if(type) {
-        type.fetch({
-            success: function(type) {
-                $scope.$apply(function(){
-                    ConvertParseObject(type, UNIT_TYPE_DEF);
-                    unit.type= type;
-                });
-            }
-        });
-    }
-}
 
