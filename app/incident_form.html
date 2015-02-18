@@ -331,23 +331,23 @@
 </div>
 
 <div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
-    <!--<div class="action_type_dialog_header grid"
-         ng-repeat="catalog_action_type in catalog_action_types">
-        <div class="action_type_label">{{catalog_action_type.name}}</div>
-        <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
+    <div class="action_type_dialog_header grid"
+         ng-repeat="catalog_action_type in getActionTypeCategories()">
+        <div class="action_type_label">{{catalog_action_type}}</div>
+        <div class="grid_item_1_4" ng-repeat="actionType in actionTypes | filter:{ category:catalog_action_type }">
             <button class="btn_xsmtext action_btn"
-                    ng-click="selectAction(catalog_action)"
-                    ng-class="{glowlightgreen: selectedSector.selectedUnit.actions.contains(catalog_action), font_red:catalog_action.is_warning}">
-                {{catalog_action.name}}
+                    ng-click="selectAction(actionType)"
+                    ng-class="{glowlightgreen: selectedSector.selectedUnit.actionsArr.contains(actionType), font_red:actionType.isWarning}">
+                {{actionType.name}}
             </button>
         </div>
-    </div>-->
-    <button class="btn_xsmtext action_btn"
+    </div>
+    <!--<button class="btn_xsmtext action_btn"
             ng-click="selectAction(actionType)"
             ng-class="{glowlightgreen: selectedSector.selectedUnit.actions.contains(catalog_action), font_red:catalog_action.is_warning}"
             ng-repeat="actionType in actionTypes">
         {{actionType.name}}
-    </button>
+    </button>-->
 </div>
 
 <!-- Upgrade Dialog -->

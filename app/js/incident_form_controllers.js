@@ -402,7 +402,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
     })
 
-    .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
+    .controller('ActionsDlg', function($scope, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
         $scope.selectedSector = {};
         LoadActionTypes();
         $scope.actionTypes = ActionTypes;
@@ -424,6 +424,15 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, actionType);
 
             if(actionType.name=="Take a Line") {DataStore.estSupply();}
+        };
+
+        $scope.getActionTypeCategories = function() {
+            var categoriesMap = {};
+            for(var i=0; i<ActionTypes.length; i++) {
+                var actionType = ActionTypes[i];
+                categoriesMap[actionType.category] = actionType;
+            }
+            return Object.keys(categoriesMap);
         };
 
         DataStore.showActionsDlg = function(sector) {
