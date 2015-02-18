@@ -21,7 +21,7 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', 'LoadActionsForUnit', function (ParseQuery, ConvertParseObject, LoadActionsForUnit) {
         return function (sector, $scope) {
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
@@ -31,11 +31,24 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                     var unit = units[i];
                     ConvertParseObject(unit, UNIT_DEF);
                     fetchTypeForUnit(unit, $scope, ConvertParseObject);
+                    LoadActionsForUnit($scope, unit);
                     sector.units.push(unit);
                 }
 
                 if(units.length>0) {
                     sector.selectedUnit=units[0];
+                }
+            });
+        }
+    }])
+
+    .factory('LoadActionsForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+        return function ($scope, unit) {
+            var relation = unit.relation("actions");
+            relation.query().find({
+                success: function(actions) {
+                    console.log(actions);
+                    unit.actions = actions;
                 }
             });
         }
