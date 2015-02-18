@@ -612,16 +612,28 @@ button:active {
 }
 
 .personnel_dlg_btn {
-    margin: 5px;
+    margin-top: 0px;
+    margin-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    float: left;
+    width: 22px !important;
+    height: 22px !important;
 }
+
 .personnel_tbar_btn {
     float: left;
     margin: 5px;
 }
 
 .psi_dlg_btn {
-    font-size: 0.6rem !important;
-    margin: 0 5px 5px 0;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    width: 42px !important;
+    font-size: 0.8rem !important;
+    float: left;
 }
 .psi_tbar_btn {
     float:left;
@@ -633,6 +645,11 @@ button:active {
 }
 .psi_yellow {background: yellow;}
 .psi_green {background: #3dff00;}
+
+.personnel_dlg_unit_btn {
+    float: left;
+    margin-left: 10px;
+}
 
 .reset_clock_btn {
     float:right;
@@ -648,13 +665,14 @@ button:active {
 }
 
 .mayday_par_btn {
-    margin: 5px 5px 5px 20px;
+    margin: 10px 5px 10px 40px;
     background:red;
     color:white;
 }
 
 .par_dialog_unit {
     margin-top: 4px;
+    padding-top: 4px;
     border-top:1px solid #666;
 }
 .par_dialog_unit_leftcol {
@@ -671,7 +689,7 @@ button:active {
     margin: 5px;
 }
 .par_dlg_left_col {
-    width: 138px;
+    width: 180px;
 }
 
 .benchmark_col_container {

@@ -682,7 +682,7 @@ function initDialogs() {
         modal: true
     });
     $( "#sector_name_dlg" ).dialog( "option", "width", 900 );
-    $( "#par-dlg" ).dialog( "option", "width", 475 );
+    $( "#par-dlg" ).dialog( "option", "width", 740 );
     $( "#bnch_dlg" ).dialog( "option", "width", 515 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
     $( "#actions_dlg" ).dialog( "option", "width", 810 );
