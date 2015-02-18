@@ -16,7 +16,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.osrPerc = 0;
         $scope.objPerc = 0;
 
-        $scope.timer_text = "00:00";
+        /*$scope.timer_text = "00:00";
         $scope.hourRollOverDone = false;
         var t0 = (new Date()).getTime();
         function updateTimer() {
@@ -41,8 +41,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             }
             $scope.timer_text = new_timer_text;
         }
-        $interval(updateTimer, 1000);
-        // TODO: This interval results in inefficient Angular updates.  I believe we should just update the timers using JQuery
+        $interval(updateTimer, 1000);*/
 
         $scope.showUnitsDlgForDispUnits = function() {
             DataStore.showUnitsDlgForDispUnits();
