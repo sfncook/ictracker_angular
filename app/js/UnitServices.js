@@ -58,24 +58,6 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('LoadActionsForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function ($scope, unit) {
-            var relation = unit.relation("actions");
-            relation.query().find({
-                success: function(actions) {
-                    if(!unit.actions) {
-                        unit.actions = new Array();
-                    }
-                    for(var i=0; i<actions.length; i++) {
-                        var action = actions[i];
-                        ConvertParseObject(action, ACTION_TYPE_DEF);
-                        unit.actions.push(action);
-                    }
-                }
-            });
-        }
-    }])
-
     .factory('CreateNewUnit', ['ConvertParseObject', 'DefaultErrorLogger', function (ConvertParseObject, DefaultErrorLogger) {
         return function (sector, unitType) {
             var UnitParseObj = Parse.Object.extend('Unit');

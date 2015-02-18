@@ -198,7 +198,7 @@
                 <div class="clear_float"></div>
                 <div class="right_scroll_pane scroll-pane"
                      ng-if="sector.units.length>0">
-                    <div ng-repeat="action in sector.selectedUnit.actions">
+                    <div ng-repeat="action in sector.selectedUnit.actionsArr">
                         <button class="action_btn"
                                 ng-class="{font_red:action.is_warning}">
                             {{action.name}}
@@ -331,7 +331,7 @@
 </div>
 
 <div id="actions_dlg" title="Actions" ng-controller="ActionsDlg" class="dialog">
-    <div class="action_type_dialog_header grid"
+    <!--<div class="action_type_dialog_header grid"
          ng-repeat="catalog_action_type in catalog_action_types">
         <div class="action_type_label">{{catalog_action_type.name}}</div>
         <div class="grid_item_1_4" ng-repeat="catalog_action in catalog_action_type.actions">
@@ -341,7 +341,13 @@
                 {{catalog_action.name}}
             </button>
         </div>
-    </div>
+    </div>-->
+    <button class="btn_xsmtext action_btn"
+            ng-click="selectAction(actionType)"
+            ng-class="{glowlightgreen: selectedSector.selectedUnit.actions.contains(catalog_action), font_red:catalog_action.is_warning}"
+            ng-repeat="actionType in actionTypes">
+        {{actionType.name}}
+    </button>
 </div>
 
 <!-- Upgrade Dialog -->

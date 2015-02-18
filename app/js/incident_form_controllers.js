@@ -404,20 +404,21 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     .controller('ActionsDlg', function($scope, $http, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
         $scope.selectedSector = {};
-        $scope.actionTypes = [];
+        LoadActionTypes();
+        $scope.actionTypes = ActionTypes;
 
-        $http.get('data/actions.json').
-            success(function(data){
-                // In order to eliminate duplicates write everything to objects
-                var action_types_local = [];
-                for(var i = 0; i < data.length; i++) {
-                    var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
-                    var action = action_type.actions.push({name:data[i].name, action_type:data[i].action_type, is_warning:data[i].is_warning});
-                }
-
-                // Convert everything to arrays
-                $scope.catalog_action_types = action_types_local.propertiesToArray();
-            });
+//        $http.get('data/actions.json').
+//            success(function(data){
+//                // In order to eliminate duplicates write everything to objects
+//                var action_types_local = [];
+//                for(var i = 0; i < data.length; i++) {
+//                    var action_type = action_types_local.putIfAbsent(data[i].action_type, {'name':data[i].action_type, 'actions':[]});
+//                    var action = action_type.actions.push({name:data[i].name, action_type:data[i].action_type, is_warning:data[i].is_warning});
+//                }
+//
+//                // Convert everything to arrays
+//                $scope.catalog_action_types = action_types_local.propertiesToArray();
+//            });
 
         $scope.selectAction = function(actionType) {
             ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, actionType);

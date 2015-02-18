@@ -131,28 +131,6 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('ToggleActionTypeForUnit', ['DefaultErrorLogger', function (DefaultErrorLogger) {
-        return function (unit, actionType) {
-            var addedAction = false;
-            if(unit.actions) {
-                if(unit.actions.indexOf(actionType)>=0) {
-                    unit.actions.remByVal(actionType);
-                    addedAction = false;
-                } else {
-                    unit.actions.push(actionType);
-                    addedAction = true;
-                }
-            } else {
-                // Add unit to sector
-                unit.actions = new Array();
-                unit.actions.push(actionType);
-                addedAction = true;
-            }
-            unit.save(null, DefaultErrorLogger);
-            return addedAction;
-        }
-    }])
-
     /*
      * This is a getter, do not count on the array to be updated dynamically.
      */
