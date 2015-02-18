@@ -612,7 +612,7 @@ button:active {
 }
 
 .personnel_dlg_btn {
-    margin-top: 0px;
+    margin-top: 3px;
     margin-left: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
@@ -661,13 +661,14 @@ button:active {
 }
 
 .par_dlg_row {
-    padding-left:150px;
+    padding-left:320px;
 }
 
 .mayday_par_btn {
-    margin: 10px 5px 10px 40px;
+    margin: 0px 15px 10px 20px;
     background:red;
     color:white;
+    float: left;
 }
 
 .par_dialog_unit {
@@ -676,8 +677,7 @@ button:active {
     border-top:1px solid #666;
 }
 .par_dialog_unit_leftcol {
-    width:398px;
-    float: left;
+    width:260px;
 }
 .par_dialog_people {
     width:398px;
@@ -686,10 +686,10 @@ button:active {
 
 .par_person_btn  {
     width: 100px;
-    margin: 5px;
+    margin: 0 5px 5px 5px;
 }
 .par_dlg_left_col {
-    width: 180px;
+    width: 280px;
 }
 
 .benchmark_col_container {
