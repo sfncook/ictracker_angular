@@ -37,7 +37,9 @@
 <body>
 
 <div id="ict_header" ng-controller="HeaderContainer">
-    <div id="incident_timer" class="header_item"></div>
+    <div timer class="header_item"
+         ng-class="{time_lg:!hourRollOverDone}">{{timer_text}}
+    </div>
     <button id="dispatched_units_btn"
             class="header_item button"
             ng-click="showUnitsDlgForDispUnits()">
