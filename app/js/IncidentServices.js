@@ -21,8 +21,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('LoadIncident', [
-        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydays',
-        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, ParseQuery, DataStore, LoadAllMaydays) {
+        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident',
+        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -36,27 +36,12 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
                         DataStore.incident.inc_type_obj= incidentTypeObj;
                     });
 
-                    var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                    querySectors.equalTo("incident", DataStore.incident);
-                    ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
-                        if(sectors.length==0) {
-                            AddDefaultTbars(DataStore.incident);
-                            SaveTbars();
-                        } else {
-                            for(var i=0; i<sectors.length; i++) {
-                                var sector = sectors[i];
-                                ConvertParseObject(sector, SECTOR_DEF);
-                                fetchTypeForSector(sector, $scope, ConvertParseObject);
-                                TbarSectors.push(sector);
-                                LoadUnitsForSector(sector, $scope);
-                            }
-                        }
+                    LoadSectorsForIncident($scope, incident);
+                    LoadAllMaydaysForIncident($scope, incident);
 
-                        LoadAllMaydays($scope);
+                    DataStore.loadSuccess = true;
+                    DataStore.waitingToLoad = false;
 
-                        DataStore.loadSuccess = true;
-                        DataStore.waitingToLoad = false;
-                    });
                 } else {
                     DataStore.loadSuccess = false;
                     DataStore.waitingToLoad = false;
@@ -99,17 +84,3 @@ function fetchTypeForIncident(incident, $scope, ConvertParseObject) {
     }
 }
 
-
-function fetchTypeForSector(sector, $scope, ConvertParseObject) {
-    var type = sector.sectorType;
-    if(type) {
-        type.fetch({
-            success: function(type) {
-                $scope.$apply(function(){
-                    ConvertParseObject(type, SECTOR_TYPE_DEF);
-                    sector.sectorType= type;
-                });
-            }
-        });
-    }
-}

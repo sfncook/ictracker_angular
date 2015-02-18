@@ -173,21 +173,21 @@ angular.module("ictApp")
         }
     }])
 
-    .factory('SaveAllMaydays', ['Maydays', function (Maydays) {
+    .factory('SaveAllMaydays', ['Maydays', 'DefaultErrorLogger', function (Maydays, DefaultErrorLogger) {
         return function () {
             for(var m=0; m<Maydays.length; m++) {
                 var mayday = Maydays[m];
-                mayday.save();
+                mayday.save(null, DefaultErrorLogger);
             }
         }
     }])
 
-    .factory('LoadAllMaydays', [
-        'Maydays', 'DataStore', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday',
-        function (Maydays, DataStore, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
-        return function ($scope) {
+    .factory('LoadAllMaydaysForIncident', [
+        'Maydays', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday',
+        function (Maydays, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
+        return function ($scope, incident) {
             var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
-            queryMaydays.equalTo("incident", DataStore.incident);
+            queryMaydays.equalTo("incident", incident);
             queryMaydays.include('unitType');
             queryMaydays.include('sectorType');
             ParseQuery(queryMaydays, {functionToCall:'find'}).then(function(maydays){

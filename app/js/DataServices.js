@@ -22,24 +22,6 @@ angular.module('DataServices', ['ParseServices'])
         };
     })
 
-    .factory('CreateNewUnit', ['ConvertParseObject', function (ConvertParseObject) {
-        return function (sector, unitType) {
-            var UnitParseObj = Parse.Object.extend('Unit');
-            var newUnit = new UnitParseObj();
-            ConvertParseObject(newUnit, UNIT_DEF);
-            newUnit.actions = new Array();
-            newUnit.hasPar = false;
-            newUnit.manyPeople = 0;
-            newUnit.par = 0;
-            newUnit.psi = 4000;
-            newUnit.type = unitType;
-            newUnit.sector = sector;
-            newUnit.save();
-            sector.units.push(newUnit);
-            return newUnit;
-        }
-    }])
-
     .factory('ConvertParseObject', [function () {
         return function (parseObject, fields) {
             //add dynamic properties from fields array
@@ -56,6 +38,15 @@ angular.module('DataServices', ['ParseServices'])
                         }
                     });
                 })();
+            }
+        }
+    }])
+
+    // Pass this into Parse save commands to log errors.
+    .factory('DefaultErrorLogger', [function () {
+        return {
+            error: function(obj, error) {
+                console.log('Failed to create new object, with error code: ' + error.message);
             }
         }
     }])

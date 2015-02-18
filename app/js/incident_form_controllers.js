@@ -187,7 +187,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('SectorNamesDlg', function($scope, $http, DataStore, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType){
+    .controller('SectorNamesDlg', function($scope, $http, DataStore, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){
         $scope.selectedSector = {};
         $scope.tbar_sectors=DataStore.tbar_sectors;
 
@@ -227,7 +227,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.selectSectorType = function(sectorType) {
             $scope.selectedSector.sectorType = sectorType;
-            $scope.selectedSector.save();
+            $scope.selectedSector.save(null, DefaultErrorLogger);
 
             if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
 
@@ -629,7 +629,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('UnitOptionsDlg', function($scope, DataStore){
+    .controller('UnitOptionsDlg', function($scope, DataStore, DefaultErrorLogger){
         $scope.pars = [1, 2, 3, 4, 5];
         $scope.psis = [];
         $scope.selected_unit = {};
@@ -645,13 +645,13 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     
         $scope.selectPar = function(par) {
             $scope.selected_unit.par = par;
-            $scope.selected_unit.save();
+            $scope.selected_unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
     
         $scope.selectPsi = function(psi) {
             $scope.selected_unit.psi = psi;
-            $scope.selected_unit.save();
+            $scope.selected_unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
     

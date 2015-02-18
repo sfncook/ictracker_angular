@@ -89,11 +89,11 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('SaveTbars', ['TbarSectors', function (TbarSectors) {
+    .factory('SaveTbars', ['TbarSectors', 'DefaultErrorLogger', function (TbarSectors, DefaultErrorLogger) {
         return function () {
             for(var i=0; i<TbarSectors.length; i++) {
                 var sector = TbarSectors[i];
-                sector.save();
+                sector.save(null, DefaultErrorLogger);
             }
         }
     }])
@@ -131,7 +131,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('ToggleActionTypeForUnit', [function () {
+    .factory('ToggleActionTypeForUnit', ['DefaultErrorLogger', function (DefaultErrorLogger) {
         return function (unit, actionType) {
             var addedAction = false;
             if(unit.actions) {
@@ -148,9 +148,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
                 unit.actions.push(actionType);
                 addedAction = true;
             }
-            unit.save(null, {error: function(object, error) {
-                console.log('Failed to create new object, with error code: ' + error.message);
-            }});
+            unit.save(null, DefaultErrorLogger);
             return addedAction;
         }
     }])

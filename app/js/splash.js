@@ -2,7 +2,7 @@
 
 var app = angular.module("SplashController", ['DataServices', 'IncidentServices']);
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger){
 
     LoadIncidentTypes();
     $scope.incidentTypes = IncidentTypes;
@@ -23,7 +23,7 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
             $scope.incidentObj.inc_number = "[Incident Number]"
         }
 
-        $scope.incidentObj.save().then(function(incidentObj) {
+        $scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
             ConvertParseObject(incidentObj, INCIDENT_DEF);
             $scope.loadIncident(incidentObj.id);
         }, function(error) {
