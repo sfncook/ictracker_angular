@@ -687,6 +687,7 @@ button:active {
 .par_person_btn  {
     width: 100px;
     margin: 0 5px 5px 5px;
+    float: left;
 }
 .par_dlg_left_col {
     width: 280px;
