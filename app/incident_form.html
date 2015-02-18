@@ -337,7 +337,7 @@
         <div class="grid_item_1_6" ng-repeat="actionType in actionTypes | filter:{ category:catalog_action_type }">
             <button class="btn_xsmtext action_btn"
                     ng-click="selectAction(actionType)"
-                    ng-class="{glowlightgreen: selectedSector.selectedUnit.actionsArr.contains(actionType), font_red:actionType.isWarning}">
+                    ng-class="{glowlightgreen: unitContainsActionType(selectedSector.selectedUnit, actionType), font_red:actionType.isWarning}">
                 {{actionType.name}}
             </button>
         </div>
