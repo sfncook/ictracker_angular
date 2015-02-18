@@ -627,7 +627,7 @@ button:active {
 }
 
 .psi_dlg_btn {
-    margin-bottom: 0px;
+    margin-bottom: 10px;
     margin-left: 10px;
     padding-top: 10px;
     padding-bottom: 0px;
@@ -638,6 +638,15 @@ button:active {
 .psi_tbar_btn {
     float:left;
     margin: 4px;
+}
+.personnel_dlg_psi_btn {
+    margin-bottom: 0px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    width: 42px !important;
+    font-size: 0.8rem !important;
+    float: left;
 }
 .psi_red {
     background: red;
@@ -857,4 +866,8 @@ button:active {
 .mayday_unit_btn {
     float: left;
     margin: 4px;
+}
+
+.unit_people_dialog_row2 {
+    padding-top: 10px;
 }
