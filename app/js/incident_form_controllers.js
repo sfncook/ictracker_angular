@@ -712,7 +712,7 @@ function initDialogs() {
     $( "#par-dlg" ).dialog( "option", "width", 475 );
     $( "#bnch_dlg" ).dialog( "option", "width", 515 );
     $( "#units_dlg" ).dialog( "option", "width", 855 );
-    $( "#actions_dlg" ).dialog( "option", "width", 545 );
+    $( "#actions_dlg" ).dialog( "option", "width", 810 );
     $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
     $( "#osr_dlg" ).dialog( "option", "width", 420 );
