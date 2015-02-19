@@ -871,3 +871,10 @@ button:active {
 .unit_people_dialog_row2 {
     padding-top: 10px;
 }
+
+.bg_gray {
+    background: #CCC;
+}
+.bg_orange {
+    background: #FFAD2C;
+}
