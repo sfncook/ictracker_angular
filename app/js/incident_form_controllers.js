@@ -631,8 +631,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     
         $scope.selectPar = function(par) {
-            $scope.selected_unit.par = par;
-            $scope.selected_unit.save(null, DefaultErrorLogger);
+            var unit = $scope.selected_unit;
+            unit.par = par;
+            if(unit.par<unit.manyPar) {
+                unit.manyPar = unit.par;
+            }
+            unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
     
