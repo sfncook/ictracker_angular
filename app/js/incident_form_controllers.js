@@ -53,7 +53,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, TbarSectors){
+    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, TbarSectors, DoesSectorHavePar){
 
         $scope.openMaydayDlg = function () {
             console.log("click TbarContainer");
@@ -95,6 +95,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             sector.selectedUnit = unit;
         }
 
+        $scope.doesSectorHavePar = DoesSectorHavePar;
+
     })
     .filter('acctUnitName', function() {
         return function(acctUnit) {
@@ -119,7 +121,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             return input;
         };
     })
-    .controller('ParDlg', function($scope, DataStore){
+    .controller('ParDlg', function($scope, DataStore, DoesSectorHavePar){
         $scope.selectedSector = {};
 
         DataStore.openParDlg = function(sector) {
@@ -128,13 +130,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.selectPersonPar = function(unit, i) {
-            unit.setPar(i);
-
-            var allUnitsHavePar = true;
-            for(var i=0; i<$scope.selectedSector.units.length; i++) {
-                allUnitsHavePar = allUnitsHavePar&$scope.selectedSector.units[i].hasPar;
+            if(unit.manyPar>=i) {
+                unit.manyPar = i-1;
+            } else {
+                unit.manyPar = i;
             }
-            $scope.selectedSector.hasPar = allUnitsHavePar;
+            unit.save();
         }
 
         $scope.selectUnitPar = function(unit) {
@@ -148,15 +149,18 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.selectSectorPar = function() {
-            $scope.selectedSector.toggleHasPar();
-            for(var i=0; i<$scope.selectedSector.units.length; i++) {
-                $scope.selectedSector.units[i].setHasPar($scope.selectedSector.hasPar);
+            var selectedSector = $scope.selectedSector;
+            for(var i=0; i<selectedSector.units.length; i++) {
+                var unit = selectedSector.units[i];
+                unit.setHasPar($scope.selectedSector.hasPar);
             }
         }
 
         $scope.showUnitOptionsDlg = function(unit) {
             DataStore.showUnitOptionsDlg(unit);
         }
+
+        $scope.doesSectorHavePar = DoesSectorHavePar;
     })
 
     .controller('SectorNamesDlg', function($scope, $http, DataStore, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){

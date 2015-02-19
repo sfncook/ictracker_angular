@@ -65,4 +65,28 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+    .factory('DoesSectorHavePar', [function () {
+        return function (sector) {
+            var allParsAreZero = true;
+            if(sector && sector.units) {
+                for(var i=0; i<sector.units.length; i++) {
+                    var unit = sector.units[i];
+                    if(unit.manyPar<unit.par) {
+                        return false;
+                    }
+                    if(unit.par!=0) {
+                        allParsAreZero = false;
+                    }
+                }
+                if(allParsAreZero) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+    }])
+
 ;

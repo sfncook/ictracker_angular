@@ -4,7 +4,7 @@ var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
-var UNIT_DEF = ['actions', 'hasPar', 'manyPeople', 'par', 'psi', 'sector', 'type'];
+var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
 var ACTION_TYPE_DEF = ['name', 'category', 'incidentType', 'isWarning'];
 var MAYDAY_DEF = ['incident', 'number', 'unitType', 'sectorType', 'isOnHoseline', 'isUnInjured', 'isLost', 'isTrapped', 'isOutOfAir', 'isRegulatorIssue', 'isLowAir', 'isPackIssue', 'nameFFighter', 'psi', 'channel', 'rank'];
 

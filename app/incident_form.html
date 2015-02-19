@@ -124,7 +124,7 @@
             <div class="tbar_title_container">
                 <button ng-disabled="sector.units.length==0"
                         class="par-btn sector_toprow_btn"
-                        ng-class="{glowlightgreen: sector.hasPar, button_disabled:sector.units.length==0}"
+                        ng-class="{glowlightgreen: doesSectorHavePar(sector), button_disabled:sector.units.length==0}"
                         ng-click="showParDlg(sector)">PAR
                 </button>
                 <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
@@ -244,7 +244,7 @@
     <div class="par_dlg_row">
         <button class="par_sector_btn sector_name_btn"
                 ng-click="selectSectorPar()"
-                ng-class="{glowlightgreen:selectedSector.hasPar}">{{selectedSector.sectorType.name}}
+                ng-class="{glowlightgreen:doesSectorHavePar(selectedSector)}">{{selectedSector.sectorType.name}}
         </button>
     </div>
     <div class="par_dialog_unit" ng-repeat="unit in selectedSector.units">
@@ -258,7 +258,7 @@
                     </button>
                     <button class="personnel_dlg_unit_btn unit_btn"
                             ng-click="selectUnitPar(unit)"
-                            ng-class="{glowlightgreen:unit.manyPeopleHavePar==unit.par}">{{unit.type.name}}
+                            ng-class="{glowlightgreen:(unit.par==unit.manyPar)}">{{unit.type.name}}
                     </button>
                     <button class="mayday_par_btn">Mayday</button>
                     <button class="personnel_dlg_btn personnel_btn" ng-click="showUnitOptionsDlg(unit)">{{unit.par|getUnitPar}}</button>
@@ -268,7 +268,7 @@
                     <button class='par_person_btn par_dialog_btn'
                             ng-repeat="i in [] | unitPar:unit.par"
                             ng-click="selectPersonPar(unit, i+1)"
-                            ng-class="{glowlightgreen:(i+1<=unit.manyPeopleHavePar&&unit.par!='P')||unit.hasPar}">
+                            ng-class="{glowlightgreen:(i+1<=unit.manyPar)}">
                         Firefighter
                     </button>
 
