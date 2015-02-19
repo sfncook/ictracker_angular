@@ -139,20 +139,25 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.selectUnitPar = function(unit) {
-            unit.toggleHasPar();
-
-            var allUnitsHavePar = true;
-            for(var i=0; i<$scope.selectedSector.units.length; i++) {
-                allUnitsHavePar = allUnitsHavePar&$scope.selectedSector.units[i].hasPar;
+            if(unit.manyPar == unit.par) {
+                unit.manyPar = 0;
+            } else {
+                unit.manyPar = unit.par;
             }
-            $scope.selectedSector.hasPar = allUnitsHavePar;
         }
 
         $scope.selectSectorPar = function() {
             var selectedSector = $scope.selectedSector;
-            for(var i=0; i<selectedSector.units.length; i++) {
-                var unit = selectedSector.units[i];
-                unit.setHasPar($scope.selectedSector.hasPar);
+            if(DoesSectorHavePar(selectedSector)) {
+                for(var i=0; i<selectedSector.units.length; i++) {
+                    var unit = selectedSector.units[i];
+                    unit.manyPar = 0;
+                }
+            } else {
+                for(var i=0; i<selectedSector.units.length; i++) {
+                    var unit = selectedSector.units[i];
+                    unit.manyPar = unit.par;
+                }
             }
         }
 
