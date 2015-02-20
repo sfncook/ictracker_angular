@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "ICT": {
+            "applicationId": "Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", 
+            "masterKey": "TcWpKfjpbVZz20ucNvrHSnlSqxNdEdKfvYr15j62"
+        }, 
+        "_default": {
+            "link": "ICT"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.5"
+    }
+}
