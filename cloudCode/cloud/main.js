@@ -13,7 +13,28 @@ Parse.Cloud.afterSave("Sector", function(request) {
             incident.save();
         },
         error: function(error) {
-            console.error("Got an error " + error.code + " : " + error.message);
+            console.error("Got an error saving Sector " + error.code + " : " + error.message);
+        }
+    });
+});
+
+Parse.Cloud.afterSave("Unit", function(request) {
+    query = new Parse.Query("Sector");
+    query.get(request.object.get("sector").id, {
+        success: function(sector) {
+            queryInc = new Parse.Query("Incident");
+            queryInc.get(sector.object.get("incident").id, {
+                success: function(incident) {
+                    incident.increment("txid");
+                    incident.save();
+                },
+                error: function(error) {
+                    console.error("Got an error saving Unit (save Incident) " + error.code + " : " + error.message);
+                }
+            });
+        },
+        error: function(error) {
+            console.error("Got an error saving Unit (find Sector)" + error.code + " : " + error.message);
         }
     });
 });
