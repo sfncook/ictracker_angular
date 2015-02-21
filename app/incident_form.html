@@ -37,6 +37,8 @@
 </head>
 <body>
 
+<div ng-controller="UpdateFetchTimer"></div>
+
 <div id="ict_header" ng-controller="HeaderContainer">
     <div timer class="header_item"
          ng-class="{time_lg:!hourRollOverDone}">{{timer_text}}
@@ -106,6 +108,7 @@
         <div id="inc_num">{{dataStore.incident.inc_number}}</div>
         <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
+    <h1>{{dataStore.incident.txid}}</h1>
     <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
     <button id="mode_btn" class="button_top">Strategy</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>

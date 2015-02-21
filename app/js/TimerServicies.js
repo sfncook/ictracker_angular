@@ -1,7 +1,7 @@
 
 angular.module('ictApp')
 
-    .directive('timer', function($interval) {
+    .directive('timer', function() {
             function link( $scope, element, attributes ) {
                 $scope.timer_text = "00:00";
                 $scope.hourRollOverDone = false;
@@ -43,5 +43,30 @@ angular.module('ictApp')
             });
         }
     )
+
+    .controller('UpdateFetchTimer', function($scope, $interval, DataStore, UpdateSectors){
+        function updateTimer() {
+//            var prevTxId = DataStore.incident.txid;
+//            DataStore.incident.fetch({
+//                success: function(incident) {
+//                    if(incident.get('txid')!=prevTxId) {
+//                        UpdateSectors($scope);
+//                    }
+//                }
+//            });
+            var prevTxId = DataStore.incident.txid;
+            DataStore.incident.fetch({
+                success:function(incident){
+                    if(incident.get('txid')!=prevTxId) {
+                        UpdateSectors($scope);
+                    }
+                },
+                error: function(obj, error) {
+                    console.log('Failed to create new object, with error code: ' + error.message);
+                }
+            });
+        }
+        $interval(updateTimer, 3000);
+    })
 
 ;

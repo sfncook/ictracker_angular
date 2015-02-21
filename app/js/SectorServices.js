@@ -28,6 +28,22 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+    .factory('UpdateSectors', [
+        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector',
+        function (TbarSectors, ConvertParseObject, FetchTypeForSector) {
+            return function ($scope) {
+                for(var i=0; i<TbarSectors.length; i++) {
+                    var sector = TbarSectors[i];
+                    sector.fetch({
+                        success:function(sector) {
+//                            ConvertParseObject(sector, SECTOR_DEF);
+                            FetchTypeForSector($scope, sector);
+                        }
+                    });
+                }
+            }
+        }])
+
     .factory('FetchTypeForSector', ['ConvertParseObject', function (ConvertParseObject) {
         return function ($scope, sector) {
             var type = sector.sectorType;
