@@ -36,7 +36,6 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                     var sector = TbarSectors[i];
                     sector.fetch({
                         success:function(sector) {
-//                            ConvertParseObject(sector, SECTOR_DEF);
                             FetchTypeForSector($scope, sector);
                         }
                     });
