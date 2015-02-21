@@ -42,6 +42,22 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+
+
+    .factory('UpdateUnitsForSector', ['LoadActionsForUnit', 'FetchTypeForUnit', function (LoadActionsForUnit, FetchTypeForUnit) {
+        return function ($scope, sector) {
+            for(var i=0; i<sector.units.length; i++) {
+                var unit = sector.units[i];
+                unit.fetch({
+                    success:function(unit) {
+                        FetchTypeForUnit($scope, unit);
+                        LoadActionsForUnit($scope, unit);
+                    }
+                });
+            }
+        }
+    }])
+
     .factory('FetchTypeForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
         return function ($scope, unit) {
             var type = unit.type;

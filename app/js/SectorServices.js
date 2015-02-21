@@ -29,14 +29,15 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('UpdateSectors', [
-        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector',
-        function (TbarSectors, ConvertParseObject, FetchTypeForSector) {
+        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector', 'UpdateUnitsForSector',
+        function (TbarSectors, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
             return function ($scope) {
                 for(var i=0; i<TbarSectors.length; i++) {
                     var sector = TbarSectors[i];
                     sector.fetch({
                         success:function(sector) {
                             FetchTypeForSector($scope, sector);
+                            UpdateUnitsForSector($scope, sector);
                         }
                     });
                 }

@@ -202,6 +202,17 @@ angular.module("ictApp")
         }
     }])
 
+    .factory('UpdateMaydays', [
+        'Maydays',
+        function (Maydays) {
+            return function ($scope) {
+                for(var i=0; i<Maydays.length; i++) {
+                    var mayday = Maydays[i];
+                    mayday.fetch();
+                }
+            }
+        }])
+
     .factory('FetchUnitTypeForMayday', ['ConvertParseObject', function (ConvertParseObject) {
         return function ($scope, mayday) {
             if(mayday.unitType) {
