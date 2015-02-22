@@ -7,6 +7,7 @@ var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
 var ACTION_TYPE_DEF = ['name', 'category', 'incidentType', 'isWarning'];
 var MAYDAY_DEF = ['incident', 'number', 'unitType', 'sectorType', 'isOnHoseline', 'isUnInjured', 'isLost', 'isTrapped', 'isOutOfAir', 'isRegulatorIssue', 'isLowAir', 'isPackIssue', 'nameFFighter', 'psi', 'channel', 'rank'];
+var IAP_DEF = ['fireControl', 'firefighterSafety', 'incident', 'isActionEffect', 'isArrangement', 'isBuilding', 'isFire', 'isLifeHazard', 'isOccupancy', 'isResources', 'isSpecial', 'isSprinkler', 'isVent', 'propertyPeople', 'rescue'];
 
 angular.module('DataServices', ['ParseServices'])
 

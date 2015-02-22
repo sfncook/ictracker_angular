@@ -2,12 +2,12 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
 
-    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
+    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-
+		LoadIAPForIncident($scope, DataStore.incident);
 		$scope.showIncInfoDlg = function() {
 			DataStore.showIncInfoDlg();
 		}
@@ -35,10 +35,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.showObjectivesDlg = function() {
             DataStore.showObjectivesDlg();
-        }
-
-        $scope.showIapDlg = function() {
-            DataStore.showIapDlg();
         }
 
         $scope.showReportsDlg = function() {
@@ -641,14 +637,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         DataStore.showObjectivesDlg = function() {
             $("#objectives_dlg").dialog( "open" );
-        }
-    })
-
-    .controller('IapDlg', function($scope, DataStore){
-        $scope.iap_evlc_show = false;
-        $scope.iap_str_rescue = 'Primary SEARCH';
-        DataStore.showIapDlg = function() {
-            $("#iap_dlg").dialog( "open" );
         }
     })
 
