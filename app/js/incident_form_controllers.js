@@ -6,6 +6,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
+		$scope.showIncInfoDlg = function() {
+        	DataStore.showIncInfoDlg();
+        }
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore){
@@ -420,6 +423,35 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .controller('IncInfoDlg', function($scope, DataStore){
+		$scope.inc_address = '';
+		$scope.inc_number = '';
+
+        DataStore.showIncInfoDlg = function() {
+        	$scope.inc_address = DataStore.incident.inc_address;
+			$scope.inc_number = DataStore.incident.inc_number;
+            $("#incident_info_dlg").dialog( "open" );
+        }
+
+        $scope.clickOk = function() {
+            DataStore.incident.inc_address = $scope.inc_address;
+            DataStore.incident.inc_number = $scope.inc_number;
+            DataStore.incident.save();
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickAddressClear = function() {
+            $scope.inc_address = "";
+        }
+        $scope.clickNumberClear = function() {
+            $scope.inc_number = "";
+        }
+    })
+
     .controller('UpgradeDlg', function($scope, DataStore){
         $scope.upgrade_primary = 0;
         $scope.upgrade_secondary = 0;
@@ -613,6 +645,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     .controller('IapDlg', function($scope, DataStore){
         $scope.iap_evlc_show = false;
+        $scope.iap_str_rescue = 'Primary SEARCH';
         DataStore.showIapDlg = function() {
             $("#iap_dlg").dialog( "open" );
         }
@@ -666,7 +699,7 @@ function initDialogs() {
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
-
+    $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 
 }
