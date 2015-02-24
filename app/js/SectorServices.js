@@ -167,25 +167,3 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
 
 ;
 
-function updateSector($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
-    return function(sectorNew) {
-        ConvertParseObject(sectorNew, SECTOR_DEF);
-        if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
-            sector.fetch({
-                success: updateSector2($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector),
-                error: function(error) {
-                    console.log('Failed to updateSector, with error code: ' + error.message);
-                }
-            });
-        }
-    };
-}
-
-function updateSector2($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
-    return function(sectorNew) {
-        ConvertParseObject(sectorNew, SECTOR_DEF);
-        FetchTypeForSector($scope, sector);
-//        UpdateUnitsForSector($scope, sector);
-    };
-}
-
