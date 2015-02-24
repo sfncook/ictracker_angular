@@ -7,7 +7,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-		LoadIAPForIncident($scope, DataStore.incident);
+//		LoadIAPForIncident($scope, DataStore.incident);
 		$scope.showIncInfoDlg = function() {
 			DataStore.showIncInfoDlg();
 		}
