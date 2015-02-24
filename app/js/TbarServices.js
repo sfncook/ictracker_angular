@@ -116,7 +116,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
                     var unit = sector.units[i];
                     if(unit.type.name==unitType.name) {
                         sector.units.remByVal(unit);
-                        unit.destroy();
+                        unit.destroy(null, DefaultErrorLogger);
                         return false;
                     }
                 }//for

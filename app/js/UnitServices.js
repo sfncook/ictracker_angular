@@ -9,14 +9,19 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         return function () {
             var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
             queryUniTypes.limit(1000);
-            return ParseQuery(queryUniTypes, {functionToCall:'find'}).then(function(unitTypes){
-                for(var i=0; i<unitTypes.length; i++) {
-                    var unitType = unitTypes[i];
-                    ConvertParseObject(unitType, UNIT_TYPE_DEF);
-                    UnitTypes.push(unitType);
-                    var nameRefor = unitType.name.toUpperCase();
-                    UnitTypes[nameRefor] = unitType;
-                }//for
+            return queryUniTypes.find({
+                success: function(unitTypes) {
+                    for(var i=0; i<unitTypes.length; i++) {
+                        var unitType = unitTypes[i];
+                        ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                        UnitTypes.push(unitType);
+                        var nameRefor = unitType.name.toUpperCase();
+                        UnitTypes[nameRefor] = unitType;
+                    }//for
+                },
+                error: function(error) {
+                    console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
+                }
             });
         }
     }])
@@ -26,17 +31,22 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
             queryUnits.equalTo("sector", sector);
-            ParseQuery(queryUnits, {functionToCall:'find'}).then(function(units){
-                for(var i=0; i<units.length; i++) {
-                    var unit = units[i];
-                    ConvertParseObject(unit, UNIT_DEF);
-                    FetchTypeForUnit($scope, unit);
-                    LoadActionsForUnit($scope, unit);
-                    sector.units.push(unit);
-                }
+            queryUnits.find({
+                success: function(units) {
+                    for(var i=0; i<units.length; i++) {
+                        var unit = units[i];
+                        ConvertParseObject(unit, UNIT_DEF);
+                        FetchTypeForUnit($scope, unit);
+                        LoadActionsForUnit($scope, unit);
+                        sector.units.push(unit);
+                    }
 
-                if(units.length>0) {
-                    sector.selectedUnit=units[0];
+                    if(units.length>0) {
+                        sector.selectedUnit=units[0];
+                    }
+                },
+                error: function(error) {
+                    console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
                 }
             });
         }
@@ -52,6 +62,9 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                     success:function(unit) {
                         FetchTypeForUnit($scope, unit);
                         LoadActionsForUnit($scope, unit);
+                    },
+                    error: function(error) {
+                        console.log('Failed to UpdateUnitsForSector, with error code: ' + error.message);
                     }
                 });
             }
@@ -68,6 +81,9 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                             ConvertParseObject(type, UNIT_TYPE_DEF);
                             unit.type= type;
                         });
+                    },
+                    error: function(error) {
+                        console.log('Failed to FetchTypeForUnit, with error code: ' + error.message);
                     }
                 });
             }

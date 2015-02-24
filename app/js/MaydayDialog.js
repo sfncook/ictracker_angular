@@ -190,13 +190,18 @@ angular.module("ictApp")
             queryMaydays.equalTo("incident", incident);
             queryMaydays.include('unitType');
             queryMaydays.include('sectorType');
-            ParseQuery(queryMaydays, {functionToCall:'find'}).then(function(maydays){
-                for(var i=0; i<maydays.length; i++) {
-                    var mayday = maydays[i];
-                    ConvertParseObject(mayday, MAYDAY_DEF);
-                    Maydays.push(mayday);
-                    FetchUnitTypeForMayday($scope, mayday);
-                    FetchSectorTypeForMayday($scope, mayday);
+            queryMaydays.find({
+                success: function(maydays) {
+                    for(var i=0; i<maydays.length; i++) {
+                        var mayday = maydays[i];
+                        ConvertParseObject(mayday, MAYDAY_DEF);
+                        Maydays.push(mayday);
+                        FetchUnitTypeForMayday($scope, mayday);
+                        FetchSectorTypeForMayday($scope, mayday);
+                    }
+                },
+                error: function(error) {
+                    console.log('Failed to LoadActionTypes, with error code: ' + error.message);
                 }
             });
         }
@@ -214,6 +219,9 @@ angular.module("ictApp")
                             $scope.$apply(function(){
                                 mayday.unitType = unitType;
                             });
+                        },
+                        error: function(error) {
+                            console.log('Failed to UpdateMaydays(unitType), with error code: ' + error.message);
                         }
                     });
                     mayday.sectorType.fetch({
@@ -221,6 +229,9 @@ angular.module("ictApp")
                             $scope.$apply(function(){
                                 mayday.sectorType = sectorType;
                             });
+                        },
+                        error: function(error) {
+                            console.log('Failed to UpdateMaydays(sectorType), with error code: ' + error.message);
                         }
                     });
                 }
@@ -236,6 +247,9 @@ angular.module("ictApp")
                             ConvertParseObject(unitType, UNIT_TYPE_DEF);
                             mayday.unitType = unitType;
                         });
+                    },
+                    error: function(error) {
+                        console.log('Failed to FetchUnitTypeForMayday, with error code: ' + error.message);
                     }
                 });
             }
@@ -251,6 +265,9 @@ angular.module("ictApp")
                             ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
                             mayday.sectorType = sectorType;
                         });
+                    },
+                    error: function(error) {
+                        console.log('Failed to FetchSectorTypeForMayday, with error code: ' + error.message);
                     }
                 });
             }
@@ -260,7 +277,7 @@ angular.module("ictApp")
     .factory('DeleteMayday', ['Maydays', function (Maydays) {
         return function (mayday) {
             Maydays.remByVal(mayday);
-            mayday.destroy();
+            mayday.destroy(null, DefaultErrorLogger);
         }
     }])
 

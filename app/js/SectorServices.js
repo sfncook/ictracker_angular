@@ -11,18 +11,23 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         return function ($scope, incident) {
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
-            ParseQuery(querySectors, {functionToCall:'find'}).then(function(sectors){
-                if(sectors.length==0) {
-                    AddDefaultTbars(incident);
-                    SaveTbars();
-                } else {
-                    for(var i=0; i<sectors.length; i++) {
-                        var sector = sectors[i];
-                        ConvertParseObject(sector, SECTOR_DEF);
-                        FetchTypeForSector($scope, sector);
-                        TbarSectors.push(sector);
-                        LoadUnitsForSector(sector, $scope);
+            querySectors.find({
+                success: function(sectors) {
+                    if(sectors.length==0) {
+                        AddDefaultTbars(incident);
+                        SaveTbars();
+                    } else {
+                        for(var i=0; i<sectors.length; i++) {
+                            var sector = sectors[i];
+                            ConvertParseObject(sector, SECTOR_DEF);
+                            FetchTypeForSector($scope, sector);
+                            TbarSectors.push(sector);
+                            LoadUnitsForSector(sector, $scope);
+                        }
                     }
+                },
+                error: function(error) {
+                    console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                 }
             });
         }
@@ -38,6 +43,9 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                         success:function(sector) {
                             FetchTypeForSector($scope, sector);
                             UpdateUnitsForSector($scope, sector);
+                        },
+                        error: function(error) {
+                            console.log('Failed to UpdateSectors, with error code: ' + error.message);
                         }
                     });
                 }
@@ -54,6 +62,9 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                             ConvertParseObject(type, SECTOR_TYPE_DEF);
                             sector.sectorType= type;
                         });
+                    },
+                    error: function(error) {
+                        console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
                     }
                 });
             }
@@ -63,20 +74,25 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
     .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
-            return ParseQuery(querySectorTypes, {functionToCall:'find'}).then(function(sectorTypes){
-                for(var i=0; i<sectorTypes.length; i++) {
-                    var sectorType = sectorTypes[i];
-                    ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
-                    SectorTypes.push(sectorType);
-                    var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
-                    SectorTypes[nameRefor] = sectorType;
-                    if (sectorType.name=="Sector Name") {
-                        SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
-                    }
-                    if (sectorType.name=="Sector ####") {
-                        SectorTypes.SECTOR_NUM = sectorType;
-                    }
-                }//for
+            return querySectorTypes.find({
+                success: function(sectorTypes) {
+                    for(var i=0; i<sectorTypes.length; i++) {
+                        var sectorType = sectorTypes[i];
+                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+                        SectorTypes.push(sectorType);
+                        var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
+                        SectorTypes[nameRefor] = sectorType;
+                        if (sectorType.name=="Sector Name") {
+                            SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
+                        }
+                        if (sectorType.name=="Sector ####") {
+                            SectorTypes.SECTOR_NUM = sectorType;
+                        }
+                    }//for
+                },
+                error: function(error) {
+                    console.log('Failed to LoadSectorTypes, with error code: ' + error.message);
+                }
             });
         }
     }])
