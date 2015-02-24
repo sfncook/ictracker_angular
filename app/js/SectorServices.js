@@ -156,11 +156,13 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('UpdateSector', ['ConvertParseObject', 'FetchTypeForSector', function (ConvertParseObject, FetchTypeForSector) {
+    .factory('UpdateSector', ['ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
+        function (ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function ($scope, sector) {
             return function(sectorNew) {
 //                console.log(sector);
                 FetchTypeForSector($scope, sector);
+                FetchAcctTypeForSector($scope, sector);
             };
         }
     }])
