@@ -31,7 +31,7 @@
     <script src="js/TbarServices.js"></script>
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/MaydayDialog.js"></script>
-    <script src="js/IAPDialog.js"></script>
+    <script src="js/IapServices.js"></script>
     <script src="js/TimerServicies.js"></script>
     <script src="js/reports.js"></script>
     <script src="version.js"></script>
@@ -579,27 +579,27 @@
         <tr>
             <td class="iap_label_td">Critical Fireground Factors:</td>
             <td>
-                <button ng-click="iap_bldg=!iap_bldg" ng-class="{glow_orange:iap_bldg}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isBuilding=!dataStore.iap.isBuilding" ng-class="{glow_orange:dataStore.iap.isBuilding}" class="iap_toggle_btn">
                     Building
                 </button>
-                <button ng-click="iap_fire=!iap_fire" ng-class="{glow_orange:iap_fire}" class="iap_toggle_btn">Fire
+                <button ng-click="dataStore.iap.isFire=!dataStore.iap.isFire" ng-class="{glow_orange:dataStore.iap.isFire}" class="iap_toggle_btn">Fire
                 </button>
-                <button ng-click="iap_occu=!iap_occu" ng-class="{glow_orange:iap_occu}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isOccupancy=!dataStore.iap.isOccupancy" ng-class="{glow_orange:dataStore.iap.isOccupancy}" class="iap_toggle_btn">
                     Occupancy
                 </button>
-                <button ng-click="iap_hazd=!iap_hazd" ng-class="{glow_orange:iap_hazd}" class="iap_toggle_btn">Life
+                <button ng-click="dataStore.iap.isLifeHazard=!dataStore.iap.isLifeHazard" ng-class="{glow_orange:dataStore.iap.isLifeHazard}" class="iap_toggle_btn">Life
                     Hazard
                 </button>
-                <button ng-click="iap_arrg=!iap_arrg" ng-class="{glow_orange:iap_arrg}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isArrangement=!dataStore.iap.isArrangement" ng-class="{glow_orange:dataStore.iap.isArrangement}" class="iap_toggle_btn">
                     Arrangement
                 </button>
-                <button ng-click="iap_rsrc=!iap_rsrc" ng-class="{glow_orange:iap_rsrc}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isResources=!dataStore.iap.isResources" ng-class="{glow_orange:dataStore.iap.isResources}" class="iap_toggle_btn">
                     Resources
                 </button>
-                <button ng-click="iap_acte=!iap_acte" ng-class="{glow_orange:iap_acte}" class="iap_toggle_btn">Action
+                <button ng-click="dataStore.iap.isActionEffect=!dataStore.iap.isActionEffect" ng-class="{glow_orange:dataStore.iap.isActionEffect}" class="iap_toggle_btn">Action
                     Effect
                 </button>
-                <button ng-click="iap_spec=!iap_spec" ng-class="{glow_orange:iap_spec}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isSpecial=!dataStore.iap.isSpecial" ng-class="{glow_orange:dataStore.iap.isSpecial}" class="iap_toggle_btn">
                     Special
                 </button>
                 <div class="clear_float"></div>
@@ -607,24 +607,26 @@
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Rescue:</td>
-            <td><textarea class="iap_input">{{iap_str_rescue}}</textarea></td>
+            <td><textarea class="iap_input">{{dataStore.iap.rescue}}</textarea></td>
         </tr>
         <tr>
             <td class="iap_blue_label iap_label_td">Fire Control:</td>
             <td>
-                <textarea class="iap_input">{{iap_str_firecontrol}}</textarea>
-                <button ng-click="iap_vent=!iap_vent" ng-class="{glowlightgreen:iap_vent}" class="iap_toggle_btn">
+                <textarea class="iap_input">{{dataStore.iap.fireControl}}</textarea>
+                <button ng-click="dataStore.iap.isVent=!dataStore.iap.isVent" ng-class="{glow_orange:dataStore.iap.isVent}" class="iap_toggle_btn">
                 	Vent
                 </button>
-                <button ng-click="iap_sprinkler=!iap_sprinkler" ng-class="{glowlightgreen:iap_sprinkler}" class="iap_toggle_btn">
+                <button ng-click="dataStore.iap.isSprinkler=!dataStore.iap.isSprinkler" ng-class="{glow_orange:dataStore.iap.isSprinkler}" class="iap_toggle_btn">
                 	Sprinkler
                 </button>
+                <button ng-click="updateIapData()">TEMP SAVE</button>
+
             </td>
         </tr>
         <tr>
             <td class="iap_blue_label iap_label_td">Property/People:</td>
             <td>
-                <textarea class="iap_input">{{iap_str_property_people}}</textarea>
+                <textarea class="iap_input">{{dataStore.iap.propertyPeople}}</textarea>
                 <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true" class="iap_btn_evacloc">Show Evacuation
                     Location
                 </button>
@@ -639,7 +641,7 @@
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Firefighter Safety:</td>
-            <td><textarea class="iap_input">{{iap_str_firefighter_safety}}</textarea></td>
+            <td><textarea class="iap_input">{{dataStore.iap.firefighterSafety}}</textarea></td>
         </tr>
     </table>
 </div>

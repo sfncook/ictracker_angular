@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices'])
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');

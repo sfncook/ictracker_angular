@@ -1,37 +1,18 @@
 'use strict';
 
-angular.module("ictApp")
-
-    .factory('IAP', [function () {
-        return new Array();
-    }])
+angular.module('IapServices', ['ParseServices', 'DataServices'])
 
     .controller('IapDlg', function($scope, DataStore){
-
-        DataStore.showIapDlg = function($scope, DataStore) {
-        	/*$scope.iap_acte = $scope.iap.isActionEffect;
-			$scope.iap_arrg = $scope.iap.isArrangement;
-			$scope.iap_bldg = $scope.iap.isBuilding;
-			$scope.iap_fire = $scope.iap.isFire;
-			$scope.iap_hazd = $scope.iap.isLifeHazard;
-			$scope.iap_occu = $scope.iap.isOccupancy;
-			$scope.iap_rsrc = $scope.iap.isResources;
-			$scope.iap_spec = $scope.iap.isSpecial;
-			$scope.iap_sprinkler = $scope.iap.isSprinkler;
-			$scope.iap_vent = $scope.iap.isVent;
-			$scope.iap_str_firecontrol = $scope.iap.fireControl;
-			$scope.iap_str_firefighter_safety = $scope.iap.firefighterSafety;
-			$scope.iap_str_property_people = $scope.iap.propertyPeople;
-			$scope.iap_str_rescue = $scope.iap.rescue;
-
-			/// TO-DO with Parse?
-			$scope.iap_evlc_show = false
-			$scope.iap_str_evac_loc = "Evacuation location"; */
+		$scope.dataStore = DataStore;
+        DataStore.showIapDlg = function() {
             $("#iap_dlg").dialog( "open" );
         }
         $scope.showIapDlg = function() {
             DataStore.showIapDlg();
         }
+		$scope.updateIapData = function() {
+			DataStore.iap.save();
+		}
     })
 
     .factory('LoadIAPForIncident', ['ParseQuery', 'ConvertParseObject', 'DataStore', 'CreateNewIap',
