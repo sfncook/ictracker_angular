@@ -1,7 +1,7 @@
 
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
-var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident'];
+var SECTOR_DEF = ['sectorType', 'row', 'col', 'incident', 'acctUnit'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];

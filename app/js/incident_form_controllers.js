@@ -301,10 +301,15 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.selectUnit = function(unitType) {
             if($scope.forAcct) {
-                $scope.selectedSector.set('acctUnit',unitType);
+                $scope.selectedSector.acctUnit = unitType;
                 $scope.forAcct=false;
                 $("#units_dlg").dialog( "close" );
-            } if($scope.forDispUnits) {
+                $scope.selectedSector.save(null, {
+                    error: function(error) {
+                        console.log('Failed to $scope.selectedSector.save() for acctUnit, with error code: ' + error.message);
+                    }
+                });
+            } else if($scope.forDispUnits) {
                 if($scope.dispatechedUnits.contains(unitType)){
                     $scope.dispatechedUnits.remByVal(unitType);
                 } else {

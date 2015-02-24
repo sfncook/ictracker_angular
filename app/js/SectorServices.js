@@ -6,8 +6,8 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
     })
 
     .factory('LoadSectorsForIncident', [
-        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseQuery', 'ConvertParseObject', 'FetchTypeForSector',
-        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector) {
+        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseQuery', 'ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
+        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function ($scope, incident) {
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
@@ -23,6 +23,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                             FetchTypeForSector($scope, sector);
                             TbarSectors.push(sector);
                             LoadUnitsForSector(sector, $scope);
+                            FetchAcctTypeForSector($scope, sector);
                         }
                     }
                 },
@@ -30,6 +31,25 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                     console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                 }
             });
+        }
+    }])
+
+    .factory('FetchAcctTypeForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+        return function ($scope, sector) {
+            var acctUnit = sector.acctUnit;
+            if(acctUnit) {
+                acctUnit.fetch({
+                    success: function(acctUnit) {
+                        $scope.$apply(function(){
+                            ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
+                            sector.acctUnit = acctUnit;
+                        });
+                    },
+                    error: function(error) {
+                        console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);
+                    }
+                });
+            }
         }
     }])
 
