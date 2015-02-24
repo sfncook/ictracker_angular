@@ -9,14 +9,19 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
         return function () {
             var queryActionTypes = new Parse.Query(Parse.Object.extend('ActionType'));
             queryActionTypes.limit(1000);
-            return ParseQuery(queryActionTypes, {functionToCall:'find'}).then(function(actionTypes){
-                for(var i=0; i<actionTypes.length; i++) {
-                    var actionType = actionTypes[i];
-                    ConvertParseObject(actionType, ACTION_TYPE_DEF);
-                    ActionTypes.push(actionType);
-                    var nameRefor = actionType.name.toUpperCase();
-                    ActionTypes[nameRefor] = actionType;
-                }//for
+            return queryActionTypes.find({
+                success: function(actionTypes) {
+                    for(var i=0; i<actionTypes.length; i++) {
+                        var actionType = actionTypes[i];
+                        ConvertParseObject(actionType, ACTION_TYPE_DEF);
+                        ActionTypes.push(actionType);
+                        var nameRefor = actionType.name.toUpperCase();
+                        ActionTypes[nameRefor] = actionType;
+                    }//for
+                },
+                error: function(error) {
+                    console.log('Failed to LoadActionTypes, with error code: ' + error.message);
+                }
             });
         }
     }])
@@ -34,6 +39,8 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
                         ConvertParseObject(action, ACTION_TYPE_DEF);
                         unit.actionsArr.push(action);
                     }
+                }, error: function(obj, error) {
+                    console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
                 }
             });
         }
