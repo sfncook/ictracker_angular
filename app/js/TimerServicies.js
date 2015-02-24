@@ -44,13 +44,13 @@ angular.module('ictApp')
         }
     )
 
-    .controller('UpdateFetchTimer', function($scope, $interval, DataStore, UpdateSectors, UpdateMaydays){
+    .controller('UpdateFetchTimer', function($scope, $interval, DataStore, UpdateSectorsAsNeeded, UpdateMaydays){
         function updateTimer() {
             var prevTxId = DataStore.incident.txid;
             DataStore.incident.fetch({
                 success:function(incident){
                     if(incident.get('txid')!=prevTxId) {
-                        UpdateSectors($scope);
+                        UpdateSectorsAsNeeded($scope);
                         UpdateMaydays($scope);
                     }
                 },

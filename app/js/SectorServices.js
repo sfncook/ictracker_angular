@@ -33,29 +33,6 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('UpdateSectors', [
-        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector', 'UpdateUnitsForSector',
-        function (TbarSectors, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
-        return function ($scope) {
-            for(var i=0; i<TbarSectors.length; i++) {
-                var sector = TbarSectors[i];
-                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                querySectors.equalTo("objectId", sector.id);
-                querySectors.first({
-                    success:function(sectorNew) {
-                        ConvertParseObject(sectorNew, SECTOR_DEF);
-                        console.log("");
-//                        FetchTypeForSector($scope, sectorNew);
-//                        UpdateUnitsForSector($scope, sectorNew);
-                    },
-                    error: function(error) {
-                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
-                    }
-                });
-            }
-        }
-    }])
-
     .factory('FetchTypeForSector', ['ConvertParseObject', function (ConvertParseObject) {
         return function ($scope, sector) {
             var type = sector.sectorType;
@@ -125,4 +102,70 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         }
     }])
 
+
+    .factory('UpdateSectorsAsNeeded', [
+        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector', 'UpdateUnitsForSector', 'DiffUpdatedTimes',
+        function (TbarSectors, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector, DiffUpdatedTimes) {
+        return function ($scope) {
+            for(var i=0; i<TbarSectors.length; i++) {
+                var sector = TbarSectors[i];
+                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+                querySectors.equalTo("objectId", sector.id);
+                querySectors.first({
+                    success: DiffUpdatedTimes($scope, sector),
+                    error: function(error) {
+                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
+                    }
+                });
+            }
+        }
+    }])
+
+    .factory('DiffUpdatedTimes', ['ConvertParseObject', 'UpdateSector', function (ConvertParseObject, UpdateSector) {
+        return function ($scope, sector) {
+            return function(sectorNew) {
+                if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
+                    sector.fetch({
+                        success: UpdateSector($scope, sector),
+                        error: function(error) {
+                            console.log('Failed to updateSector, with error code: ' + error.message);
+                        }
+                    });
+                }
+            };
+        }
+    }])
+
+    .factory('UpdateSector', ['ConvertParseObject', 'FetchTypeForSector', function (ConvertParseObject, FetchTypeForSector) {
+        return function ($scope, sector) {
+            return function(sectorNew) {
+//                console.log(sector);
+                FetchTypeForSector($scope, sector);
+            };
+        }
+    }])
+
 ;
+
+function updateSector($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
+    return function(sectorNew) {
+        ConvertParseObject(sectorNew, SECTOR_DEF);
+        if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
+            sector.fetch({
+                success: updateSector2($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector),
+                error: function(error) {
+                    console.log('Failed to updateSector, with error code: ' + error.message);
+                }
+            });
+        }
+    };
+}
+
+function updateSector2($scope, sector, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector) {
+    return function(sectorNew) {
+        ConvertParseObject(sectorNew, SECTOR_DEF);
+        FetchTypeForSector($scope, sector);
+//        UpdateUnitsForSector($scope, sector);
+    };
+}
+
