@@ -10,9 +10,9 @@ angular.module('IapServices', ['ParseServices', 'DataServices'])
         $scope.showIapDlg = function() {
             DataStore.showIapDlg();
         }
-		$scope.updateIapData = function() {
-			DataStore.iap.save();
-		}
+		//$scope.updateIapData = function() {
+		//	DataStore.iap.save();
+		//}
     })
 
     .factory('LoadIAPForIncident', ['ParseQuery', 'ConvertParseObject', 'DataStore', 'CreateNewIap',
@@ -49,6 +49,7 @@ angular.module('IapServices', ['ParseServices', 'DataServices'])
 			iapObject.fireControl="";
 			iapObject.firefighterSafety="";
 			iapObject.propertyPeople="";
+			iapObject.evacuationLocation="";
 			iapObject.rescue="";
 			iapObject.incident=curIncident;
             return iapObject;

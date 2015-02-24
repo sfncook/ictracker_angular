@@ -725,8 +725,7 @@ function initDialogs() {
     $( "#iap_dlg" ).dialog({
     	width: 616,
     	close: function(event, ui){
-    		alert('bam, baby');
-    		DataStore.iap.save();
+    		angular.element('#iap_dlg').scope().dataStore.iap.save();
     	}
     });
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );

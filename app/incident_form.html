@@ -607,12 +607,12 @@
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Rescue:</td>
-            <td><textarea class="iap_input">{{dataStore.iap.rescue}}</textarea></td>
+            <td><textarea class="iap_input" ng-model="dataStore.iap.rescue"></textarea></td>
         </tr>
         <tr>
             <td class="iap_blue_label iap_label_td">Fire Control:</td>
             <td>
-                <textarea class="iap_input">{{dataStore.iap.fireControl}}</textarea>
+                <textarea class="iap_input" ng-model="dataStore.iap.fireControl"></textarea>
                 <button ng-click="dataStore.iap.isVent=!dataStore.iap.isVent" ng-class="{glow_orange:dataStore.iap.isVent}" class="iap_toggle_btn">
                 	Vent
                 </button>
@@ -624,7 +624,7 @@
         <tr>
             <td class="iap_blue_label iap_label_td">Property/People:</td>
             <td>
-                <textarea class="iap_input">{{dataStore.iap.propertyPeople}}</textarea>
+                <textarea class="iap_input" ng-model="dataStore.iap.propertyPeople"></textarea>
                 <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true" class="iap_btn_evacloc">Show Evacuation
                     Location
                 </button>
@@ -633,13 +633,13 @@
                 </button>
                 <div class="clear_both"></div>
                 <div ng-show="iap_evlc_show">
-                    <textarea id="iap_evacloc_input">Evacuation Location</textarea>
+                    <textarea id="iap_evacloc_input" ng-model="dataStore.iap.evacuationLocation">Evacuation Location</textarea>
                 </div>
             </td>
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Firefighter Safety:</td>
-            <td><textarea class="iap_input">{{dataStore.iap.firefighterSafety}}</textarea></td>
+            <td><textarea class="iap_input" ng-model="dataStore.iap.firefighterSafety"></textarea></td>
         </tr>
     </table>
 </div>
