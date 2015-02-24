@@ -203,12 +203,26 @@ angular.module("ictApp")
     }])
 
     .factory('UpdateMaydays', [
-        'Maydays',
-        function (Maydays) {
+        'Maydays', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday', 'ConvertParseObject',
+        function (Maydays, FetchUnitTypeForMayday, FetchSectorTypeForMayday, ConvertParseObject) {
             return function ($scope) {
                 for(var i=0; i<Maydays.length; i++) {
                     var mayday = Maydays[i];
                     mayday.fetch();
+                    mayday.unitType.fetch({
+                        success: function(unitType) {
+                            $scope.$apply(function(){
+                                mayday.unitType = unitType;
+                            });
+                        }
+                    });
+                    mayday.sectorType.fetch({
+                        success: function(sectorType) {
+                            $scope.$apply(function(){
+                                mayday.sectorType = sectorType;
+                            });
+                        }
+                    });
                 }
             }
         }])
