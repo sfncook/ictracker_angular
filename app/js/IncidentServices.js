@@ -38,7 +38,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
 
                     LoadSectorsForIncident($scope, incident);
                     LoadAllMaydaysForIncident($scope, incident);
-                    LoadIAPForIncident($scope, incident);
+					LoadIAPForIncident($scope, incident);
 
                     DataStore.loadSuccess = true;
                     DataStore.waitingToLoad = false;

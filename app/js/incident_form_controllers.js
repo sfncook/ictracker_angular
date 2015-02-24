@@ -7,7 +7,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-//		LoadIAPForIncident($scope, DataStore.incident);
+		//LoadIAPForIncident($scope, DataStore.incident);
 		$scope.showIncInfoDlg = function() {
 			DataStore.showIncInfoDlg();
 		}
@@ -722,7 +722,13 @@ function initDialogs() {
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
     $( "#osr_dlg" ).dialog( "option", "width", 420 );
     $( "#objectives_dlg" ).dialog( "option", "width", 230 );
-    $( "#iap_dlg" ).dialog( "option", "width", 616 );
+    $( "#iap_dlg" ).dialog({
+    	width: 616,
+    	close: function(event, ui){
+    		alert('bam, baby');
+    		DataStore.iap.save();
+    	}
+    });
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
