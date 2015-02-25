@@ -9,6 +9,7 @@ app.factory('reportsSvc', function() {
 });
 
 app.controller('ReportsDlg', function($scope, DataStore, reportsSvc){
+    $scope.dataStore = DataStore;
     $scope.events = [];
 
     reportsSvc.addEvent_title_to_sector = function(sector) {
