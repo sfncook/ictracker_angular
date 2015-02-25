@@ -26,8 +26,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('LoadIncident', [
-        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident',
-        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident) {
+        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident',
+        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -44,6 +44,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices'])
 
                         LoadSectorsForIncident($scope, incident);
                         LoadAllMaydaysForIncident($scope, incident);
+					LoadIAPForIncident($scope, incident);
 
                         DataStore.loadSuccess = true;
                         DataStore.waitingToLoad = false;

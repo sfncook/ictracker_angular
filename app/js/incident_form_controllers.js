@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices'])
 
-    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
+    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-
-        $scope.showIncDataDlg = function () {
-        }
+		//LoadIAPForIncident($scope, DataStore.incident);
+		$scope.showIncInfoDlg = function() {
+			DataStore.showIncInfoDlg();
+		}
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore){
@@ -34,10 +35,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.showObjectivesDlg = function() {
             DataStore.showObjectivesDlg();
-        }
-
-        $scope.showIapDlg = function() {
-            DataStore.showIapDlg();
         }
 
         $scope.showReportsDlg = function() {
@@ -428,6 +425,35 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+.controller('IncInfoDlg', function($scope, DataStore){
+		$scope.inc_address = '';
+		$scope.inc_number = '';
+
+        DataStore.showIncInfoDlg = function() {
+        	$scope.inc_address = DataStore.incident.inc_address;
+			$scope.inc_number = DataStore.incident.inc_number;
+            $("#incident_info_dlg").dialog( "open" );
+        }
+
+        $scope.clickOk = function() {
+            DataStore.incident.inc_address = $scope.inc_address;
+            DataStore.incident.inc_number = $scope.inc_number;
+            DataStore.incident.save();
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickAddressClear = function() {
+            $scope.inc_address = "";
+        }
+        $scope.clickNumberClear = function() {
+            $scope.inc_number = "";
+        }
+    })
+
     .controller('UpgradeDlg', function($scope, DataStore){
         $scope.upgrade_primary = 0;
         $scope.upgrade_secondary = 0;
@@ -619,27 +645,20 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('IapDlg', function($scope, DataStore){
-        $scope.iap_evlc_show = false;
-        DataStore.showIapDlg = function() {
-            $("#iap_dlg").dialog( "open" );
-        }
-    })
-
     .controller('UnitOptionsDlg', function($scope, DataStore, DefaultErrorLogger){
         $scope.pars = [1, 2, 3, 4, 5];
         $scope.psis = [];
         $scope.selected_unit = {};
-    
+
         for(var psiValue=4500; psiValue>=0; psiValue-=100) {
             $scope.psis.push(psiValue);
         }
-    
+
         DataStore.showUnitOptionsDlg = function(unit) {
             $scope.selected_unit = unit;
             $("#unit_options_dlg").dialog( "open" );
         }
-    
+
         $scope.selectPar = function(par) {
             var unit = $scope.selected_unit;
             unit.par = par;
@@ -649,13 +668,13 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
         $scope.selectPsi = function(psi) {
             $scope.selected_unit.psi = psi;
             $scope.selected_unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
     })
 
     .controller('PsiDlg', function($scope, DataStore){
@@ -691,7 +710,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             beforeDialogCloseFunc = 0;
         }
     }])
-    
+
 ;
 
 function initDialogs() {
@@ -708,12 +727,18 @@ function initDialogs() {
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
     $( "#osr_dlg" ).dialog( "option", "width", 420 );
     $( "#objectives_dlg" ).dialog( "option", "width", 230 );
-    $( "#iap_dlg" ).dialog( "option", "width", 616 );
+    $( "#iap_dlg" ).dialog({
+    	width: 616,
+    	close: function(event, ui){
+    		angular.element('#iap_dlg').scope().dataStore.iap.save();
+    	}
+    });
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
+    $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
 
     $("#mayday_form").hide();
 
