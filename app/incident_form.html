@@ -766,8 +766,8 @@
             <div class="report_div_header_span">{{dataStore.department}}</div>
             <div class="report_div_header_span">{{dataStore.incident.inc_number}}</div>
             <div class="report_div_header_span">{{dataStore.incident.inc_address}}</div>
-            <div class="report_div_header_span">{{}}</div>
-            <div class="report_div_header_span">{{}}</div>
+            <div class="report_div_header_span">{{dataStore.incident | dateStringForIncident}}</div>
+            <div class="report_div_header_span">{{dataStore.incident | timeStringForIncident}}</div>
         </div>
     </div>
     <div class="clear_both"></div>

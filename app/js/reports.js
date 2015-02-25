@@ -119,6 +119,7 @@ app.controller('ReportsDlg', function($scope, DataStore, reportsSvc){
     DataStore.showReportsDlg = function() {
         $("#reports_dlg").dialog( "open" );
     }
+
 });
 
 app.filter('getDateStr', function () {
@@ -127,5 +128,44 @@ app.filter('getDateStr', function () {
         var date = new Date(dateStr);
         console.log(date);
         return dateStr;
+    };
+});
+
+app.filter('dateStringForIncident', function () {
+    return function (incident) {
+        if(incident.createdAt) {
+            var msEpoch = incident.createdAt.getTime();
+            var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+            var dayNames = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+            var date = new Date(parseInt(msEpoch));
+            return dayNames[date.getDay()] + ", " + monthNames[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+        } else {
+            return "";
+        }
+    };
+});
+
+app.filter('timeStringForIncident', function () {
+    return function (incident) {
+        if(incident.createdAt) {
+            var msEpoch = incident.createdAt.getTime();
+            var date = new Date(parseInt(msEpoch));
+            var hr = date.getHours();
+            var hrStr = hr + "";
+
+            var date = new Date(parseInt(msEpoch));
+            var min = date.getMinutes();
+            var minStr = (min < 10) ? ("0" + min) : min;
+
+            var timeStr = hrStr + ":" + minStr;
+
+            if (hr < 12) {
+                timeStr += "AM";
+            }
+
+            return timeStr;
+        } else {
+            return "";
+        }
     };
 });
