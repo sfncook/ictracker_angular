@@ -8,34 +8,20 @@ app.factory('reportsSvc', function() {
     };
 });
 
-app.controller('ReportsDlg', function($scope, DataStore, reportsSvc){
+app.controller('ReportsDlg', function($scope, DataStore, reportsSvc, DefaultErrorLogger){
     $scope.dataStore = DataStore;
     $scope.events = [];
 
     reportsSvc.addEvent_title_to_sector = function(sector) {
-        var event = {
-            "datetime":new Date(),
-            "sector":sector};
-
-        $scope.events.push(event);
+        $scope.saveActionToReport("Sector initialized: "+sector.sectorType.name);
     }
 
     reportsSvc.addEvent_unit_to_sector = function(unit, sector) {
-        var event = {
-            "datetime":new Date(),
-            "unit":unit,
-            "sector":sector};
-
-        $scope.events.push(event);
+        $scope.saveActionToReport("Unit:" + unit.type.name + " added to Sector:" + sector.sectorType.name);
     }
 
     reportsSvc.addEvent_unit_to_acct = function(unit, sector) {
-        var event = {
-            "datetime":new Date(),
-            "unit":unit,
-            "sector":sector};
-
-        $scope.events.push(event);
+        $scope.saveActionToReport("Accountability Unit:" + unit.type.name + " added to Sector:" + sector.sectorType.name);
     }
 
     reportsSvc.addEvent_action_to_unit = function(action, unit, sector) {
@@ -118,6 +104,13 @@ app.controller('ReportsDlg', function($scope, DataStore, reportsSvc){
 
     DataStore.showReportsDlg = function() {
         $("#reports_dlg").dialog( "open" );
+    }
+
+    $scope.saveActionToReport = function(text) {
+        var ReportAction = Parse.Object.extend("ReportAction");
+        var reportAction = new ReportAction();
+        reportAction.set("text", text);
+        reportAction.save(null, DefaultErrorLogger);
     }
 
 });

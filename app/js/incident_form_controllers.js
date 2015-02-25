@@ -212,7 +212,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
             if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
 
-            reportsSvc.addEvent_title_to_sector(sectorType.name);
+            reportsSvc.addEvent_title_to_sector($scope.selectedSector);
 
             $("#sector_name_dlg").dialog( "close" );
         };
