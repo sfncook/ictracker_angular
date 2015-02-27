@@ -32,6 +32,8 @@
     <script src="js/incident_form_controllers.js"></script>
     <script src="js/MaydayDialog.js"></script>
     <script src="js/IapServices.js"></script>
+    <script src="js/ObjectivesServices.js"></script>
+    <script src="js/OSRServices.js"></script>
     <script src="js/TimerServicies.js"></script>
     <script src="js/reports.js"></script>
     <script src="version.js"></script>
@@ -71,23 +73,26 @@
             class="disabled header_item button"
             ng-click="showUpgradeDlg()">Branch
     </button>
-
+    <div ng-controller="OsrDlg">
     <button id="osr_header_btn"
             class="header_item"
-            ng-click="showObjectivesDlg()">
+            ng-click="showOSRDlg()">
         <div class="perc_horz_bar_bg">
             <div id="osr_perc_bar" class="perc_horz_bar"></div>
         </div>
         <div>OSR</div>
     </button>
-    <button id="objectives_header_btn"
+    </div>
+    <div ng-controller="ObjDlg">
+       <button id="objectives_header_btn"
             class="header_item"
             ng-click="showObjectivesDlg()">
         <div class="perc_horz_bar_bg">
             <div id="objectives_perc_bar" class="perc_horz_bar"></div>
         </div>
         <div style="margin-top:-1px">Objectives</div>
-    </button>
+       </button>
+    </div>
 	<div ng-controller="IapDlg">
 		<button id="iap_btn"
     			class="header_item"
@@ -562,18 +567,18 @@
 </div>
 
 <!-- Objectives Dialog Unit Component Prototype -->
-<div id="objectives_dlg" title="Objectives" ng-controller="ObjectivesDlg" class="dialog">
-    <button ng-click="obj_upgd=!obj_upgd" ng-class="{glowlightgreen:obj_upgd}" class="objective_btn">Upgrade to Full Recue</button>
-    <button ng-click="obj_safe=!obj_safe" ng-class="{glowlightgreen:obj_safe}" class="objective_btn">Assing Safety</button>
-    <button ng-click="obj_estb=!obj_estb" ng-class="{glowlightgreen:obj_estb}" class="objective_btn">Establish Supply Line</button>
-    <button ng-click="obj_utes=!obj_utes" ng-class="{glowlightgreen:obj_utes}" class="objective_btn">Secure Utilities</button>
-    <button ng-click="obj_vent=!obj_vent" ng-class="{glowlightgreen:obj_vent}" class="objective_btn">Ventilation</button>
-    <button ng-click="obj_deck=!obj_deck" ng-class="{glowlightgreen:obj_deck}" class="objective_btn">Create "On Deck"</button>
-    <button ng-click="obj_pres=!obj_pres" ng-class="{glowlightgreen:obj_pres}" class="objective_btn">Pressurize Exposures</button>
-    <button ng-click="obj_moni=!obj_moni" ng-class="{glowlightgreen:obj_moni}" class="objective_btn">Monitor Channel 16</button>
-    <button ng-click="obj_salv=!obj_salv" ng-class="{glowlightgreen:obj_salv}" class="objective_btn">Salvage</button>
-    <button ng-click="obj_rehb=!obj_rehb" ng-class="{glowlightgreen:obj_rehb}" class="objective_btn">Establish Rehab</button>
-    <button ng-click="obj_srvc=!obj_srvc" ng-class="{glowlightgreen:obj_srvc}" class="objective_btn">Customer Service</button>
+<div id="objectives_dlg" title="Objectives" ng-controller="ObjDlg" class="dialog">
+    <button ng-click="dataStore.objectives.upgradeToFullRescue=!dataStore.objectives.upgradeToFullRescue; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.upgradeToFullRescue}" class="objective_btn">Upgrade to Full Rescue</button>
+    <button ng-click="dataStore.objectives.assingSafety=!dataStore.objectives.assingSafety; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.assingSafety}" class="objective_btn">Assing Safety</button>
+    <button ng-click="dataStore.objectives.establishSupplyLine=!dataStore.objectives.establishSupplyLine; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.establishSupplyLine}" class="objective_btn">Establish Supply Line</button>
+    <button ng-click="dataStore.objectives.secureUtilities=!dataStore.objectives.secureUtilities; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.secureUtilities}" class="objective_btn">Secure Utilities</button>
+    <button ng-click="dataStore.objectives.ventiliation=!dataStore.objectives.ventiliation; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.ventiliation}" class="objective_btn">Ventilation</button>
+    <button ng-click="dataStore.objectives.createOnDeck=!dataStore.objectives.createOnDeck; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.createOnDeck}" class="objective_btn">Create "On Deck"</button>
+    <button ng-click="dataStore.objectives.pressurizeExposures=!dataStore.objectives.pressurizeExposures; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.pressurizeExposures}" class="objective_btn">Pressurize Exposures</button>
+    <button ng-click="dataStore.objectives.monitorChannel16=!dataStore.objectives.monitorChannel16; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.monitorChannel16}" class="objective_btn">Monitor Channel 16</button>
+    <button ng-click="dataStore.objectives.salvage=!dataStore.objectives.salvage; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.salvage}" class="objective_btn">Salvage</button>
+    <button ng-click="dataStore.objectives.establishRehab=!dataStore.objectives.establishRehab; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.establishRehab}" class="objective_btn">Establish Rehab</button>
+    <button ng-click="dataStore.objectives.customerService=!dataStore.objectives.customerService; updateObjPerc()" ng-class="{glowlightgreen:dataStore.objectives.customerService}" class="objective_btn">Customer Service</button>
 </div>
 
 <!-- IAP Dialog -->
