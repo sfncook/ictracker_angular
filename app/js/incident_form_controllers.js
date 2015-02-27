@@ -1,15 +1,16 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices'])
 
-    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes){
+    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-
-        $scope.showIncDataDlg = function () {
-        }
+		//LoadIAPForIncident($scope, DataStore.incident);
+		$scope.showIncInfoDlg = function() {
+			DataStore.showIncInfoDlg();
+		}
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore){
@@ -26,18 +27,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.showCmdXferDlg = function() {
             DataStore.showCmdXferDlg();
-        }
-
-        $scope.showOsrDlg = function() {
-            DataStore.showOsrDlg();
-        }
-
-        $scope.showObjectivesDlg = function() {
-            DataStore.showObjectivesDlg();
-        }
-
-        $scope.showIapDlg = function() {
-            DataStore.showIapDlg();
         }
 
         $scope.showReportsDlg = function() {
@@ -428,6 +417,35 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+.controller('IncInfoDlg', function($scope, DataStore){
+		$scope.inc_address = '';
+		$scope.inc_number = '';
+
+        DataStore.showIncInfoDlg = function() {
+        	$scope.inc_address = DataStore.incident.inc_address;
+			$scope.inc_number = DataStore.incident.inc_number;
+            $("#incident_info_dlg").dialog( "open" );
+        }
+
+        $scope.clickOk = function() {
+            DataStore.incident.inc_address = $scope.inc_address;
+            DataStore.incident.inc_number = $scope.inc_number;
+            DataStore.incident.save();
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#incident_info_dlg").dialog( "close" );
+        }
+
+        $scope.clickAddressClear = function() {
+            $scope.inc_address = "";
+        }
+        $scope.clickNumberClear = function() {
+            $scope.inc_number = "";
+        }
+    })
+
     .controller('UpgradeDlg', function($scope, DataStore){
         $scope.upgrade_primary = 0;
         $scope.upgrade_secondary = 0;
@@ -446,86 +464,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('OsrDlg', function($scope, DataStore){
-
-        $scope.unit_osr = false;
-        $scope.address_left_osr = false;
-        $scope.occupancy_osr = false;
-        $scope.construction_osr = false;
-        $scope.conditions_osr = false;
-        $scope.assumecmd_osr = false;
-        $scope.location_osr = false;
-        $scope.mode_osr = false;
-        $scope.attach_line = false;
-        $scope.water_supply = false;
-        $scope.iric_osr = false;
-        $scope.acct_osr = false;
-
-        $scope.disp_address = 'Dispatch Address';
-        $scope.type_of_bldg = 'Type of building';
-        $scope.num_floors = 'Number of floors';
-        $scope.size_building = 'Size of building';
-        $scope.basement = 0;
-        $scope.construction = 'Construction type';
-        $scope.roof = 'Roof';
-        $scope.conditions = 'Conditions';
-        $scope.location = 0;
-        $scope.strategy = 0;
-
-        DataStore.showOsrDlg = function() {
-            $("#osr_dlg").dialog( "open" );
-        }
-
-        $scope.showAddressDlg = function() {
-            DataStore.showAddressDlg();
-        }
-
-        DataStore.getDispAddress = function() {
-            return $scope.disp_address;
-        }
-
-        DataStore.setDispAddress = function(address) {
-            $scope.disp_address = address;
-        }
-
-        function updatePerc() {
-            var count = 0;
-            if($scope.unit_osr        ) {count++;}
-            if($scope.address_left_osr) {count++;}
-            if($scope.occupancy_osr   ) {count++;}
-            if($scope.construction_osr) {count++;}
-            if($scope.conditions_osr  ) {count++;}
-            if($scope.assumecmd_osr   ) {count++;}
-            if($scope.location_osr    ) {count++;}
-            if($scope.mode_osr        ) {count++;}
-            if($scope.attach_line     ) {count++;}
-            if($scope.water_supply    ) {count++;}
-            if($scope.iric_osr        ) {count++;}
-            if($scope.acct_osr        ) {count++;}
-            var perc = Math.ceil((count*100)/12)
-            DataStore.setOsrPerc(perc);
-        }
-
-        $scope.$watch('unit_osr',           function() { updatePerc(); });
-        $scope.$watch('address_left_osr',   function() { updatePerc(); });
-        $scope.$watch('occupancy_osr',      function() { updatePerc(); });
-        $scope.$watch('construction_osr ',  function() { updatePerc(); });
-        $scope.$watch('conditions_osr',     function() { updatePerc(); });
-        $scope.$watch('assumecmd_osr',      function() { updatePerc(); });
-        $scope.$watch('location_osr',       function() { updatePerc(); });
-        $scope.$watch('mode_osr',           function() { updatePerc(); });
-        $scope.$watch('attach_line',        function() { updatePerc(); });
-        $scope.$watch('water_supply',       function() { updatePerc(); });
-        $scope.$watch('iric_osr',           function() { updatePerc(); });
-        $scope.$watch('acct_osr',           function() { updatePerc(); });
-
-        $scope.$watch('type_of_bldg',       function(newVal) { $scope.occupancy_osr = newVal!='Type of building';       updatePerc(); });
-        $scope.$watch('construction',       function(newVal) { $scope.construction_osr = newVal!='Construction type';   updatePerc(); });
-        $scope.$watch('conditions',         function(newVal) { $scope.conditions_osr = newVal!='Conditions';            updatePerc(); });
-        $scope.$watch('location',           function(newVal) { $scope.location_osr = newVal>0;                          updatePerc(); });
-        $scope.$watch('strategy',           function(newVal) { $scope.mode_osr = newVal>0;                              updatePerc(); });
-
-    })
 
     .controller('AddressDlg', function($scope, DataStore){
 
@@ -613,33 +551,22 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $scope.obj_rehb = true;
             updatePerc();
         }
-
-        DataStore.showObjectivesDlg = function() {
-            $("#objectives_dlg").dialog( "open" );
-        }
-    })
-
-    .controller('IapDlg', function($scope, DataStore){
-        $scope.iap_evlc_show = false;
-        DataStore.showIapDlg = function() {
-            $("#iap_dlg").dialog( "open" );
-        }
     })
 
     .controller('UnitOptionsDlg', function($scope, DataStore, DefaultErrorLogger){
         $scope.pars = [1, 2, 3, 4, 5];
         $scope.psis = [];
         $scope.selected_unit = {};
-    
+
         for(var psiValue=4500; psiValue>=0; psiValue-=100) {
             $scope.psis.push(psiValue);
         }
-    
+
         DataStore.showUnitOptionsDlg = function(unit) {
             $scope.selected_unit = unit;
             $("#unit_options_dlg").dialog( "open" );
         }
-    
+
         $scope.selectPar = function(par) {
             var unit = $scope.selected_unit;
             unit.par = par;
@@ -649,13 +576,13 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
         $scope.selectPsi = function(psi) {
             $scope.selected_unit.psi = psi;
             $scope.selected_unit.save(null, DefaultErrorLogger);
             $("#unit_options_dlg").dialog( "close" );
         }
-    
+
     })
 
     .controller('PsiDlg', function($scope, DataStore){
@@ -691,7 +618,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             beforeDialogCloseFunc = 0;
         }
     }])
-    
+
 ;
 
 function initDialogs() {
@@ -706,14 +633,32 @@ function initDialogs() {
     $( "#actions_dlg" ).dialog( "option", "width", 810 );
     $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
     $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
-    $( "#osr_dlg" ).dialog( "option", "width", 420 );
-    $( "#objectives_dlg" ).dialog( "option", "width", 230 );
-    $( "#iap_dlg" ).dialog( "option", "width", 616 );
+    $( "#osr_dlg" ).dialog({
+    		width: 420,
+    		close: function(event, ui){
+    			angular.element('#osr_dlg').scope().dataStore.osr.save();	
+    		}
+    	
+    });
+    $( "#objectives_dlg" ).dialog({
+    		width: 230,
+    		close: function(event, ui){
+    			angular.element('#objectives_dlg').scope().dataStore.objectives.save();	
+    		}
+    	
+    });
+    $( "#iap_dlg" ).dialog({
+    	width: 616,
+    	close: function(event, ui){
+    		angular.element('#iap_dlg').scope().dataStore.iap.save();
+    	}
+    });
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 550 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
+    $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
 
     $("#mayday_form").hide();
 
