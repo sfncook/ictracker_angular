@@ -115,6 +115,10 @@ var app = angular.module("ReportServices", ['DataServices'])
 
     })
 
+    .factory('LoadReportsForIncident', function() {
+        return function(incident) {};
+    })
+
     .filter('getDateStr', function () {
 
         return function (dateStr) {
