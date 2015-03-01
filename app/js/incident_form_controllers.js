@@ -157,7 +157,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.doesSectorHavePar = DoesSectorHavePar;
     })
 
-    .controller('SectorNamesDlg', function($scope, $http, DataStore, reportsSvc, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){
+    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){
         $scope.selectedSector = {};
         $scope.tbar_sectors=DataStore.tbar_sectors;
 
@@ -201,7 +201,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
             if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
 
-            reportsSvc.addEvent_title_to_sector($scope.selectedSector);
+            ReportFunctions.addEvent_title_to_sector($scope.selectedSector);
 
             $("#sector_name_dlg").dialog( "close" );
         };
