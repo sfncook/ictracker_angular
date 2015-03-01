@@ -240,7 +240,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     })
 
-    .controller('UnitsDlg', function($scope, $http, DataStore, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector){
+    .controller('UnitsDlg', function($scope, $http, DataStore, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector, ReportFunctions){
         $scope.selectedSector = {};
         $scope.dispatechedUnits = [];
         $scope.tbar_sectors=DataStore.tbar_sectors;
@@ -291,6 +291,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.selectUnit = function(unitType) {
             if($scope.forAcct) {
                 $scope.selectedSector.acctUnit = unitType;
+                ReportFunctions.addEvent_unitType_to_acct($scope.selectedSector, unitType);
                 $scope.forAcct=false;
                 $("#units_dlg").dialog( "close" );
                 $scope.selectedSector.save(null, {
@@ -377,15 +378,15 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
     })
 
-    .controller('ActionsDlg', function($scope, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit){
+    .controller('ActionsDlg', function($scope, DataStore, LoadActionTypes, ActionTypes, ToggleActionTypeForUnit, ReportFunctions){
         $scope.selectedSector = {};
         LoadActionTypes();
         $scope.actionTypes = ActionTypes;
 
         $scope.selectAction = function(actionType) {
             ToggleActionTypeForUnit($scope.selectedSector.selectedUnit, actionType);
-
-            if(actionType.name=="Take a Line") {DataStore.estSupply();}
+            ReportFunctions.addEvent_action_to_unit($scope.selectedSector, $scope.selectedSector.selectedUnit, actionType);
+//            if(actionType.name=="Take a Line") {DataStore.estSupply();}
         };
 
         $scope.getActionTypeCategories = function() {

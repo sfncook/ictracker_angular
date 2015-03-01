@@ -108,7 +108,9 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('ToggleUnitTypeForSector', ['CreateNewUnit', function (CreateNewUnit) {
+    .factory('ToggleUnitTypeForSector', [
+        'CreateNewUnit', 'ReportFunctions',
+        function (CreateNewUnit, ReportFunctions) {
         return function (sector, unitType) {
             if(sector.units) {
                 // search for unitType already in sector
@@ -121,11 +123,15 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
                     }
                 }//for
                 var newUnit = CreateNewUnit(sector, unitType);
+                sector.units.push(newUnit);
+                ReportFunctions.addEvent_unit_to_sector(sector, newUnit);
                 return true;
             } else {
                 // Add unit to sector
                 sector.units = new Array();
                 var newUnit = CreateNewUnit(sector, unitType);
+                sector.units.push(newUnit);
+                ReportFunctions.addEvent_unit_to_sector(sector, newUnit);
                 return true;
             }
         }

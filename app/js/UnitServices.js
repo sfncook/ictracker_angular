@@ -103,7 +103,6 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
             newUnit.type = unitType;
             newUnit.sector = sector;
             newUnit.save(null, DefaultErrorLogger);
-            sector.units.push(newUnit);
             return newUnit;
         }
     }])
