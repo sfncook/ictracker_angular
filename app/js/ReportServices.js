@@ -38,7 +38,7 @@ angular.module("ReportServices", ['DataServices'])
 
     .filter('dateStringForIncident', function () {
         return function (incident) {
-            if(incident && incident.createdAt) {
+            if(incident.createdAt) {
                 var msEpoch = incident.createdAt.getTime();
                 var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
                 var dayNames = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
@@ -52,7 +52,7 @@ angular.module("ReportServices", ['DataServices'])
 
     .filter('timeStringForIncident', function () {
         return function (incident) {
-            if(incident && incident.createdAt) {
+            if(incident.createdAt) {
                 return incident.createdAt.toLocaleTimeString();
             } else {
                 return "";
@@ -63,6 +63,7 @@ angular.module("ReportServices", ['DataServices'])
 
     .controller('ReportsDlg', function($scope, ReportFunctions, DefaultErrorLogger, LoadReportsForIncident, ReportActions, DataStore){
         $scope.reportActions = ReportActions;
+        $scope.dataStore = DataStore;
         $scope.orderByField = "createdBy";
 
         DataStore.showReportsDlg = function() {
@@ -94,18 +95,10 @@ angular.module("ReportServices", ['DataServices'])
             addEvent_title_to_sector:       function(sector)                        {SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},
             addEvent_unit_to_sector:        function(sector, unit)                  {SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
             addEvent_unitType_to_acct:      function(sector, unitType)              {SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
-            addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);}
+            addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
         };
 
-//        ReportFunctions. = function(action, unit, sector) {
-//            var event = {
-//                "datetime":new Date(),
-//                "action":action,
-//                "unit":unit,
-//                "sector":sector};
-//
-//            $scope.events.push(event);
-//        }
 //
 //        ReportFunctions.addEvent_person_has_par = function(unit, sector) {
 //            var event = {

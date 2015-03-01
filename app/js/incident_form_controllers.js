@@ -110,7 +110,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             return input;
         };
     })
-    .controller('ParDlg', function($scope, DataStore, DoesSectorHavePar){
+    .controller('ParDlg', function($scope, DataStore, DoesSectorHavePar, ReportFunctions){
         $scope.selectedSector = {};
 
         DataStore.openParDlg = function(sector) {
@@ -132,6 +132,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 unit.manyPar = 0;
             } else {
                 unit.manyPar = unit.par;
+            }
+
+            if(unit.manyPar == unit.par) {
+                ReportFunctions.addEvent_person_has_par($scope.selectedSector, unit);
             }
         }
 
