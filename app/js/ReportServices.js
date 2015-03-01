@@ -170,22 +170,23 @@ angular.module("ReportServices", ['DataServices'])
     .filter('timeStringForIncident', function () {
         return function (incident) {
             if(incident.createdAt) {
-                var msEpoch = incident.createdAt.getTime();
-                var date = new Date(parseInt(msEpoch));
-                var hr = date.getHours();
-                var hrStr = hr + "";
-
-                var date = new Date(parseInt(msEpoch));
-                var min = date.getMinutes();
-                var minStr = (min < 10) ? ("0" + min) : min;
-
-                var timeStr = hrStr + ":" + minStr;
-
-                if (hr < 12) {
-                    timeStr += "AM";
-                }
-
-                return timeStr;
+//                var msEpoch = incident.createdAt.getTime();
+//                var date = new Date(parseInt(msEpoch));
+//                var hr = date.getHours();
+//                var hrStr = hr + "";
+//
+//                var date = new Date(parseInt(msEpoch));
+//                var min = date.getMinutes();
+//                var minStr = (min < 10) ? ("0" + min) : min;
+//
+//                var timeStr = hrStr + ":" + minStr;
+//
+//                if (hr < 12) {
+//                    timeStr += "AM";
+//                }
+//
+//                return timeStr;
+                return incident.createdAt.toLocaleTimeString();
             } else {
                 return "";
             }
