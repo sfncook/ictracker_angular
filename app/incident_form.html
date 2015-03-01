@@ -783,6 +783,13 @@
             <div class="report_div_header_span">{{dataStore.incident | dateStringForIncident}}</div>
             <div class="report_div_header_span">{{dataStore.incident | timeStringForIncident}}</div>
         </div>
+
+        <table class="report_rows_container">
+            <tr ng-repeat="reportAction in reportActions">
+                <td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>
+                <td class="report_td">{{reportAction.text}}</td>
+            </tr>
+        </table>
     </div>
     <div class="clear_both"></div>
 </div>

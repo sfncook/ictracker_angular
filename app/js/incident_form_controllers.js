@@ -656,7 +656,7 @@ function initDialogs() {
     $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
     $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
-    $( "#reports_dlg" ).dialog( "option", "width", 550 );
+    $( "#reports_dlg" ).dialog( "option", "width", 820 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
     $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
 
