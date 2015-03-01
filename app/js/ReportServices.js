@@ -63,80 +63,14 @@ angular.module("ReportServices", ['DataServices'])
 
     .controller('ReportsDlg', function($scope, ReportFunctions, DefaultErrorLogger, LoadReportsForIncident, ReportActions, DataStore){
         $scope.reportActions = ReportActions;
+        $scope.orderByField = "createdBy";
+
         $scope.dataStore = DataStore;ReportFunctions.addEvent_action_to_unit = function(action, unit, sector) {
             var event = {
                 "datetime":new Date(),
                 "action":action,
                 "unit":unit,
                 "sector":sector};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_person_has_par = function(unit, sector) {
-            var event = {
-                "datetime":new Date(),
-                "unit":unit,
-                "sector":sector};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_unit_has_par = function(unit, sector) {
-            var event = {
-                "datetime":new Date(),
-                "unit":unit,
-                "sector":sector};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_sector_has_par = function(sector) {
-            var event = {
-                "datetime":new Date(),
-                "sector":sector};
-
-            $scope.events.push(event);
-        }
-
-
-        ReportFunctions.addEvent_benchmark = function(benchmark) {
-            var event = {
-                "datetime":new Date(),
-                "benchmark":benchmark};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_mode = function(mode) {
-            var event = {
-                "datetime":new Date(),
-                "mode":mode};
-
-            $scope.events.push(event);
-        }
-
-
-        ReportFunctions.addEvent_osr = function(osr) {
-            var event = {
-                "datetime":new Date(),
-                "osr":osr};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_objective = function(objective) {
-            var event = {
-                "datetime":new Date(),
-                "objective":objective};
-
-            $scope.events.push(event);
-        }
-
-        ReportFunctions.addEvent_iap = function(iap) {
-            var event = {
-                "datetime":new Date(),
-                "iap":iap};
 
             $scope.events.push(event);
         }

@@ -767,8 +767,12 @@
 <!-- Reports Dialog -->
 <div id="reports_dlg" title="Reports" ng-controller="ReportsDlg" class="dialog">
     <div class="reports_header">
-        <button class="report_toggle_btn">Time Report</button>
-        <button class="report_toggle_btn">Sector Report</button>
+        <button class="report_toggle_btn"
+                ng-class="{glowlightgreen: orderByField=='createdBy'}"
+                ng-click="orderByField='createdBy'">Time Report</button>
+        <button class="report_toggle_btn"
+                ng-class="{glowlightgreen: orderByField!='createdBy'}"
+                ng-click="orderByField='sector'">Sector Report</button>
         <button id="print_report_btn">
             <img id="print_report_icon" src="img/printer.png"/>
             Print
@@ -785,7 +789,7 @@
         </div>
 
         <table class="report_rows_container">
-            <tr ng-repeat="reportAction in reportActions">
+            <tr ng-repeat="reportAction in reportActions | orderBy:orderByField">
                 <td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>
                 <td class="report_td">{{reportAction.text}}</td>
             </tr>
