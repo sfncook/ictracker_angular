@@ -30,6 +30,13 @@ Array.prototype.remByVal = function (val) {
     return this;
 }
 
+Array.prototype.removeAll = function () {
+    while(this.length > 0) {
+        this.pop();
+    }
+    return this;
+}
+
 /*
  * 'this' must be an array of tbar objects such that this.name is
  * the name of the sector.

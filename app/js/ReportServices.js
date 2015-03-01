@@ -1,5 +1,9 @@
 
-var app = angular.module("ReportServices", ['DataServices'])
+angular.module("ReportServices", ['DataServices'])
+
+    .factory('ReportActions', function() {
+        return new Array();
+    })
 
     .factory('ReportFunctions', function() {
         var addEvent_title_to_sector;
@@ -8,9 +12,10 @@ var app = angular.module("ReportServices", ['DataServices'])
         };
     })
 
-    .controller('ReportsDlg', function($scope, DataStore, ReportFunctions, DefaultErrorLogger){
+    .controller('ReportsDlg', function($scope, ReportFunctions, DefaultErrorLogger, LoadReportsForIncident, ReportActions, DataStore){
+        $scope.reportActions = ReportActions;
         $scope.dataStore = DataStore;
-        $scope.events = [];
+//        $scope.events = [];
 
         ReportFunctions.addEvent_title_to_sector = function(sector) {
             $scope.saveActionToReport("Sector initialized: "+sector.sectorType.name);
@@ -103,7 +108,9 @@ var app = angular.module("ReportServices", ['DataServices'])
         }
 
         DataStore.showReportsDlg = function() {
-            $("#reports_dlg").dialog( "open" );
+            LoadReportsForIncident(DataStore.incident).then(function(){
+                $("#reports_dlg").dialog( "open" );
+            });
         }
 
         $scope.saveActionToReport = function(text) {
@@ -115,9 +122,27 @@ var app = angular.module("ReportServices", ['DataServices'])
 
     })
 
-    .factory('LoadReportsForIncident', function() {
-        return function(incident) {};
-    })
+    .factory('LoadReportsForIncident', [
+        'ReportActions', 'ConvertParseObject',
+        function (ReportActions, ConvertParseObject) {
+        return function (incident) {
+            var queryReportActions = new Parse.Query(Parse.Object.extend('ReportAction'));
+            queryReportActions.equalTo("incident", incident);
+            ReportActions.removeAll();
+            return queryReportActions.find({
+                success: function(reportActions) {
+                    for(var i=0; i<reportActions.length; i++) {
+                        var reportAction = reportActions[i];
+                        ConvertParseObject(reportAction, REPORT_ACTION_DEF);
+                        ReportActions.push(reportAction);
+                    }
+                },
+                error: function(error) {
+                    console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
+                }
+            });
+        }
+    }])
 
     .filter('getDateStr', function () {
 
