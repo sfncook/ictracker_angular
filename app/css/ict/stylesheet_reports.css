@@ -28,7 +28,7 @@
 }
 
 .report_dialog_body {
-    height: 770px;
+    height: 500px;
     overflow: scroll;
     background: white;
     padding: 0 15px;
@@ -52,6 +52,7 @@
 .report_rows_container {
     float:left;
     font-size:0.8rem;
+    margin-top: 10px;
 }
 .report_td {
     padding: 2px 10px;
