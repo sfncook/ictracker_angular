@@ -110,7 +110,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             return input;
         };
     })
-    .controller('ParDlg', function($scope, DataStore, DoesSectorHavePar, ReportFunctions){
+    .controller('ParDlg', function($scope, DataStore, DoesSectorHavePar, ReportFunctions, DefaultErrorLogger){
         $scope.selectedSector = {};
 
         DataStore.openParDlg = function(sector) {
@@ -123,6 +123,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 unit.manyPar = i-1;
             } else {
                 unit.manyPar = i;
+                ReportFunctions.addEvent_person_has_par($scope.selectedSector, unit);
             }
             unit.save(null, DefaultErrorLogger);
         }
@@ -135,8 +136,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             }
 
             if(unit.manyPar == unit.par) {
-                ReportFunctions.addEvent_person_has_par($scope.selectedSector, unit);
+                ReportFunctions.addEvent_unit_has_par($scope.selectedSector, unit);
             }
+
+            unit.save(null, DefaultErrorLogger);
         }
 
         $scope.selectSectorPar = function() {
@@ -151,6 +154,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     var unit = selectedSector.units[i];
                     unit.manyPar = unit.par;
                 }
+                ReportFunctions.addEvent_sector_has_par($scope.selectedSector);
+            }
+
+            for(var i=0; i<selectedSector.units.length; i++) {
+                var unit = selectedSector.units[i];
+                unit.save(null, DefaultErrorLogger);
             }
         }
 

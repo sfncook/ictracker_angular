@@ -96,29 +96,12 @@ angular.module("ReportServices", ['DataServices'])
             addEvent_unit_to_sector:        function(sector, unit)                  {SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
             addEvent_unitType_to_acct:      function(sector, unitType)              {SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
             addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-            addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_sector_has_par:        function(sector)                        {SaveReportAction(sector, "Sector has par - Sector: " + sector.sectorType.name);},
+            addEvent_unit_has_par:          function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Fire fighter has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
         };
 
-//
-//        ReportFunctions.addEvent_person_has_par = function(unit, sector) {
-//            var event = {
-//                "datetime":new Date(),
-//                "unit":unit,
-//                "sector":sector};
-//
-//            $scope.events.push(event);
-//        }
-//
-//        ReportFunctions.addEvent_unit_has_par = function(unit, sector) {
-//            var event = {
-//                "datetime":new Date(),
-//                "unit":unit,
-//                "sector":sector};
-//
-//            $scope.events.push(event);
-//        }
-//
-//        ReportFunctions.addEvent_sector_has_par = function(sector) {
+//        ReportFunctions. = function(sector) {
 //            var event = {
 //                "datetime":new Date(),
 //                "sector":sector};
