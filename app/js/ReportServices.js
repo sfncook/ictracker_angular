@@ -90,67 +90,19 @@ angular.module("ReportServices", ['DataServices'])
     .factory('ReportFunctions', [
         'SaveReportAction',
         function(SaveReportAction) {
-
-        return {
-            addEvent_title_to_sector:       function(sector)                        {SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},
-            addEvent_unit_to_sector:        function(sector, unit)                  {SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
-            addEvent_unitType_to_acct:      function(sector, unitType)              {SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
-            addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-            addEvent_sector_has_par:        function(sector)                        {SaveReportAction(sector, "Sector has par - Sector: " + sector.sectorType.name);},
-            addEvent_unit_has_par:          function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-            addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Fire fighter has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-        };
-
-//        ReportFunctions. = function(sector) {
-//            var event = {
-//                "datetime":new Date(),
-//                "sector":sector};
-//
-//            $scope.events.push(event);
-//        }
-//
-//
-//        ReportFunctions.addEvent_benchmark = function(benchmark) {
-//            var event = {
-//                "datetime":new Date(),
-//                "benchmark":benchmark};
-//
-//            $scope.events.push(event);
-//        }
-//
-//        ReportFunctions.addEvent_mode = function(mode) {
-//            var event = {
-//                "datetime":new Date(),
-//                "mode":mode};
-//
-//            $scope.events.push(event);
-//        }
-//
-//
-//        ReportFunctions.addEvent_osr = function(osr) {
-//            var event = {
-//                "datetime":new Date(),
-//                "osr":osr};
-//
-//            $scope.events.push(event);
-//        }
-//
-//        ReportFunctions.addEvent_objective = function(objective) {
-//            var event = {
-//                "datetime":new Date(),
-//                "objective":objective};
-//
-//            $scope.events.push(event);
-//        }
-//
-//        ReportFunctions.addEvent_iap = function(iap) {
-//            var event = {
-//                "datetime":new Date(),
-//                "iap":iap};
-//
-//            $scope.events.push(event);
-//        }
-
+            return {
+                addEvent_title_to_sector:       function(sector)                        {SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},
+                addEvent_unit_to_sector:        function(sector, unit)                  {SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
+                addEvent_unitType_to_acct:      function(sector, unitType)              {SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
+                addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+                addEvent_sector_has_par:        function(sector)                        {SaveReportAction(sector, "Sector has par - Sector: " + sector.sectorType.name);},
+                addEvent_unit_has_par:          function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+                addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Fire fighter has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+                addEvent_benchmark:             function(sector, benchmarkText)         {SaveReportAction(sector, "Benchmark:" + benchmarkText + " for Sector: " + sector.sectorType.name);},
+                addEvent_osr:                   function(osrText)                       {SaveReportAction(sector, "OSR:" + osrText);},
+                addEvent_objective:             function(objectiveText)                 {SaveReportAction(sector, "Objective:" + objectiveText);},
+                addEvent_iap:                   function(iapText)                       {SaveReportAction(sector, "IAP:" + iapText);},
+            };
         }])
 
 
