@@ -109,8 +109,8 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
     }])
 
     .factory('ToggleUnitTypeForSector', [
-        'CreateNewUnit', 'ReportFunctions',
-        function (CreateNewUnit, ReportFunctions) {
+        'CreateNewUnit', 'ReportFunctions', 'DefaultErrorLogger',
+        function (CreateNewUnit, ReportFunctions, DefaultErrorLogger) {
         return function (sector, unitType) {
             if(sector.units) {
                 // search for unitType already in sector

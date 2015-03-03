@@ -63,6 +63,9 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
             } else {
                 // Add unit to sector
                 relation.add(actionType);
+                if(!unit.actionsArr) {
+                    unit.actionsArr = new Array();
+                }
                 unit.actionsArr.push(actionType);
                 addedAction = true;
             }
