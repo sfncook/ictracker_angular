@@ -795,14 +795,15 @@
         </table>
 
         <div class="report_rows_container" ng-show="orderByField!='createdBy'">
-            <div ng-repeat="sectorTypeName in getSectorTypeNames()">
-                <div class="action_type_dialog_header">{{sectorTypeName}}</div>
-                <!--<table class="report_rows_container">-->
-                <!--<tr ng-repeat="reportAction in reportActions | orderBy:orderByField">-->
-                <!--<td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>-->
-                <!--<td class="report_td">{{reportAction.text}}</td>-->
-                <!--</tr>-->
-                <!--</table>-->
+            <div ng-repeat="sectorType in getSectorTypes()">
+                <div class="action_type_dialog_header">{{sectorType.name}}</div>
+                <table class="report_rows_container">
+                    <tr ng-repeat="reportAction in getReportActionsForSectorType(sectorType) | orderBy:orderByField">
+                        <td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>
+                        <td class="report_td">{{reportAction.text}}</td>
+                    </tr>
+                </table>
+                <div class="clear_both"></div>
             </div>
         </div>
     </div>

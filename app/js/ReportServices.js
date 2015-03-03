@@ -82,13 +82,30 @@ angular.module("ReportServices", ['DataServices'])
             });
         }
 
-        $scope.getSectorTypeNames = function() {
+        $scope.getSectorTypes = function() {
             var sectorsMap = {};
             for(var i=0; i<ReportActions.length; i++) {
                 var reportAction = ReportActions[i];
-                sectorsMap[reportAction.sector.sectorType.name] = reportAction.sector;
+                sectorsMap[reportAction.sector.sectorType.name] = reportAction.sector.sectorType;
             }
-            return Object.keys(sectorsMap);
+
+            var sectorTypes = new Array();
+            for(var i=0; i<Object.keys(sectorsMap).length; i++) {
+                var key = Object.keys(sectorsMap)[i];
+                sectorTypes.push(sectorsMap[key]);
+            }
+            return sectorTypes;
+        };
+
+        $scope.getReportActionsForSectorType = function(sectorType) {
+            var reportActions = new Array();
+            for(var i=0; i<ReportActions.length; i++) {
+                var reportAction = ReportActions[i];
+                if(reportAction.sector.sectorType.name==sectorType.name) {
+                    reportActions.push(reportAction);
+                }
+            }
+            return reportActions;
         };
 
     })
