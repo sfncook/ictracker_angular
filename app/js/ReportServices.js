@@ -6,9 +6,9 @@ angular.module("ReportServices", ['DataServices'])
     })
 
     .factory('LoadReportsForIncident', [
-        'ReportActions', 'ConvertParseObject',
-        function (ReportActions, ConvertParseObject) {
-            return function (incident) {
+        'ReportActions', 'ConvertParseObject', 'FetchTypeForSector',
+        function (ReportActions, ConvertParseObject, FetchTypeForSector) {
+            return function ($scope, incident) {
                 var queryReportActions = new Parse.Query(Parse.Object.extend('ReportAction'));
                 queryReportActions.equalTo("incident", incident);
                 ReportActions.removeAll();
@@ -17,6 +17,16 @@ angular.module("ReportServices", ['DataServices'])
                         for(var i=0; i<reportActions.length; i++) {
                             var reportAction = reportActions[i];
                             ConvertParseObject(reportAction, REPORT_ACTION_DEF);
+                            reportAction.sector.fetch({
+                                success: function(sector) {
+                                    ConvertParseObject(sector, SECTOR_DEF);
+                                    FetchTypeForSector($scope, sector);
+                                    reportAction.sector = sector;
+                                },
+                                error: function(error) {
+                                    console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
+                                }
+                            });
                             ReportActions.push(reportAction);
                         }
                     },
@@ -67,10 +77,19 @@ angular.module("ReportServices", ['DataServices'])
         $scope.orderByField = "createdBy";
 
         DataStore.showReportsDlg = function() {
-            LoadReportsForIncident(DataStore.incident).then(function(){
+            LoadReportsForIncident($scope, DataStore.incident).then(function(){
                 $("#reports_dlg").dialog( "open" );
             });
         }
+
+        $scope.getSectorTypeNames = function() {
+            var sectorsMap = {};
+            for(var i=0; i<ReportActions.length; i++) {
+                var reportAction = ReportActions[i];
+                sectorsMap[reportAction.sector.sectorType.name] = reportAction.sector;
+            }
+            return Object.keys(sectorsMap);
+        };
 
     })
 

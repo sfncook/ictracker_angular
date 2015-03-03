@@ -787,12 +787,24 @@
             <div class="report_div_header_span">{{dataStore.incident | timeStringForIncident}}</div>
         </div>
 
-        <table class="report_rows_container">
+        <table class="report_rows_container" ng-show="orderByField=='createdBy'">
             <tr ng-repeat="reportAction in reportActions | orderBy:orderByField">
                 <td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>
                 <td class="report_td">{{reportAction.text}}</td>
             </tr>
         </table>
+
+        <div class="report_rows_container" ng-show="orderByField!='createdBy'">
+            <div ng-repeat="sectorTypeName in getSectorTypeNames()">
+                <div class="action_type_dialog_header">{{sectorTypeName}}</div>
+                <!--<table class="report_rows_container">-->
+                <!--<tr ng-repeat="reportAction in reportActions | orderBy:orderByField">-->
+                <!--<td class="report_td report_date_td">{{reportAction | timeStringForIncident}}</td>-->
+                <!--<td class="report_td">{{reportAction.text}}</td>-->
+                <!--</tr>-->
+                <!--</table>-->
+            </div>
+        </div>
     </div>
     <div class="clear_both"></div>
 </div>
