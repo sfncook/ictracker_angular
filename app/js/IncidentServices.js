@@ -82,6 +82,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
 
     .factory('LoadAllIncidents', ['ConvertParseObject', 'ParseQuery', 'Incidents', function (ConvertParseObject, ParseQuery, Incidents) {
         return function ($scope) {
+            Incidents.removeAll();
             var query = new Parse.Query(Parse.Object.extend('Incident'));
             query.find({
                 success: function(incidents) {

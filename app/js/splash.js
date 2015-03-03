@@ -42,11 +42,11 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         if (response == true) {
             incident.destroy({
                 success: function(myObject) {
-                    loadIncidentList($scope, ConvertParseObject, ParseQuery);
+                    LoadAllIncidents($scope);
                 },
                 error: function(myObject, error) {
                     console.log("Error:"+error);
-                    loadIncidentList($scope, ConvertParseObject, ParseQuery);
+                    LoadAllIncidents($scope);
                 }
             });
         }
