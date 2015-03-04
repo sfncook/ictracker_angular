@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("AdminModule", ['DataServices'])
+angular.module("AdminModule", ['DataServices', 'UserServices'])
 
     .controller('AdminUserCtrl', function ($scope, ConvertParseObject, LoadAllDepartments, Departments) {
         $scope.username = "";
@@ -17,6 +17,8 @@ angular.module("AdminModule", ['DataServices'])
 
         LoadAllDepartments();
         $scope.departments = Departments;
+        $scope.roles = ["admin", "user"];
+        $scope.addedRoles = new Array();
 
         $scope.createUser = function() {
             var user = new Parse.User();
@@ -62,9 +64,18 @@ angular.module("AdminModule", ['DataServices'])
             });
         }
 
-        $scope.testClick = function() {
-            $scope.testing = "XYZ";
+        $scope.toggleRole = function(roleName) {
+            if($scope.addedRoles.indexOf(roleName)>=0) {
+                $scope.addedRoles.remByVal(roleName);
+            } else {
+                $scope.addedRoles.push(roleName);
+            }
         }
+
+        $scope.isAddedRoll = function(roleName) {
+            return $scope.addedRoles.indexOf(roleName)>=0;
+        }
+
     })
 
     .factory('Departments', function() {

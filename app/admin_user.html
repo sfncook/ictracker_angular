@@ -15,6 +15,7 @@
     <script src="js/init.js"></script>
     <script src="js/libs/ParseServices.js"></script>
     <script src="js/DataServices.js"></script>
+    <script src="js/admin/UserServices.js"></script>
     <script src="js/admin/AdminUserServices.js"></script>
 </head>
 <body ng-controller="AdminUserCtrl">
@@ -48,6 +49,16 @@
                     <select style="width:125px;" ng-model="department">
                         <option ng-repeat="department in departments">{{department.name}}</option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Roles:</td>
+                <td style="text-align: left">
+                    <button
+                        ng-repeat="role in roles"
+                        ng-class="{glowlightgreen:isAddedRoll(role)}"
+                        ng-click="toggleRole(role)"
+                        style="margin:0 5px">{{role}}</button>
                 </td>
             </tr>
             <tr>

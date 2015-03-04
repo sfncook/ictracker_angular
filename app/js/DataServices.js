@@ -13,6 +13,7 @@ var OSR_DEF = ['incident', 'isAddress', 'isOccupancy', 'isConstruction', 'isAssu
 var OBJECTIVES_DEF = ['incident', 'upgradeToFullRescue', 'assingSafety', 'establishSupplyLine', 'secureUtilities', 'ventiliation', 'createOnDeck', 'pressurizeExposures', 'monitorChannel16', 'salvage', 'establishRehab', 'customerService'];
 var DEPT_DEF = ['name'];
 var USER_DEF = ['username', 'email'];
+var ROLE_DEF = ['name'];
 
 angular.module('DataServices', ['ParseServices'])
     .factory('DefaultCity', function() {
