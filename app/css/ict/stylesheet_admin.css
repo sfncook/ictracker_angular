@@ -1,0 +1,24 @@
+
+html {
+    font-size: 100%;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background: #9ad1ff;
+    color: black;
+    text-align: center;
+    height: 100%;
+}
+
+table {
+    width: 400px;
+    margin: 50px auto;
+}
+
+table td {
+    padding:5px;
+}

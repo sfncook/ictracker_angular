@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="AdminModule">
+<head>
+    <title>ICT User Admin</title>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <link rel="stylesheet" href="css/ict/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" href="css/ict/stylesheet_admin.css">
+
+    <script src="js/libs/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/admin/AdminUserServices.js"></script>
+</head>
+<body ng-controller="AdminUserCtrl">
+    <table>
+        <tr>
+            <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center">Add a new user:</td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Name:</td>
+            <td style="text-align: left"><input ng-model="username"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Password:</td>
+            <td style="text-align: left"><input ng-model="password" type="password"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Email:</td>
+            <td style="text-align: left"><input ng-model="email" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center"><button ng-click="createUser()">Submit</button></td>
+        </tr>
+    </table>
+</body>
+</html>
