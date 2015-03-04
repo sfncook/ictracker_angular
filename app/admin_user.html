@@ -13,31 +13,75 @@
     <script src="bower_components/angular/angular.js"></script>
     <script src="js/config.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
     <script src="js/admin/AdminUserServices.js"></script>
 </head>
 <body ng-controller="AdminUserCtrl">
-    <table>
-        <tr>
-            <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center">Add a new user:</td>
-        </tr>
-        <tr>
-            <td style="text-align: right">Name:</td>
-            <td style="text-align: left"><input ng-model="username"/></td>
-        </tr>
-        <tr>
-            <td style="text-align: right">Password:</td>
-            <td style="text-align: left"><input ng-model="password" type="password"/></td>
-        </tr>
-        <tr>
-            <td style="text-align: right">Email:</td>
-            <td style="text-align: left"><input ng-model="email" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center"><button ng-click="createUser()">Submit</button></td>
-        </tr>
-    </table>
+    <div ng-show="!loggedOut">
+        <div class="currentUser">
+            Hello, {{currentUser.username}}!<br>
+            <button ng-click="logout()">Logout</button>
+        </div>
+        <table>
+            <tr>
+                <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center; font-size:1.2rem; font-weight:bold;">Add a new user:</td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Name:</td>
+                <td style="text-align: left"><input ng-model="username"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Password:</td>
+                <td style="text-align: left"><input ng-model="password"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Email:</td>
+                <td style="text-align: left"><input ng-model="email" /></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Department:</td>
+                <td style="text-align: left">
+                    <select style="width:125px;" ng-model="department">
+                        <option ng-repeat="department in departments">{{department.name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><button ng-click="createUser()">Submit</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-show="loggedOut">
+        <table>
+            <tr>
+                <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center; font-size:1.2rem; font-weight:bold;">Admin login:</td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Name:</td>
+                <td style="text-align: left"><input ng-model="username"/></td>
+            </tr>
+            <tr>
+                <td style="text-align: right">Password:</td>
+                <td style="text-align: left"><input ng-model="password" type="password"/></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><button ng-click="login()">Login</button></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="copyright_div">
+        <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
+        <div id="version_text" class="lic_info_splash">Version: 0.0</div>
+    </div>
 </body>
 </html>
