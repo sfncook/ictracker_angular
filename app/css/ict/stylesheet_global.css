@@ -97,15 +97,17 @@ button:active {
 .button_hidden {
     visibility: hidden;
 }
-.button_disabled {
-    background: #CCC;
+.button_disabled, .button_disabled.glowlightgreen {
+    background: #CCC !important;
 }
-.button_disabled:hover {
-    background: #CCC;
+.button_disabled:hover, .button_disabled.glowlightgreen:hover {
+    background: #CCC !important;
 }
-.button_disabled:active {
-    background: #CCC;
+.button_disabled:active, .button_disabled.glowlightgreen:active {
+    background: #CCC !important;
 }
+
+div#upgrade_btn_sub_label{ font-size: 12px; }
 
 .button_top {
     border-top-left-radius: 0;
@@ -485,7 +487,7 @@ button:active {
 #upgrade_right_col {
     float:right;
 }
-#upgrade_left_col {
+#upgrade_left_col, #upgrade_middle_col {
     float:left;
 }
 
@@ -863,4 +865,8 @@ button:active {
 }
 .bg_orange {
     background: #FFAD2C;
+}
+.outer_glow{
+    box-shadow: 0px 0px 20px darkred;
+    border:2px solid yellow;
 }

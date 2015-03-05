@@ -1,8 +1,20 @@
 
-angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapServices', 'ObjectivesServices', 'OSRServices'])
+angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapServices', 'ObjectivesServices', 'OSRServices', 'UpgradeServices'])
 
     .factory('IncidentTypes', function() {
         return new Array();
+    })
+
+    .controller('StrategyDlg', function($scope, $http, DataStore){
+        $scope.dataStore = DataStore;
+        DataStore.showStrategyDlg=function(){
+            $("#strategy_dlg").dialog('open');
+        }
+        $scope.setStrategy = function(strategyType){
+            DataStore.incident.strategy = strategyType;
+            DataStore.incident.save();
+            $("#strategy_dlg").dialog('close');
+        }
     })
 
     .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ConvertParseObject', function (IncidentTypes, ParseQuery, ConvertParseObject) {
@@ -26,8 +38,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     }])
 
     .factory('LoadIncident', [
-        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident', 'LoadObjectivesForIncident', 'LoadOSRForIncident',
-        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident) {
+        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident', 'LoadObjectivesForIncident', 'LoadOSRForIncident', 'LoadUpgradeForIncident',
+        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -47,6 +59,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         LoadIAPForIncident($scope, incident);
                         LoadObjectivesForIncident($scope, incident);
                         LoadOSRForIncident($scope, incident);
+                        LoadUpgradeForIncident($scope, incident);
 
                         DataStore.loadSuccess = true;
                         DataStore.waitingToLoad = false;
