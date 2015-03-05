@@ -2,7 +2,7 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices'])
 
-    .controller('AdminUserCtrl', function ($scope, ConvertParseObject, LoadAllDepartments, Departments) {
+    .controller('AdminUserCtrl', function ($scope, ConvertParseObject, LoadAllDepartments, Departments, CreateUser) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
@@ -21,29 +21,10 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
         $scope.addedRoles = new Array();
 
         $scope.createUser = function() {
-            var user = new Parse.User();
-            user.set("username", $scope.username);
-            user.set("password", $scope.password);
-            user.set("email", $scope.email);
-            var department_;
-            for(var i=0; i<Departments.length; i++) {
-                var department = Departments[i];
-                if(department.name==$scope.department) {
-                    department_=department;
-                    break;
-                }
-            }
-            user.set("department", department_);
-
-            user.signUp(null, {
-                success: function(user) {
-                    console.log("Success!");
-                },
-                error: function(user, error) {
-                    // Show the error message somewhere and let the user try again.
-                    console.log("Error: " + error.code + " " + error.message);
-                }
-            });
+//            CreateUser($scope.username, $scope.password, $scope.email, $scope.department, $scope.addedRoles);
+            var role = new Parse.Role("admin", new Parse.ACL());
+            role.getUsers().add($scope.currentUser);
+            role.save();
         }
 
         $scope.logout = function() {
