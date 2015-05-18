@@ -1,0 +1,13 @@
+
+body.signuppage {
+    background: #9ad1ff;
+    color: black;
+    text-align: center;
+    height: 100%;
+}
+
+.signup_btn {
+    width: 150px;
+    margin: 5px;
+    display:block;
+}

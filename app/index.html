@@ -1,6 +1,33 @@
+
 <!DOCTYPE html>
-<html>
-<body>
-<script>window.location = "splash.html";</script>
+<html lang="en" ng-app="SignUpController">
+<head>
+    <link href="ict_logo_29x29.png" rel="icon"/>
+    <title>White Helmet Tech, LLC</title>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_signup.css"/>
+
+    <!--JS-->
+    <script src="//www.parsecdn.com/js/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/SignUpServices.js"></script>
+
+</head>
+
+<body class="signuppage" ng-controller="SignUpCtrl">
+    <div style="width:400px; margin:0 auto;">
+        <center>
+            <img src="img/logo/ict_logo_300x300.png"/><br/>
+            <h2>Start your FREE 30-Day trial:</h2>
+            <button class="signup_btn" ng-click="signup()">Free Trial</button>
+        </center>
+    </div>
+
 </body>
 </html>

@@ -21,10 +21,18 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
         $scope.addedRoles = new Array();
 
         $scope.createUser = function() {
+            createRole();
 //            CreateUser($scope.username, $scope.password, $scope.email, $scope.department, $scope.addedRoles);
-            var role = new Parse.Role("admin", new Parse.ACL());
-            role.getUsers().add($scope.currentUser);
-            role.save();
+//            Parse.Cloud.run('setUserRole', { userId: 'MnppIcJMyX', role: 'admin' }, {
+//                success: function(response) {
+//                    console.log("success:");
+//                    console.log(response);
+//                },
+//                error: function(error) {
+//                    console.log("error:");
+//                    console.log(error);
+//                }
+//            });
         }
 
         $scope.logout = function() {
@@ -78,3 +86,24 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
     }])
 
 ;
+
+function createRole() {
+    var roleACL = new Parse.ACL();
+    roleACL.setWriteAccess(Parse.User.current(), true);
+    roleACL.setPublicReadAccess(true);
+    var role = new Parse.Role("Administrator", roleACL);
+    role.getUsers().add(Parse.User.current());
+
+    role.save(null, {
+        success: function(saveObject) {
+            // The object was saved successfully.
+            alert('role creation done');
+            updateRoleACL(saveObject);
+        },
+        error: function(saveObject, error) {
+            // The save failed.
+            window.alert("Failed creating role with error: " + error.code + ":"+ error.message);
+            //assignRoles();
+        }
+    });
+}
