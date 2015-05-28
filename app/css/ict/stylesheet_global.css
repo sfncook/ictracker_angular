@@ -870,3 +870,7 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     box-shadow: 0px 0px 20px darkred;
     border:2px solid yellow;
 }
+
+#branch_users_select {
+    margin: 5px;
+}

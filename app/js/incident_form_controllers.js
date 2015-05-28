@@ -24,6 +24,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             DataStore.showUnitsDlgForDispUnits();
         }
 
+        $scope.showBranchDlg = function() {
+            DataStore.showBranchDlg();
+        }
+
         $scope.showCmdXferDlg = function() {
             DataStore.showCmdXferDlg();
         }
@@ -432,13 +436,13 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-.controller('IncInfoDlg', function($scope, DataStore){
-		$scope.inc_address = '';
-		$scope.inc_number = '';
+    .controller('IncInfoDlg', function($scope, DataStore){
+        $scope.inc_address = '';
+        $scope.inc_number = '';
 
         DataStore.showIncInfoDlg = function() {
-        	$scope.inc_address = DataStore.incident.inc_address;
-			$scope.inc_number = DataStore.incident.inc_number;
+            $scope.inc_address = DataStore.incident.inc_address;
+            $scope.inc_number = DataStore.incident.inc_number;
             $("#incident_info_dlg").dialog( "open" );
         }
 
@@ -458,6 +462,28 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
         $scope.clickNumberClear = function() {
             $scope.inc_number = "";
+        }
+    })
+
+    .controller('BranchDlg', function($scope, DataStore){
+
+        $scope.users = [
+            {"name":"Bob Smith"},
+            {"name":"John Jones"},
+            {"name":"Sally Smith"},
+            {"name":"Jeff Bridges"}
+        ];
+
+        DataStore.showBranchDlg = function() {
+            $("#branch_dlg").dialog( "open" );
+        }
+
+        $scope.clickOk = function() {
+            $("#branch_dlg").dialog( "close" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#branch_dlg").dialog( "close" );
         }
     })
 
@@ -665,6 +691,7 @@ function initDialogs() {
     $( "#reports_dlg" ).dialog( "option", "width", 820 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
     $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
+    $( "#branch_dlg" ).dialog( "option", "width", 450 );
     $( "#strategy_dlg" ).dialog( "option", "width", 258 );
     $("#mayday_form").hide();
 

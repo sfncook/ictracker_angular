@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.11.0.custom/jquery-ui.css"/>
     <link rel="stylesheet" href="css/ict/reset.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css"/>
     <link rel="stylesheet" href="css/ict/stylesheet_global.css">
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
@@ -18,7 +18,7 @@
     <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="js/config.js"></script>
@@ -67,14 +67,14 @@
     </button>
 
     <button id="cmdxfer_units_btn"
-            class="header_item"
+            class="disabled header_item"
             ng-click="showCmdXferDlg()">
         <div>Command</div>
         <div>Transferred</div>
     </button>
     <button id="branch_btn"
-            class="disabled header_item button"
-            ng-click="showUpgradeDlg()">Branch
+            class="header_item"
+            ng-click="showBranchDlg()">Branch
     </button>
     <div ng-controller="OsrDlg">
     <button id="osr_header_btn"
@@ -838,6 +838,24 @@
         <button ng-click="clickCancel()" id="inc_info_dlg_cancel" class="confirm_btn">Cancel</button>
         <div class="clear_float"></div>
     </div>
+</div>
+
+<!-- Branch Dialog -->
+<div id="branch_dlg" title="Branch Incident" ng-controller="BranchDlg" class="dialog">
+    <div class="">
+        <select id="branch_users_select" size="6" style="float:left"
+                ng-init="branch_user = users[0]"
+                ng-options="user.name for user in users"
+                ng-model="branch_user">
+        </select>
+    </div>
+    <div class="">
+
+    </div>
+
+    <button ng-click="clickOk()" id="branch_dlg_ok" class="confirm_btn">OK</button>
+    <button ng-click="clickCancel()" id="branch_dlg_cancel" class="confirm_btn">Cancel</button>
+    <div class="clear_float"></div>
 </div>
 
 <div id="copyright_text">&copy; Copyright 2014 White Helmet Tech, LLC</div>
