@@ -465,7 +465,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('BranchDlg', function($scope, DataStore){
+    .controller('BranchDlg', function($scope, DataStore, LoadIncidentTypes, IncidentTypes){
+
+        LoadIncidentTypes();
+        $scope.incidentTypes = IncidentTypes;
 
         $scope.users = [
             {"name":"Bob Smith"},
@@ -483,6 +486,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.clickCancel = function() {
+            $("#branch_dlg").dialog( "close" );
+        }
+
+        $scope.createBranch = function(incidentType) {
             $("#branch_dlg").dialog( "close" );
         }
     })

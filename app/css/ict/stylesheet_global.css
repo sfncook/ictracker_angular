@@ -874,3 +874,20 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
 #branch_users_select {
     margin: 5px;
 }
+.branch_dlg_left_col {
+    float:left;
+}
+.branch_dlg_right_col {
+    float:left;
+}
+.branch_inc_type_btn {
+    height: 50px;
+    width: 60px;
+    margin: 5px;
+    padding-top: 2px !important;
+    float: left;
+}
+.branch_inc_type_btn_icon {
+    height: 15px;
+    width: 15px;
+}

@@ -842,16 +842,23 @@
 
 <!-- Branch Dialog -->
 <div id="branch_dlg" title="Branch Incident" ng-controller="BranchDlg" class="dialog">
-    <div class="">
+    <div class="branch_dlg_left_col">
         <select id="branch_users_select" size="6" style="float:left"
                 ng-init="branch_user = users[0]"
                 ng-options="user.name for user in users"
                 ng-model="branch_user">
         </select>
     </div>
-    <div class="">
+    <div class="branch_dlg_right_col">
+        <button class="branch_inc_type_btn"
+                ng-repeat="incidentType in incidentTypes"
+                ng-click="createBranch(incidentType)">
+            <img class="branch_inc_type_btn_icon" ng-src="{{incidentType.icon}}"/>
 
+            <div class="splash_start_btn_text">{{incidentType.nameLong}}</div>
+        </button>
     </div>
+    <div class="clear_float"></div>
 
     <button ng-click="clickOk()" id="branch_dlg_ok" class="confirm_btn">OK</button>
     <button ng-click="clickCancel()" id="branch_dlg_cancel" class="confirm_btn">Cancel</button>
