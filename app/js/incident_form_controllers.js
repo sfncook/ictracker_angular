@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices'])
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
@@ -465,7 +465,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('BranchDlg', function($scope, DataStore, LoadIncidentTypes, IncidentTypes){
+    .controller('BranchDlg', function($scope, DataStore, LoadIncidentTypes, IncidentTypes, CreateBranch){
 
         LoadIncidentTypes();
         $scope.incidentTypes = IncidentTypes;
@@ -487,6 +487,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.createBranch = function(incidentType) {
             $("#branch_dlg").dialog( "close" );
+            CreateBranch($scope.branch_user, incidentType);
         }
     })
 
