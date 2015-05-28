@@ -481,10 +481,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $("#branch_dlg").dialog( "open" );
         }
 
-        $scope.clickOk = function() {
-            $("#branch_dlg").dialog( "close" );
-        }
-
         $scope.clickCancel = function() {
             $("#branch_dlg").dialog( "close" );
         }
@@ -698,7 +694,7 @@ function initDialogs() {
     $( "#reports_dlg" ).dialog( "option", "width", 820 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
     $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
-    $( "#branch_dlg" ).dialog( "option", "width", 450 );
+    $( "#branch_dlg" ).dialog( "option", "width", 550 );
     $( "#strategy_dlg" ).dialog( "option", "width", 258 );
     $("#mayday_form").hide();
 
