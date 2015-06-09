@@ -175,4 +175,8 @@
 #objectives_header_btn {
     height: 30px;
 }
-
+.strat_btn {
+    display: block;
+    width: 90%;
+    margin: 1em;
+}

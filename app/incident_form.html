@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.11.0.custom/jquery-ui.css"/>
     <link rel="stylesheet" href="css/ict/reset.css">
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="bower_components/angular-gridster/dist/angular-gridster.min.css"/>
     <link rel="stylesheet" href="css/ict/stylesheet_global.css">
     <link rel="stylesheet" href="css/ict/stylesheet_tbar.css">
@@ -18,7 +18,7 @@
     <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
-    <script src="../bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="bower_components/angular-gridster/dist/angular-gridster.min.js"></script>
     <script src="js/config.js"></script>
@@ -35,8 +35,10 @@
     <script src="js/IapServices.js"></script>
     <script src="js/ObjectivesServices.js"></script>
     <script src="js/OSRServices.js"></script>
+    <script src="js/UpgradeServices.js"></script>
     <script src="js/TimerServicies.js"></script>
     <script src="js/ReportServices.js"></script>
+    <script src="js/BranchServices.js"></script>
     <script src="version.js"></script>
 </head>
 <body>
@@ -59,20 +61,21 @@
     </button>
     <button id="upgrade_btn"
             class="header_item"
+            ng-controller="UpgradeDlg"
             ng-click="showUpgradeDlg()">
         <div>Upgrade</div>
-        <div id="upgrade_btn_sub_label" class="hidden_div"></div>
+        <div id="upgrade_btn_sub_label">{{displayUpgradeLabel}}</div>
     </button>
 
     <button id="cmdxfer_units_btn"
-            class="header_item"
+            class="disabled header_item"
             ng-click="showCmdXferDlg()">
         <div>Command</div>
         <div>Transferred</div>
     </button>
     <button id="branch_btn"
-            class="disabled header_item button"
-            ng-click="showUpgradeDlg()">Branch
+            class="header_item"
+            ng-click="showBranchDlg()">Branch
     </button>
     <div ng-controller="OsrDlg">
     <button id="osr_header_btn"
@@ -123,7 +126,7 @@
         <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
     <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
-    <button id="mode_btn" class="button_top">Strategy</button>
+    <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
     <div id="db_status_msg_success"
          class="button_top db_status"
@@ -146,9 +149,9 @@
                 <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
                     <table>
                         <tr>
-                            <td class="tbar_title_dir_td">{{sector.sector_dir}}</td>
+                            <td class="tbar_title_dir_td">{{sector.direction}}</td>
                             <td class="tbar_title_td">{{sector.sectorType.name}}</td>
-                            <td class="tbar_title_num_td">{{sector.sector_num}}</td>
+                            <td class="tbar_title_num_td">{{sector.number}}</td>
                         </tr>
                     </table>
                 </button>
@@ -233,13 +236,13 @@
     <button
             class="sector_numdir_btn"
             ng-repeat="sector_dir in sector_dir_btns"
-            ng-class="{glow_orange:selectedSector.sector_dir=='{{sector_dir.tbar}}', tbar_title_dir_wide_td:{{sector_dir.isWide}}}"
+            ng-class="{glow_orange:selectedSector.direction=='{{sector_dir.tbar}}', tbar_title_dir_wide_td:{{sector_dir.isWide}}}"
             ng-click="setDir(sector_dir)">{{sector_dir.dialog}}
     </button>
     <button
             class="sector_numdir_btn"
             ng-repeat="sector_num in sector_num_btns"
-            ng-class="{glow_orange:selectedSector.sector_num=='{{sector_num}}'}"
+            ng-class="{glow_orange:selectedSector.number=='{{sector_num}}'}"
             ng-click="setNum(sector_num)">{{sector_num}}
     </button>
     <div class="clear_both"></div>
@@ -374,33 +377,38 @@
 <!-- Upgrade Dialog -->
 <div id="upgrade_dlg" title="Upgrade" ng-controller="UpgradeDlg" class="dialog">
     <div id="upgrade_left_col">
-        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=1"
-                ng-class="{glowlightgreen:upgrade_primary==1}">En Route
+        <button id="enroute_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgTogglePrim(true)"
+                ng-class="{glowlightgreen:dataStore.upgrade.isEnRoute}">En Route
         </button>
-        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgrade_primary=2"
-                ng-class="{glowlightgreen:upgrade_primary==2}">On Scene
+        <button id="onscene_upgrade_btn" class="left_upgrade_btn upgrade_btn" ng-click="upgTogglePrim(false)"
+                ng-class="{glowlightgreen:!dataStore.upgrade.isEnRoute}">On Scene
+        </button>
+    </div>
+    <div id="upgrade_middle_col">
+        <button id="balance_to_upgrade_btn" class="mid_upgrade_btn upgrade_btn" ng-click="upgToggleBalance()"
+                ng-class="{glowlightgreen:dataStore.upgrade.isBalanceTo}">Balance To
         </button>
     </div>
     <div id="upgrade_right_col">
-        <button id="working_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=1"
-                ng-class="{glowlightgreen:upgrade_secondary==1, button_disabled:upgrade_primary==0}"
-                ng-disabled="upgrade_primary==0">Working Fire
+        <button id="working_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgSec(1)"
+                ng-class="{glowlightgreen:upgrade_secondary==1, button_disabled:dataStore.upgrade.isBalanceTo}"
+                ng-disabled="dataStore.upgrade.isBalanceTo">Working Fire
         </button>
-        <button id="first_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=2"
-                ng-class="{glowlightgreen:upgrade_secondary==2, button_disabled:upgrade_primary==0}"
-                ng-disabled="upgrade_primary==0">1st Alarm
+        <button id="first_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgSec(2)"
+                ng-class="{glowlightgreen:upgrade_secondary==2, button_disabled:dataStore.upgrade.isBalanceTo}"
+                ng-disabled="dataStore.upgrade.isBalanceTo">1st Alarm
         </button>
-        <button id="second_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=3"
-                ng-class="{glowlightgreen:upgrade_secondary==3, button_disabled:upgrade_primary==0}"
-                ng-disabled="upgrade_primary==0">2nd Alarm
+        <button id="second_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgSec(3)"
+                ng-class="{glowlightgreen:upgrade_secondary==3, button_disabled:dataStore.upgrade.isBalanceTo}"
+                ng-disabled="dataStore.upgrade.isBalanceTo">2nd Alarm
         </button>
-        <button id="third_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=4"
-                ng-class="{glowlightgreen:upgrade_secondary==4, button_disabled:upgrade_primary==0}"
-                ng-disabled="upgrade_primary==0">3rd Alarm
+        <button id="third_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgSec(4)"
+                ng-class="{glowlightgreen:upgrade_secondary==4, button_disabled:dataStore.upgrade.isBalanceTo}"
+                ng-disabled="dataStore.upgrade.isBalanceTo">3rd Alarm
         </button>
-        <button id="fourth_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgrade_secondary=5"
-                ng-class="{glowlightgreen:upgrade_secondary==5, button_disabled:upgrade_primary==0}"
-                ng-disabled="upgrade_primary==0">4th Alarm
+        <button id="fourth_upgrade_btn" class="right_upgrade_btn upgrade_btn" ng-click="upgSec(5)"
+                ng-class="{glowlightgreen:upgrade_secondary==5, button_disabled:dataStore.upgrade.isBalanceTo}"
+                ng-disabled="dataStore.upgrade.isBalanceTo">4th Alarm
         </button>
     </div>
 </div>
@@ -566,6 +574,12 @@
         <button ng-click="clickCancel()" id="address_dlg_cancel" class="confirm_btn">Cancel</button>
         <div class="clear_float"></div>
     </div>
+</div>
+
+<!-- Objectives Dialog Unit Component Prototype -->
+<div id="strategy_dlg" title="Strategy" ng-controller="StrategyDlg" class="dialog">
+    <button class="glowgreen strat_btn" ng-class="{outer_glow:dataStore.incident.strategy=='OFFENSE'}" ng-click="setStrategy('OFFENSE');">OFFENSIVE</button>
+    <button class="glowred strat_btn" ng-class="{outer_glow:dataStore.incident.strategy=='DEFENSE'}" ng-click="setStrategy('DEFENSE');">DEFENSIVE</button>
 </div>
 
 <!-- Objectives Dialog Unit Component Prototype -->
@@ -825,6 +839,31 @@
         <button ng-click="clickCancel()" id="inc_info_dlg_cancel" class="confirm_btn">Cancel</button>
         <div class="clear_float"></div>
     </div>
+</div>
+
+<!-- Branch Dialog -->
+<div id="branch_dlg" title="Branch Incident" ng-controller="BranchDlg" class="dialog">
+    <div class="branch_dlg_left_col">
+        <select id="branch_users_select" size="6" style="float:left"
+                ng-init="branch_user = users[0]"
+                ng-options="user.name for user in users"
+                ng-model="branch_user">
+        </select>
+    </div>
+    <div class="branch_dlg_right_col">
+        <button class="branch_inc_type_btn"
+                ng-repeat="incidentType in incidentTypes"
+                ng-click="createBranch(incidentType)">
+            <img class="branch_inc_type_btn_icon" ng-src="{{incidentType.icon}}"/>
+
+            <div class="splash_start_btn_text">{{incidentType.nameLong}}</div>
+        </button>
+
+        <button ng-click="clickCancel()" id="branch_dlg_cancel" class="confirm_btn">Cancel</button>
+
+        <div class="clear_float"></div>
+    </div>
+    <div class="clear_float"></div>
 </div>
 
 <div id="copyright_text">&copy; Copyright 2014 White Helmet Tech, LLC</div>

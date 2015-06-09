@@ -1,16 +1,19 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices'])
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-		//LoadIAPForIncident($scope, DataStore.incident);
-		$scope.showIncInfoDlg = function() {
-			DataStore.showIncInfoDlg();
-		}
+        //LoadIAPForIncident($scope, DataStore.incident);
+        $scope.showIncInfoDlg = function() {
+            DataStore.showIncInfoDlg();
+        }
+        $scope.showStrategyDlg = function() {
+            DataStore.showStrategyDlg();
+        }
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore){
@@ -21,8 +24,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             DataStore.showUnitsDlgForDispUnits();
         }
 
-        $scope.showUpgradeDlg = function() {
-            DataStore.showUpgradeDlg();
+        $scope.showBranchDlg = function() {
+            DataStore.showBranchDlg();
         }
 
         $scope.showCmdXferDlg = function() {
@@ -219,10 +222,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $("#sector_name_dlg").dialog( "close" );
         };
         $scope.setDir = function(sector_dir) {
-            $scope.selectedSector.sector_dir=sector_dir.tbar;
+            $scope.selectedSector.direction=sector_dir.tbar;
+            $scope.selectedSector.save(null, DefaultErrorLogger);
         };
         $scope.setNum = function(sector_num) {
-            $scope.selectedSector.sector_num=sector_num;
+            $scope.selectedSector.number=sector_num;
+            $scope.selectedSector.save(null, DefaultErrorLogger);
         };
 
 
@@ -431,13 +436,13 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-.controller('IncInfoDlg', function($scope, DataStore){
-		$scope.inc_address = '';
-		$scope.inc_number = '';
+    .controller('IncInfoDlg', function($scope, DataStore){
+        $scope.inc_address = '';
+        $scope.inc_number = '';
 
         DataStore.showIncInfoDlg = function() {
-        	$scope.inc_address = DataStore.incident.inc_address;
-			$scope.inc_number = DataStore.incident.inc_number;
+            $scope.inc_address = DataStore.incident.inc_address;
+            $scope.inc_number = DataStore.incident.inc_number;
             $("#incident_info_dlg").dialog( "open" );
         }
 
@@ -460,12 +465,29 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('UpgradeDlg', function($scope, DataStore){
-        $scope.upgrade_primary = 0;
-        $scope.upgrade_secondary = 0;
+    .controller('BranchDlg', function($scope, DataStore, LoadIncidentTypes, IncidentTypes, CreateBranch){
 
-        DataStore.showUpgradeDlg = function() {
-            $("#upgrade_dlg").dialog( "open" );
+        LoadIncidentTypes();
+        $scope.incidentTypes = IncidentTypes;
+
+        $scope.users = [
+            {"name":"Bob Smith"},
+            {"name":"John Jones"},
+            {"name":"Sally Smith"},
+            {"name":"Jeff Bridges"}
+        ];
+
+        DataStore.showBranchDlg = function() {
+            $("#branch_dlg").dialog( "open" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#branch_dlg").dialog( "close" );
+        }
+
+        $scope.createBranch = function(incidentType) {
+            $("#branch_dlg").dialog( "close" );
+            CreateBranch($scope.branch_user, incidentType);
         }
     })
 
@@ -646,7 +668,7 @@ function initDialogs() {
     $( "#units_dlg" ).dialog( "option", "width", 855 );
     $( "#actions_dlg" ).dialog( "option", "width", 810 );
     $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
-    $( "#upgrade_dlg" ).dialog( "option", "width", 328 );
+    $( "#upgrade_dlg" ).dialog( "option", "width", 485 );
     $( "#osr_dlg" ).dialog({
     		width: 420,
     		close: function(event, ui){
@@ -673,7 +695,8 @@ function initDialogs() {
     $( "#reports_dlg" ).dialog( "option", "width", 820 );
     $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
     $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
-
+    $( "#branch_dlg" ).dialog( "option", "width", 550 );
+    $( "#strategy_dlg" ).dialog( "option", "width", 258 );
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
