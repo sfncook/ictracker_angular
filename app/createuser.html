@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CreateUserController">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <title>ICT</title>
+    <meta name="description" content="Incident Command Tracker"/>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_createuser.css"/>
+
+    <!--JS-->
+    <script src="//www.parsecdn.com/js/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/ActionServices.js"></script>
+    <script src="js/UnitServices.js"></script>
+    <script src="js/SectorServices.js"></script>
+    <script src="js/IncidentServices.js"></script>
+    <script src="js/IapServices.js"></script>
+    <script src="js/ObjectivesServices.js"></script>
+    <script src="js/OSRServices.js"></script>
+    <script src="js/UpgradeServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/splash.js"></script>
+    <script src="version.js"></script>
+
+</head>
+
+<body class="createuserpage" ng-controller="CreateUserCtrl">
+
+<h1>Create user profile for trail account</h1>
+
+<div class="incident_info_entry">
+    <div>User Name:<span class="mandatory_field">*</span></div>
+    <input id="user_name_input" name="user_name_input" type="text" ng-model="user_name"/>
+</div>
+<div class="incident_info_entry">
+    <div>Password:<span class="mandatory_field">*</span></div>
+    <input id="password_input" name="password_input" type="password" ng-model="password"/>
+</div>
+<div class="incident_info_entry">
+    <div>Email:<span class="mandatory_field">*</span></div>
+    <input id="email_input" name="email_input" type="text" ng-model="email"/>
+</div>
+<div class="incident_info_entry">
+    <div>Phone Number:</div>
+    <input id="phone_input" name="phone_input" type="text" ng-model="phone"/>
+</div>
+<button class="create_user_btn" ng-click="createUser_TrialAccount()">
+    Create User
+</button>
+
+<div id="status_success" class="status_div success" ng-show="is_success">Success!</div>
+<div id="status_failure" class="status_div failure" ng-show="is_failure">Failed to create user:{{failure_msg}}</div>
+
+</body>
+</html>
