@@ -18,10 +18,31 @@ angular.module('CreateUserController', ['ParseServices', 'DataServices'])
             user.set("phone", $scope.phone);
 
             user.signUp(null, {
-                success: function(user) {
-                    $scope.$apply(function(){
-                        $scope.is_success = true;
-                        $scope.is_failure = false;
+                success: function(new_user) {
+                    var queryRole = new Parse.Query(Parse.Role);
+                    queryRole.equalTo("name", "trial_license");
+                    queryRole.first({
+                        success: function(role) {
+                            role.getUsers().add(new_user);
+                            role.save(null, {
+                                success: function() {
+                                    $scope.$apply(function(){
+                                        $scope.is_success = true;
+                                        $scope.is_failure = false;
+                                    });
+                                },
+                                error: function(obj, error) {
+                                    $scope.$apply(function(){
+                                        $scope.is_success = false;
+                                        $scope.is_failure = true;
+                                        $scope.failure_msg = error.message;
+                                    });
+                                }
+                            });
+                        },
+                        error: function(error) {
+                            console.log('Failed to UpdateSectors, with error code: ' + error.message);
+                        }
                     });
                 },
                 error: function(user, error) {
