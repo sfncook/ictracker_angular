@@ -25,7 +25,20 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.showBranchDlg = function() {
-            DataStore.showBranchDlg();
+            //DataStore.showBranchDlg();
+            console.log("Branch clicked");
+            Parse.Cloud.run('incidentDataAll', { incidentObjectId: '0wyWB7SCst' }, {
+                success: function(incidentData) {
+                    console.log("success");
+                    //console.log(incidentData);
+                    var fromParse = JSON.parse(incidentData);
+                    console.log(fromParse);
+                },
+                error: function(error) {
+                    console.log("error");
+                    console.log(error);
+                }
+            });
         }
 
         $scope.showCmdXferDlg = function() {
