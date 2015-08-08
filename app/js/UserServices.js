@@ -17,6 +17,13 @@ angular.module('UserServices', [])
         }
     }])
 
+    .factory('UserLogout', [function () {
+        return function () {
+            return Parse.User.logOut();
+        }
+    }])
+
+
 ;
 
 

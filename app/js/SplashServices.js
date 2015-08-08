@@ -1,20 +1,13 @@
 'use strict';
 
-var app = angular.module("SplashController", ['DataServices', 'IncidentServices']);
+var app = angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices']);
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout){
 
     $scope.logout = function() {
-        UserLogout($scope.username, $scope.password).then(
-            function () {
-                var urlLink = "splash.html?department_id="+$scope.department_id;
-                window.location.href = urlLink;
-            },
-            function () {
-                //TODO: Display error
-            }
-        );
-
+        UserLogout();
+        var urlLink = "login.html?department_id="+$scope.department_id;
+        window.location.href = urlLink;
     };
 
     $scope.department_id = getHttpRequestByName('department_id');
