@@ -1,7 +1,7 @@
 
 
 var app = angular.module("LoginApp", ['UserServices', 'DataServices'])
-    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment, Callback_LoginError){
+    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment){
             $scope.username="";
             $scope.password="";
 
@@ -11,20 +11,17 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices'])
             // Respond to incident type button click
             $scope.login = function() {
                 //console.log("login");
-                UserLogin($scope.username, $scope.password,
+                UserLogin($scope.username, $scope.password).then(
                     function () {
                         var urlLink = "splash.html?department_id="+$scope.department_id;
                         window.location.href = urlLink;
                     },
-                    Callback_LoginError);
+                    function () {
+                        //TODO: Display error
+                    }
+                );
 
             };
-        })
-
-    .factory('Callback_LoginError', function () {
-            return function () {
-                //TODO: Display error
-            }
         })
 
     ;
