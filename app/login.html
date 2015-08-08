@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="LoginApp">
+<head>
+    <title>White Helmet Tech, LLC</title>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_login.css"/>
+
+    <!--JS-->
+    <script src="//www.parsecdn.com/js/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/LoginServices.js"></script>
+
+</head>
+
+<body class="login" ng-controller="LoginCtrl">
+<div style="width:400px; margin:0 auto;">
+    <center>
+        <div id="userpass_container">
+            <img src="img/logo/ict_logo_300x300.png"/><br/>
+            <div class="userpass_info_entry">
+                <div>User Name:</div>
+                <input id="username_input" name="inc_num_input" type="text" ng-model="username"/>
+            </div>
+            <div class="userpass_info_entry">
+                <div>Password:</div>
+                <input id="password_input" name="address_input" type="password" ng-model="password"/>
+            </div>
+        </div>
+        <button is="login_btn" ng-click="login()">Login</button>
+    </center>
+</div>
+
+</body>
+</html>
