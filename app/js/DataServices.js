@@ -1,4 +1,5 @@
 
+var DEPARTMENT_DEF = ['name_short', 'name_long', 'app_key', 'js_key'];
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'strategy', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit'];
@@ -66,11 +67,24 @@ angular.module('DataServices', ['ParseServices'])
         }
     }])
 
-    .factory('SetDeptDatabase', [function () {
+    .factory('InitDbForDepartment', ['ParseQuery', 'ConvertParseObject', 'SetDefaultDatabase', function (ParseQuery, ConvertParseObject, SetDefaultDatabase) {
         return function (department_id) {
-            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
-                Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
-            }
+            SetDefaultDatabase();
+
+            var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
+            queryDepartment.equalTo("objectId", department_id);
+            queryDepartment.first({
+                success: function(department) {
+                    //TODO: Handle department=undefined
+                    ConvertParseObject(department, DEPARTMENT_DEF);
+                    console.log("department name_short:"+department.name_short+"  name_long:"+department.name_long+"  app_key:"+department.app_key+"  js_key:"+department.js_key);
+                    Parse.initialize(department.app_key, department.js_key);
+                },
+                error: function(error) {
+                    //TODO: display error
+                    console.log('Failed to Department, with error code: ' + error.message);
+                }
+            });
         }
     }])
 

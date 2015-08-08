@@ -1,31 +1,31 @@
 
 
-var app = angular.module("LoginApp", ['UserServices'])
+var app = angular.module("LoginApp", ['UserServices', 'DataServices'])
+    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment, Callback_LoginError){
+            $scope.username="";
+            $scope.password="";
 
-    .controller('LoginCtrl', function($scope, UserLogin){
-        $scope.username="";
-        $scope.password="";
+            var department_id = getHttpRequestByName('department_id');
+            $scope.department_id=department_id;
+            InitDbForDepartment(department_id);
 
-        // Respond to incident type button click
-        $scope.login = function() {
-            //console.log("login");
-            UserLogin($scope.username, $scope.password, Callback_RedirectToSplashPage, Callback_LoginError);
+            // Respond to incident type button click
+            $scope.login = function() {
+                //console.log("login");
+                UserLogin($scope.username, $scope.password,
+                    function () {
+                        var urlLink = "splash.html?department_id="+$scope.department_id;
+                        window.location.href = urlLink;
+                    },
+                    Callback_LoginError);
 
-        };
-
-    })
-
-    .factory('Callback_RedirectToSplashPage', function () {
-        return function () {
-            var urlLink = "splash.html";
-            window.location.href = urlLink;
-        }
-    })
+            };
+        })
 
     .factory('Callback_LoginError', function () {
-        return function () {
-
-        }
-    })
+            return function () {
+                //TODO: Display error
+            }
+        })
 
     ;
