@@ -3,10 +3,11 @@
 angular.module('UserServices', [])
 
     .factory('UserLogin', [function () {
-        return function (username, password) {
+        return function (username, password, callback_success) {
             Parse.User.logIn(username, password, {
                 success: function(user) {
-                    console.log("Login success! user:"+user);
+                    //console.log("Login success! user:"+user);
+                    callback_success();
                 },
                 error: function(user, error) {
                     console.log("Login error:"+error);

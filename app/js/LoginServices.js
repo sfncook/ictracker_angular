@@ -1,4 +1,9 @@
 
+function callback_openSplashPage(){
+    var urlLink = "splash.html";
+    window.location.href = urlLink;
+}
+
 var app = angular.module("LoginApp", ['UserServices'])
 
     .controller('LoginCtrl', function($scope, UserLogin){
@@ -8,7 +13,8 @@ var app = angular.module("LoginApp", ['UserServices'])
         // Respond to incident type button click
         $scope.login = function() {
             //console.log("login");
-            UserLogin($scope.username, $scope.password);
+            UserLogin($scope.username, $scope.password, callback_openSplashPage);
+
         };
 
     });
