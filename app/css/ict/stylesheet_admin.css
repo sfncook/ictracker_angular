@@ -23,22 +23,6 @@ table td {
     padding:5px;
 }
 
-.copyright_div {
-    position: fixed;
-    bottom: 0px;
-    left:0px;
-}
-#version_text {
-    z-index: 150;
-    background: #9ad1ff;
-    margin: 0 10px;
-}
-#copyright_text {
-    z-index: 150;
-    background: #9ad1ff;
-    margin: 0 10px;
-}
-
 .currentUser {
     margin: 10px;
     position: fixed;

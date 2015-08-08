@@ -60,7 +60,8 @@ angular.module('DataServices', ['ParseServices'])
     }])
 
     .factory('SetDefaultDatabase', [function () {
-        return function (department_id) {
+        return function () {
+            console.log("SetDefaultDatabase ");
             if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
                 Parse.initialize("rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO", "L0Brh9CVpryQ2yTIezbjLrEdBOfoVlbIMmtgUniJ");
             }
@@ -69,11 +70,12 @@ angular.module('DataServices', ['ParseServices'])
 
     .factory('InitDbForDepartment', ['ParseQuery', 'ConvertParseObject', 'SetDefaultDatabase', function (ParseQuery, ConvertParseObject, SetDefaultDatabase) {
         return function (department_id) {
+            console.log("InitDbForDepartment department_id:"+department_id);
             SetDefaultDatabase();
 
             var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
             queryDepartment.equalTo("objectId", department_id);
-            queryDepartment.first({
+            return queryDepartment.first({
                 success: function(department) {
                     //TODO: Handle department=undefined
                     ConvertParseObject(department, DEPARTMENT_DEF);

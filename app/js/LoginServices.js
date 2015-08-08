@@ -5,9 +5,8 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices'])
             $scope.username="";
             $scope.password="";
 
-            var department_id = getHttpRequestByName('department_id');
-            $scope.department_id=department_id;
-            InitDbForDepartment(department_id);
+            $scope.department_id = getHttpRequestByName('department_id');
+            InitDbForDepartment($scope.department_id);
 
             // Respond to incident type button click
             $scope.login = function() {
