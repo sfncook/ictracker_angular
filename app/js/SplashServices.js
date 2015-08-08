@@ -13,6 +13,28 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
     $scope.department_id = getHttpRequestByName('department_id');
     InitDbForDepartment($scope.department_id).then(
         function() {
+
+            //DEBUGING
+
+            var queryAdminRole = new Parse.Query(Parse.Object.extend('Role'));
+            queryAdminRole.equalTo("name", "admin");
+            queryAdminRole.first({
+                success: function(adminRole) {
+                    console.log("success");
+                    console(adminRole);
+                },
+                error: function(error) {
+                    console.log('Error: ');
+                    console.log(error.message);
+                }
+            });
+
+
+            //var administrators = /* Your "Administrators" role */;
+            //var moderators = /* Your "Moderators" role */;
+            //moderators.getRoles().add(administrators);
+            //moderators.save();
+
             LoadIncidentTypes();
             $scope.incidentTypes = IncidentTypes;
 
