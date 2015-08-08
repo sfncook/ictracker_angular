@@ -4,6 +4,19 @@ var app = angular.module("SplashController", ['DataServices', 'IncidentServices'
 
 app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment){
 
+    $scope.logout = function() {
+        UserLogout($scope.username, $scope.password).then(
+            function () {
+                var urlLink = "splash.html?department_id="+$scope.department_id;
+                window.location.href = urlLink;
+            },
+            function () {
+                //TODO: Display error
+            }
+        );
+
+    };
+
     $scope.department_id = getHttpRequestByName('department_id');
     InitDbForDepartment($scope.department_id).then(
         function() {
