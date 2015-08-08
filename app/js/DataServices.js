@@ -58,4 +58,20 @@ angular.module('DataServices', ['ParseServices'])
         }
     }])
 
+    .factory('SetDefaultDatabase', [function () {
+        return function (department_id) {
+            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+                Parse.initialize("rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO", "L0Brh9CVpryQ2yTIezbjLrEdBOfoVlbIMmtgUniJ");
+            }
+        }
+    }])
+
+    .factory('SetDeptDatabase', [function () {
+        return function (department_id) {
+            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+                Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
+            }
+        }
+    }])
+
 ;

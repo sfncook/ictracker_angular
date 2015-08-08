@@ -99,6 +99,7 @@ button:active {
 }
 .button_disabled, .button_disabled.glowlightgreen {
     background: #CCC !important;
+    cursor: default;
 }
 .button_disabled:hover, .button_disabled.glowlightgreen:hover {
     background: #CCC !important;
