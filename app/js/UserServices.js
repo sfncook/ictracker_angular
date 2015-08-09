@@ -39,11 +39,11 @@ angular.module('UserServices', ['DataServices'])
             queryUser.include('department');
             return queryUser.find({
                 success: function(allUsers) {
+                    AllUsers.removeAll();
                     for(var i=0; i<allUsers.length; i++) {
                         var user = allUsers[i];
                         ConvertParseObject(user, USER_DEF);
                         if(user.department){
-                            console.log(user.department.get('name_long'));
                             user.department.name_long = user.department.get('name_long');
                         }
                         //user.department.fetch().then(function(departmentObj){

@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module("AdminModule", ['DataServices', 'UserServices'])
+angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServices'])
 
-    .controller('AdminUserCtrl', function ($scope, LoadAllDepartments, Departments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers) {
+    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
         $scope.loggedOut = true;
+        $scope.showAddUser = false;
+        $scope.newuser = {};
 
         InitDefaultDatabase();
 
@@ -16,7 +18,8 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
                 $scope.currentUser = DataStore.currentUser;
             });
 
-            LoadAllUsers().then(function(){
+            LoadAllUsers().then(
+                function(){
                 $scope.user_list = AllUsers;
             });
         } else{
@@ -25,8 +28,10 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
             window.location.href = urlLink;
         }
 
-        LoadAllDepartments();
-        $scope.departments = Departments;
+        LoadAllDepartments().then(function(){
+            $scope.departments = AllDepartments;
+        });
+
         $scope.roles = ["admin", "user"];
         $scope.addedRoles = new Array();
 
@@ -43,6 +48,26 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
 //                    console.log(error);
 //                }
 //            });
+        }
+
+        $scope.addUser = function() {
+            $scope.showAddUser = true;
+        }
+
+        $scope.saveNewUser = function() {
+            $scope.showAddUser = false;
+            $scope.newuser.username="";
+            $scope.newuser.name="";
+            $scope.newuser.department_id="";
+            $scope.newuser.email="";
+        }
+
+        $scope.cancelAddUser = function() {
+            $scope.showAddUser = false;
+            $scope.newuser.username="";
+            $scope.newuser.name="";
+            $scope.newuser.department_id="";
+            $scope.newuser.email="";
         }
 
         $scope.logout = function() {
@@ -76,24 +101,6 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
         }
 
     })
-
-    .factory('Departments', function() {
-        return new Array();
-    })
-
-    .factory('LoadAllDepartments', ['ConvertParseObject', 'ParseQuery', 'Departments', function (ConvertParseObject, ParseQuery, Departments) {
-        return function () {
-            var query = new Parse.Query(Parse.Object.extend('FireDepartment'));
-            ParseQuery(query, {functionToCall:'find'}).then(function(departments){
-                Departments.removeAll();
-                for(var i=0; i<departments.length; i++) {
-                    var department = departments[i];
-                    ConvertParseObject(department, DEPT_DEF);
-                    Departments.push(department);
-                }
-            });
-        }
-    }])
 
 ;
 

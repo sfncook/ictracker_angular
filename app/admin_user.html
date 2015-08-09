@@ -16,6 +16,7 @@
     <script src="js/libs/ParseServices.js"></script>
     <script src="js/DataServices.js"></script>
     <script src="js/UserServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
     <script src="js/AdminUserServices.js"></script>
 </head>
 <body ng-controller="AdminUserCtrl">
@@ -32,7 +33,7 @@
         <table class="admin_user_table">
             <thead>
             <tr>
-                <td></td>
+                <td><button class="load_btn" ng-click="addUser()">Add</button></td>
                 <td></td>
                 <td>username</td>
                 <td>Name</td>
@@ -41,6 +42,23 @@
             </tr>
             </thead>
             <tbody>
+            <tr ng-show="showAddUser">
+                <td>
+                    <button class="load_btn" ng-click="saveNewUser()">Save</button>
+                </td>
+                <td>
+                    <button class="delt_btn" ng-click="cancelAddUser()">Cancel</button>
+                </td>
+                <td><input ng-model="newuser.username" type="text"/></td>
+                <td><input ng-model="newuser.name" type="text"/></td>
+                <td>
+                    <select ng-model="newuser.department">
+                        <option ng-repeat="department in departments" value="0">{{department.name_long}}</option>
+                    </select>
+                </td>
+                <td><input ng-model="newuser.email" type="text"/></td>
+            </tr>
+
             <tr ng-repeat="user in user_list">
                 <td>
                     <button class="load_btn"
