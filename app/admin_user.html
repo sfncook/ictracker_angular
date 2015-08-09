@@ -52,9 +52,8 @@
                 <td><input ng-model="newuser.username" type="text"/></td>
                 <td><input ng-model="newuser.name" type="text"/></td>
                 <td>
-                    <select ng-model="newuser.department">
-                        <option ng-repeat="department in departments" value="0">{{department.name_long}}</option>
-                    </select>
+                    <select ng-options="department as department.name_long for department in departments"
+                            ng-model="selected_department"></select>
                 </td>
                 <td><input ng-model="newuser.email" type="text"/></td>
             </tr>

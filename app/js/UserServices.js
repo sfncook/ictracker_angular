@@ -72,7 +72,7 @@ angular.module('UserServices', ['DataServices'])
                 },
                 error: function(user, error) {
                     console.log("Login error:");
-                    console.log(error);
+                    console.log(error.message);
                     if (callback_error) {
                         callback_error(error);
                     }
@@ -87,61 +87,87 @@ angular.module('UserServices', ['DataServices'])
         }
     }])
 
+    .factory('CreateUser', [function () {
+        return function (username, password, name, email, department_obj, callback_success, callback_error) {
+
+            var user = new Parse.User();
+            user.set("username", username);
+            user.set("password", password);
+            user.set("name", name);
+            user.set("email", email);
+            user.set("department", department_obj);
+
+            user.signUp(null, {
+                success: function(new_user){
+                    if (callback_success) {
+                        callback_success(user);
+                    }
+                },
+                error: function(user, error) {
+                    console.log("CreateUser error:");
+                    console.log(error.message);
+                    if (callback_error) {
+                        callback_error(error);
+                    }
+                }
+            });
+        }
+    }])
+
+
+
+    //.controller('CreateUserCtrl', function($scope, ConvertParseObject, DefaultErrorLogger){
+    //    $scope.is_success = false;
+    //    $scope.is_failure = false;
+    //
+    //    $scope.createUser_TrialAccount = function() {
+    //        $scope.is_success = false;
+    //        $scope.is_failure = false;
+    //
+    //        var user = new Parse.User();
+    //        user.set("username", $scope.user_name);
+    //        user.set("password", $scope.password);
+    //        user.set("email", $scope.email);
+    //        user.set("phone", $scope.phone);
+    //
+    //        user.signUp(null, {
+    //            success: function(new_user) {
+    //                var queryRole = new Parse.Query(Parse.Role);
+    //                queryRole.equalTo("name", "trial_license");
+    //                queryRole.first({
+    //                    success: function(role) {
+    //                        role.getUsers().add(new_user);
+    //                        role.save(null, {
+    //                            success: function() {
+    //                                $scope.$apply(function(){
+    //                                    $scope.is_success = true;
+    //                                    $scope.is_failure = false;
+    //                                });
+    //                            },
+    //                            error: function(obj, error) {
+    //                                $scope.$apply(function(){
+    //                                    $scope.is_success = false;
+    //                                    $scope.is_failure = true;
+    //                                    $scope.failure_msg = error.message;
+    //                                });
+    //                            }
+    //                        });
+    //                    },
+    //                    error: function(error) {
+    //                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
+    //                    }
+    //                });
+    //            },
+    //            error: function(user, error) {
+    //                $scope.$apply(function(){
+    //                    $scope.is_success = false;
+    //                    $scope.is_failure = true;
+    //                    $scope.failure_msg = error.message;
+    //                });
+    //            }
+    //        });
+    //    };
+    //})
 
 ;
 
-
-//angular.module('CreateUserController', ['ParseServices', 'DataServices'])
-//    .controller('CreateUserCtrl', function($scope, ConvertParseObject, DefaultErrorLogger){
-//            $scope.is_success = false;
-//            $scope.is_failure = false;
-//
-//            $scope.createUser_TrialAccount = function() {
-//                $scope.is_success = false;
-//                $scope.is_failure = false;
-//
-//                var user = new Parse.User();
-//                user.set("username", $scope.user_name);
-//                user.set("password", $scope.password);
-//                user.set("email", $scope.email);
-//                user.set("phone", $scope.phone);
-//
-//                user.signUp(null, {
-//                    success: function(new_user) {
-//                        var queryRole = new Parse.Query(Parse.Role);
-//                        queryRole.equalTo("name", "trial_license");
-//                        queryRole.first({
-//                            success: function(role) {
-//                                role.getUsers().add(new_user);
-//                                role.save(null, {
-//                                    success: function() {
-//                                        $scope.$apply(function(){
-//                                            $scope.is_success = true;
-//                                            $scope.is_failure = false;
-//                                        });
-//                                    },
-//                                    error: function(obj, error) {
-//                                        $scope.$apply(function(){
-//                                            $scope.is_success = false;
-//                                            $scope.is_failure = true;
-//                                            $scope.failure_msg = error.message;
-//                                        });
-//                                    }
-//                                });
-//                            },
-//                            error: function(error) {
-//                                console.log('Failed to UpdateSectors, with error code: ' + error.message);
-//                            }
-//                        });
-//                    },
-//                    error: function(user, error) {
-//                        $scope.$apply(function(){
-//                            $scope.is_success = false;
-//                            $scope.is_failure = true;
-//                            $scope.failure_msg = error.message;
-//                        });
-//                    }
-//                });
-//            };
-//    })
-//;

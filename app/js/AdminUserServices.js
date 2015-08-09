@@ -2,7 +2,7 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServices'])
 
-    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers) {
+    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers, CreateUser) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
@@ -20,8 +20,9 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
 
             LoadAllUsers().then(
                 function(){
-                $scope.user_list = AllUsers;
-            });
+                    $scope.user_list = AllUsers;
+                    $scope.$apply();
+                });
         } else{
             $scope.loggedOut = true;
             var urlLink = "login.html";
@@ -32,49 +33,11 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
             $scope.departments = AllDepartments;
         });
 
-        $scope.roles = ["admin", "user"];
-        $scope.addedRoles = new Array();
-
-        $scope.createUser = function() {
-            createRole();
-//            CreateUser($scope.username, $scope.password, $scope.email, $scope.department, $scope.addedRoles);
-//            Parse.Cloud.run('setUserRole', { userId: 'MnppIcJMyX', role: 'admin' }, {
-//                success: function(response) {
-//                    console.log("success:");
-//                    console.log(response);
-//                },
-//                error: function(error) {
-//                    console.log("error:");
-//                    console.log(error);
-//                }
-//            });
-        }
-
-        $scope.addUser = function() {
-            $scope.showAddUser = true;
-        }
-
-        $scope.saveNewUser = function() {
-            $scope.showAddUser = false;
-            $scope.newuser.username="";
-            $scope.newuser.name="";
-            $scope.newuser.department_id="";
-            $scope.newuser.email="";
-        }
-
-        $scope.cancelAddUser = function() {
-            $scope.showAddUser = false;
-            $scope.newuser.username="";
-            $scope.newuser.name="";
-            $scope.newuser.department_id="";
-            $scope.newuser.email="";
-        }
 
         $scope.logout = function() {
             Parse.User.logOut();
             location.reload();
         }
-
         $scope.login = function() {
             Parse.User.logIn($scope.username, $scope.password, {
                 success: function(user) {
@@ -88,16 +51,34 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
             });
         }
 
-        $scope.toggleRole = function(roleName) {
-            if($scope.addedRoles.indexOf(roleName)>=0) {
-                $scope.addedRoles.remByVal(roleName);
-            } else {
-                $scope.addedRoles.push(roleName);
-            }
-        }
 
-        $scope.isAddedRoll = function(roleName) {
-            return $scope.addedRoles.indexOf(roleName)>=0;
+
+        $scope.addUser = function() {
+            $scope.showAddUser = true;
+        }
+        $scope.saveNewUser = function() {
+            CreateUser($scope.newuser.username, "password", $scope.newuser.name, $scope.newuser.email, $scope.selected_department,
+                function() {
+                    console.log("successfully saved new user");
+                    LoadAllUsers().then(
+                        function(){
+                            $scope.user_list = AllUsers;
+                            $scope.$apply();
+                        });
+                }
+            );
+            $scope.showAddUser = false;
+            $scope.newuser.username="";
+            $scope.newuser.name="";
+            $scope.newuser.department_id="";
+            $scope.newuser.email="";
+        }
+        $scope.cancelAddUser = function() {
+            $scope.showAddUser = false;
+            $scope.newuser.username="";
+            $scope.newuser.name="";
+            $scope.newuser.department_id="";
+            $scope.newuser.email="";
         }
 
     })
