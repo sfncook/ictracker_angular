@@ -2,7 +2,7 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices'])
 
-    .controller('AdminUserCtrl', function ($scope, LoadAllDepartments, Departments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn) {
+    .controller('AdminUserCtrl', function ($scope, LoadAllDepartments, Departments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
@@ -14,6 +14,10 @@ angular.module("AdminModule", ['DataServices', 'UserServices'])
             $scope.loggedOut = false;
             LoadCurrentUser().then(function(){
                 $scope.currentUser = DataStore.currentUser;
+            });
+
+            LoadAllUsers().then(function(){
+                $scope.user_list = AllUsers;
             });
         } else{
             $scope.loggedOut = true;

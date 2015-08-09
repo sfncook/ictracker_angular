@@ -28,6 +28,38 @@ angular.module('UserServices', ['DataServices'])
         }
     }])
 
+    .factory('AllUsers', function() {
+        return new Array();
+    })
+
+    .factory('LoadAllUsers', ['ConvertParseObject', 'AllUsers', function (ConvertParseObject, AllUsers) {
+        return function () {
+
+            var queryUser = new Parse.Query(Parse.Object.extend('User'));
+            queryUser.include('department');
+            return queryUser.find({
+                success: function(allUsers) {
+                    for(var i=0; i<allUsers.length; i++) {
+                        var user = allUsers[i];
+                        ConvertParseObject(user, USER_DEF);
+                        if(user.department){
+                            console.log(user.department.get('name_long'));
+                            user.department.name_long = user.department.get('name_long');
+                        }
+                        //user.department.fetch().then(function(departmentObj){
+                        //    ConvertParseObject(departmentObj, DEPARTMENT_DEF);
+                        //    //DataStore.incident.inc_type_obj= incidentTypeObj;
+                        //});
+                        AllUsers.push(user);
+                    }
+                },
+                error: function(error) {
+                    console.log('Failed LoadAllUsers, with error code: ' + error.message);
+                }
+            });
+        }
+    }])
+
     .factory('UserLogin', [function () {
         return function (username, password, callback_success, callback_error) {
             return Parse.User.logIn(username, password, {

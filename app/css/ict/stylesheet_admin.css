@@ -36,3 +36,15 @@ table td {
     top: 0px;
     right:0px;
 }
+
+.admin_user_table {
+
+}
+
+.admin_user_table thead td {
+    border: none;
+}
+
+.admin_user_table td {
+    border: 1px black solid;
+}
