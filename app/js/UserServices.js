@@ -2,6 +2,12 @@
 
 angular.module('UserServices', ['DataServices'])
 
+    .factory('IsLoggedIn', [function () {
+        return function () {
+            return Parse.User.current();
+        }
+    }])
+
     .factory('LoadCurrentUser', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
         return function () {
 
