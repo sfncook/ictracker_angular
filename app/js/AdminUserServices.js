@@ -2,18 +2,21 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices'])
 
-    .controller('AdminUserCtrl', function ($scope, ConvertParseObject, LoadAllDepartments, Departments, CreateUser) {
+    .controller('AdminUserCtrl', function ($scope, LoadAllDepartments, Departments, InitDefaultDatabase, LoadCurrentUser, DataStore) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
 
-        $scope.currentUser = Parse.User.current();
-        if($scope.currentUser) {
-            $scope.loggedOut = false;
-            ConvertParseObject($scope.currentUser, USER_DEF);
-        } else {
-            $scope.loggedOut = true;
-        }
+        InitDefaultDatabase();
+
+        LoadCurrentUser().then(function(){
+            $scope.currentUser = DataStore.currentUser;
+            if($scope.currentUser) {
+                $scope.loggedOut = false;
+            } else {
+                $scope.loggedOut = true;
+            }
+        });
 
         LoadAllDepartments();
         $scope.departments = Departments;

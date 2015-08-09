@@ -15,13 +15,14 @@
     <script src="js/init.js"></script>
     <script src="js/libs/ParseServices.js"></script>
     <script src="js/DataServices.js"></script>
-    <script src="js/admin/UserServices.js"></script>
-    <script src="js/admin/AdminUserServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/AdminUserServices.js"></script>
 </head>
 <body ng-controller="AdminUserCtrl">
     <div ng-show="!loggedOut">
+        <div class="pageTitle">ICT Admin Page</div>
         <div class="currentUser">
-            Hello, {{currentUser.username}}!<br>
+            Welcome, {{currentUser.name}} ({{currentUser.username}})<br>
             <button ng-click="logout()">Logout</button>
         </div>
         <table>

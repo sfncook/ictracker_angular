@@ -14,7 +14,7 @@ var IAP_DEF = ['fireControl', 'firefighterSafety', 'incident', 'isActionEffect',
 var OSR_DEF = ['incident', 'isAddress', 'isOccupancy', 'isConstruction', 'isAssumeCommand', 'isLocation', 'isStrategy', 'isAttackLine', 'isWaterSupply', 'isIRIC', 'isBasement', 'isMobile', 'isDefensive', 'accountability', 'accountabilityLocation', 'unit', 'dispatchAddress', 'sizeOfBuilding', 'numberOfFloors', 'typeOfBuilding', 'subFloors', 'constructionType', 'roofType', 'conditions'];
 var OBJECTIVES_DEF = ['incident', 'upgradeToFullRescue', 'assingSafety', 'establishSupplyLine', 'secureUtilities', 'ventiliation', 'createOnDeck', 'pressurizeExposures', 'monitorChannel16', 'salvage', 'establishRehab', 'customerService'];
 var DEPT_DEF = ['name'];
-var USER_DEF = ['username', 'email'];
+var USER_DEF = ['username', 'email', 'name', 'department_id'];
 var ROLE_DEF = ['name'];
 
 angular.module('DataServices', ['ParseServices'])
@@ -25,6 +25,7 @@ angular.module('DataServices', ['ParseServices'])
     .factory('DataStore', function() {
         return {
             incident:{},
+            currentUser:{},
             waitingToLoad:true,
             loadSuccess:false
         };
@@ -61,7 +62,6 @@ angular.module('DataServices', ['ParseServices'])
 
     .factory('InitDefaultDatabase', [function () {
         return function () {
-            console.log("SetDefaultDatabase ");
             if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
                 Parse.initialize("rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO", "L0Brh9CVpryQ2yTIezbjLrEdBOfoVlbIMmtgUniJ");
             }

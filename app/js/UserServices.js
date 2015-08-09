@@ -1,6 +1,26 @@
 'use strict';
 
-angular.module('UserServices', [])
+angular.module('UserServices', ['DataServices'])
+
+    .factory('LoadCurrentUser', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
+        return function () {
+
+            DataStore.currentUser = Parse.User.current();
+            ConvertParseObject(DataStore.currentUser, USER_DEF);
+
+            var queryUser = new Parse.Query(Parse.Object.extend('User'));
+            queryUser.equalTo("objectId", DataStore.currentUser.id);
+            return queryUser.first({
+                success: function(currentUser_) {
+                    ConvertParseObject(currentUser_, USER_DEF);
+                    DataStore.currentUser = currentUser_;
+                },
+                error: function(error) {
+                    console.log('Failed queryUser, with error code: ' + error.message);
+                }
+            });
+        }
+    }])
 
     .factory('UserLogin', [function () {
         return function (username, password, callback_success, callback_error) {
