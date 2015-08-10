@@ -82,9 +82,9 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
                     });
                 }
             };
-        }, function() {
+        }, function(message) {
             console.log("Error initializing department database: ");
-            console.log(error);
+            console.log(error.message);
         }
     );
 

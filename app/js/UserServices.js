@@ -87,9 +87,10 @@ angular.module('UserServices', ['DataServices'])
         }
     }])
 
-    .factory('CreateUser', [function () {
+    .factory('CreateUser', ['InitDefaultDatabase', 'InitDbForDepartment', function (InitDefaultDatabase, InitDbForDepartment) {
         return function (username, password, name, email, department_obj, callback_success, callback_error) {
 
+            InitDefaultDatabase();
             var user = new Parse.User();
             user.set("username", username);
             user.set("password", password);
@@ -99,9 +100,33 @@ angular.module('UserServices', ['DataServices'])
 
             user.signUp(null, {
                 success: function(new_user){
-                    if (callback_success) {
-                        callback_success(user);
-                    }
+                    InitDbForDepartment(department_obj.id).then(function(){
+                        var user = new Parse.User();
+                        user.set("username", username);
+                        user.set("password", password);
+                        user.set("name", name);
+                        user.set("email", email);
+                        user.set("department", department_obj);
+
+                        user.signUp(null, {
+                            success: function(new_user){
+                                if (callback_success) {
+                                    callback_success(new_user);
+                                }
+                            },
+                            error: function(user, error) {
+                                console.log("CreateUser error:");
+                                console.log(error.message);
+                                if (callback_error) {
+                                    callback_error(error);
+                                }
+                            }
+                        });
+
+                        if (callback_success) {
+                            callback_success(user);
+                        }
+                    });
                 },
                 error: function(user, error) {
                     console.log("CreateUser error:");
