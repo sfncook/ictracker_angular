@@ -2,47 +2,36 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServices'])
 
-    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDefaultDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers, CreateUser) {
+    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers, CreateUser) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
-        $scope.loggedOut = true;
         $scope.showAddUser = false;
         $scope.newuser = {};
+        $scope.loggedIn = IsLoggedIn();
 
-        InitDefaultDatabase();
-
-        if(IsLoggedIn()) {
-            $scope.loggedOut = false;
-            LoadCurrentUser().then(function(){
-                $scope.currentUser = DataStore.currentUser;
+        InitDatabase().then(function(){
+            LoadAllDepartments().then(function(){
+                $scope.departments = AllDepartments;
+                $scope.$apply();
             });
-
-            LoadAllUsers().then(
-                function(){
-                    $scope.user_list = AllUsers;
-                    $scope.$apply();
-                });
-        } else{
-            $scope.loggedOut = true;
-            var urlLink = "login.html";
-            window.location.href = urlLink;
-        }
-
-        LoadAllDepartments().then(function(){
-            $scope.departments = AllDepartments;
         });
 
 
         $scope.logout = function() {
             Parse.User.logOut();
             location.reload();
+            window.location.href = "login.html";
         }
         $scope.login = function() {
             Parse.User.logIn($scope.username, $scope.password, {
                 success: function(user) {
                     console.log("successful login");
-                    location.reload();
+                    $scope.loggedIn = IsLoggedIn();
+                    LoadAllUsers().then(function(){
+                        $scope.user_list = AllUsers;
+                        $scope.$apply();
+                    });
                 },
                 error: function(user, error) {
                     console.log("Error: " + error.code + " " + error.message);
@@ -50,7 +39,6 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
                 }
             });
         }
-
 
 
         $scope.addUser = function() {
@@ -79,6 +67,11 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
             $scope.newuser.name="";
             $scope.newuser.department_id="";
             $scope.newuser.email="";
+        }
+
+
+        $scope.select_department = function() {
+            InitDbForDepartment($scope.selected_department.id);
         }
 
     })

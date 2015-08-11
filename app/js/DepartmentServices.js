@@ -8,7 +8,6 @@ angular.module('DepartmentServices', ['DataServices'])
 
     .factory('LoadAllDepartments', ['ConvertParseObject', 'AllDepartments', function (ConvertParseObject, AllDepartments) {
         return function () {
-
             var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
             return queryDepartment.find({
                 success: function(allDepartments) {

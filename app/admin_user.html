@@ -25,12 +25,34 @@
             ICT Admin Page<br/>
             <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
         </div>
-        <div class="currentUser">
+        <div ng-show="loggedIn" class="currentUser">
             Welcome, {{currentUser.name}} ({{currentUser.username}})<br>
             <button ng-click="logout()">Logout</button>
         </div>
 
-        <table class="admin_user_table">
+        <div style="width:400px; margin:100px auto;">
+            <center>
+                <div class="userpass_info_entry">
+                    <select ng-options="department as department.name_long for department in departments"
+                            ng-model="selected_department"
+                            ng-change="select_department()"></select>
+                </div>
+                <div style="margin-top:10px" ng-show="selected_department && !loggedIn" id="userpass_container">
+                    <div class="userpass_info_entry">
+                        <div>User Name:</div>
+                        <input id="username_input" name="inc_num_input" type="text" ng-model="username"/>
+                    </div>
+                    <div class="userpass_info_entry">
+                        <div>Password:</div>
+                        <input id="password_input" name="address_input" type="password" ng-model="password"/>
+                    </div>
+                    <button is="login_btn" style="margin-top:10px" ng-click="login()" ng-disabled="!username||!password" ng-class="{button_disabled:!username||!password}">Login</button>
+                </div>
+            </center>
+        </div>
+
+
+        <table ng-show="user_list.length" ng-show="selected_department" class="admin_user_table">
             <thead>
             <tr>
                 <td><button class="load_btn" ng-click="addUser()">Add</button></td>
@@ -52,8 +74,8 @@
                 <td><input ng-model="newuser.username" type="text"/></td>
                 <td><input ng-model="newuser.name" type="text"/></td>
                 <td>
-                    <select ng-options="department as department.name_long for department in departments"
-                            ng-model="selected_department"></select>
+                    <!--<select ng-options="department as department.name_long for department in departments"-->
+                            <!--ng-model="selected_department"></select>-->
                 </td>
                 <td><input ng-model="newuser.email" type="text"/></td>
             </tr>

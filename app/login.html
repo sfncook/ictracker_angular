@@ -16,6 +16,7 @@
     <script src="js/init.js"></script>
     <script src="js/libs/ParseServices.js"></script>
     <script src="js/DataServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
     <script src="js/UserServices.js"></script>
     <script src="js/LoginServices.js"></script>
 
@@ -28,16 +29,27 @@
             <img src="img/logo/ict_logo_300x300.png"/><br/>
             <div class="userpass_info_entry">
                 <div>User Name:</div>
-                <input id="username_input" name="inc_num_input" type="text" ng-model="username"/>
+                <input id="username_input" name="inc_num_input" type="text" ng-model="username" ng-disabled="!selected_department.id"/>
             </div>
             <div class="userpass_info_entry">
                 <div>Password:</div>
-                <input id="password_input" name="address_input" type="password" ng-model="password"/>
+                <input id="password_input" name="address_input" type="password" ng-model="password" ng-disabled="!selected_department.id"/>
             </div>
+            <button is="login_btn"
+                    style="margin-top:10px"
+                    ng-click="login()"
+                    ng-disabled="(!username||!password) || !selected_department.id"
+                    ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
         </div>
-        <button is="login_btn" ng-click="login()" ng-disabled="!username||!password" ng-class="{button_disabled:!username||!password}">Login</button>
+
+        <div class="userpass_info_entry" ng-show="!department_id">
+            <select ng-options="department as department.name_long for department in departments"
+                    ng-model="selected_department"
+                    style="margin-top:10px"></select>
+        </div>
     </center>
 </div>
+
 
 <div class="copyright_div">
     <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>

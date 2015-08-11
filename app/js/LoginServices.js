@@ -1,45 +1,40 @@
 
 
-var app = angular.module("LoginApp", ['UserServices', 'DataServices'])
-    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment, InitDefaultDatabase){
+var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'DepartmentServices'])
+    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment, InitDefaultDatabase, LoadAllDepartments, AllDepartments){
             $scope.username="";
             $scope.password="";
+            $scope.selected_department = {"id":getHttpRequestByName('department_id')};
+
+            if(!$scope.selected_department.id) {
+                InitDefaultDatabase();
+
+                LoadAllDepartments().then(function(){
+                    $scope.departments = AllDepartments;
+                    $scope.$apply();
+                });
+            }
 
             // Respond to incident type button click
             $scope.login = function() {
-                $scope.department_id = getHttpRequestByName('department_id');
+                InitDbForDepartment($scope.selected_department);
 
-                if($scope.department_id) {
-                    InitDbForDepartment($scope.department_id);
+                //console.log("login");
+                UserLogin($scope.username, $scope.password,
+                    function () {
+                        var urlLink = "splash.html?department_id=" + $scope.department_id;
+                        window.location.href = urlLink;
+                    },
+                    function (error) {
+                        //TODO: Display error
+                        console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
+                    }
+                );
+            };
 
-                    //console.log("login");
-                    UserLogin($scope.username, $scope.password,
-                        function () {
-                            var urlLink = "splash.html?department_id=" + $scope.department_id;
-                            window.location.href = urlLink;
-                        },
-                        function (error) {
-                            //TODO: Display error
-                            console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
-                        }
-                    );
-                } else {
-                    InitDefaultDatabase();
-
-                    //console.log("login");
-                    UserLogin($scope.username, $scope.password,
-                        function () {
-                            var urlLink = "admin_user.html";
-                            window.location.href = urlLink;
-                        },
-                        function (error) {
-                            //TODO: Display error
-                            console.log('Failed UserLogin, with error code: ' + error.message);
-                        }
-                    );
-                }
-
-
+            $scope.select_department = function(department) {
+                $scope.department_id = department.id;
+                $scope.department = department;
             };
         })
 

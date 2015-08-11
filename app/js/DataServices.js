@@ -68,24 +68,22 @@ angular.module('DataServices', ['ParseServices'])
     }])
 
     .factory('InitDbForDepartment', ['ParseQuery', 'ConvertParseObject', 'InitDefaultDatabase', function (ParseQuery, ConvertParseObject, InitDefaultDatabase) {
-        return function (department_id) {
-            console.log("InitDbForDepartment department_id:"+department_id);
-            InitDefaultDatabase();
+        return function (department) {
+            console.log("InitDbForDepartment department:");
+            console.log(department);
+            Parse.initialize(department.app_key, department.js_key);
+        }
+    }])
 
-            var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
-            queryDepartment.equalTo("objectId", department_id);
-            return queryDepartment.first({
-                success: function(department) {
-                    //TODO: Handle department=undefined
-                    ConvertParseObject(department, DEPARTMENT_DEF);
-                    console.log("department name_short:"+department.name_short+"  name_long:"+department.name_long+"  app_key:"+department.app_key+"  js_key:"+department.js_key);
-                    Parse.initialize(department.app_key, department.js_key);
-                },
-                error: function(error) {
-                    //TODO: display error
-                    console.log('Failed to Department, with error code: ' + error.message);
+    .factory('InitDatabase', ['InitDbForDepartment', 'InitDefaultDatabase', function (InitDbForDepartment, InitDefaultDatabase) {
+        return function () {
+            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+                var app_key =   localStorage.getItem('app_key');
+                var js_key =    localStorage.getItem('js_key');
+                if(app_key && js_key) {
+                    Parse.initialize(app_key, js_key);
                 }
-            });
+            }
         }
     }])
 
