@@ -22,7 +22,7 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
                 //console.log("login");
                 UserLogin($scope.username, $scope.password,
                     function () {
-                        var urlLink = "splash.html?department_id=" + $scope.department_id;
+                        var urlLink = "splash.html?department_id=" + $scope.selected_department.id;
                         window.location.href = urlLink;
                     },
                     function (error) {
