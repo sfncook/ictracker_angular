@@ -24,7 +24,7 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
 
     $scope.logout = function() {
         UserLogout();
-        var urlLink = "login.html?department_id="+$scope.department_id;
+        var urlLink = "login.html";
         window.location.href = urlLink;
     };
 

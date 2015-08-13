@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('UserServices', ['DataServices'])
+angular.module('UserServices', ['DataServices', 'DepartmentServices'])
 
     .factory('IsLoggedIn', [function () {
         return function () {

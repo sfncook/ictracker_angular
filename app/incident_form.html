@@ -39,6 +39,8 @@
     <script src="js/TimerServicies.js"></script>
     <script src="js/ReportServices.js"></script>
     <script src="js/BranchServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
     <script src="version.js"></script>
 </head>
 <body>
@@ -114,6 +116,11 @@
         <img class="report_icon" src="img/report.png"/>
 
         <div>Reports</div>
+    </button>
+    <button id="logout_btn"
+            class="header_item"
+            ng-click="userLogout()">
+        <div style="margin-top:-1px">Logout</div>
     </button>
 </div>
 <!-- ict_header-->
