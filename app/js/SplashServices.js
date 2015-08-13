@@ -7,39 +7,20 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
     if(!SetSavedDepartment()) {
         alert("No department stored locally.");
     } else {
-        console.log(Parse.User.current());
-    }
+        LoadIncidentTypes().then(function(){
+            $scope.incidentTypes = IncidentTypes;
+            $scope.$apply();
+        });
 
-    //$scope.department_id = getHttpRequestByName('department_id');
-    //InitDbForDepartmentId($scope.department_id).then(
-    //    function() {
-    //        // For new databases
-    //        //AddUserToRole("sfncook", "ict_admin");
-    //        //AddStrongRoleToWeakRole("ict_admin", "admin");
-    //        //AddStrongRoleToWeakRole("admin", "user");
-    //
-    //        console.log(Parse.User.current());
-    //
-    //        //LoadCurrentUser().then(function(){
-    //        //    console.log(DataStore.currentUser);
-    //        //    $scope.me = DataStore.currentUser.username;
-    //        //    $scope.$apply();
-    //        //});
-    //
-    //        //LoadIncidentTypes();
-    //        //$scope.incidentTypes = IncidentTypes;
-    //
-    //        //LoadAllIncidents($scope);
-    //        //$scope.incident_list = Incidents;
-    //        //
-    //        //var IncidentParseObj = Parse.Object.extend('Incident');
-    //        //$scope.incidentObj = new IncidentParseObj();
-    //        //ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
-    //    }, function(message) {
-    //        console.log("Error initializing department database: ");
-    //        console.log(error.message);
-    //    }
-    //);
+        LoadAllIncidents($scope).then(function(){
+            $scope.incident_list = Incidents;
+            $scope.$apply();
+        });
+
+        var IncidentParseObj = Parse.Object.extend('Incident');
+        $scope.incidentObj = new IncidentParseObj();
+        ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+    }
 
     $scope.logout = function() {
         UserLogout();
