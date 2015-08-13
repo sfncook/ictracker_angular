@@ -133,5 +133,63 @@ angular.module('UserServices', ['DataServices'])
         }
     }])
 
+    .factory('AddUserToRole', [function () {
+        return function (username, rolename) {
+            var query = new Parse.Query(Parse.Role);
+            query.equalTo("name", rolename);
+            return query.first({
+                success: function(role) {
+                    console.log("successfully found "+rolename+" role");
+                    console.log(role);
+                    var queryU = new Parse.Query(Parse.User);
+                    queryU.equalTo("username", username);
+                    queryU.first({
+                        success: function(userToAddToRole) {
+                            console.log("userToAddToRole:");
+                            console.log(userToAddToRole);
+                            role.getUsers().add(userToAddToRole);
+                            role.save();
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.log('Error: ');
+                    console.log(error.message);
+                }
+            });
+        }
+    }])
+
+    .factory('AddStrongRoleToWeakRole', [function () {
+        return function (strongrolename, weakrolename) {
+            var query_weak = new Parse.Query(Parse.Role);
+            query_weak.equalTo("name", weakrolename);
+            return query_weak.first({
+                success: function(weak_role) {
+                    console.log("successfully found weakrolename "+weakrolename+" role");
+                    console.log(weak_role);
+                    var query_strong = new Parse.Query(Parse.Role);
+                    query_strong.equalTo("name", strongrolename);
+                    query_strong.first({
+                        success: function(strong_role) {
+                            console.log("successfully found strongrolename "+strongrolename+" role");
+                            console.log(strong_role);
+                            weak_role.getRoles().add(strong_role);
+                            weak_role.save();
+                        },
+                        error: function(error) {
+                            console.log('Error: ');
+                            console.log(error.message);
+                        }
+                    });
+                },
+                error: function(error) {
+                    console.log('Error: ');
+                    console.log(error.message);
+                }
+            });
+        }
+    }])
+
 ;
 

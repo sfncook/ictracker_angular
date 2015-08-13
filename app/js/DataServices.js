@@ -14,7 +14,7 @@ var IAP_DEF = ['fireControl', 'firefighterSafety', 'incident', 'isActionEffect',
 var OSR_DEF = ['incident', 'isAddress', 'isOccupancy', 'isConstruction', 'isAssumeCommand', 'isLocation', 'isStrategy', 'isAttackLine', 'isWaterSupply', 'isIRIC', 'isBasement', 'isMobile', 'isDefensive', 'accountability', 'accountabilityLocation', 'unit', 'dispatchAddress', 'sizeOfBuilding', 'numberOfFloors', 'typeOfBuilding', 'subFloors', 'constructionType', 'roofType', 'conditions'];
 var OBJECTIVES_DEF = ['incident', 'upgradeToFullRescue', 'assingSafety', 'establishSupplyLine', 'secureUtilities', 'ventiliation', 'createOnDeck', 'pressurizeExposures', 'monitorChannel16', 'salvage', 'establishRehab', 'customerService'];
 var USER_DEF = ['username', 'email', 'name', 'department'];
-var ROLE_DEF = ['name'];
+var ROLE_DEF = ['name', 'users', 'roles'];
 
 angular.module('DataServices', ['ParseServices'])
     .factory('DefaultCity', function() {
@@ -69,9 +69,26 @@ angular.module('DataServices', ['ParseServices'])
 
     .factory('InitDbForDepartment', ['ParseQuery', 'ConvertParseObject', 'InitDefaultDatabase', function (ParseQuery, ConvertParseObject, InitDefaultDatabase) {
         return function (department) {
-            console.log("InitDbForDepartment department:");
-            console.log(department);
+            console.log("InitDbForDepartment department:"+department.app_key+", "+department.js_key);
             Parse.initialize(department.app_key, department.js_key);
+        }
+    }])
+
+    .factory('InitDbForDepartmentId', ['ParseQuery', 'ConvertParseObject', 'InitDefaultDatabase', 'InitDbForDepartment', function (ParseQuery, ConvertParseObject, InitDefaultDatabase, InitDbForDepartment) {
+        return function (department_id) {
+            console.log("InitDbForDepartmentId department_id:"+department_id);
+            InitDefaultDatabase();
+            var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
+            queryDepartment.equalTo("objectId", department_id);
+            return queryDepartment.first({
+                success: function(department) {
+                    ConvertParseObject(department, DEPARTMENT_DEF);
+                    InitDbForDepartment(department);
+                },
+                error: function() {
+                    console.log('Failed to find department_id:'+department_id+', with error code: ' + error.message);
+                }
+            });
         }
     }])
 
