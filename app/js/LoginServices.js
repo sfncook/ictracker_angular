@@ -1,23 +1,20 @@
 
 
 var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'DepartmentServices'])
-    .controller('LoginCtrl', function($scope, UserLogin, InitDbForDepartment, InitDefaultDatabase, LoadAllDepartments, AllDepartments){
+    .controller('LoginCtrl', function($scope, UserLogin, InitDefaultDatabase, LoadAllDepartments, AllDepartments, SetDepartment){
             $scope.username="";
             $scope.password="";
             $scope.selected_department = {"id":getHttpRequestByName('department_id')};
 
-            if(!$scope.selected_department.id) {
-                InitDefaultDatabase();
-
-                LoadAllDepartments().then(function(){
-                    $scope.departments = AllDepartments;
-                    $scope.$apply();
-                });
-            }
+            InitDefaultDatabase();
+            LoadAllDepartments().then(function(){
+                $scope.departments = AllDepartments;
+                $scope.$apply();
+            });
 
             // Respond to incident type button click
             $scope.login = function() {
-                InitDbForDepartment($scope.selected_department);
+                SetDepartment($scope.selected_department);
 
                 //console.log("login");
                 UserLogin($scope.username, $scope.password,
@@ -30,11 +27,6 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
                         console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
                     }
                 );
-            };
-
-            $scope.select_department = function(department) {
-                $scope.department_id = department.id;
-                $scope.department = department;
             };
         })
 
