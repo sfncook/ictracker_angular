@@ -33,13 +33,19 @@ angular.module('DepartmentServices', ['DataServices'])
         }
     }])
 
+    .factory('ResetSavedDepartment', [function () {
+        return function () {
+            localStorage.removeItem('department_app_key');
+            localStorage.removeItem('department_js_key');
+        }
+    }])
+
     .factory('SetSavedDepartment', [function () {
         return function () {
             var app_key = localStorage.getItem('department_app_key');
             var js_key = localStorage.getItem('department_js_key');
 
             if(app_key && js_key) {
-                console.log(app_key+" "+js_key);
                 Parse.initialize(app_key, js_key);
                 return true;
             } else {

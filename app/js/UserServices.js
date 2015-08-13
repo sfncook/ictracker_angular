@@ -75,8 +75,9 @@ angular.module('UserServices', ['DataServices'])
         }
     }])
 
-    .factory('UserLogout', [function () {
+    .factory('UserLogout', ['ResetSavedDepartment', function (ResetSavedDepartment) {
         return function () {
+            ResetSavedDepartment();
             return Parse.User.logOut();
         }
     }])
