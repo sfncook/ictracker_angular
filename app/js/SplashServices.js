@@ -1,41 +1,45 @@
 'use strict';
 
-var app = angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices']);
+var app = angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices']);
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, InitDbForDepartmentId, DataStore, LoadCurrentUser){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, SetSavedDepartment, DataStore){
 
-    console.log(Parse.User.current());
+    if(!SetSavedDepartment()) {
+        alert("No department stored locally.");
+    } else {
+        console.log(Parse.User.current());
+    }
 
-    $scope.department_id = getHttpRequestByName('department_id');
-    InitDbForDepartmentId($scope.department_id).then(
-        function() {
-            // For new databases
-            //AddUserToRole("sfncook", "ict_admin");
-            //AddStrongRoleToWeakRole("ict_admin", "admin");
-            //AddStrongRoleToWeakRole("admin", "user");
-
-            console.log(Parse.User.current());
-
-            //LoadCurrentUser().then(function(){
-            //    console.log(DataStore.currentUser);
-            //    $scope.me = DataStore.currentUser.username;
-            //    $scope.$apply();
-            //});
-
-            //LoadIncidentTypes();
-            //$scope.incidentTypes = IncidentTypes;
-
-            //LoadAllIncidents($scope);
-            //$scope.incident_list = Incidents;
-            //
-            //var IncidentParseObj = Parse.Object.extend('Incident');
-            //$scope.incidentObj = new IncidentParseObj();
-            //ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
-        }, function(message) {
-            console.log("Error initializing department database: ");
-            console.log(error.message);
-        }
-    );
+    //$scope.department_id = getHttpRequestByName('department_id');
+    //InitDbForDepartmentId($scope.department_id).then(
+    //    function() {
+    //        // For new databases
+    //        //AddUserToRole("sfncook", "ict_admin");
+    //        //AddStrongRoleToWeakRole("ict_admin", "admin");
+    //        //AddStrongRoleToWeakRole("admin", "user");
+    //
+    //        console.log(Parse.User.current());
+    //
+    //        //LoadCurrentUser().then(function(){
+    //        //    console.log(DataStore.currentUser);
+    //        //    $scope.me = DataStore.currentUser.username;
+    //        //    $scope.$apply();
+    //        //});
+    //
+    //        //LoadIncidentTypes();
+    //        //$scope.incidentTypes = IncidentTypes;
+    //
+    //        //LoadAllIncidents($scope);
+    //        //$scope.incident_list = Incidents;
+    //        //
+    //        //var IncidentParseObj = Parse.Object.extend('Incident');
+    //        //$scope.incidentObj = new IncidentParseObj();
+    //        //ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+    //    }, function(message) {
+    //        console.log("Error initializing department database: ");
+    //        console.log(error.message);
+    //    }
+    //);
 
     $scope.logout = function() {
         UserLogout();
