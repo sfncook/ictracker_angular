@@ -2,11 +2,11 @@
 
 var app = angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices']);
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, SetSavedDepartment, DataStore){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout){
 
-    if(!SetSavedDepartment()) {
-        alert("No department stored locally.");
-    } else {
+    //if(!SetSavedDepartment()) {
+    //    alert("No department stored locally.");
+    //} else {
         LoadIncidentTypes().then(function(){
             $scope.incidentTypes = IncidentTypes;
             $scope.$apply();
@@ -20,7 +20,7 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         var IncidentParseObj = Parse.Object.extend('Incident');
         $scope.incidentObj = new IncidentParseObj();
         ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
-    }
+    //}
 
     $scope.logout = function() {
         UserLogout();

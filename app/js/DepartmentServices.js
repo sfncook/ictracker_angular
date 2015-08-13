@@ -40,19 +40,5 @@ angular.module('DepartmentServices', ['DataServices'])
         }
     }])
 
-    .factory('SetSavedDepartment', [function () {
-        return function () {
-            var app_key = localStorage.getItem('department_app_key');
-            var js_key = localStorage.getItem('department_js_key');
-
-            if(app_key && js_key) {
-                Parse.initialize(app_key, js_key);
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }])
-
 ;
 
