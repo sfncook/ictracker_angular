@@ -37,7 +37,14 @@
 {{me}}
 <div id="splash_outer_outer_div">
     <div id="splash_outer_inner_div">
-        <a ng-click="logout()">Logout</a>
+        <button id="logout_btn"
+                ng-click="userLogout()">
+            <div style="margin-top:-1px">Logout</div>
+        </button>
+        <button id="admin_btn"
+                ng-click="redirectAdmin()">
+            <div style="margin-top:-1px">Admin</div>
+        </button>
         <div class="splash_row1">
             <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
 

@@ -22,9 +22,14 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
     //}
 
-    $scope.logout = function() {
+    $scope.userLogout = function() {
         UserLogout();
         var urlLink = "login.html";
+        window.location.href = urlLink;
+    };
+
+    $scope.redirectAdmin = function() {
+        var urlLink = "admin_user.html";
         window.location.href = urlLink;
     };
 
