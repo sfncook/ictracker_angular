@@ -38,7 +38,8 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         }
 
         $scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
-            ConvertParseObject(incidentObj, INCIDENT_DEF);
+            //console.log(incidentObj);
+            //ConvertParseObject(incidentObj, INCIDENT_DEF);
             $scope.loadIncident(incidentObj.id);
         }, function(error) {
             console.log("Error saving new incident: "+error);
