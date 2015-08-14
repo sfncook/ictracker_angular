@@ -20,153 +20,27 @@
     <script src="js/AdminUserServices.js"></script>
 </head>
 <body ng-controller="AdminUserCtrl">
-    <div ng-show="!loggedOut">
-        <div class="pageTitle">
-            ICT Admin Page<br/>
-            <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
+<div style="width:400px; margin:0 auto;">
+    <center>
+        <div>
+            <img src="img/logo/ict_logo_300x300.png"/><br/>
+            <button id="init_new_database_btn"
+                    style="margin-top:10px"
+                    ng-click="init_new_database()">Initialize New Database</button>
+            <br/>
+            <button id="logout_btn"
+                    ng-click="userLogout()"
+                    style="margin-top:10px">
+                <div style="margin-top:-1px">Logout</div>
+            </button>
         </div>
-        <div ng-show="loggedIn" class="currentUser">
-            Welcome, {{currentUser.name}} ({{currentUser.username}})<br>
-            <button ng-click="logout()">Logout</button>
-        </div>
-
-        <div style="width:400px; margin:100px auto;">
-            <center>
-                <div class="userpass_info_entry">
-                    <select ng-options="department as department.name_long for department in departments"
-                            ng-model="selected_department"
-                            ng-change="select_department()"></select>
-                </div>
-                <div style="margin-top:10px" ng-show="selected_department && !loggedIn" id="userpass_container">
-                    <div class="userpass_info_entry">
-                        <div>User Name:</div>
-                        <input id="username_input" name="inc_num_input" type="text" ng-model="username"/>
-                    </div>
-                    <div class="userpass_info_entry">
-                        <div>Password:</div>
-                        <input id="password_input" name="address_input" type="password" ng-model="password"/>
-                    </div>
-                    <button is="login_btn" style="margin-top:10px" ng-click="login()" ng-disabled="!username||!password" ng-class="{button_disabled:!username||!password}">Login</button>
-                </div>
-            </center>
-        </div>
+    </center>
+</div>
 
 
-        <table ng-show="user_list.length" ng-show="selected_department" class="admin_user_table">
-            <thead>
-            <tr>
-                <td><button class="load_btn" ng-click="addUser()">Add</button></td>
-                <td></td>
-                <td>username</td>
-                <td>Name</td>
-                <td>Department</td>
-                <td>Email</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-show="showAddUser">
-                <td>
-                    <button class="load_btn" ng-click="saveNewUser()">Save</button>
-                </td>
-                <td>
-                    <button class="delt_btn" ng-click="cancelAddUser()">Cancel</button>
-                </td>
-                <td><input ng-model="newuser.username" type="text"/></td>
-                <td><input ng-model="newuser.name" type="text"/></td>
-                <td>
-                    <!--<select ng-options="department as department.name_long for department in departments"-->
-                            <!--ng-model="selected_department"></select>-->
-                </td>
-                <td><input ng-model="newuser.email" type="text"/></td>
-            </tr>
-
-            <tr ng-repeat="user in user_list">
-                <td>
-                    <button class="load_btn"
-                            ng-click="editUser(user.id)">Edit</button>
-                </td>
-                <td>
-                    <button class="delt_btn"
-                            ng-click="deleteUser(user.id)">Delete</button>
-                </td>
-                <td>{{user.username}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.department.name_long}}</td>
-                <td>{{user.email}}</td>
-            </tr>
-            </tbody>
-        </table>
-
-<!--        <table>
-            <tr>
-                <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center; font-size:1.2rem; font-weight:bold;">Add a new user:</td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Name:</td>
-                <td style="text-align: left"><input ng-model="username"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Password:</td>
-                <td style="text-align: left"><input ng-model="password"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Email:</td>
-                <td style="text-align: left"><input ng-model="email" /></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Department:</td>
-                <td style="text-align: left">
-                    <select style="width:125px;" ng-model="department">
-                        <option ng-repeat="department in departments">{{department.name}}</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Roles:</td>
-                <td style="text-align: left">
-                    <button
-                        ng-repeat="role in roles"
-                        ng-class="{glowlightgreen:isAddedRoll(role)}"
-                        ng-click="toggleRole(role)"
-                        style="margin:0 5px">{{role}}</button>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center"><button ng-click="createUser()">Submit</button></td>
-            </tr>
-        </table>
-        -->
-    </div>
-
-    <div ng-show="loggedOut">
-        <table>
-            <tr>
-                <td colspan="2" style="text-align: center"><img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center; font-size:1.2rem; font-weight:bold;">Admin login:</td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Name:</td>
-                <td style="text-align: left"><input ng-model="username"/></td>
-            </tr>
-            <tr>
-                <td style="text-align: right">Password:</td>
-                <td style="text-align: left"><input ng-model="password" type="password"/></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align: center"><button ng-click="login()">Login</button></td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div class="copyright_div">
-        <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
-        <div id="version_text" class="lic_info_splash">Version: 0.0</div>
-    </div>
+<div class="copyright_div">
+    <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
+    <div id="version_text" class="lic_info_splash">Version: 0.0</div>
+</div>
 </body>
 </html>

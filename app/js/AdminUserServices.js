@@ -2,7 +2,7 @@
 
 angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServices'])
 
-    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers, CreateUser) {
+    .controller('AdminUserCtrl', function ($scope, AllDepartments, LoadAllDepartments, InitDatabase, LoadCurrentUser, DataStore, IsLoggedIn, LoadAllUsers, AllUsers, CreateUser, UserLogout) {
         $scope.username = "";
         $scope.password = "";
         $scope.email = "";
@@ -10,19 +10,34 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
         $scope.newuser = {};
         $scope.loggedIn = IsLoggedIn();
 
-        InitDatabase().then(function(){
-            LoadAllDepartments().then(function(){
-                $scope.departments = AllDepartments;
-                $scope.$apply();
-            });
-        });
+        $scope.init_new_database = function() {
+            var r = confirm("Are you sure you want to add ACLs to all the tables in this database?");
+            if (r == true) {
+                var acl = new Parse.ACL();
+                acl.setPublicReadAccess(false);
+                acl.setPublicWriteAccess(false);
+
+                var role_user = new Parse.Role('user', acl);
+                var role_admin = new Parse.Role('admin', acl);
+                var role_ict_admin = new Parse.Role('ict_admin', acl);
+
+                role_user.save();
+                role_admin.save();
+                role_ict_admin.save();
 
 
-        $scope.logout = function() {
-            Parse.User.logOut();
-            location.reload();
-            window.location.href = "login.html";
+
+                role_user.getRoles().add(role_admin);
+                role_admin.getRoles().add(role_ict_admin);
+            }
         }
+
+        $scope.userLogout = function() {
+            UserLogout();
+            var urlLink = "login.html";
+            window.location.href = urlLink;
+        }
+
         $scope.login = function() {
             Parse.User.logIn($scope.username, $scope.password, {
                 success: function(user) {

@@ -35,7 +35,7 @@
                 <div>Password:</div>
                 <input id="password_input" name="address_input" type="password" ng-model="password" ng-disabled="!selected_department.id"/>
             </div>
-            <button is="login_btn"
+            <button id="login_btn"
                     style="margin-top:10px"
                     ng-click="login()"
                     ng-disabled="(!username||!password) || !selected_department.id"
