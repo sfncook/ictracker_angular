@@ -137,7 +137,13 @@ function getHttpRequestByName(name) {
 
 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
     //Parse.initialize - Doesn't do much, only sets key variables.  Does not contact server.
-    Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
+    //Parse.initialize("Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR", "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp");
+    var app_key = localStorage.getItem('department_app_key');
+    var js_key = localStorage.getItem('department_js_key');
+
+    if(app_key && js_key) {
+        Parse.initialize(app_key, js_key);
+    }
 }
 
 $(document).keyup(function (e) {

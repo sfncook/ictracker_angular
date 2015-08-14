@@ -1,4 +1,5 @@
 
+var DEPARTMENT_DEF = ['name_short', 'name_long', 'app_key', 'js_key'];
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'strategy', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
 var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit'];
@@ -12,6 +13,8 @@ var REPORT_ACTION_DEF = ['incident', 'sector', 'text'];
 var IAP_DEF = ['fireControl', 'firefighterSafety', 'incident', 'isActionEffect', 'isArrangement', 'isBuilding', 'isFire', 'isLifeHazard', 'isOccupancy', 'isResources', 'isSpecial', 'isSprinkler', 'isVent', 'propertyPeople', 'evacutionLocation', 'rescue'];
 var OSR_DEF = ['incident', 'isAddress', 'isOccupancy', 'isConstruction', 'isAssumeCommand', 'isLocation', 'isStrategy', 'isAttackLine', 'isWaterSupply', 'isIRIC', 'isBasement', 'isMobile', 'isDefensive', 'accountability', 'accountabilityLocation', 'unit', 'dispatchAddress', 'sizeOfBuilding', 'numberOfFloors', 'typeOfBuilding', 'subFloors', 'constructionType', 'roofType', 'conditions'];
 var OBJECTIVES_DEF = ['incident', 'upgradeToFullRescue', 'assingSafety', 'establishSupplyLine', 'secureUtilities', 'ventiliation', 'createOnDeck', 'pressurizeExposures', 'monitorChannel16', 'salvage', 'establishRehab', 'customerService'];
+var USER_DEF = ['username', 'email', 'name', 'department'];
+var ROLE_DEF = ['name', 'users', 'roles'];
 
 angular.module('DataServices', ['ParseServices'])
     .factory('DefaultCity', function() {
@@ -21,6 +24,7 @@ angular.module('DataServices', ['ParseServices'])
     .factory('DataStore', function() {
         return {
             incident:{},
+            currentUser:{},
             waitingToLoad:true,
             loadSuccess:false
         };
@@ -51,6 +55,51 @@ angular.module('DataServices', ['ParseServices'])
         return {
             error: function(obj, error) {
                 console.log('Failed to create new object, with error code: ' + error.message);
+            }
+        }
+    }])
+
+    .factory('InitDefaultDatabase', [function () {
+        return function () {
+            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+                Parse.initialize("rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO", "L0Brh9CVpryQ2yTIezbjLrEdBOfoVlbIMmtgUniJ");
+            }
+        }
+    }])
+
+    .factory('InitDbForDepartment', ['ParseQuery', 'ConvertParseObject', 'InitDefaultDatabase', function (ParseQuery, ConvertParseObject, InitDefaultDatabase) {
+        return function (department) {
+            console.log("InitDbForDepartment department:"+department.app_key+", "+department.js_key);
+            Parse.initialize(department.app_key, department.js_key);
+        }
+    }])
+
+    .factory('InitDbForDepartmentId', ['ParseQuery', 'ConvertParseObject', 'InitDefaultDatabase', 'InitDbForDepartment', function (ParseQuery, ConvertParseObject, InitDefaultDatabase, InitDbForDepartment) {
+        return function (department_id) {
+            console.log("InitDbForDepartmentId department_id:"+department_id);
+            InitDefaultDatabase();
+            var queryDepartment = new Parse.Query(Parse.Object.extend('Department'));
+            queryDepartment.equalTo("objectId", department_id);
+            return queryDepartment.first({
+                success: function(department) {
+                    ConvertParseObject(department, DEPARTMENT_DEF);
+                    InitDbForDepartment(department);
+                },
+                error: function() {
+                    console.log('Failed to find department_id:'+department_id+', with error code: ' + error.message);
+                }
+            });
+        }
+    }])
+
+    .factory('InitDatabase', ['InitDbForDepartment', 'InitDefaultDatabase', function (InitDbForDepartment, InitDefaultDatabase) {
+        return function () {
+            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
+                var app_key =   localStorage.getItem('app_key');
+                var js_key =    localStorage.getItem('js_key');
+                if(app_key && js_key) {
+                    Parse.initialize(app_key, js_key);
+                }
             }
         }
     }])

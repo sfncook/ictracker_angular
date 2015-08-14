@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="AdminModule">
+<head>
+    <title>ICT User Admin</title>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <link rel="stylesheet" href="css/ict/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" href="css/ict/stylesheet_admin.css">
+
+    <script src="js/libs/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
+    <script src="js/AdminUserServices.js"></script>
+</head>
+<body ng-controller="AdminUserCtrl">
+<div style="width:400px; margin:0 auto;">
+    <center>
+        <div>
+            <img src="img/logo/ict_logo_300x300.png"/><br/>
+            <button id="init_new_database_btn"
+                    style="margin-top:10px"
+                    ng-click="init_new_database()">Initialize New Database</button>
+            <br/>
+            <button id="logout_btn"
+                    ng-click="userLogout()"
+                    style="margin-top:10px">
+                <div style="margin-top:-1px">Logout</div>
+            </button>
+        </div>
+    </center>
+</div>
+
+
+<div class="copyright_div">
+    <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
+    <div id="version_text" class="lic_info_splash">Version: 0.0</div>
+</div>
+</body>
+</html>

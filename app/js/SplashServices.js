@@ -1,18 +1,37 @@
 'use strict';
 
-var app = angular.module("SplashController", ['DataServices', 'IncidentServices']);
+var app = angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices']);
 
-app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger){
+app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout){
 
-    LoadIncidentTypes();
-    $scope.incidentTypes = IncidentTypes;
+    //if(!SetSavedDepartment()) {
+    //    alert("No department stored locally.");
+    //} else {
+        LoadIncidentTypes().then(function(){
+            $scope.incidentTypes = IncidentTypes;
+            $scope.$apply();
+        });
 
-    LoadAllIncidents($scope);
-    $scope.incident_list = Incidents;
+        LoadAllIncidents($scope).then(function(){
+            $scope.incident_list = Incidents;
+            $scope.$apply();
+        });
 
-    var IncidentParseObj = Parse.Object.extend('Incident');
-    $scope.incidentObj = new IncidentParseObj();
-    ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+        var IncidentParseObj = Parse.Object.extend('Incident');
+        $scope.incidentObj = new IncidentParseObj();
+        ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+    //}
+
+    $scope.userLogout = function() {
+        UserLogout();
+        var urlLink = "login.html";
+        window.location.href = urlLink;
+    };
+
+    $scope.redirectAdmin = function() {
+        var urlLink = "admin_user.html";
+        window.location.href = urlLink;
+    };
 
     // Respond to incident type button click
     $scope.createAndLoadNewIncident = function(incidentType) {
@@ -24,7 +43,8 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
         }
 
         $scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
-            ConvertParseObject(incidentObj, INCIDENT_DEF);
+            //console.log(incidentObj);
+            //ConvertParseObject(incidentObj, INCIDENT_DEF);
             $scope.loadIncident(incidentObj.id);
         }, function(error) {
             console.log("Error saving new incident: "+error);
@@ -51,6 +71,5 @@ app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadI
             });
         }
     };
-
 
 });

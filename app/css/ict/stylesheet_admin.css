@@ -1,0 +1,50 @@
+
+html {
+    font-size: 100%;
+    overflow-y: scroll;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    background: #9ad1ff;
+    color: black;
+    text-align: center;
+    height: 100%;
+}
+
+table {
+    width: 400px;
+    margin: 50px auto;
+}
+
+table td {
+    padding:5px;
+}
+
+.pageTitle {
+    margin: 10px;
+    position: fixed;
+    top: 0px;
+    left:0px;
+}
+
+.currentUser {
+    margin: 10px;
+    position: fixed;
+    top: 0px;
+    right:0px;
+}
+
+.admin_user_table {
+
+}
+
+.admin_user_table thead td {
+    border: none;
+}
+
+.admin_user_table td {
+    border: 1px black solid;
+}

@@ -1,0 +1,38 @@
+
+body.createuserpage {
+    background: #9ad1ff;
+    color: black;
+    text-align: center;
+    height: 100%;
+}
+
+.create_user_btn {
+    height: 70px;
+    width: 180px;
+    margin: 10px;
+    font-size: 2.0rem;
+    padding-top: 5px !important;
+    float: left;
+}
+
+.incident_info_entry {
+    width: 200px;
+    margin-bottom:10px;
+}
+
+.mandatory_field {
+    color: red;
+}
+
+.status_div {
+    width: 200px;
+}
+
+.success {
+    background: green;
+}
+
+.failure {
+    background: red;
+}
+

@@ -99,6 +99,7 @@ button:active {
 }
 .button_disabled, .button_disabled.glowlightgreen {
     background: #CCC !important;
+    cursor: default;
 }
 .button_disabled:hover, .button_disabled.glowlightgreen:hover {
     background: #CCC !important;
@@ -897,4 +898,20 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     margin-top:23px;
     margin-bottom:0px;
     float:right;
+}
+
+.copyright_div {
+    position: fixed;
+    bottom: 0px;
+    left:0px;
+}
+#version_text {
+    z-index: 150;
+    background: #9ad1ff;
+    margin: 0 10px;
+}
+#copyright_text {
+    z-index: 150;
+    background: #9ad1ff;
+    margin: 0 10px;
 }

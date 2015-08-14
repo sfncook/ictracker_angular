@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="LoginApp">
+<head>
+    <title>White Helmet Tech, LLC</title>
+    <link href="img/logo/ict_logo_29x29.png" rel="icon"/>
+
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_global.css"/>
+    <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_login.css"/>
+
+    <!--JS-->
+    <script src="js/libs/parse-1.3.3.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/libs/ParseServices.js"></script>
+    <script src="js/DataServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/LoginServices.js"></script>
+
+</head>
+
+<body class="login" ng-controller="LoginCtrl">
+<div style="width:400px; margin:0 auto;">
+    <center>
+        <div id="userpass_container">
+            <img src="img/logo/ict_logo_300x300.png"/><br/>
+            <div class="userpass_info_entry">
+                <div>User Name:</div>
+                <input id="username_input" name="inc_num_input" type="text" ng-model="username" ng-disabled="!selected_department.id"/>
+            </div>
+            <div class="userpass_info_entry">
+                <div>Password:</div>
+                <input id="password_input" name="address_input" type="password" ng-model="password" ng-disabled="!selected_department.id"/>
+            </div>
+            <button id="login_btn"
+                    style="margin-top:10px"
+                    ng-click="login()"
+                    ng-disabled="(!username||!password) || !selected_department.id"
+                    ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
+        </div>
+
+        <div class="userpass_info_entry" ng-show="!department_id">
+            <select ng-options="department as department.name_long for department in departments"
+                    ng-model="selected_department"
+                    style="margin-top:10px"></select>
+        </div>
+    </center>
+</div>
+
+
+<div class="copyright_div">
+    <div id="copyright_text" class="lic_info_splash">&copy; Copyright 2014 White Helmet Tech, LLC</div>
+    <div id="version_text" class="lic_info_splash">Version: 0.0</div>
+</div>
+
+</body>
+</html>

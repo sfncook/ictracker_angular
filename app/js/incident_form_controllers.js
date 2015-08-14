@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
@@ -16,7 +16,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('HeaderContainer', function($scope, $interval, DataStore){
+    .controller('HeaderContainer', function($scope, $interval, DataStore, UserLogout){
         $scope.osrPerc = 0;
         $scope.objPerc = 0;
 
@@ -25,7 +25,20 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.showBranchDlg = function() {
-            DataStore.showBranchDlg();
+            //DataStore.showBranchDlg();
+            console.log("Branch clicked");
+            Parse.Cloud.run('incidentDataAll', { incidentObjectId: '0wyWB7SCst' }, {
+                success: function(incidentData) {
+                    console.log("success");
+                    //console.log(incidentData);
+                    var fromParse = JSON.parse(incidentData);
+                    console.log(fromParse);
+                },
+                error: function(error) {
+                    console.log("error");
+                    console.log(error);
+                }
+            });
         }
 
         $scope.showCmdXferDlg = function() {
@@ -42,6 +55,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         DataStore.setObjPerc = function(perc) {
             $scope.objPerc = perc;
+        }
+
+        $scope.userLogout = function() {
+            UserLogout();
+            var urlLink = "login.html";
+            window.location.href = urlLink;
         }
     })
 

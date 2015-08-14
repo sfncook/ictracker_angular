@@ -20,7 +20,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ConvertParseObject', function (IncidentTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var queryIncidentTypes = new Parse.Query(Parse.Object.extend('IncidentType'));
-            queryIncidentTypes.find({
+            return queryIncidentTypes.find({
                 success: function(incidentTypes) {
                     for(var i=0; i<incidentTypes.length; i++) {
                         var incidentType = incidentTypes[i];
@@ -84,7 +84,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         return function ($scope) {
             Incidents.removeAll();
             var query = new Parse.Query(Parse.Object.extend('Incident'));
-            query.find({
+            return query.find({
                 success: function(incidents) {
                     for(var i=0; i<incidents.length; i++) {
                         var incident = incidents[i];

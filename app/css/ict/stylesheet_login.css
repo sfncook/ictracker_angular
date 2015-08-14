@@ -1,0 +1,26 @@
+
+body.login{
+    background: #9ad1ff;
+    color: black;
+    text-align: center;
+    height: 100%;
+}
+
+#userpass_container {
+    padding-top: 50px;
+}
+
+#userpass_title {
+    font-family: sans-serif;
+    font-size: 1.2rem;
+}
+
+#userpass_info_entry {
+    font-family: sans-serif;
+    font-size: 1.2rem;
+}
+
+#login_btn {
+    width: 150px;
+    margin: 5px;
+}

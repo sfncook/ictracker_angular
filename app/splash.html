@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="css/ict/stylesheet_splash.css"/>
 
     <!--JS-->
-    <script src="//www.parsecdn.com/js/parse-1.3.3.js"></script>
+    <script src="js/libs/parse-1.3.3.js"></script>
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="js/config.js"></script>
@@ -26,15 +26,25 @@
     <script src="js/ObjectivesServices.js"></script>
     <script src="js/OSRServices.js"></script>
     <script src="js/UpgradeServices.js"></script>
-    <script src="js/splash.js"></script>
+    <script src="js/UserServices.js"></script>
+    <script src="js/DepartmentServices.js"></script>
+    <script src="js/SplashServices.js"></script>
     <script src="version.js"></script>
 
 </head>
 
 <body class="splashpage" ng-controller="SplashCtrl">
-
+{{me}}
 <div id="splash_outer_outer_div">
     <div id="splash_outer_inner_div">
+        <button id="logout_btn"
+                ng-click="userLogout()">
+            <div style="margin-top:-1px">Logout</div>
+        </button>
+        <button id="admin_btn"
+                ng-click="redirectAdmin()">
+            <div style="margin-top:-1px">Admin</div>
+        </button>
         <div class="splash_row1">
             <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
 
