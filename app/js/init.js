@@ -43,7 +43,7 @@ Array.prototype.removeAll = function () {
  */
 Array.prototype.findSectorByName = function (name) {
     for (var i = 0; i < this.length; i++) {
-        if (typeof this[i].name != 'undefined' && this[i].name === name) {
+        if (typeof this[i].sectorType.name != 'undefined' && this[i].sectorType.name === name) {
             return i;
         }
     }

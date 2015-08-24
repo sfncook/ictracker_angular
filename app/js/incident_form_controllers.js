@@ -211,9 +211,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.doesSectorHavePar = DoesSectorHavePar;
     })
 
-    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){
+    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger, TbarSectors){
         $scope.selectedSector = {};
-        $scope.tbar_sectors=DataStore.tbar_sectors;
+        $scope.tbar_sectors=TbarSectors;
 
         LoadSectorTypes().then(
             function() {
@@ -268,6 +268,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $scope.selectedSector.save(null, DefaultErrorLogger);
         };
 
+        $scope.isSectorTypeSelected = function(sectorType) {
+            console.log("sectorType:",sectorType);
+        }
 
         DataStore.showSectorNameDlg = function(sector) {
             $scope.selectedSector = sector;
