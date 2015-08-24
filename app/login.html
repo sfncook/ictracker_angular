@@ -39,20 +39,23 @@
                 <input id="username_input" name="inc_num_input" type="text"
                        ng-model="username"
                        ng-disabled="!selected_department.id"
-                       ng-enter="login()"/>
+                       ng-enter="login()"
+                       ng-class="{invalid_login_border:is_invalid_login}"/>
             </div>
             <div class="userpass_info_entry">
                 <div>Password:</div>
                 <input id="password_input" name="address_input" type="password"
                        ng-model="password"
                        ng-disabled="!selected_department.id"
-                       ng-enter="login()"/>
+                       ng-enter="login()"
+                       ng-class="{invalid_login_border:is_invalid_login}"/>
             </div>
             <button id="login_btn"
                     style="margin-top:10px"
                     ng-click="login()"
                     ng-disabled="(!username||!password) || !selected_department.id"
                     ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
+            <div ng-show="is_invalid_login" class="invalid_login_font">Invalid user name or password.</div>
         </div>
     </center>
 </div>

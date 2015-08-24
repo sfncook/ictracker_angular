@@ -24,3 +24,11 @@ body.login{
     width: 150px;
     margin: 5px;
 }
+
+.invalid_login_border {
+    border: 5px solid red;
+}
+
+.invalid_login_font {
+    color: red;
+}

@@ -4,6 +4,7 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
     .controller('LoginCtrl', function($scope, UserLogin, InitDefaultDatabase, LoadAllDepartments, AllDepartments, SetDepartment){
         $scope.username="";
         $scope.password="";
+        $scope.is_invalid_login = false;
 
         InitDefaultDatabase();
         LoadAllDepartments().then(function(){
@@ -20,8 +21,9 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
                     window.location.href = urlLink;
                 },
                 function (error) {
-                    //TODO: Display error
                     console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
+                    $scope.is_invalid_login = true;
+                    $scope.$apply();
                 }
             );
         };
