@@ -115,13 +115,11 @@ tbar {
 
 .par-btn {
     width:30px;
-    height: 22px;
     padding:4px;
-    margin:2px;
     font-size: 0.6rem;
 }
 .sector_name_btn {
-    width:168px;
+    width:178px;
     height: 24px;
     padding: 0 0 0 2px;
     font-size: 1.0rem;
@@ -130,9 +128,7 @@ tbar {
 }
 .bnch-btn {
     width:57px;
-    height: 22px;
     padding:4px;
-    margin:2px;
     font-size: 0.6rem;
 }
 
@@ -206,6 +202,7 @@ tbar {
 }
 .tbar_title_num_td {
     width:10px;
+    padding-right:5px;
 }
 .tbar_title_td {
     width: 130px;

@@ -267,7 +267,8 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
 
 .sector_toprow_btn {
     float:left;
-    margin:5px;
+    margin:2px;
+    height: 24px;
 }
 
 #top_header_container {
