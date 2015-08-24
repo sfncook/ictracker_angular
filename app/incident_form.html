@@ -133,6 +133,10 @@
         <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
     <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
+    <button id="inc_map_btn" class="button_top" ng-click="openMap()">
+        <img class="map_btn_img" src="img/map_icon.png"/>Map
+    </button>
+
     <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
     <div id="db_status_msg_success"

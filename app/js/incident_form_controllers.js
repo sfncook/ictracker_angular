@@ -14,6 +14,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.showStrategyDlg = function() {
             DataStore.showStrategyDlg();
         }
+
+        $scope.openMap = function() {
+            window.open('https://maps.google.com/?daddr=' + encodeURI($scope.dataStore.incident.inc_address), '_blank');
+        }
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore, UserLogout){
