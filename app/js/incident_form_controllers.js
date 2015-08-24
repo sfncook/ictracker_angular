@@ -4,6 +4,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     .run(function(IsLoggedIn) {
         if(!IsLoggedIn()){
+            ResetSavedDepartment();
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
