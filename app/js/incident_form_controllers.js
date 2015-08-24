@@ -2,6 +2,10 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
+    .run(function() {
+        console.log("app run");
+    })
+
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
@@ -13,6 +17,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
         $scope.showStrategyDlg = function() {
             DataStore.showStrategyDlg();
+        }
+        $scope.showSettingsDlg = function() {
+            DataStore.showSettingsDlg();
         }
 
         $scope.openMap = function() {
@@ -514,6 +521,23 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .controller('SettingsDlg', function($scope, DataStore, UserLogout){
+
+        DataStore.showSettingsDlg = function() {
+            $("#settings_dlg").dialog( "open" );
+        }
+
+        $scope.clickCancel = function() {
+            $("#settings_dlg").dialog( "close" );
+        }
+
+        $scope.userLogout = function() {
+            UserLogout();
+            var urlLink = "login.html";
+            window.location.href = urlLink;
+        }
+    })
+
     .controller('CmdXferDlg', function($scope, DataStore){
         $scope.upgrade_primary = 0;
         $scope.upgrade_secondary = 0;
@@ -720,6 +744,7 @@ function initDialogs() {
     $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
     $( "#branch_dlg" ).dialog( "option", "width", 550 );
     $( "#strategy_dlg" ).dialog( "option", "width", 258 );
+    $( "#settings_dlg" ).dialog( "option", "width", 258 );
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");

@@ -117,11 +117,6 @@
 
         <div>Reports</div>
     </button>
-    <button id="logout_btn"
-            class="header_item"
-            ng-click="userLogout()">
-        <div style="margin-top:-1px">Logout</div>
-    </button>
 </div>
 <!-- ict_header-->
 
@@ -139,7 +134,8 @@
 
     <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
-    <button id="settings_btn" class="button_top db_status">
+    <button id="settings_btn" class="button_top db_status"
+            ng-click="showSettingsDlg()">
         <img class="settings_btn_img" src="img/settings.png"/>
     </button>
     <div id="db_status_msg_success"
@@ -877,6 +873,15 @@
 
         <div class="clear_float"></div>
     </div>
+    <div class="clear_float"></div>
+</div>
+
+<!-- Settings Dialog -->
+<div id="settings_dlg" title="Settings" ng-controller="SettingsDlg" class="dialog">
+    <button class="header_item logout_btn"
+            ng-click="userLogout()">
+        Logout
+    </button>
     <div class="clear_float"></div>
 </div>
 
