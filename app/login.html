@@ -29,11 +29,17 @@
             <img src="img/logo/ict_logo_300x300.png"/><br/>
             <div class="userpass_info_entry">
                 <div>User Name:</div>
-                <input id="username_input" name="inc_num_input" type="text" ng-model="username" ng-disabled="!selected_department.id"/>
+                <input id="username_input" name="inc_num_input" type="text"
+                       ng-model="username"
+                       ng-disabled="!selected_department.id"
+                       ng-enter="login()"/>
             </div>
             <div class="userpass_info_entry">
                 <div>Password:</div>
-                <input id="password_input" name="address_input" type="password" ng-model="password" ng-disabled="!selected_department.id"/>
+                <input id="password_input" name="address_input" type="password"
+                       ng-model="password"
+                       ng-disabled="!selected_department.id"
+                       ng-enter="login()"/>
             </div>
             <button id="login_btn"
                     style="margin-top:10px"

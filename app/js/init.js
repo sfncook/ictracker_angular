@@ -143,6 +143,8 @@ if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
 
     if(app_key && js_key) {
         Parse.initialize(app_key, js_key);
+    } else {
+        Parse.User.logOut();
     }
 }
 
