@@ -55,6 +55,10 @@ angular.module("AdminModule", ['DataServices', 'UserServices', 'DepartmentServic
             });
         }
 
+        $scope.redirectToSplash = function() {
+            var urlLink = "splash.html";
+            window.location.href = urlLink;
+        };
 
         $scope.addUser = function() {
             $scope.showAddUser = true;
