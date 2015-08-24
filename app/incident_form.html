@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/ict/stylesheet_header.css">
     <link rel="stylesheet" href="css/ict/stylesheet_mayday.css">
     <link rel="stylesheet" href="css/ict/stylesheet_reports.css">
+    <link rel="stylesheet" href="css/ict/stylesheet_loading_splash.css">
 
     <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
@@ -1132,6 +1133,13 @@
     <!-- Mayday Dialog -->
 </div>
 
+
+<div class="loading_splash_screen" ng-controller="LoadingSplashDlg"
+        ng-show="loadingComplete">
+    <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/><br/>
+    <h1>LOADING</h1><br/>
+    <img src="img/loading.gif"/>
+</div>
 
 </body>
 </html>

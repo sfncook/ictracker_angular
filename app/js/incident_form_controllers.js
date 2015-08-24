@@ -10,6 +10,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .controller('LoadingSplashDlg', function($scope, DataStore){
+        $scope.loadingComplete = true;
+    })
+
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
         var incidentObjectId = getHttpRequestByName('i');
 
