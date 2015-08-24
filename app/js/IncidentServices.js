@@ -61,8 +61,11 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         LoadOSRForIncident($scope, incident);
                         LoadUpgradeForIncident($scope, incident);
 
-                        DataStore.loadSuccess = true;
-                        DataStore.waitingToLoad = false;
+                        setTimeout(function(){
+                            DataStore.loadSuccess = true;
+                            DataStore.waitingToLoad = false;
+                            $scope.$apply();
+                        }, 3500);
 
                     } else {
                         DataStore.loadSuccess = false;
