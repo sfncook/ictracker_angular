@@ -2,8 +2,11 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
-    .run(function() {
-        console.log("app run");
+    .run(function(IsLoggedIn) {
+        if(!IsLoggedIn()){
+            var urlLink = "login.html";
+            window.location.href = urlLink;
+        }
     })
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){

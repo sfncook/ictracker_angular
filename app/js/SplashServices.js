@@ -5,7 +5,7 @@ var app = angular.module("SplashController", ['DataServices', 'IncidentServices'
     app.controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn){
 
         if(!IsLoggedIn()) {
-            console.log("Not Logged in");
+            ResetSavedDepartment();
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
