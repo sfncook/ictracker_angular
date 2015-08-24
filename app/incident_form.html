@@ -139,6 +139,9 @@
 
     <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
     <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
+    <button id="settings_btn" class="button_top db_status">
+        <img class="settings_btn_img" src="img/settings.png"/>
+    </button>
     <div id="db_status_msg_success"
          class="button_top db_status"
          ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess"

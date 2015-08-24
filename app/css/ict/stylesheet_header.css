@@ -192,3 +192,13 @@ img.map_btn_img{
     height: 22px;
     margin-right:5px;
 }
+
+#settings_btn {
+    width: 52px;
+    height: 51px;
+}
+img.settings_btn_img {
+    width: 42px;
+    height: 42px;
+    margin-right:5px;
+}
