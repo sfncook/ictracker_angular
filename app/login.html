@@ -25,8 +25,15 @@
 <body class="login" ng-controller="LoginCtrl">
 <div style="width:400px; margin:0 auto;">
     <center>
-        <div id="userpass_container">
-            <img src="img/logo/ict_logo_300x300.png"/><br/>
+        <img src="img/logo/ict_logo_300x300.png"/><br/>
+        <div class="userpass_info_entry" ng-show="!department_id">
+            Your department:<br/>
+            <select ng-options="department as department.name_long for department in departments"
+                    ng-model="selected_department"
+                    style="font-size:larger; margin-top:10px"></select>
+        </div>
+        <div id="userpass_container"
+             ng-style="{opacity : (!selected_department && '0.0') || '1'}">
             <div class="userpass_info_entry">
                 <div>User Name:</div>
                 <input id="username_input" name="inc_num_input" type="text"
@@ -46,12 +53,6 @@
                     ng-click="login()"
                     ng-disabled="(!username||!password) || !selected_department.id"
                     ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
-        </div>
-
-        <div class="userpass_info_entry" ng-show="!department_id">
-            <select ng-options="department as department.name_long for department in departments"
-                    ng-model="selected_department"
-                    style="margin-top:10px"></select>
         </div>
     </center>
 </div>
