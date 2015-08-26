@@ -1138,11 +1138,16 @@
 
 
 <div class="loading_splash_screen" ng-controller="LoadingSplashDlg"
-        ng-show="!dataStore.loadSuccess">
-    <img id="splash_title_logo_img" src="img/logo/ict_logo_300x300.png"/><br/>
-    <h1>LOADING</h1><br/>
-    <img src="img/loading.gif"/>
+     ng-show="!dataStore.loadSuccess">
+    <center>
+        <img class="loading_title_logo_img" src="img/logo/ict_logo_300x300.png"/>
+        <div class="clear_both"></div>
+        <h1>LOADING</h1>
+        <div class="clear_both"></div>
+        <img src="img/loading.gif"/>
+    </center>
 </div>
+
 
 </body>
 </html>

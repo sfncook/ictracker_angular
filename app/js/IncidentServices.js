@@ -83,7 +83,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         return new Array();
     })
 
-    .factory('LoadAllIncidents', ['ConvertParseObject', 'ParseQuery', 'Incidents', function (ConvertParseObject, ParseQuery, Incidents) {
+    .factory('LoadAllIncidents', ['ConvertParseObject', 'ParseQuery', 'Incidents', 'DataStore', function (ConvertParseObject, ParseQuery, Incidents, DataStore) {
         return function ($scope) {
             Incidents.removeAll();
             var query = new Parse.Query(Parse.Object.extend('Incident'));
@@ -95,6 +95,12 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         fetchTypeForIncident(incident, $scope, ConvertParseObject);
                         Incidents.push(incident);
                     }
+                    setTimeout(function(){
+                        console.log("DONE");
+                        DataStore.loadSuccess = true;
+                        DataStore.waitingToLoad = false;
+                        $scope.$apply();
+                    }, 1500);
                 },
                 error: function(error) {
                     console.log('Failed to LoadAllIncidents, with error code: ' + error.message);

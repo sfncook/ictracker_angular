@@ -78,4 +78,8 @@ var app = angular.module("SplashController", ['DataServices', 'IncidentServices'
             }
         };
     })
+
+    .controller('LoadingSplashDlg', function($scope, DataStore){
+        $scope.dataStore = DataStore;
+    })
 ;
