@@ -752,7 +752,7 @@ function initDialogs() {
     		angular.element('#iap_dlg').scope().dataStore.iap.save();
     	}
     });
-    $( "#unit_options_dlg" ).dialog( "option", "width", 423 );
+    $( "#unit_options_dlg" ).dialog( "option", "width", 575 );
     $( "#psi_dlg" ).dialog( "option", "width", 423 );
     $( "#address_dialog" ).dialog( "option", "width", 450 );
     $( "#reports_dlg" ).dialog( "option", "width", 820 );
