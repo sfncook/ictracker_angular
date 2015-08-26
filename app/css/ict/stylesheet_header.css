@@ -202,3 +202,9 @@ img.settings_btn_img {
     height: 42px;
     margin-right:5px;
 }
+
+.settings_btn {
+    margin-bottom: 4px;
+    height: 25px;
+    display: block;
+}

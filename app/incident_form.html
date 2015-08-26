@@ -879,10 +879,13 @@
 
 <!-- Settings Dialog -->
 <div id="settings_dlg" title="Settings" ng-controller="SettingsDlg" class="dialog">
-    <button class="header_item logout_btn"
+    <button class="settings_btn logout_btn"
             ng-click="userLogout()">
-        Logout
-    </button>
+        Logout</button>
+
+    <button class="settings_btn logout_btn"
+            ng-click="redirectIncidentPage()">
+        Go To All Incidents</button>
     <div class="clear_float"></div>
 </div>
 

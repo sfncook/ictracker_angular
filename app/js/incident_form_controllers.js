@@ -547,6 +547,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
+
+        $scope.redirectIncidentPage = function() {
+            var urlLink = "splash.html";
+            window.location.href = urlLink;
+        }
     })
 
     .controller('CmdXferDlg', function($scope, DataStore){
