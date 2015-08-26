@@ -628,6 +628,7 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
 .personnel_tbar_btn {
     float: left;
     margin: 5px;
+    padding-left: 6px !important;
 }
 
 .psi_dlg_btn {
