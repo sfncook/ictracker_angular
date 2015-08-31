@@ -38,8 +38,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     }])
 
     .factory('LoadIncident', [
-        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident', 'LoadObjectivesForIncident', 'LoadOSRForIncident', 'LoadUpgradeForIncident',
-        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident) {
+        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident', 'LoadObjectivesForIncident', 'LoadOSRForIncident', 'LoadUpgradeForIncident', 'LoadDispatchedUnitsForIncident',
+        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
         return function (incidentObjectId, $scope) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -60,6 +60,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         LoadObjectivesForIncident($scope, incident);
                         LoadOSRForIncident($scope, incident);
                         LoadUpgradeForIncident($scope, incident);
+                        LoadDispatchedUnitsForIncident($scope, incident);
 
                         setTimeout(function(){
                             DataStore.loadSuccess = true;
@@ -108,6 +109,50 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
             });
         }
     }])
+
+
+    .factory('LoadDispatchedUnitsForIncident', [
+        'ParseQuery', 'ConvertParseObject', 'DataStore',
+        function (ParseQuery, ConvertParseObject, DataStore) {
+            return function ($scope, incident) {
+                var queryDispatchedUnits = new Parse.Query(Parse.Object.extend('DispatchedUnits'));
+                queryDispatchedUnits.equalTo("incident", incident);
+                queryDispatchedUnits.first({
+                    success: function(dispatchedUnitsObj) {
+                        if(!dispatchedUnitsObj) {
+                            var DispatchedUnitsObj = Parse.Object.extend('DispatchedUnits');
+                            dispatchedUnitsObj = new DispatchedUnitsObj();
+                            ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
+                            dispatchedUnitsObj.incident = incident;
+                            dispatchedUnitsObj.unitTypes = new Array();
+                            dispatchedUnitsObj.save(null, {
+                                error: function(error) {
+                                    console.log('(2) Failed to save dispatechedUnitsObj with error code: ' + error.message);
+                                }
+                            });
+                        } else {
+                            ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
+                            DataStore.dispatchedUnits = dispatchedUnitsObj;
+                            var promises = new Array();
+                            for(var i=0; i<dispatchedUnitsObj.unitTypes.length; i++) {
+                                var unitType = dispatchedUnitsObj.unitTypes[i];
+                                ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                                var promise = unitType.fetch();
+                                promises.push(promise);
+                            }
+                            Promise.all(promises).then(
+                                function(unitTypes) {
+                                    DataStore.dispatchedUnits.unitTypes = unitTypes;
+                                }
+                            );
+                        }
+                    },
+                    error: function(error) {
+                        console.log('Failed to LoadDispatchedUnitsForIncident, with error code: ' + error.message);
+                    }
+                });
+            }
+        }])
 
 ;
 

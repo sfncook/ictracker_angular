@@ -326,9 +326,9 @@
         <div id="title_dispatched_units_div">Dispatched Units</div>
         <div id="units_dispatched_units_div">
             <button class="unit_dlg_btn unit_btn"
-                    ng-repeat="unit in dispatechedUnits"
-                    ng-click="selectDispatchedUnit(unit)">
-                {{unit.name}}
+                    ng-repeat="unitType in dataStore.dispatchedUnits.unitTypes"
+                    ng-click="selectDispatchedUnit(unitType)">
+                {{unitType.name}}
             </button>
             <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
         </div>

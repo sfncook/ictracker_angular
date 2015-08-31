@@ -19,7 +19,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.dataStore = DataStore;
         LoadIncident(incidentObjectId, $scope);
-        //LoadIAPForIncident($scope, DataStore.incident);
+
         $scope.showIncInfoDlg = function() {
             DataStore.showIncInfoDlg();
         }
@@ -301,8 +301,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     .controller('UnitsDlg', function($scope, $http, DataStore, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector, ReportFunctions){
         $scope.selectedSector = {};
-        $scope.dispatechedUnits = [];
-        $scope.tbar_sectors=DataStore.tbar_sectors;
+        $scope.dataStore = DataStore;
         $scope.forAcct=false;
 
         $scope.cities = new Array();
@@ -348,6 +347,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
 
         $scope.selectUnit = function(unitType) {
+            console.log(unitType);
             if($scope.forAcct) {
                 $scope.selectedSector.acctUnit = unitType;
                 ReportFunctions.addEvent_unitType_to_acct($scope.selectedSector, unitType);
@@ -359,17 +359,26 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     }
                 });
             } else if($scope.forDispUnits) {
-                if($scope.dispatechedUnits.contains(unitType)){
-                    $scope.dispatechedUnits.remByVal(unitType);
+                if($scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
+                    $scope.dataStore.dispatchedUnits.unitTypes.remByVal(unitType);
                 } else {
-                    $scope.dispatechedUnits.push(unitType);
+                    $scope.dataStore.dispatchedUnits.unitTypes.push(unitType);
                 }
+                $scope.dataStore.dispatchedUnits.save(null, {
+                    error: function(error) {
+                        console.log('Failed to $scope.dataStore.dispatchedUnits.save() for acctUnit, with error code: ' + error.message);
+                    }
+                });
             } else {
-    //            var wasAdded = $scope.selectedSector.toggleUnit(unitType);
                 var wasAdded = ToggleUnitTypeForSector($scope.selectedSector, unitType);
                 if(wasAdded) {
-                    if(!$scope.dispatechedUnits.contains(unitType)){
-                        $scope.dispatechedUnits.push(unitType);
+                    if(!$scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
+                        $scope.dataStore.dispatchedUnits.unitTypes.push(unitType);
+                        $scope.dataStore.dispatchedUnits.save(null, {
+                            error: function(error) {
+                                console.log('(2) Failed to $scope.dataStore.dispatchedUnits.save() with error code: ' + error.message);
+                            }
+                        });
                     }
 
                     // Update sector.selectedUnit
@@ -391,7 +400,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                         DataStore.setRehab();
                     }
                 } else {
-                    $scope.dispatechedUnits.remByVal(unitType);
+                    $scope.dataStore.dispatchedUnits.unitTypes.remByVal(unitType);
+                    $scope.dataStore.dispatchedUnits.save(null, {
+                        error: function(error) {
+                            console.log('(3) Failed to $scope.dataStore.dispatchedUnits.save() with error code: ' + error.message);
+                        }
+                    });
                 }
                 $("#units_dlg").dialog( "close" );
             }
