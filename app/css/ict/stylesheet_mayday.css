@@ -185,7 +185,9 @@
     width: 190px;
     height: 25px;
     float: left;
-    margin-left: 7px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 15px;
 }
 
 .mayday_topstuff {
@@ -202,7 +204,7 @@
 
 .mayday_select_half {
     float:left;
-    width:120px;
+    width:124px;
 }
 
 .yellow_bg {
