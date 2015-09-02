@@ -213,25 +213,35 @@ angular.module("ictApp")
             return function ($scope) {
                 for(var i=0; i<Maydays.length; i++) {
                     var mayday = Maydays[i];
-                    mayday.fetch();
-                    mayday.unitType.fetch({
-                        success: function(unitType) {
-                            $scope.$apply(function(){
-                                mayday.unitType = unitType;
-                            });
+                    mayday.fetch({
+                        success:function(mayday){
+                            if(mayday.unitType) {
+                                mayday.unitType.fetch({
+                                    success: function(unitType) {
+                                        $scope.$apply(function(){
+                                            mayday.unitType = unitType;
+                                        });
+                                    },
+                                    error: function(error) {
+                                        console.log('Failed to UpdateMaydays(unitType), with error code: ' + error.message);
+                                    }
+                                });
+                            }
+                            if(mayday.sectorType) {
+                                mayday.sectorType.fetch({
+                                    success: function(sectorType) {
+                                        $scope.$apply(function(){
+                                            mayday.sectorType = sectorType;
+                                        });
+                                    },
+                                    error: function(error) {
+                                        console.log('Failed to UpdateMaydays(sectorType), with error code: ' + error.message);
+                                    }
+                                });
+                            }
                         },
                         error: function(error) {
-                            console.log('Failed to UpdateMaydays(unitType), with error code: ' + error.message);
-                        }
-                    });
-                    mayday.sectorType.fetch({
-                        success: function(sectorType) {
-                            $scope.$apply(function(){
-                                mayday.sectorType = sectorType;
-                            });
-                        },
-                        error: function(error) {
-                            console.log('Failed to UpdateMaydays(sectorType), with error code: ' + error.message);
+                            console.log('Failed to UpdateMaydays (mayday), with error code: ' + error.message);
                         }
                     });
                 }

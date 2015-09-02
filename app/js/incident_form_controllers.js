@@ -347,7 +347,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
 
         $scope.selectUnit = function(unitType) {
-            console.log(unitType);
             if($scope.forAcct) {
                 $scope.selectedSector.acctUnit = unitType;
                 ReportFunctions.addEvent_unitType_to_acct($scope.selectedSector, unitType);
