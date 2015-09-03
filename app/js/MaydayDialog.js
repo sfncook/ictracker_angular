@@ -11,6 +11,7 @@ angular.module("ictApp")
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
         $scope.selectedMayday;
+        $scope.dataStore = DataStore;
         $scope.maydays = Maydays;
 
         var keyUpEvent = function (e) {

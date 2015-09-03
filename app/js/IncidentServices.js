@@ -117,7 +117,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
             return function ($scope, incident) {
                 var queryDispatchedUnits = new Parse.Query(Parse.Object.extend('DispatchedUnits'));
                 queryDispatchedUnits.equalTo("incident", incident);
-                queryDispatchedUnits.first({
+                return queryDispatchedUnits.first({
                     success: function(dispatchedUnitsObj) {
                         if(!dispatchedUnitsObj) {
                             var DispatchedUnitsObj = Parse.Object.extend('DispatchedUnits');
@@ -125,6 +125,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                             ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
                             dispatchedUnitsObj.incident = incident;
                             dispatchedUnitsObj.unitTypes = new Array();
+                            DataStore.dispatchedUnits = dispatchedUnitsObj;
                             dispatchedUnitsObj.save(null, {
                                 error: function(error) {
                                     console.log('(2) Failed to save dispatechedUnitsObj with error code: ' + error.message);
