@@ -19,7 +19,7 @@
     <script src="js/libs/parse-1.3.3.js"></script>
     <script src="js/libs/jquery-1.11.0.js"></script>
     <script src="js/libs/jquery-ui-1.10.4.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    <script src="js/libs/angular.js"></script>
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="js/libs/angular-gridster.min.js"></script>
     <script src="js/config.js"></script>
@@ -948,6 +948,7 @@
                     <div ng-show="incidentUnitTypes.length>12">
                         <select id="mayday_unit_select" style="float:left" class="mayday_select"
                                 ng-options="unitType.name for unitType in incidentUnitTypes track by unitType.name" ng-model="selectedMayday.unitType">
+                            <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>UNIT</option>
                         </select>
                         <div class="clear_float"></div>
                     </div>
@@ -966,12 +967,14 @@
                         <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
                         <select id="mayday_sectors_select" class="mayday_select"
                                 ng-options="sectorType.name for sectorType in incidentSectorTypes track by sectorType.name" ng-model="selectedMayday.sectorType">
+                            <option id="mayday_sector_option_default" disabled='disabled' selected='selected' class='default_option'>SECTOR</option>
                         </select>
                         <div class="clear_float"></div>
                     </div>
 
                     <div class="clear_float"></div>
 
+                    <!--
                     <select id="mayday_channel_select" class="mayday_select_half mayday_channel_select mayday_select" ng-model="selectedMayday.channel">
                         <option id="mayday_channel_opt_default" disabled='disabled' selected='selected' class='default_option'>Channel</option>
                         <option class='mayday_channel_1'>Channel 1</option>
@@ -991,6 +994,12 @@
                         <option class='mayday_channel_15'>Channel 15</option>
                         <option class='mayday_channel_16'>Channel 16</option>
                     </select>
+                    -->
+                    <select id="mayday_channel_select"
+                            class="mayday_select_half mayday_channel_select mayday_select"
+                            ng-options="channel.channelname as channel.channelname for channel in channels track by channel.channelname"
+                            ng-model="selectedMayday.channel"></select>
+
 
                     <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select" ng-model="selectedMayday.rank">
                         <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
@@ -1022,7 +1031,7 @@
             </td>
             <td id="mayday_right_td">
                 <div id="mayday_list_box">
-                    <div ng-repeat="mayday in maydays"
+                    <div ng-repeat="mayday in maydays | orderBy:'+number'"
                          class="mayday_saved"
                          ng-class="{mayday_saved_selected:selectedMayday==mayday}"
                          ng-click="selectMayday(mayday)">

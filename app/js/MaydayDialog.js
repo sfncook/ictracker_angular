@@ -8,6 +8,25 @@ angular.module("ictApp")
 
     .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore){
 
+        $scope.channels = [
+            {channelname:"Channel"},
+            {channelname:"Channel 1"},
+            {channelname:"Channel 2"},
+            {channelname:"Channel 3"},
+            {channelname:"Channel 4"},
+            {channelname:"Channel 5"},
+            {channelname:"Channel 6"},
+            {channelname:"Channel 7"},
+            {channelname:"Channel 8"},
+            {channelname:"Channel 9"},
+            {channelname:"Channel 10"},
+            {channelname:"Channel 11"},
+            {channelname:"Channel 12"},
+            {channelname:"Channel 13"},
+            {channelname:"Channel 14"},
+            {channelname:"Channel 15"},
+            {channelname:"Channel 16"}
+        ];
         $scope.incidentSectorTypes = [];
         $scope.incidentUnitTypes = [];
         $scope.selectedMayday;
@@ -53,6 +72,9 @@ angular.module("ictApp")
 
         $scope.selectMayday = function (mayday) {
             $scope.selectedMayday = mayday;
+            if($scope.selectedMayday.channel=="") {
+
+            }
         }
 
         $scope.manyValidSectorTypes = function () {
