@@ -941,7 +941,7 @@
 
                     <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
                         <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn"
-                                ng-class="{btn_smtext: unitType.name.length>5, btn_medtext: unitType.name.length>4}"
+                                ng-class="{btn_smtext: unitType.name.length>5, btn_medtext: unitType.name.length>4, glowred:selectedMayday.unitType.name==unitType.name}"
                                 ng-repeat="unitType in incidentUnitTypes"
                                 ng-click="selectedMayday.unitType=unitType">{{unitType.name}}</button>
                     </div>
@@ -956,7 +956,11 @@
                     <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
 
                     <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidSectorTypes()<=6">
-                        <button ng-repeat="sectorType in incidentSectorTypes" class="mayday_sector_edit_btn mayday_sector_title" ng-show="sectorType.name!='Sector Name'">{{sectorType.name}}</button>
+                        <button ng-repeat="sectorType in incidentSectorTypes"
+                                class="mayday_sector_edit_btn mayday_sector_title"
+                                ng-show="sectorType.name!='Sector Name'"
+                                ng-click="selectedMayday.sectorType=sectorType"
+                                ng-class="{glowred:selectedMayday.sectorType.name==sectorType.name}">{{sectorType.name}}</button>
                     </div>
                     <div ng-show="manyValidSectorTypes()>6">
                         <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
