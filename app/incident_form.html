@@ -946,7 +946,6 @@
                                 ng-click="selectedMayday.unitType=unitType">{{unitType.name}}</button>
                     </div>
                     <div ng-show="incidentUnitTypes.length>12">
-                        <label for="mayday_unit_select" class="mayday_select_label">Unit:</label>
                         <select id="mayday_unit_select" style="float:left" class="mayday_select"
                                 ng-options="unitType.name for unitType in incidentUnitTypes track by unitType.name" ng-model="selectedMayday.unitType">
                         </select>

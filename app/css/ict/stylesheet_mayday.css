@@ -189,6 +189,14 @@
     margin-right: 2px;
     margin-top: 15px;
 }
+#mayday_unit_select {
+    width:124px;
+    height:25px;
+    margin-left:2px;
+    margin-right:2px;
+    margin-top:4px;
+    margin-bottom: 5px;
+}
 
 .mayday_topstuff {
     margin-bottom: 10px;
