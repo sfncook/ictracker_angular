@@ -1,32 +1,115 @@
 
 
-var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'DepartmentServices'])
-    .controller('LoginCtrl', function($scope, UserLogin, InitDefaultDatabase, LoadAllDepartments, AllDepartments, SetDepartment){
-        $scope.username="";
-        $scope.password="";
-        $scope.is_invalid_login = false;
+var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'DepartmentServices', 'js-data'])
+    .config(function (DSProvider, DSHttpAdapterProvider) {
+            var defaults = {idAttribute : 'objectId'};
+            angular.extend(DSProvider.defaults, defaults);
 
-        InitDefaultDatabase();
-        LoadAllDepartments().then(function(){
-            $scope.departments = AllDepartments;
-            $scope.$apply();
-        });
+    })
 
-        // Respond to incident type button click
-        $scope.login = function() {
-            SetDepartment($scope.selected_department);
-            UserLogin($scope.username, $scope.password,
-                function () {
-                    var urlLink = "splash.html";
-                    window.location.href = urlLink;
+    .controller('LoginCtrl', function($scope, $http, DS, UserLogin, InitDefaultDatabase, LoadAllDepartments, AllDepartments, SetDepartment){
+            $scope.username="";
+            $scope.password="";
+            $scope.is_invalid_login = false;
+
+            var req = {
+                method: 'GET',
+                url: 'https://api.parse.com/1/users/me',
+                headers : {
+                    'X-Parse-Application-Id' : 'Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR',
+                    'X-Parse-REST-API-Key': 'EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9',
+                    'X-Parse-Session-Token': 'r:zrjhRxYSWwgUO42hqStMjV5za'
+                }
+            };
+            $http(req).then(
+                function(obj){
+                    console.log("Me success:", obj);
                 },
-                function (error) {
-                    console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
-                    $scope.is_invalid_login = true;
-                    $scope.$apply();
+                function(error){
+                    console.log("Me error:", error);
+                });
+
+
+
+            var req = {
+                method: 'GET',
+                url: 'https://api.parse.com/1/classes/Incident/gFGa4HMohQ',
+                headers : {
+                    'X-Parse-Application-Id' : 'Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR',
+                    'X-Parse-REST-API-Key': 'EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9',
+                    'X-Parse-Session-Token': 'r:zrjhRxYSWwgUO42hqStMjV5za'
+                }
+            };
+            $http(req).then(
+                function(obj){
+                    console.log("Incident success:", obj);
+                },
+                function(error){
+                    console.log("Incident error:", error);
                 }
             );
-        };
+
+
+
+            var IncidentRes = DS.defineResource('Incident');
+            console.log(DS);
+            var options = {
+                basePath: 'https://api.parse.com/1/classes',
+                headers : {
+                    'X-Parse-Application-Id' : 'Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR',
+                    'X-Parse-REST-API-Key': 'EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9',
+                    'X-Parse-Session-Token': 'r:zrjhRxYSWwgUO42hqStMjV5za'
+                },
+                deserialize: function (resourceConfig, data) {
+                    if(data.data) {
+                        var normalizedObj = data.data;
+
+                        if('results' in normalizedObj) {
+                            normalizedObj = normalizedObj.results;
+                        }
+
+                        return normalizedObj;
+                    }
+                }
+            };
+            IncidentRes.find('gFGa4HMohQ', options).then(
+                function(obj){
+                    console.log("IncidentRes find success:", obj);
+                },
+                function(error){
+                    console.log("IncidentRes find error:", error);
+                }
+            );
+            IncidentRes.findAll({}, options).then(
+                function(obj){
+                    console.log("IncidentRes findAll success:", obj);
+                },
+                function(error){
+                    console.log("IncidentRes findAll error:", error);
+                }
+            );
+
+        //InitDefaultDatabase();
+        //LoadAllDepartments().then(function(){
+        //    $scope.departments = AllDepartments;
+        //    $scope.$apply();
+        //});
+        //
+        //// Respond to incident type button click
+        //$scope.login = function() {
+        //    SetDepartment($scope.selected_department);
+        //    UserLogin($scope.username, $scope.password,
+        //        function () {
+        //            var urlLink = "splash.html";
+        //            window.location.href = urlLink;
+        //        },
+        //        function (error) {
+        //            console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
+        //            $scope.is_invalid_login = true;
+        //            $scope.$apply();
+        //        }
+        //    );
+        //};
     })
 
     .directive('ngEnter', function () {
