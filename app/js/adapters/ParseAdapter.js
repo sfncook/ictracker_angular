@@ -52,7 +52,8 @@ angular.module('AdaptersModule')
 
                 $get: function () {
                     return {
-                        loginWithDepartment: true
+                        loginWithDepartment: true,
+                        hasLogin: true
                     };
                 }
             }
