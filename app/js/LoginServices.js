@@ -1,13 +1,8 @@
 
 
-var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'DepartmentServices', 'js-data'])
-    //.config(function (DSProvider, DSHttpAdapterProvider) {
-    //        var defaults = {idAttribute : 'objectId'};
-    //        angular.extend(DSProvider.defaults, defaults);
-    //
-    //})
+var app = angular.module("LoginApp", ['AdaptersModule', 'js-data'])
 
-    .controller('LoginCtrl', function($scope, $http, DS, UserLogin, InitDefaultDatabase, LoadAllDepartments, AllDepartments, SetDepartment){
+    .controller('LoginCtrl', function($scope, $http, DS){
             $scope.username="";
             $scope.password="";
             $scope.is_invalid_login = false;
@@ -52,35 +47,57 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
 
             //DS.defaults.idAttribute = 'objectId';
 
-            var options = {
-                basePath: 'https://api.parse.com/1/classes',
-                headers : {
-                    //'X-Parse-Session-Token':    'r:zrjhRxYSWwgUO42hqStMjV5za',
-                    //'X-Parse-Application-Id' :  'Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR',
-                    //'X-Parse-REST-API-Key':     'EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9',
-                    'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
-                    'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
-                },
-                deserialize: function (resourceConfig, data) {
-                    if(data.data) {
-                        var normalizedObj = data.data;
+            //var options = {
+            //    basePath: 'https://api.parse.com/1/classes',
+            //    headers : {
+            //        //'X-Parse-Session-Token':    'r:zrjhRxYSWwgUO42hqStMjV5za',
+            //        //'X-Parse-Application-Id' :  'Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR',
+            //        //'X-Parse-REST-API-Key':     'EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9',
+            //        'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
+            //        'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
+            //    },
+            //    deserialize: function (resourceConfig, data) {
+            //        if(data.data) {
+            //            var normalizedObj = data.data;
+            //
+            //            if('results' in normalizedObj) {
+            //                normalizedObj = normalizedObj.results;
+            //                for(var i in normalizedObj) {
+            //                    normalizedObj[i].id = normalizedObj[i].objectId;
+            //                }
+            //            } else {
+            //                normalizedObj.id = normalizedObj.objectId;
+            //            }
+            //
+            //            return normalizedObj;
+            //        }
+            //    }
+            //};
 
-                        if('results' in normalizedObj) {
-                            normalizedObj = normalizedObj.results;
-                            for(var i in normalizedObj) {
-                                normalizedObj[i].id = normalizedObj[i].objectId;
-                            }
-                        } else {
-                            normalizedObj.id = normalizedObj.objectId;
-                        }
-
-                        return normalizedObj;
-                    }
-                }
-            };
+            //DS.defaults.basePath = 'https://api.parse.com/1/classes';
+            //DS.defaults.headers = {
+            //    'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
+            //    'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
+            //};
+            //DS.defaults.deserialize = function (resourceConfig, data) {
+            //    if(data.data) {
+            //        var normalizedObj = data.data;
+            //
+            //        if('results' in normalizedObj) {
+            //            normalizedObj = normalizedObj.results;
+            //            for(var i in normalizedObj) {
+            //                normalizedObj[i].id = normalizedObj[i].objectId;
+            //            }
+            //        } else {
+            //            normalizedObj.id = normalizedObj.objectId;
+            //        }
+            //
+            //        return normalizedObj;
+            //    }
+            //};
 
             var DepartmentRes = DS.defineResource('Department');
-            DepartmentRes.findAll({}, options).then(
+            DepartmentRes.findAll().then(
                 function(obj){
                     console.log("DepartmentRes findAll success:", obj);
                     $scope.departments = obj;
