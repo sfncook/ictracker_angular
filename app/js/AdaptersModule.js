@@ -1,38 +1,42 @@
 'use strict';
 
+function AdaptersConfig() {
+    this.loginWithDepartment = false;
+}
+
 angular.module('AdaptersModule', ['js-data'])
+    .provider("Adapters", function () {
+        var adaptersByName = {};
+        var defaultAdapterName;
+        return {
+            addAdapter: function (adapterName, adapter) {
+                console.log("addAdapter");
+                adaptersByName[adapterName] = adapter;
+            },
 
-    .config(function (DSProvider) {
-        var Adapters = {};
-        Adapters['parse'] = {
-            init:function(){
-                var defaults = {};
-                defaults.basePath = 'https://api.parse.com/1/classes';
-                defaults.headers = {
-                    'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
-                    'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
-                };
-                defaults.deserialize = function (resourceConfig, data) {
-                    if(data.data) {
-                        var normalizedObj = data.data;
+            setDefaultAdapterName: function (adapterName) {
+                defaultAdapterName = adapterName;
+            },
 
-                        if('results' in normalizedObj) {
-                            normalizedObj = normalizedObj.results;
-                            for(var i in normalizedObj) {
-                                normalizedObj[i].id = normalizedObj[i].objectId;
-                            }
-                        } else {
-                            normalizedObj.id = normalizedObj.objectId;
-                        }
-
-                        return normalizedObj;
+            $get: function () {
+                return {
+                    init: function () {
+                        console.log("Adapters.init()  adaptersByName:", adaptersByName," this:",this, " defaultAdapterName:", defaultAdapterName);
+                        adaptersByName[defaultAdapterName].init();
                     }
                 };
-                DSProvider.defaults = defaults;
             }
         };
+    })
 
-        Adapters[getHttpRequestByName('adapter')].init();
+    .config(function (AdaptersProvider) {
+        console.log("AdaptersModule config");
+        AdaptersProvider.setDefaultAdapterName(getHttpRequestByName('adapter'));
+    })
+
+    .run(function (Adapters) {
+        console.log("AdaptersModule run", Adapters);
+        Adapters.init();
     })
 
 ;

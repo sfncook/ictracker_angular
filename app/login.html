@@ -16,7 +16,9 @@
     <script src="js/libs/js-data-angular.js"></script>
     <script src="js/config.js"></script>
     <script src="js/init.js"></script>
+    <script src="js/model/Department.js"></script>
     <script src="js/AdaptersModule.js"></script>
+    <script src="js/adapters/ParseAdapter.js"></script>
     <script src="js/DataServices.js"></script>
     <script src="js/DepartmentServices.js"></script>
     <script src="js/UserServices.js"></script>
@@ -28,7 +30,8 @@
 <div style="width:400px; margin:0 auto;">
     <center>
         <img src="img/logo/ict_logo_300x300.png"/><br/>
-        <div class="userpass_info_entry" ng-show="!department_id">
+        <div class="userpass_info_entry"
+             ng-show="loginWithDepartment">
             Your department:<br/>
             <select ng-options="department as department.name_long for department in departments"
                     ng-model="selected_department"
@@ -40,7 +43,7 @@
                 <div>User Name:</div>
                 <input id="username_input" name="inc_num_input" type="text"
                        ng-model="username"
-                       ng-disabled="!selected_department.id"
+                       ng-disabled="!selected_department.id || !loginWithDepartment"
                        ng-enter="login()"
                        ng-class="{invalid_login_border:is_invalid_login}"/>
             </div>
@@ -48,14 +51,14 @@
                 <div>Password:</div>
                 <input id="password_input" name="address_input" type="password"
                        ng-model="password"
-                       ng-disabled="!selected_department.id"
+                       ng-disabled="!selected_department.id || !loginWithDepartment"
                        ng-enter="login()"
                        ng-class="{invalid_login_border:is_invalid_login}"/>
             </div>
             <button id="login_btn"
                     style="margin-top:10px"
                     ng-click="login()"
-                    ng-disabled="(!username||!password) || !selected_department.id"
+                    ng-disabled="(!username||!password) || !selected_department.id || !loginWithDepartment"
                     ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
             <div ng-show="is_invalid_login" class="invalid_login_font">Invalid user name or password.</div>
         </div>
