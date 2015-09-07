@@ -2,14 +2,14 @@
 
 angular.module('AdaptersModule')
 
-    .config(function (AdaptersProvider, DSProvider) {
+    .config(function (AdaptersProvider, DSProvider, DSHttpAdapterProvider) {
         AdaptersProvider.addAdapter("parse",
             {
 
                 loginWithDepartment: true,
                 hasLogin: true,
-
-                init:function(){
+                init:function(DS){
+                    console.log("ParseAdapter.init");
                     var defaults = {};
 
                     var app_key = localStorage.getItem('department_app_key');
@@ -42,7 +42,8 @@ angular.module('AdaptersModule')
                             return normalizedObj;
                         }
                     };
-                    DSProvider.defaults = defaults;
+                    DSProvider.default = defaults;
+                    DSHttpAdapterProvider.defaults = defaults;
                 },
 
                 login: function(username, password) {

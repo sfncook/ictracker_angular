@@ -3,6 +3,12 @@
 var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentModule'])
 
     .controller('LoginCtrl', function($scope, Department, Adapters){
+
+            if(!Adapters.hasLogin) {
+                var urlLink = "splash.html"+document.location.search;
+                window.location.href = urlLink;
+            }
+
             $scope.username="";
             $scope.password="";
             $scope.is_invalid_login = false;

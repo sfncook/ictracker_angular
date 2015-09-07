@@ -2,13 +2,14 @@
 
 angular.module('AdaptersModule')
 
-    .config(function (AdaptersProvider, DSProvider) {
+    .config(function (AdaptersProvider) {
         AdaptersProvider.addAdapter("dev",
             {
                 loginWithDepartment: true,
-                hasLogin: true,
+                hasLogin: false,
 
                 init:function(DS){
+                    console.log("StatDataAdapter.init");
                     var adapter = new DSLocalStorageAdapter();
                     DS.registerAdapter('localstorage', adapter, { default: true });
                 },
