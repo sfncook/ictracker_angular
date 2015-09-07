@@ -1,69 +1,90 @@
 'use strict';
 
+var ParseAdapter = {
+    DS_:null,
+        loginWithDepartment: true,
+    hasLogin: true,
+    init:function(DS){
+        this.DS_ = DS;
+        var defaults = {};
+
+        var app_key_jsonstr = localStorage.getItem('department_keys');
+        if(app_key_jsonstr) {
+            defaults.headers = JSON.parse(app_key_jsonstr);
+        } else {
+            defaults.headers = {
+                'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
+                'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
+            };
+            localStorage.setItem('department_keys',  JSON.stringify(defaults.headers));
+        }
+        defaults.basePath = 'https://api.parse.com/1';
+        defaults.deserialize = function (resourceConfig, data) {
+            if(data.data) {
+                var normalizedObj = data.data;
+
+                if('results' in normalizedObj) {
+                    normalizedObj = normalizedObj.results;
+                    for(var i in normalizedObj) {
+                        normalizedObj[i].id = normalizedObj[i].objectId;
+                    }
+                } else {
+                    normalizedObj.id = normalizedObj.objectId;
+                }
+
+                return normalizedObj;
+            }
+        };
+        angular.extend(DS.defaults, defaults);
+    },
+
+    setDepartment: null,
+
+    login: null,
+
+    logout: function() {
+    }
+};
+
 angular.module('AdaptersModule')
 
     .config(function (AdaptersProvider) {
-        AdaptersProvider.addAdapter("parse",
-            {
-                DS_:null,
-                loginWithDepartment: true,
-                hasLogin: true,
-                init:function(DS){
-                    this.DS_ = DS;
-                    var defaults = {};
+        AdaptersProvider.addAdapter("parse", ParseAdapter);
+    })
 
-                    var app_key = localStorage.getItem('department_app_key');
-                    var js_key = localStorage.getItem('department_js_key');
-                    if(app_key && js_key) {
-                        defaults.headers = {
-                            'X-Parse-Application-Id' :  app_key,
-                            'X-Parse-REST-API-Key' :    js_key
-                        };
-                    } else {
-                        defaults.headers = {
-                            'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
-                            'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
-                        };
-                        localStorage.setItem('department_app_key',  defaults.headers.X-Parse-Application-Id);
-                        localStorage.setItem('department_js_key',   defaults.headers.X-Parse-REST-API-Key);
-                    }
-                    defaults.basePath = 'https://api.parse.com/1';
-                    defaults.deserialize = function (resourceConfig, data) {
-                        if(data.data) {
-                            var normalizedObj = data.data;
+    .run(function (SetDepartment, Login) {
+        ParseAdapter.setDepartment = SetDepartment;
+        ParseAdapter.login = Login;
+    })
 
-                            if('results' in normalizedObj) {
-                                normalizedObj = normalizedObj.results;
-                                for(var i in normalizedObj) {
-                                    normalizedObj[i].id = normalizedObj[i].objectId;
-                                }
-                            } else {
-                                normalizedObj.id = normalizedObj.objectId;
-                            }
+    .factory('SetDepartment', function (DS) {
+        return function (app_key, api_key) {
+            var headers = {
+                'X-Parse-Application-Id' :  app_key,
+                'X-Parse-REST-API-Key' :    api_key
+            };
+            localStorage.setItem('department_keys',  JSON.stringify(headers));
+            DS.defaults.headers = headers;
+        }
+    })
 
-                            return normalizedObj;
-                        }
-                    };
-                    angular.extend(DS.defaults, defaults);
-                },
-
-                setDepartment: function(department) {
-                    localStorage.setItem('department_app_key', department.app_key);
-                    localStorage.setItem('department_js_key', department.js_key);
-                    this.DS_.defaults.headers = {
-                        'X-Parse-Application-Id' :  department.app_key,
-                        'X-Parse-REST-API-Key' :    department.js_key
-                    };
-                },
-
-                login: function(username, password) {
-
-                },
-
-                logout: function() {
+    .factory('Login', function ($http) {
+        return function(username, password) {
+            var app_key_jsonstr = localStorage.getItem('department_keys');
+            var headers = JSON.parse(app_key_jsonstr);
+            headers['X-Parse-Revocable-Session'] = 1;
+            var req = {
+                method: 'GET',
+                url: 'https://api.parse.com/1/login',
+                headers : headers,
+                params : {
+                    username:username,
+                    password:password
                 }
-            }
-        );
+            };
+
+            return $http(req);
+        }
     })
 
 ;

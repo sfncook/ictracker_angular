@@ -16,7 +16,7 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentMo
 
             Department.findAll().then(
                 function(obj){
-                    console.log("DepartmentRes findAll success:", obj);
+                    //console.log("DepartmentRes findAll success:", obj);
                     $scope.departments = obj;
                 },
                 function(error){
@@ -47,23 +47,19 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentMo
             // Respond to incident type button click
             $scope.login = function() {
                 if(Adapters.loginWithDepartment) {
-                    Adapters.setDepartment($scope.selected_department);
+                    Adapters.setDepartment($scope.selected_department.app_key, $scope.selected_department.api_key);
                 }
 
-                Adapters.login($scope.username, $scope.password);
-
-                //SetDepartment($scope.selected_department);
-                //UserLogin($scope.username, $scope.password,
-                //    function () {
-                //        var urlLink = "splash.html";
-                //        window.location.href = urlLink;
-                //    },
-                //    function (error) {
-                //        console.log('Failed UserLogin department_id: "+department_id+", with error code: ' + error.message);
-                //        $scope.is_invalid_login = true;
-                //        $scope.$apply();
-                //    }
-                //);
+                Adapters.login($scope.username, $scope.password).then(
+                    function(obj){
+                        var urlLink = "splash.html"+document.location.search;
+                        window.location.href = urlLink;
+                    },
+                    function(error){
+                        console.log("LoginServices - Login error:", error);
+                        $scope.is_invalid_login = true;
+                    }
+                );
             };
     })
 

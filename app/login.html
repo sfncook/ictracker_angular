@@ -62,7 +62,6 @@
                         ng-click="login()"
                         ng-disabled="(!username||!password) || !selected_department.id"
                         ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
-                <div ng-show="is_invalid_login" class="invalid_login_font">Invalid user name or password.</div>
             </div>
         </div>
 
@@ -90,9 +89,10 @@
                         ng-click="login()"
                         ng-disabled="(!username||!password) || !selected_department.id"
                         ng-class="{button_disabled:(!username||!password) || !selected_department.id}">Login</button>
-                <div ng-show="is_invalid_login" class="invalid_login_font">Invalid user name or password.</div>
             </div>
         </div>
+
+        <div ng-show="is_invalid_login" class="invalid_login_font">Invalid user name or password.</div>
 
     </center>
 </div>
