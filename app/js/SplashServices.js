@@ -25,15 +25,54 @@ var app = angular.module("SplashController", ['IncidentTypeModule', 'IncidentMod
         );
 
         Incident.findAll().then(
-            function(obj){
-                console.log("Incident findAll success:", obj);
-                $scope.incident_list = obj;
-                $scope.loadSuccess = true;
+            function(incidents){
+
+                var promises = [];
+
+                for(var i=0; i<incidents.length; i++){
+                    var incident = incidents[i];
+                    var promise = IncidentType.find(incident.incidentType.objectId).then(
+                        function(incidentType){
+                            console.log("IncidentType find success:", incidentType);
+                            incident.incidentType.incidentType = incidentType;
+                        }
+                    )
+                    promises.push(promise);
+                }
+
+                return Promise.all(promises).then(function(incidents){
+                    $scope.incident_list = incidents;
+                    $scope.loadSuccess = true;
+                    return incidents;
+                });
             },
             function(error){
                 console.log("Incident findAll error:", error);
             }
-        );
+        )
+
+        //Incident.findAll().then(
+        //    function(obj){
+        //        console.log("Incident findAll success:", obj);
+        //        $scope.incident_list = obj;
+        //        $scope.loadSuccess = true;
+        //    },
+        //    function(error){
+        //        console.log("Incident findAll error:", error);
+        //    }
+        //);
+        //
+        //Incident.find('gFGa4HMohQ').then(function(incident){
+        //        IncidentType.find(incident.incidentType.objectId).then(
+        //            function(incidentType){
+        //                console.log("Incident find IncidentType success:", incidentType);
+        //                incident.incidentType.incidentType = incidentType;
+        //            },
+        //            function(error){
+        //                console.log("Incident find IncidentType error:", error);
+        //            }
+        //        )
+        //    });
 
         //LoadIncidentTypes().then(function(){
         //    $scope.incidentTypes = IncidentTypes;
