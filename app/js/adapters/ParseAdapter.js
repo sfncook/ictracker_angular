@@ -2,10 +2,9 @@
 
 angular.module('AdaptersModule')
 
-    .config(function (AdaptersProvider, DSProvider, DSHttpAdapterProvider) {
+    .config(function (AdaptersProvider) {
         AdaptersProvider.addAdapter("parse",
             {
-
                 loginWithDepartment: true,
                 hasLogin: true,
                 init:function(DS){
@@ -42,8 +41,7 @@ angular.module('AdaptersModule')
                             return normalizedObj;
                         }
                     };
-                    DSProvider.default = defaults;
-                    DSHttpAdapterProvider.defaults = defaults;
+                    angular.extend(DS.defaults, defaults);
                 },
 
                 login: function(username, password) {
