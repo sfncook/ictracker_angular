@@ -3,11 +3,13 @@
 angular.module('AdaptersModule')
 
     .config(function (AdaptersProvider, DSProvider) {
-        console.log("ParseAdapterModule config  AdaptersProvider:", AdaptersProvider);
         AdaptersProvider.addAdapter("parse",
             {
+
+                loginWithDepartment: true,
+                hasLogin: true,
+
                 init:function(){
-                    console.log("ParseAdapter init - BIG ONE");
                     var defaults = {};
 
                     var app_key = localStorage.getItem('department_app_key');
@@ -48,13 +50,6 @@ angular.module('AdaptersModule')
                 },
 
                 logout: function() {
-                },
-
-                $get: function () {
-                    return {
-                        loginWithDepartment: true,
-                        hasLogin: true
-                    };
                 }
             }
         );

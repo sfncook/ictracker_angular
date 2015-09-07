@@ -2,20 +2,21 @@
 
 var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentModule'])
 
-    .controller('LoginCtrl', function($scope, Department){
+    .controller('LoginCtrl', function($scope, Department, Adapters){
             $scope.username="";
             $scope.password="";
             $scope.is_invalid_login = false;
+            $scope.loginWithDepartment = Adapters.loginWithDepartment;
 
-            //Department.findAll().then(
-            //    function(obj){
-            //        console.log("DepartmentRes findAll success:", obj);
-            //        $scope.departments = obj;
-            //    },
-            //    function(error){
-            //        console.log("DepartmentRes findAll error:", error);
-            //    }
-            //);
+            Department.findAll().then(
+                function(obj){
+                    console.log("DepartmentRes findAll success:", obj);
+                    $scope.departments = obj;
+                },
+                function(error){
+                    console.log("DepartmentRes findAll error:", error);
+                }
+            );
 
             //var IncidentRes = DS.defineResource('Incident');
             //
@@ -68,4 +69,4 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentMo
         };
     })
 
-    ;
+;

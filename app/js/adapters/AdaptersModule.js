@@ -4,13 +4,12 @@ function AdaptersConfig() {
     this.loginWithDepartment = false;
 }
 
-angular.module('AdaptersModule', ['js-data'])
+angular.module('AdaptersModule', ['js-data', 'DepartmentModule'])
     .provider("Adapters", function () {
         var adaptersByName = {};
         var defaultAdapterName;
         return {
             addAdapter: function (adapterName, adapter) {
-                console.log("addAdapter");
                 adaptersByName[adapterName] = adapter;
             },
 
@@ -20,9 +19,10 @@ angular.module('AdaptersModule', ['js-data'])
 
             $get: function () {
                 return {
-                    init: function () {
-                        console.log("Adapters.init()  adaptersByName:", adaptersByName," this:",this, " defaultAdapterName:", defaultAdapterName);
-                        adaptersByName[defaultAdapterName].init();
+                    init: function (DS) {
+                        adaptersByName[defaultAdapterName].init(DS);
+                        this.loginWithDepartment = adaptersByName[defaultAdapterName].loginWithDepartment;
+                        this.hasLogin = adaptersByName[defaultAdapterName].hasLogin;
                     }
                 };
             }
@@ -30,13 +30,11 @@ angular.module('AdaptersModule', ['js-data'])
     })
 
     .config(function (AdaptersProvider) {
-        console.log("AdaptersModule config");
         AdaptersProvider.setDefaultAdapterName(getHttpRequestByName('adapter'));
     })
 
-    .run(function (Adapters) {
-        console.log("AdaptersModule run", Adapters);
-        Adapters.init();
+    .run(function (Adapters, DS) {
+        Adapters.init(DS);
     })
 
 ;
