@@ -87,7 +87,35 @@ angular.module('AdaptersModule')
                 }
             };
 
-            return $http(req);
+            return $http(req).then(function(res){
+                console.log("login res:",res);
+                localStorage.setItem('parse_current_user',  JSON.stringify(res.data));
+            });
+        }
+    })
+
+    .factory('IsLoggedIn', function ($http) {
+        return function () {
+            var app_key_jsonstr = localStorage.getItem('department_keys');
+            var headers = JSON.parse(app_key_jsonstr);
+            headers['X-Parse-Revocable-Session'] = 1;
+            var req = {
+                method: 'GET',
+                url: 'https://api.parse.com/1/login',
+                headers : headers,
+                params : {
+                    username:username,
+                    password:password
+                }
+            };
+
+
+  //          curl -X GET \
+  //-H "X-Parse-Application-Id: Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR" \
+  //-H "X-Parse-REST-API-Key: EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9" \
+  //-H "X-Parse-Session-Token: r:pnktnjyb996sj4p156gjtp4im" \
+  //https://api.parse.com/1/users/me
+
         }
     })
 
