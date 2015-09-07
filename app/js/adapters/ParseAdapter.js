@@ -14,6 +14,9 @@ var ParseAdapter = {
         var app_key_jsonstr = localStorage.getItem('department_keys');
         if(app_key_jsonstr) {
             defaults.headers = JSON.parse(app_key_jsonstr);
+            var parse_current_user_jsonstr = localStorage.getItem('parse_current_user');
+            var parse_current_user = JSON.parse(parse_current_user_jsonstr);
+            defaults.headers['X-Parse-Session-Token'] = parse_current_user.sessionToken;
         } else {
             defaults.headers = {
                 'X-Parse-Application-Id' :  default_app_id,
@@ -59,7 +62,7 @@ angular.module('AdaptersModule')
         ParseAdapter.setDepartment = SetDepartment;
         ParseAdapter.login = Login;
         ParseAdapter.isLoggedIn = IsLoggedIn_Parse;
-        SetDepartment(default_app_id, default_api_key);
+        //SetDepartment(default_app_id, default_api_key);
         //localStorage.removeItem('parse_current_user');
     })
 
@@ -92,6 +95,7 @@ angular.module('AdaptersModule')
             return $http(req).then(function(res){
                 console.log("login res:",res);
                 localStorage.setItem('parse_current_user',  JSON.stringify(res.data));
+                var app_key_jsonstr = localStorage.getItem('department_keys');
             });
         }
     })

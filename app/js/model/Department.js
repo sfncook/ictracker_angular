@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module("DepartmentModule", ['js-data', 'AdaptersModule'])
+angular.module("DepartmentModule", ['js-data'])
 
-    .factory('Department', function (DS, Adapters) {
+    .factory('Department', function (DS) {
         return DS.defineResource({
             name: 'Department',
             endpoint: 'classes/Department'
