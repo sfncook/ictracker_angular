@@ -18,13 +18,7 @@ angular.module('AdaptersModule', ['js-data', 'DepartmentModule'])
             },
 
             $get: function () {
-                return {
-                    init: function (DS) {
-                        adaptersByName[defaultAdapterName].init(DS);
-                        this.loginWithDepartment = adaptersByName[defaultAdapterName].loginWithDepartment;
-                        this.hasLogin = adaptersByName[defaultAdapterName].hasLogin;
-                    }
-                };
+                return adaptersByName[defaultAdapterName];
             }
         };
     })
