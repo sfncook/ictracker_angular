@@ -8,7 +8,6 @@ angular.module('AdaptersModule')
                 loginWithDepartment: true,
                 hasLogin: true,
                 init:function(DS){
-                    console.log("ParseAdapter.init");
                     var defaults = {};
 
                     var app_key = localStorage.getItem('department_app_key');
