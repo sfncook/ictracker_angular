@@ -1,6 +1,6 @@
 
 
-var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentModule'])
+var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
 
     .controller('LoginCtrl', function($scope, Department, Adapters){
 
@@ -33,7 +33,7 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'js-data', 'DepartmentMo
                 Adapters.login($scope.username, $scope.password).then(
                     function(obj){
                         var urlLink = "splash.html"+document.location.search;
-                        //window.location.href = urlLink;
+                        window.location.href = urlLink;
                     },
                     function(error){
                         console.log("LoginServices - Login error:", error);

@@ -7,7 +7,7 @@ var app = angular.module("SplashController", ['DataServices', 'IncidentServices'
         if(!IsLoggedIn()) {
             console.log("Not logged in. Redirecting to login.html");
             ResetSavedDepartment();
-            var urlLink = "login.html";
+            var urlLink = "login.html"+document.location.search;
             window.location.href = urlLink;
         }
 

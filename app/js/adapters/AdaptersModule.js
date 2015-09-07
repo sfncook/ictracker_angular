@@ -4,7 +4,7 @@ function AdaptersConfig() {
     this.loginWithDepartment = false;
 }
 
-angular.module('AdaptersModule', ['js-data', 'DepartmentModule'])
+angular.module('AdaptersModule', ['js-data'])
     .provider("Adapters", function () {
         var adaptersByName = {};
         var defaultAdapterName;

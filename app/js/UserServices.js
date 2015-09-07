@@ -2,10 +2,10 @@
 
 angular.module('UserServices', ['DataServices', 'DepartmentServices', 'AdaptersModule'])
 
-    .factory('IsLoggedIn', [function (Adapters) {
+    .factory('IsLoggedIn', ['Adapters', function (Adapters) {
         return function () {
             if(Adapters.hasLogin) {
-                return Parse.User.current();
+                return Adapters.isLoggedIn();
             } else {
                 return true;
             }

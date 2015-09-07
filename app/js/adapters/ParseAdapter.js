@@ -42,8 +42,8 @@ var ParseAdapter = {
     },
 
     setDepartment: null,
-
     login: null,
+    isLoggedIn: null,
 
     logout: function() {
     }
@@ -55,10 +55,12 @@ angular.module('AdaptersModule')
         AdaptersProvider.addAdapter("parse", ParseAdapter);
     })
 
-    .run(function (SetDepartment, Login) {
+    .run(function (SetDepartment, Login, IsLoggedIn_Parse) {
         ParseAdapter.setDepartment = SetDepartment;
         ParseAdapter.login = Login;
+        ParseAdapter.isLoggedIn = IsLoggedIn_Parse;
         SetDepartment(default_app_id, default_api_key);
+        //localStorage.removeItem('parse_current_user');
     })
 
     .factory('SetDepartment', function (DS) {
@@ -94,28 +96,13 @@ angular.module('AdaptersModule')
         }
     })
 
-    .factory('IsLoggedIn', function ($http) {
+    .factory('IsLoggedIn_Parse', function () {
         return function () {
-            var app_key_jsonstr = localStorage.getItem('department_keys');
-            var headers = JSON.parse(app_key_jsonstr);
-            headers['X-Parse-Revocable-Session'] = 1;
-            var req = {
-                method: 'GET',
-                url: 'https://api.parse.com/1/login',
-                headers : headers,
-                params : {
-                    username:username,
-                    password:password
-                }
-            };
-
-
-  //          curl -X GET \
-  //-H "X-Parse-Application-Id: Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR" \
-  //-H "X-Parse-REST-API-Key: EZZN6UZkmQrf8NKElL7JH6Pq5IWIUzAqFXLwHWp9" \
-  //-H "X-Parse-Session-Token: r:pnktnjyb996sj4p156gjtp4im" \
-  //https://api.parse.com/1/users/me
-
+            if(localStorage.getItem('parse_current_user')) {
+                return true;
+            } else {
+                return false;
+            }
         }
     })
 
