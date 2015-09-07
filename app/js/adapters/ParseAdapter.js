@@ -1,5 +1,8 @@
 'use strict';
 
+var default_app_id =    'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO';
+var default_api_key =   'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7';
+
 var ParseAdapter = {
     DS_:null,
         loginWithDepartment: true,
@@ -13,8 +16,8 @@ var ParseAdapter = {
             defaults.headers = JSON.parse(app_key_jsonstr);
         } else {
             defaults.headers = {
-                'X-Parse-Application-Id' :  'rGT3rpOCdLiXBniennYMpIr77IzzDAlTmGHwy1fO',
-                'X-Parse-REST-API-Key' :    'gmvXdV5g0vFu3VnOR1Dg48oLf6M77uOUMwDfJKJ7'
+                'X-Parse-Application-Id' :  default_app_id,
+                'X-Parse-REST-API-Key' :    default_api_key
             };
             localStorage.setItem('department_keys',  JSON.stringify(defaults.headers));
         }
@@ -55,6 +58,7 @@ angular.module('AdaptersModule')
     .run(function (SetDepartment, Login) {
         ParseAdapter.setDepartment = SetDepartment;
         ParseAdapter.login = Login;
+        SetDepartment(default_app_id, default_api_key);
     })
 
     .factory('SetDepartment', function (DS) {
