@@ -17,7 +17,9 @@ var ParseAdapter = {
             defaults.headers = JSON.parse(app_key_jsonstr);
             var parse_current_user_jsonstr = localStorage.getItem('parse_current_user');
             var parse_current_user = JSON.parse(parse_current_user_jsonstr);
-            defaults.headers['X-Parse-Session-Token'] = parse_current_user.sessionToken;
+            if(parse_current_user) {
+                defaults.headers['X-Parse-Session-Token'] = parse_current_user.sessionToken;
+            }
         } else {
             defaults.headers = {
                 'X-Parse-Application-Id' :  default_app_id,

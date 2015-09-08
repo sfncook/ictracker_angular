@@ -16,7 +16,7 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
 
             Department.findAll().then(
                 function(obj){
-                    //console.log("DepartmentRes findAll success:", obj);
+                    console.log("DepartmentRes findAll success:", obj);
                     $scope.departments = obj;
                 },
                 function(error){
@@ -42,25 +42,6 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
                 );
             };
 
-            //var IncidentRes = DS.defineResource('Incident');
-            //
-            //IncidentRes.find('gFGa4HMohQ', options).then(
-            //    function(obj){
-            //        console.log("IncidentRes find success:", obj);
-            //    },
-            //    function(error){
-            //        console.log("IncidentRes find error:", error);
-            //    }
-            //);
-            //
-            //IncidentRes.findAll({}, options).then(
-            //    function(obj){
-            //        console.log("IncidentRes findAll success:", obj);
-            //    },
-            //    function(error){
-            //        console.log("IncidentRes findAll error:", error);
-            //    }
-            //);
     })
 
     .directive('ngEnter', function () {
