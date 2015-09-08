@@ -21,7 +21,7 @@ angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'Dat
             //console.log('LoadAllIncidents');
             return Incident.findAll().then(
                 function(incidents){
-                    //console.log("LoadAllIncidents successful - incidents:", incidents);
+                    console.log("LoadAllIncidents successful - incidents:", incidents);
                     DataStore.incidents = incidents;
 
                     var promises = [];

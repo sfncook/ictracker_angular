@@ -10,7 +10,7 @@ angular.module('AdaptersModule')
                 objIdFieldName: 'id',
 
                 init:function(DS){
-                    console.log("StatDataAdapter.init");
+                    //console.log("StatDataAdapter.init");
                     var adapter = new DSLocalStorageAdapter();
                     DS.registerAdapter('localstorage', adapter, { default: true });
                 },
@@ -46,8 +46,10 @@ angular.module('AdaptersModule')
         };
     })
 
-    .run(function (Department, LoadJsonFile) {
+    .run(function (LoadJsonFile, Department, IncidentType, Incident) {
         LoadJsonFile(Department, 'data/departments.json');
+        LoadJsonFile(IncidentType, 'data/incidentTypes.json');
+        LoadJsonFile(Incident, 'data/incidents.json');
     })
 
 ;

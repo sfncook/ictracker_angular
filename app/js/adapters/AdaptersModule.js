@@ -4,7 +4,7 @@ function AdaptersConfig() {
     this.loginWithDepartment = false;
 }
 
-angular.module('AdaptersModule', ['js-data'])
+angular.module('AdaptersModule', ['js-data', 'DepartmentModule', 'IncidentModule', 'IncidentTypeModule'])
     .provider("Adapters", function () {
         var adaptersByName = {};
         var defaultAdapterName;
@@ -24,7 +24,9 @@ angular.module('AdaptersModule', ['js-data'])
     })
 
     .config(function (AdaptersProvider) {
-        AdaptersProvider.setDefaultAdapterName(getHttpRequestByName('adapter'));
+        var adapterName = getHttpRequestByName('adapter');
+        AdaptersProvider.setDefaultAdapterName(adapterName);
+        //console.log("adapterName:",adapterName);
     })
 
     .run(function (Adapters, DS) {
