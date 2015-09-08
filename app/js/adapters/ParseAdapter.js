@@ -7,6 +7,7 @@ var ParseAdapter = {
     DS_:null,
         loginWithDepartment: true,
     hasLogin: true,
+    objIdFieldName: 'objectId',
     init:function(DS){
         this.DS_ = DS;
         var defaults = {};

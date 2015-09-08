@@ -1,8 +1,8 @@
 'use strict';
 
-var app = angular.module("SplashController", ['IncidentTypeModule', 'IncidentModule', 'UserServices']);
+var app = angular.module("SplashController", ['IncidentServices', 'UserServices']);
 
-    app.controller('SplashCtrl', function($scope, IsLoggedIn, IncidentType, Incident){
+    app.controller('SplashCtrl', function($scope, IsLoggedIn, LoadIncidentTypes, LoadAllIncidents){
 
         $scope.incidentObj = {};
         $scope.loadSuccess = false;
@@ -14,42 +14,24 @@ var app = angular.module("SplashController", ['IncidentTypeModule', 'IncidentMod
             window.location.href = urlLink;
         }
 
-        IncidentType.findAll().then(
+        LoadIncidentTypes().then(
             function(obj){
-                console.log("IncidentType findAll success:", obj);
+                //console.log("IncidentType findAll success:", obj);
                 $scope.incidentTypes = obj;
             },
             function(error){
-                console.log("IncidentType findAll error:", error);
+                console.log("SplashServices - IncidentType findAll error:", error);
             }
         );
 
-        Incident.findAll().then(
-            function(incidents){
-
-                var promises = [];
-
-                for(var i=0; i<incidents.length; i++){
-                    var incident = incidents[i];
-                    var promise = IncidentType.find(incident.incidentType.objectId).then(
-                        function(incidentType){
-                            console.log("IncidentType find success:", incidentType);
-                            incident.incidentType.incidentType = incidentType;
-                        }
-                    )
-                    promises.push(promise);
-                }
-
-                return Promise.all(promises).then(function(incidents){
-                    $scope.incident_list = incidents;
-                    $scope.loadSuccess = true;
-                    return incidents;
-                });
-            },
-            function(error){
-                console.log("Incident findAll error:", error);
+        LoadAllIncidents().then(
+            function(obj) {
+                //console.log("SplashServices LoadAllIncidents.then()");
+                $scope.incident_list = obj;
+                $scope.loadSuccess = true;
             }
-        )
+        );
+
 
         //Incident.findAll().then(
         //    function(obj){

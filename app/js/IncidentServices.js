@@ -1,9 +1,65 @@
 
-angular.module('IncidentServices', ['AdaptersModule', 'IncidentModule'])
+angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'DataServices', 'AdaptersModule'])
 
-    .factory('LoadIncidentTypes', ['IncidentTypes', function () {
+    .factory('LoadIncidentTypes', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function () {
+            //console.log('LoadIncidentTypes');
+            return IncidentType.findAll().then(
+                function(incidentTypes) {
+                    DataStore.incidentTypes = incidentTypes;
+                    return incidentTypes;
+                },
+                function(error){
+                    console.log("IncidentType findAll error:", error);
+                }
+            );
+        }
+    }])
 
+    .factory('LoadAllIncidents', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident) {
+        return function () {
+            //console.log('LoadAllIncidents');
+            return Incident.findAll().then(
+                function(incidents){
+                    //console.log("LoadAllIncidents successful - incidents:", incidents);
+                    DataStore.incidents = incidents;
+
+                    var promises = [];
+
+                    for(var i=0; i<incidents.length; i++){
+                        var incident = incidents[i];
+                        var promise = LoadIncidentTypesForIncident(incident);
+                        promises.push(promise);
+                    }
+
+                    // Wait for all other incident data to load.
+                    Promise.all(promises).then(function(incidentTypes){
+                        //console.log("Promise.all(promises) incidents:", incidents);
+                    });
+
+                    return incidents;
+                },
+                function(error){
+                    console.log("Incident findAll error:", error);
+                }
+            )
+        }
+    }])
+
+    .factory('LoadIncidentTypesForIncident', ['IncidentType', 'Adapters', function (IncidentType, Adapters) {
+        return function (incident) {
+            //console.log("LoadIncidentTypesForIncident for incident:", incident);
+            var incidentTypeId = incident.incidentType[Adapters.objIdFieldName];
+            return IncidentType.find(incidentTypeId).then(
+                function(incidentType){
+                    //console.log("LoadIncidentTypesForIncident succes for incidentType:", incidentType);
+                    incident.incidentType = incidentType;
+                    return incidentType
+                },
+                function(error){
+                    console.log("LoadIncidentTypesForIncident - IncidentType findAll error:", error);
+                }
+            );
         }
     }])
 

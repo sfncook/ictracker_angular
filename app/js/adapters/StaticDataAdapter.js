@@ -7,6 +7,7 @@ angular.module('AdaptersModule')
             {
                 loginWithDepartment: true,
                 hasLogin: false,
+                objIdFieldName: 'id',
 
                 init:function(DS){
                     console.log("StatDataAdapter.init");
