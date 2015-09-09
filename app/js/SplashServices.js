@@ -32,6 +32,16 @@ var app = angular.module("SplashController", ['IncidentServices', 'UserServices'
             }
         );
 
+        $scope.loadIncident = function(incidentId) {
+            var argsStr = "i="+incidentId;
+            var adapter = getHttpRequestByName('adapter');
+            if(adapter) {
+                argsStr = argsStr+"&adapter="+adapter;
+            }
+            var urlLink = "incident_form.html?"+argsStr;
+            window.location.href = urlLink;
+        };
+
 
         //Incident.findAll().then(
         //    function(obj){

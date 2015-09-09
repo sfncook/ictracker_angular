@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('UserServices', ['DataServices', 'DepartmentServices', 'AdaptersModule'])
+angular.module('UserServices', ['DataServices', 'DepartmentServices'])
 
-    .factory('IsLoggedIn', ['Adapters', function (Adapters) {
+    .factory('IsLoggedIn', ['DataStore', function (DataStore) {
         return function () {
-            if(Adapters.hasLogin) {
-                return Adapters.isLoggedIn();
+            if(DataStore.adapter.hasLogin) {
+                return DataStore.adapter.isLoggedIn();
             } else {
                 return true;
             }

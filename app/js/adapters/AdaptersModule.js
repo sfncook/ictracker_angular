@@ -4,33 +4,20 @@ function AdaptersConfig() {
     this.loginWithDepartment = false;
 }
 
-angular.module('AdaptersModule', ['js-data', 'DepartmentModule', 'IncidentModule', 'IncidentTypeModule'])
-    .provider("Adapters", function () {
-        var adaptersByName = {};
-        var defaultAdapterName;
-        return {
-            addAdapter: function (adapterName, adapter) {
-                adaptersByName[adapterName] = adapter;
-            },
+angular.module('AdaptersModule', ['js-data', 'DepartmentModule', 'IncidentModule', 'IncidentTypeModule', 'DataServices'])
 
-            setDefaultAdapterName: function (adapterName) {
-                defaultAdapterName = adapterName;
-            },
-
-            $get: function () {
-                return adaptersByName[defaultAdapterName];
-            }
-        };
-    })
-
-    .config(function (AdaptersProvider) {
+    .run(function (StaticDataAdapter, ParseAdapter, DataStore) {
         var adapterName = getHttpRequestByName('adapter');
-        AdaptersProvider.setDefaultAdapterName(adapterName);
-        //console.log("adapterName:",adapterName);
-    })
+        if(adapterName=="dev") {
+            DataStore.adapter = StaticDataAdapter;
+        } else if(adapterName=="parse") {
+            DataStore.adapter = ParseAdapter;
+        } else {
+            // Default adapter
+            DataStore.adapter = ParseAdapter;
+        }
 
-    .run(function (Adapters, DS) {
-        Adapters.init(DS);
+        DataStore.adapter.init();
     })
 
 ;

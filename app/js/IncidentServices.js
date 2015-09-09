@@ -21,7 +21,7 @@ angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'Dat
             //console.log('LoadAllIncidents');
             return Incident.findAll().then(
                 function(incidents){
-                    console.log("LoadAllIncidents successful - incidents:", incidents);
+                    //console.log("LoadAllIncidents successful - incidents:", incidents);
                     DataStore.incidents = incidents;
 
                     var promises = [];
@@ -46,10 +46,10 @@ angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'Dat
         }
     }])
 
-    .factory('LoadIncidentTypesForIncident', ['IncidentType', 'Adapters', function (IncidentType, Adapters) {
+    .factory('LoadIncidentTypesForIncident', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function (incident) {
             //console.log("LoadIncidentTypesForIncident for incident:", incident);
-            var incidentTypeId = incident.incidentType[Adapters.objIdFieldName];
+            var incidentTypeId = incident.incidentType[DataStore.adapter.objIdFieldName];
             return IncidentType.find(incidentTypeId).then(
                 function(incidentType){
                     //console.log("LoadIncidentTypesForIncident succes for incidentType:", incidentType);
