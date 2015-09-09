@@ -1,4 +1,6 @@
-angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices'])
+'use strict';
+
+angular.module('TbarServices', ['DataServices', 'SectorServices'])
 
     .factory('TbarSectors', function() {
         return new Array();
@@ -29,7 +31,7 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ConvertParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ConvertParseObject, SectorTypes) {
+    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'SectorTypes', function (GridsterOpts, TbarSectors, SectorTypes) {
         return function (incident) {
             var SectorParseObj = Parse.Object.extend('Sector');
 

@@ -1,5 +1,5 @@
 
-angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'DataServices', 'AdaptersModule'])
+angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'AdaptersModule'])
 
     .factory('LoadIncidentTypes', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function () {
@@ -18,7 +18,7 @@ angular.module('IncidentServices', ['IncidentTypeModule', 'IncidentModule', 'Dat
 
     .factory('LoadAllIncidents', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident) {
         return function () {
-            //console.log('LoadAllIncidents');
+            console.log('Incident resource:', Incident);
             return Incident.findAll().then(
                 function(incidents){
                     //console.log("LoadAllIncidents successful - incidents:", incidents);

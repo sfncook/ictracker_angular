@@ -1,6 +1,6 @@
 
 
-var app = angular.module("LoginApp", ['DataServices', 'DepartmentModule', 'AdaptersModule'])
+var app = angular.module("LoginApp", ['DataServices', 'DataModelsModule', 'AdaptersModule'])
 
     .controller('LoginCtrl', function($scope, Department, DataStore){
 

@@ -4,7 +4,7 @@ function AdaptersConfig() {
     this.loginWithDepartment = false;
 }
 
-angular.module('AdaptersModule', ['js-data', 'DepartmentModule', 'IncidentModule', 'IncidentTypeModule', 'DataServices'])
+angular.module('AdaptersModule', ['js-data', 'DataModelsModule', 'DataServices'])
 
     .run(function (StaticDataAdapter, ParseAdapter, DataStore) {
         var adapterName = getHttpRequestByName('adapter');
