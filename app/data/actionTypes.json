@@ -1,0 +1,956 @@
+[
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Supply",
+    "objectId": "FDFuPUM7eY"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Take a Line",
+    "objectId": "qcDPgsz97B"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Search/Rescue",
+    "objectId": "Vdi6dhj2GX"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Fire Attack",
+    "objectId": "OwMUlsKD4q"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "IRIC",
+    "objectId": "QbOW0oRVZS"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Check Extension",
+    "objectId": "8i0FMwGyCy"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Protect Exposures",
+    "objectId": "9Xyg7CbJaQ"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Overhaul",
+    "objectId": "X946zLYSDF"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Deck Gun",
+    "objectId": "eWRKyifb0T"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Portable Monitor",
+    "objectId": "5qfHKIPouJ"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Secondary Search",
+    "objectId": "XzVHL1dz2T"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Victim Found",
+    "objectId": "UedHl20zWZ"
+  },
+  {
+    "category": "Engine",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Firefighter Located",
+    "objectId": "9epfv4qcFe"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Secure Utilities",
+    "objectId": "HHDVlaC2Lg"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Vert Ventilation",
+    "objectId": "HhYqciwF15"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "2nd Hole",
+    "objectId": "E5Ro7bCVgv"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Trench Cut",
+    "objectId": "4JVBVbqCJ0"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Roof Profile",
+    "objectId": "N88Yhz2J1f"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Fan to the Door",
+    "objectId": "birfGmu89F"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Pressurize Exposures",
+    "objectId": "d8vi0Tz6RI"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Forcible Entry",
+    "objectId": "0isuc9uKc6"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Soften Building",
+    "objectId": "kQpXJO507X"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Open Building",
+    "objectId": "BzsdMCssbG"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Open Rollup",
+    "objectId": "ds0Fw9S8y1"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Salvage",
+    "objectId": "GbQAqK2lJK"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Position for Def. Ops",
+    "objectId": "QibtHMu43k"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Put Stick Up",
+    "objectId": "Oi85VJrQ4m"
+  },
+  {
+    "category": "Ladder",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Elevated Master",
+    "objectId": "QiDxMyDAjk"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Agrees With Strategy",
+    "objectId": "7BCwewpKTF"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "360 recon",
+    "objectId": "WKjph8wUpr"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Pool",
+    "objectId": "ZuuHHbmVyX"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Empty Pool",
+    "objectId": "cWjLpS5Da5"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Powerlines",
+    "objectId": "7DBLDWwh7U"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Powerlines Down",
+    "objectId": "ErZXUaUTP7"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Bars on Windows",
+    "objectId": "1RmtUquMXW"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Dogs in Yard",
+    "objectId": "xwnMqLpyw4"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Hoarders House",
+    "objectId": "3RmxUwaiyk"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Basement",
+    "objectId": "uoPyhQzJCg"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Flashover",
+    "objectId": "pgQGVrSGle"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Backdraft",
+    "objectId": "aCWwXxhnst"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Eminent Collapse",
+    "objectId": "Ie7NQiBN12"
+  },
+  {
+    "category": "Safety",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": true,
+    "name": "*Collapse",
+    "objectId": "IyrRvCfd4q"
+  },
+  {
+    "category": "Rescue",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Grab RIC Bag",
+    "objectId": "YGYsyhd56d"
+  },
+  {
+    "category": "Rescue",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Accountability Update",
+    "objectId": "d4bVOFTqeV"
+  },
+  {
+    "category": "Rescue",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Throw Ladders",
+    "objectId": "6pFXvk35lu"
+  },
+  {
+    "category": "Rescue",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Monitor Ch. 16",
+    "objectId": "kyY7mjBPi4"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "1-3/4",
+    "objectId": "UMZq4JZ5qM"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "2\"",
+    "objectId": "sneydNNYDz"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "2-1/2",
+    "objectId": "n6CMZupsRz"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "3\"",
+    "objectId": "L7nhYfEw78"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Piercing Nozzle",
+    "objectId": "GymlQo9t5C"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Horizontal Standpipe",
+    "objectId": "1nVnknSoIA"
+  },
+  {
+    "category": "Lines",
+    "incidentType": [
+      "fire",
+      "medical",
+      "arff",
+      "hazmat",
+      "water",
+      "trench",
+      "mountain",
+      "palm",
+      "struct",
+      "confined"
+    ],
+    "isWarning": false,
+    "name": "Support Sprinklers",
+    "objectId": "c4TVpAuuAs"
+  }
+]
