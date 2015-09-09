@@ -1,10 +1,10 @@
 
 
-var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
+var app = angular.module("LoginApp", ['DataServices', 'DepartmentModule', 'AdaptersModule'])
 
-    .controller('LoginCtrl', function($scope, Department, Adapters){
+    .controller('LoginCtrl', function($scope, Department, DataStore){
 
-            if(!Adapters.hasLogin) {
+            if(!DataStore.adapter.hasLogin) {
                 var urlLink = "splash.html"+document.location.search;
                 window.location.href = urlLink;
             }
@@ -12,7 +12,7 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
             $scope.username="";
             $scope.password="";
             $scope.is_invalid_login = false;
-            $scope.loginWithDepartment = Adapters.loginWithDepartment;
+            $scope.loginWithDepartment = DataStore.adapter.loginWithDepartment;
 
             Department.findAll().then(
                 function(obj){
@@ -26,11 +26,11 @@ var app = angular.module("LoginApp", ['AdaptersModule', 'DepartmentModule'])
             
             // Respond to incident type button click
             $scope.login = function() {
-                if(Adapters.loginWithDepartment) {
-                    Adapters.setDepartment($scope.selected_department.app_key, $scope.selected_department.api_key);
+                if(DataStore.adapter.loginWithDepartment) {
+                    DataStore.adapter.setDepartment($scope.selected_department.app_key, $scope.selected_department.api_key);
                 }
 
-                Adapters.login($scope.username, $scope.password).then(
+                DataStore.adapter.login($scope.username, $scope.password).then(
                     function(obj){
                         var urlLink = "splash.html"+document.location.search;
                         window.location.href = urlLink;
