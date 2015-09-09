@@ -1,28 +1,23 @@
 'use strict';
 
+var StaticAdapter = {
+    DS_:null,
+    loginWithDepartment: false,
+    hasLogin: false,
+    objIdFieldName: 'id',
+    init:function(DS){
+        var adapter = new DSLocalStorageAdapter();
+        DS.registerAdapter('localstorage', adapter, { default: true });
+    },
+
+    logout: function() {
+    }
+};
+
 angular.module('AdaptersModule')
 
     .config(function (AdaptersProvider) {
-        AdaptersProvider.addAdapter("dev",
-            {
-                loginWithDepartment: true,
-                hasLogin: false,
-                objIdFieldName: 'id',
-
-                init:function(DS){
-                    //console.log("StatDataAdapter.init");
-                    var adapter = new DSLocalStorageAdapter();
-                    DS.registerAdapter('localstorage', adapter, { default: true });
-                },
-
-                login: function(username, password) {
-
-                },
-
-                logout: function() {
-                }
-            }
-        );
+        AdaptersProvider.addAdapter("dev", StaticAdapter);
     })
 
     .factory('LoadJsonFile', function ($http) {
@@ -46,10 +41,16 @@ angular.module('AdaptersModule')
         };
     })
 
-    .run(function (LoadJsonFile, Department, IncidentType, Incident) {
-        LoadJsonFile(Department, 'data/departments.json');
-        LoadJsonFile(IncidentType, 'data/incidentTypes.json');
-        LoadJsonFile(Incident, 'data/incidents.json');
+    .factory('LoadAllJsonData', function (LoadJsonFile, Department, IncidentType, Incident) {
+        return function() {
+            LoadJsonFile(Department, 'data/departments.json');
+            LoadJsonFile(IncidentType, 'data/incidentTypes.json');
+            LoadJsonFile(Incident, 'data/incidents.json');
+        };
+    })
+
+    .run(function (LoadAllJsonData) {
+        StaticAdapter.init = LoadAllJsonData;
     })
 
 ;
