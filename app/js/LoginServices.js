@@ -7,6 +7,20 @@ var app = angular.module("LoginApp", ['DataServices', 'DataModelsModule', 'Adapt
             if(!DataStore.adapter.hasLogin) {
                 var urlLink = "splash.html"+document.location.search;
                 window.location.href = urlLink;
+            } else {
+                //Always logout
+                var promise = DataStore.adapter.logout();
+                if(promise) {
+                    promise.then(
+                        function(obj){
+                            console.log("Logout complete.");
+                        },
+                        function(error){
+                            console.log("LoginServices - Logout error:", error);
+                            $scope.is_invalid_login = true;
+                        }
+                    );
+                }
             }
 
             $scope.username="";

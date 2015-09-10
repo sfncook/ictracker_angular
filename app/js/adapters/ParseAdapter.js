@@ -88,6 +88,8 @@ angular.module('AdaptersModule')
             },
 
             logout: function() {
+                localStorage.removeItem('parse_current_user');
+                this.setDepartment(default_app_id, default_api_key);
             }
         };
     })
