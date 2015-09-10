@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('DataServices', [])
+angular.module('DataServices', ['AdaptersModule'])
     .factory('DefaultCity', function() {
         return "Mesa";
     })
@@ -13,5 +13,11 @@ angular.module('DataServices', [])
             loadSuccess:false
         };
     })
+
+    .factory('initDataStore', ['TbarSectors', function (TbarSectors) {
+        return function () {
+            TbarSectors.push(newSector);
+        }
+    }])
 
 ;

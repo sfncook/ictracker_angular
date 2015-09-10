@@ -30,4 +30,18 @@ angular.module("DataModelsModule", ['js-data'])
         });
     })
 
+    .factory('Sector', function (DS) {
+        return DS.defineResource({
+            name: 'Sector',
+            endpoint: 'classes/Sector'
+        });
+    })
+
+    .factory('SectorType', function (DS) {
+        return DS.defineResource({
+            name: 'SectorType',
+            endpoint: 'classes/SectorType'
+        });
+    })
+
 ;
