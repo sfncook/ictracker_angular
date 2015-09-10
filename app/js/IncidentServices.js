@@ -63,6 +63,47 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         }
     }])
 
+    .factory('LoadIncident', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident) {
+        return function (incidentObjectId, $scope) {
+            return Incident.find(incidentObjectId).then(
+                function(incident){
+                    console.log("IncidentServices - LoadIncident find success:", incident);
+                    if(incident) {
+                        DataStore.incident = incident;
+
+                        var promises = [];
+
+                        promises.push(LoadIncidentTypesForIncident(incident));
+
+                        // Wait for all other incident data to load.
+                        Promise.all(promises).then(function(incidentTypes){
+                            //console.log("Promise.all(promises) incidents:", incidents);
+                        });
+
+                        //DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
+                        //    ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
+                        //    DataStore.incident.inc_type_obj= incidentTypeObj;
+                        //});
+                        //
+                        //LoadSectorsForIncident($scope, incident);
+                        //LoadAllMaydaysForIncident($scope, incident);
+                        //LoadIAPForIncident($scope, incident);
+                        //LoadObjectivesForIncident($scope, incident);
+                        //LoadOSRForIncident($scope, incident);
+                        //LoadUpgradeForIncident($scope, incident);
+                        //LoadDispatchedUnitsForIncident($scope, incident);
+
+                        return incident;
+
+                    }
+                },
+                function(error){
+                    console.log("IncidentServices - LoadIncident find error:", error);
+                }
+            );
+        }
+    }])
+
     //.factory('IncidentTypes', function() {
     //    return new Array();
     //})

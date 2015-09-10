@@ -59,7 +59,7 @@ angular.module('ictApp')
                 }
             });
         }
-        $interval(updateTimer, 3000);
+        //$interval(updateTimer, 3000);
     })
 
 ;

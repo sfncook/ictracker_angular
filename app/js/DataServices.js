@@ -20,4 +20,34 @@ angular.module('DataServices', ['AdaptersModule'])
         }
     }])
 
+
+    .factory('ConvertParseObject', [function () {
+        return function (parseObject, fields) {
+            //add dynamic properties from fields array
+            for (var i = 0; i < fields.length; i++) {
+                //add closure
+                (function () {
+                    var propName = fields[i];
+                    Object.defineProperty(parseObject, propName, {
+                        get: function () {
+                            return parseObject.get(propName);
+                        },
+                        set: function (value) {
+                            parseObject.set(propName, value);
+                        }
+                    });
+                })();
+            }
+        }
+    }])
+
+    // Pass this into Parse save commands to log errors.
+    .factory('DefaultErrorLogger', [function () {
+        return {
+            error: function(obj, error) {
+                console.log('Failed to create new object, with error code: ' + error.message);
+            }
+        }
+    }])
+
 ;

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('OSRServices', ['ParseServices', 'DataServices'])
+//angular.module('OSRServices', ['ParseServices', 'DataServices'])
+angular.module('ictApp')
 
     .controller('OsrDlg', function($scope, DataStore){
 		$scope.dataStore = DataStore;

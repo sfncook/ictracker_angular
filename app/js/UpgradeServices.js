@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
+//angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
+angular.module('ictApp')
+
+    .config(['$controllerProvider', function($controllerProvider) {
+        $controllerProvider.allowGlobals();
+    }])
 
     .controller('UpgradeDlg', function($scope, DataStore){
 		$scope.dataStore = DataStore;
