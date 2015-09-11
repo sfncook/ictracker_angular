@@ -2,26 +2,30 @@
 
 var app = angular.module("LoginApp", ['DataServices', 'DataModelsModule', 'AdaptersModule'])
 
+    .run(function(DataStore, InitAdapter) {
+        InitAdapter();
+
+        if(!DataStore.adapter.hasLogin) {
+            var urlLink = "splash.html"+document.location.search;
+            window.location.href = urlLink;
+        }
+
+        //Always logout
+        var promise = DataStore.adapter.logout();
+        if(promise) {
+            promise.then(
+                function(obj){
+                    console.log("Logout complete.");
+                },
+                function(error){
+                    console.log("LoginServices - Logout error:", error);
+                    $scope.is_invalid_login = true;
+                }
+            );
+        }
+    })
+
     .controller('LoginCtrl', function($scope, Department, DataStore){
-
-            if(!DataStore.adapter.hasLogin) {
-                var urlLink = "splash.html"+document.location.search;
-                window.location.href = urlLink;
-            }
-
-            //Always logout
-            var promise = DataStore.adapter.logout();
-            if(promise) {
-                promise.then(
-                    function(obj){
-                        console.log("Logout complete.");
-                    },
-                    function(error){
-                        console.log("LoginServices - Logout error:", error);
-                        $scope.is_invalid_login = true;
-                    }
-                );
-            }
 
             $scope.username="";
             $scope.password="";
