@@ -60,7 +60,6 @@
         <h1>LOADING</h1>
         <div class="clear_both"></div>
         <img src="img/loading.gif"/>
-        <h1>{{foo}}</h1>
     </center>
 </div>
 
@@ -146,7 +145,7 @@
         <div id="inc_num">{{dataStore.incident.inc_number}}</div>
         <div id="inc_add">{{dataStore.incident.inc_address}}</div>
     </button>
-    <img id="inc_type_icon" ng-src="{{dataStore.incident.inc_type_obj.icon}}"/>
+    <img id="inc_type_icon" ng-src="{{dataStore.incident.incidentType.icon}}"/>
     <button id="inc_map_btn" class="button_top" ng-click="openMap()">
         <img class="map_btn_img" src="img/map_icon.png"/>Map
     </button>

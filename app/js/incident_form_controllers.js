@@ -11,10 +11,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('LoadingSplashDlg', function($scope, DataStore){
-        console.log("foo bar");
         $scope.dataStore = DataStore;
-
-        $scope.foo = "bar";
     })
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
@@ -22,23 +19,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.dataStore = DataStore;
 
-        $scope.dataStore.loadSuccess = true;
-        $scope.dataStore.waitingToLoad = false;
-
         LoadIncident(incidentObjectId, $scope).then(
             function(obj){
-                console.log("XXX LoadIncident find success:", obj);
-
-                DataStore.loadSuccess = true;
-                DataStore.waitingToLoad = false;
-                //$scope.$apply();
-
-                setTimeout(function(){
-                    console.log("DataStore.loadSuccess");
-                    DataStore.loadSuccess = true;
-                    DataStore.waitingToLoad = false;
-                    $scope.$apply();
-                }, 1500);
+                console.log("LoadIncident find success:", obj);
             },
             function(error){
                 console.log("LoadIncident find error:", error);
@@ -56,7 +39,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.openMap = function() {
-            window.open('https://maps.google.com/?daddr=' + encodeURI($scope.dataStore.incident.inc_address), '_blank');
+            console.log($scope.dataStore.incident);
+            //window.open('https://maps.google.com/?daddr=' + encodeURI($scope.dataStore.incident.inc_address), '_blank');
         }
     })
 

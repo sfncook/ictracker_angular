@@ -47,12 +47,12 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
     }])
 
     .factory('LoadIncidentTypesForIncident', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
-        return function (incident) {
+        return function (incident, $scope) {
             //console.log("LoadIncidentTypesForIncident for incident:", incident);
             var incidentTypeId = incident.incidentType[DataStore.adapter.objIdFieldName];
             return IncidentType.find(incidentTypeId).then(
                 function(incidentType){
-                    //console.log("LoadIncidentTypesForIncident succes for incidentType:", incidentType);
+                    console.log("LoadIncidentTypesForIncident");
                     incident.incidentType = incidentType;
                     return incidentType
                 },
@@ -67,18 +67,13 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         return function (incidentObjectId, $scope) {
             return Incident.find(incidentObjectId).then(
                 function(incident){
-                    console.log("IncidentServices - LoadIncident find success:", incident);
+                    //console.log("IncidentServices - LoadIncident find success:", incident);
                     if(incident) {
                         DataStore.incident = incident;
 
                         var promises = [];
 
-                        promises.push(LoadIncidentTypesForIncident(incident));
-
-                        // Wait for all other incident data to load.
-                        Promise.all(promises).then(function(incidentTypes){
-                            //console.log("Promise.all(promises) incidents:", incidents);
-                        });
+                        promises.push(LoadIncidentTypesForIncident(incident, $scope));
 
                         //DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
                         //    ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
@@ -92,6 +87,18 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                         //LoadOSRForIncident($scope, incident);
                         //LoadUpgradeForIncident($scope, incident);
                         //LoadDispatchedUnitsForIncident($scope, incident);
+
+                        DataStore.loadSuccess = true;
+                        DataStore.waitingToLoad = false;
+                        //$scope.$apply();
+
+                        //console.log("setTimeout");
+                        //setTimeout(function(){
+                        //    //console.log("DataStore.loadSuccess");
+                        //    DataStore.loadSuccess = true;
+                        //    DataStore.waitingToLoad = false;
+                        //    $scope.$apply();
+                        //}, 1500);
 
                         return incident;
 
