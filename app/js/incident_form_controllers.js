@@ -2,12 +2,27 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
-    .run(function(IsLoggedIn) {
+    .run(function(InitAdapter, IsLoggedIn, DataStore, LoadIncident) {
+        InitAdapter();
+
         if(!IsLoggedIn()){
             ResetSavedDepartment();
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
+
+        var incidentObjectId = getHttpRequestByName('i');
+        LoadIncident(incidentObjectId).then(
+            function(obj){
+                console.log("check 4");
+                console.log("LoadIncident find success:", obj);
+                DataStore.loadSuccess = true;
+                DataStore.waitingToLoad = false;
+            },
+            function(error){
+                console.log("LoadIncident find error:", error);
+            }
+        );
     })
 
     .controller('LoadingSplashDlg', function($scope, DataStore){
@@ -15,24 +30,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
-        var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
-
-        LoadIncident(incidentObjectId).then(
-            function(obj){
-                console.log("check 4");
-                console.log("LoadIncident find success:", obj);
-                setTimeout(function(){
-                    DataStore.loadSuccess = true;
-                    DataStore.waitingToLoad = false;
-                    $scope.$apply();
-                }, 1500);
-            },
-            function(error){
-                console.log("LoadIncident find error:", error);
-            }
-        );
 
         $scope.showIncInfoDlg = function() {
             DataStore.showIncInfoDlg();
