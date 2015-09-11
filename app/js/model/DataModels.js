@@ -44,4 +44,11 @@ angular.module("DataModelsModule", ['js-data'])
         });
     })
 
+    .factory('Iap', function (DS) {
+        return DS.defineResource({
+            name: 'Iap',
+            endpoint: 'classes/Iap'
+        });
+    })
+
 ;

@@ -48,13 +48,12 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
 
     .factory('LoadIncidentTypesForIncident', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function (incident) {
-            //console.log("LoadIncidentTypesForIncident for incident:", incident);
+            console.log("check 2");
             var incidentTypeId = incident.incidentType[DataStore.adapter.objIdFieldName];
             return IncidentType.find(incidentTypeId).then(
                 function(incidentType){
-                    //console.log("LoadIncidentTypesForIncident");
                     incident.incidentType = incidentType;
-                    return incidentType
+                    return incident;
                 },
                 function(error){
                     console.log("LoadIncidentTypesForIncident - IncidentType findAll error:", error);
@@ -63,25 +62,14 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         }
     }])
 
-    .factory('LoadIncident', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident) {
+    .factory('LoadIncident', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', 'LoadIAPForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident, LoadIAPForIncident) {
         return function (incidentObjectId) {
             return Incident.find(incidentObjectId).then(
                 function(incident){
-                    //console.log("IncidentServices - LoadIncident find success:", incident);
+                    console.log("check 1");
                     if(incident) {
                         DataStore.incident = incident;
 
-                        var promises = [];
-
-                        promises.push(LoadIncidentTypesForIncident(incident));
-
-                        console.log("check 1");
-                        Promise.all(promises).then(
-                            function(objs) {
-                                console.log("check 2");
-                            }
-                        );
-                        console.log("check 3");
 
                         //DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
                         //    ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
@@ -95,7 +83,7 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                         //LoadOSRForIncident($scope, incident);
                         //LoadUpgradeForIncident($scope, incident);
                         //LoadDispatchedUnitsForIncident($scope, incident);
-                        
+
                         return incident;
 
                     }
@@ -103,7 +91,14 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                 function(error){
                     console.log("IncidentServices - LoadIncident find error:", error);
                 }
-            );
+            ).then(
+                LoadIncidentTypesForIncident,
+                function(error){
+                    console.log("IncidentServices - LoadIncidentTypesForIncident find error:", error);
+                }
+            )
+
+                ;
         }
     }])
 

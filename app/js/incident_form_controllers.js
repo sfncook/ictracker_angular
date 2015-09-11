@@ -21,6 +21,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         LoadIncident(incidentObjectId).then(
             function(obj){
+                console.log("check 4");
                 console.log("LoadIncident find success:", obj);
                 setTimeout(function(){
                     DataStore.loadSuccess = true;
