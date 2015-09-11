@@ -1,18 +1,20 @@
 'use strict';
 
-var app = angular.module("SplashController", ['IncidentServices', 'UserServices']);
+angular.module("SplashController", ['IncidentServices', 'UserServices'])
 
-    app.controller('SplashCtrl', function($scope, IsLoggedIn, LoadIncidentTypes, LoadAllIncidents){
-
-        $scope.incidentObj = {};
-        $scope.loadSuccess = false;
+    .run(function(InitAdapter, IsLoggedIn) {
+        InitAdapter();
 
         if(!IsLoggedIn()) {
-            console.log("Not logged in. Redirecting to login.html");
-            ResetSavedDepartment();
             var urlLink = "login.html"+document.location.search;
             window.location.href = urlLink;
         }
+    })
+
+    .controller('SplashCtrl', function($scope, LoadIncidentTypes, LoadAllIncidents){
+
+        $scope.incidentObj = {};
+        $scope.loadSuccess = false;
 
         LoadIncidentTypes().then(
             function(obj){
