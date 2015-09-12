@@ -22,9 +22,9 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                     DataStore.incidents = new Array();
                     for(var i=0; i<incidents.length; i++) {
                         if(incidents[i].json) {
-                            console.log("json: ", incidents[i].json);
+                            //console.log("json: ", incidents[i].json);
                             var incident = JSON.parse(incidents[i].json);
-                            console.log("obj: ", incident);
+                            //console.log("obj: ", incident);
                             DataStore.incidents.push(incident);
                         }
                     }
@@ -75,6 +75,23 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
             )
 
                 ;
+        }
+    }])
+
+    .factory('SaveIncident', ['Incident', function (Incident) {
+        return function (incident) {
+            var incidentJson = JSON.stringify(incident);
+            incident.json = incidentJson;
+            delete incident.incidentType;
+            return Incident.create(incident).then(
+                function(incidentSaved) {
+                    //console.log("Incident.create Success incidentSaved: ", incidentSaved);
+                    return incidentSaved;
+                },
+                function(error){
+                    console.log("Incident.create error:", error);
+                }
+            );
         }
     }])
 

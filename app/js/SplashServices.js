@@ -11,14 +11,14 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
         }
     })
 
-    .controller('SplashCtrl', function($scope, LoadIncidentTypes, LoadAllIncidents){
+    .controller('SplashCtrl', function($scope, LoadIncidentTypes, LoadAllIncidents, SaveIncident){
 
         $scope.incidentObj = {};
         $scope.loadSuccess = false;
 
         LoadIncidentTypes().then(
             function(obj){
-                console.log("SplashServices LoadIncidentTypes success:", obj);
+                //console.log("SplashServices LoadIncidentTypes success:", obj);
                 $scope.incidentTypes = obj;
             },
             function(error){
@@ -41,6 +41,36 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
             }
             var urlLink = "incident_form.html?"+argsStr;
             window.location.href = urlLink;
+        };
+
+        // Respond to incident type button click
+        $scope.createAndLoadNewIncident = function(incidentType) {
+            $scope.incidentObj.incidentType = incidentType;
+
+            // Default value for inc_number
+            if(!$scope.incidentObj.inc_number) {
+                $scope.incidentObj.inc_number = "[Incident Number]"
+            }
+
+            console.log("create incident: ", $scope.incidentObj);
+
+            SaveIncident($scope.incidentObj).then(
+                function(obj){
+                    console.log("SplashServices SaveIncident success:", obj);
+                    $scope.loadIncident(obj.id);
+                },
+                function(error){
+                    console.log("SplashServices - SaveIncident findAll error:", error);
+                }
+            );
+
+            //$scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
+            //    //console.log(incidentObj);
+            //    //ConvertParseObject(incidentObj, INCIDENT_DEF);
+            //    $scope.loadIncident(incidentObj.id);
+            //}, function(error) {
+            //    console.log("Error saving new incident: "+error);
+            //});;
         };
 
 
