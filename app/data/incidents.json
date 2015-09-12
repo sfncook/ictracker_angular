@@ -1,18 +1,10 @@
 [
   {
-    "id":"asdf1234",
-    "inc_address":"add007",
-    "inc_number":"inc007",
-    "incidentType":{
-      "id":"FcnwTPZY3N"
-    }
+    "id":"gFGa4HMohQ",
+    "json":"{\"inc_address\":\"add007\",\"inc_number\":\"inc007\",\"incidentType\":{\"icon\":\"img/icons/fire.png\",\"nameLong\":\"Fire Incident\",\"nameShort\":\"fire\",\"order\":1},\"iap\":{\"fireControl\": \"Shawn update 01 fire control\",\"firefighterSafety\": \"Shawn update 01 firefighter safety\",\"isActionEffect\": false,\"isArrangement\": false,\"isBuilding\": false,\"isFire\": true,\"isLifeHazard\": true,\"isOccupancy\": false,\"isResources\": true,\"isSpecial\": true,\"isSprinkler\": true,\"isVent\": true,\"propertyPeople\": \"Shawn update 01 property people\",\"rescue\": \"Shawn update 01 rescue\"}}"
   },
   {
-    "id":"qwer4567",
-    "inc_address":"add008",
-    "inc_number":"inc008",
-    "incidentType":{
-      "id":"Vp4pJbG2bA"
-    }
+    "id":"mL9SQdUvPL",
+    "json":"{\"inc_address\":\"add008\",\"inc_number\":\"inc008\",\"incidentType\":{\"icon\":\"img/icons/hazmat.png\",\"nameLong\":\"HazMat Incident\",\"nameShort\":\"hazmat\",\"order\":1}}"
   }
 ]

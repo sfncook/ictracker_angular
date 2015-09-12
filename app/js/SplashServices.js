@@ -18,7 +18,7 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
 
         LoadIncidentTypes().then(
             function(obj){
-                //console.log("IncidentType findAll success:", obj);
+                console.log("SplashServices LoadIncidentTypes success:", obj);
                 $scope.incidentTypes = obj;
             },
             function(error){
@@ -28,7 +28,6 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
 
         LoadAllIncidents().then(
             function(obj) {
-                //console.log("SplashServices LoadAllIncidents.then()");
                 $scope.incident_list = obj;
                 $scope.loadSuccess = true;
             }

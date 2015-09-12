@@ -3,7 +3,6 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
 
     .factory('LoadIncidentTypes', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function () {
-            //console.log('LoadIncidentTypes');
             return IncidentType.findAll().then(
                 function(incidentTypes) {
                     DataStore.incidentTypes = incidentTypes;
@@ -16,48 +15,21 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         }
     }])
 
-    .factory('LoadAllIncidents', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident) {
+    .factory('LoadAllIncidents', ['Incident', 'DataStore', function (Incident, DataStore) {
         return function () {
-            console.log('Incident resource:', Incident);
             return Incident.findAll().then(
                 function(incidents){
-                    //console.log("LoadAllIncidents successful - incidents:", incidents);
-                    DataStore.incidents = incidents;
-
-                    var promises = [];
-
-                    for(var i=0; i<incidents.length; i++){
-                        var incident = incidents[i];
-                        var promise = LoadIncidentTypesForIncident(incident);
-                        promises.push(promise);
+                    DataStore.incidents = new Array();
+                    for(var i=0; i<incidents.length; i++) {
+                        var incident = JSON.parse(incidents[i].json);
+                        DataStore.incidents.push(incident);
                     }
-
-                    // Wait for all other incident data to load.
-                    Promise.all(promises).then(function(incidentTypes){
-                        //console.log("Promise.all(promises) incidents:", incidents);
-                    });
-
-                    return incidents;
+                    return DataStore.incidents;
                 },
                 function(error){
                     console.log("Incident findAll error:", error);
                 }
             )
-        }
-    }])
-
-    .factory('LoadIncidentTypesForIncident', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
-        return function (incident) {
-            var incidentTypeId = incident.incidentType[DataStore.adapter.objIdFieldName];
-            return IncidentType.find(incidentTypeId).then(
-                function(incidentType){
-                    incident.incidentType = incidentType;
-                    return incident;
-                },
-                function(error){
-                    console.log("LoadIncidentTypesForIncident - IncidentType findAll error:", error);
-                }
-            );
         }
     }])
 
