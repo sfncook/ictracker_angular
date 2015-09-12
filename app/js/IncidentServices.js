@@ -21,8 +21,12 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                 function(incidents){
                     DataStore.incidents = new Array();
                     for(var i=0; i<incidents.length; i++) {
-                        var incident = JSON.parse(incidents[i].json);
-                        DataStore.incidents.push(incident);
+                        if(incidents[i].json) {
+                            console.log("json: ", incidents[i].json);
+                            var incident = JSON.parse(incidents[i].json);
+                            console.log("obj: ", incident);
+                            DataStore.incidents.push(incident);
+                        }
                     }
                     return DataStore.incidents;
                 },
