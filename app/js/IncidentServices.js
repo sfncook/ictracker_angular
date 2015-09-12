@@ -48,7 +48,6 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
 
     .factory('LoadIncidentTypesForIncident', ['IncidentType', 'DataStore', function (IncidentType, DataStore) {
         return function (incident) {
-            console.log("check 2");
             var incidentTypeId = incident.incidentType[DataStore.adapter.objIdFieldName];
             return IncidentType.find(incidentTypeId).then(
                 function(incidentType){
@@ -66,9 +65,10 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         return function (incidentObjectId) {
             return Incident.find(incidentObjectId).then(
                 function(incident){
-                    console.log("check 1");
                     if(incident) {
                         DataStore.incident = incident;
+
+                        DataStore.iap = JSON.parse(incident.iap);
 
 
                         //DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){

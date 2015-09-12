@@ -14,8 +14,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(
             function(obj){
-                console.log("check 4");
-                console.log("LoadIncident find success:", obj);
+                //console.log("check 1");
                 DataStore.loadSuccess = true;
                 DataStore.waitingToLoad = false;
             },
@@ -26,12 +25,14 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('LoadingSplashDlg', function($scope, DataStore){
+        console.log("check 2");
         $scope.dataStore = DataStore;
     })
 
     .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
-
         $scope.dataStore = DataStore;
+
+        console.log("iap: ", DataStore.iap);
 
         $scope.showIncInfoDlg = function() {
             DataStore.showIncInfoDlg();
