@@ -14,7 +14,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(
             function(obj){
-                //console.log("check 1");
+                console.log("check 1");
                 DataStore.loadSuccess = true;
                 DataStore.waitingToLoad = false;
             },
@@ -22,6 +22,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 console.log("LoadIncident find error:", error);
             }
         );
+        console.log("end of run");
     })
 
     .controller('LoadingSplashDlg', function($scope, DataStore){

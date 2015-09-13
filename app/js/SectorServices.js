@@ -8,31 +8,60 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
     .factory('LoadSectorsForIncident', [
         'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseQuery', 'ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
         function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
-        return function ($scope, incident) {
-            var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-            querySectors.equalTo("incident", incident);
-            querySectors.find({
-                success: function(sectors) {
-                    if(sectors.length==0) {
-                        AddDefaultTbars(incident);
-                        SaveTbars();
-                    } else {
-                        for(var i=0; i<sectors.length; i++) {
-                            var sector = sectors[i];
-                            ConvertParseObject(sector, SECTOR_DEF);
-                            FetchTypeForSector($scope, sector);
-                            TbarSectors.push(sector);
-                            LoadUnitsForSector(sector, $scope);
-                            FetchAcctTypeForSector($scope, sector);
+            return function ($scope, incident) {
+                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+                querySectors.equalTo("incident", incident);
+                querySectors.find({
+                    success: function(sectors) {
+                        if(sectors.length==0) {
+                            AddDefaultTbars(incident);
+                            SaveTbars();
+                        } else {
+                            for(var i=0; i<sectors.length; i++) {
+                                var sector = sectors[i];
+                                ConvertParseObject(sector, SECTOR_DEF);
+                                FetchTypeForSector($scope, sector);
+                                TbarSectors.push(sector);
+                                LoadUnitsForSector(sector, $scope);
+                                FetchAcctTypeForSector($scope, sector);
+                            }
                         }
+                    },
+                    error: function(error) {
+                        console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                     }
-                },
-                error: function(error) {
-                    console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
-                }
-            });
-        }
-    }])
+                });
+            }
+        }])
+    
+    //.factory('LoadSectorsForIncident', [
+    //    'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseQuery', 'ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
+    //    function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+    //    return function ($scope, incident) {
+    //        var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+    //        querySectors.equalTo("incident", incident);
+    //        querySectors.find({
+    //            success: function(sectors) {
+    //                if(sectors.length==0) {
+    //                    AddDefaultTbars(incident);
+    //                    SaveTbars();
+    //                } else {
+    //                    for(var i=0; i<sectors.length; i++) {
+    //                        var sector = sectors[i];
+    //                        ConvertParseObject(sector, SECTOR_DEF);
+    //                        FetchTypeForSector($scope, sector);
+    //                        TbarSectors.push(sector);
+    //                        LoadUnitsForSector(sector, $scope);
+    //                        FetchAcctTypeForSector($scope, sector);
+    //                    }
+    //                }
+    //            },
+    //            error: function(error) {
+    //                console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
+    //            }
+    //        });
+    //    }
+    //}])
 
     .factory('FetchAcctTypeForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
         return function ($scope, sector) {

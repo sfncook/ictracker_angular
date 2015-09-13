@@ -17,7 +17,7 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
 
     .factory('LoadAllIncidents', ['Incident', 'DataStore', function (Incident, DataStore) {
         return function () {
-            return Incident.findAll().then(
+            return Incident.findAll({}, {"bypassCache":true}).then(
                 function(incidents){
                     DataStore.incidents = new Array();
                     for(var i=0; i<incidents.length; i++) {
@@ -38,14 +38,15 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
         }
     }])
 
-    .factory('LoadIncident', ['Incident', 'DataStore', 'LoadIncidentTypesForIncident', 'LoadIAPForIncident', function (Incident, DataStore, LoadIncidentTypesForIncident, LoadIAPForIncident) {
+    .factory('LoadIncident', ['Incident', 'DataStore', function (Incident, DataStore) {
         return function (incidentObjectId) {
             return Incident.find(incidentObjectId).then(
                 function(incident){
                     if(incident) {
-                        DataStore.incident = incident;
+                        DataStore.incident = JSON.parse(incident.json);
+                        DataStore.incident.id = incident.id;
 
-                        DataStore.iap = JSON.parse(incident.iap);
+                        //DataStore.iap = JSON.parse(incident.iap);
 
 
                         //DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
@@ -68,14 +69,7 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                 function(error){
                     console.log("IncidentServices - LoadIncident find error:", error);
                 }
-            ).then(
-                LoadIncidentTypesForIncident,
-                function(error){
-                    console.log("IncidentServices - LoadIncidentTypesForIncident find error:", error);
-                }
-            )
-
-                ;
+            );
         }
     }])
 
@@ -110,10 +104,10 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
 
     .factory('DeleteIncident', ['Incident', function (Incident) {
         return function (incident) {
-            console.log(incident);
+            //console.log(incident);
             return Incident.destroy(incident.id).then(
                 function(incidentDeleted) {
-                    console.log("DeleteIncident Success: ", incidentDeleted);
+                    //console.log("DeleteIncident Success: ", incidentDeleted);
                     return incidentDeleted;
                 },
                 function(error){

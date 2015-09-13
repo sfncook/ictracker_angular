@@ -56,8 +56,8 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
 
             SaveIncident($scope.incidentObj).then(
                 function(obj){
-                    console.log("SplashServices SaveIncident success:", obj);
-                    //$scope.loadIncident(obj.id);
+                    //console.log("SplashServices SaveIncident success:", obj);
+                    $scope.loadIncident(obj.id);
                 },
                 function(error){
                     console.log("SplashServices - SaveIncident findAll error:", error);
@@ -70,12 +70,17 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
             if (response == true) {
                 DeleteIncident(incident).then(
                     function(obj){
-                        console.log("SplashServices DeleteIncident success:", obj);
-                        //LoadAllIncidents($scope);
+                        //console.log("SplashServices DeleteIncident success:", obj);
+                        LoadAllIncidents($scope).then(
+                            function(obj) {
+                                //console.log("Reload obj:", obj);
+                                $scope.incident_list = obj;
+                            }
+                        );
                     },
                     function(error){
                         console.log("SplashServices - DeleteIncident findAll error:", error);
-                        //LoadAllIncidents($scope);
+                        LoadAllIncidents($scope);
                     }
                 );
             }
