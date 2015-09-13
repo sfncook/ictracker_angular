@@ -36,6 +36,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('HeaderContainer', function($scope, $interval, DataStore, UserLogout){
+        $scope.dataStore = DataStore;
         $scope.osrPerc = 0;
         $scope.objPerc = 0;
 
