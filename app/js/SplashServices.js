@@ -11,7 +11,7 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
         }
     })
 
-    .controller('SplashCtrl', function($scope, LoadIncidentTypes, LoadAllIncidents, SaveIncident){
+    .controller('SplashCtrl', function($scope, LoadIncidentTypes, LoadAllIncidents, SaveIncident, DeleteIncident){
 
         $scope.incidentObj = {};
         $scope.loadSuccess = false;
@@ -57,20 +57,28 @@ angular.module("SplashController", ['IncidentServices', 'UserServices'])
             SaveIncident($scope.incidentObj).then(
                 function(obj){
                     console.log("SplashServices SaveIncident success:", obj);
-                    $scope.loadIncident(obj.id);
+                    //$scope.loadIncident(obj.id);
                 },
                 function(error){
                     console.log("SplashServices - SaveIncident findAll error:", error);
                 }
             );
+        };
 
-            //$scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
-            //    //console.log(incidentObj);
-            //    //ConvertParseObject(incidentObj, INCIDENT_DEF);
-            //    $scope.loadIncident(incidentObj.id);
-            //}, function(error) {
-            //    console.log("Error saving new incident: "+error);
-            //});;
+        $scope.deleIncident = function(incident) {
+            var response = confirm("Are you sure you want to delete incident "+incident.inc_number+"?");
+            if (response == true) {
+                DeleteIncident(incident).then(
+                    function(obj){
+                        console.log("SplashServices DeleteIncident success:", obj);
+                        //LoadAllIncidents($scope);
+                    },
+                    function(error){
+                        console.log("SplashServices - DeleteIncident findAll error:", error);
+                        //LoadAllIncidents($scope);
+                    }
+                );
+            }
         };
 
 

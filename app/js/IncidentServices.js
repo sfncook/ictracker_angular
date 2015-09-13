@@ -24,6 +24,7 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
                         if(incidents[i].json) {
                             //console.log("json: ", incidents[i].json);
                             var incident = JSON.parse(incidents[i].json);
+                            incident.id = incidents[i].id;
                             //console.log("obj: ", incident);
                             DataStore.incidents.push(incident);
                         }
@@ -85,11 +86,38 @@ angular.module('IncidentServices', ['DataModelsModule', 'DataServices', 'Adapter
             delete incident.incidentType;
             return Incident.create(incident).then(
                 function(incidentSaved) {
-                    //console.log("Incident.create Success incidentSaved: ", incidentSaved);
+                    console.log("Incident.create Success incidentSaved:", incidentSaved);
                     return incidentSaved;
+                    //var incident_json_obj = JSON.parse(incident.json);
+                    //incident_json_obj.id = incidentSaved.id;
+                    //var incident_json_str = JSON.stringify(incident_json_obj);
+                    //Incident.update(incidentSaved.id, {"json":incident_json_str}).then(
+                    //    function(incidentSaved) {
+                    //        console.log("Incident.update success:", incidentSaved);
+                    //        return incidentSaved;
+                    //    },
+                    //    function(error){
+                    //        console.log("Incident.update error:", error);
+                    //    }
+                    //);
                 },
                 function(error){
                     console.log("Incident.create error:", error);
+                }
+            );
+        }
+    }])
+
+    .factory('DeleteIncident', ['Incident', function (Incident) {
+        return function (incident) {
+            console.log(incident);
+            return Incident.destroy(incident.id).then(
+                function(incidentDeleted) {
+                    console.log("DeleteIncident Success: ", incidentDeleted);
+                    return incidentDeleted;
+                },
+                function(error){
+                    console.log("DeleteIncident error:", error);
                 }
             );
         }
