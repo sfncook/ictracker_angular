@@ -360,7 +360,7 @@
                 <button class="unit_dlg_btn unit_btn"
                         ng-repeat="unit in type.units"
                         ng-click="selectUnit(unit)"
-                        ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findSectorByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                        ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findUnitByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
                     {{unit.name}}
                 </button>
             </div>

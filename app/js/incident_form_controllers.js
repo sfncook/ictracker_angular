@@ -300,10 +300,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
     })
 
-    .controller('UnitsDlg', function($scope, $http, DataStore, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector, ReportFunctions){
+    .controller('UnitsDlg', function($scope, $http, DataStore, LoadUnitTypes, UnitTypes, DefaultCity, ToggleUnitTypeForSector, ReportFunctions, TbarSectors){
         $scope.selectedSector = {};
         $scope.dataStore = DataStore;
         $scope.forAcct=false;
+        $scope.tbar_sectors = TbarSectors;
 
         $scope.cities = new Array();
         $scope.type_names = new Array();

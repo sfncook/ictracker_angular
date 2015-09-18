@@ -51,6 +51,19 @@ Array.prototype.findSectorByName = function (name) {
 }
 
 /*
+ * 'this' must be an array of tbar objects such that this.name is
+ * the name of the sector.
+ */
+Array.prototype.findUnitByName = function (name) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].type && this[i].type.name && this[i].type.name === name) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/*
  * 'this' must be an array of tbar objects such that this.units is
  * an array of unit objects such that unit.name is the name of the
  * unit.
