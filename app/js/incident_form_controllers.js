@@ -290,20 +290,28 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.selectBnch = function(bnch) {
             if(bnch==1) {
                 $scope.selectedSector.bnch1 = !$scope.selectedSector.bnch1;
+                $scope.selectedSector.bnchPrimaryNotAvailable = false;
             } else if(bnch==2) {
                 $scope.selectedSector.bnch2 = !$scope.selectedSector.bnch2;
             } else if(bnch==3) {
                 $scope.selectedSector.bnch3 = !$scope.selectedSector.bnch3;
+                $scope.selectedSector.bnchSecondaryNotAvailable = false;
             } else if(bnch==4) {
                 $scope.selectedSector.bnch4 = !$scope.selectedSector.bnch4;
             }
         }
 
         $scope.selectUnablePrimary = function() {
-            $scope.selectedSector.toggleUnablePrimary();
+            $scope.selectedSector.bnchPrimaryNotAvailable = !$scope.selectedSector.bnchPrimaryNotAvailable;
+            $scope.selectedSector.bnch1 = false;
+            $scope.selectedSector.bnch2 = false;
+            $scope.selectedSector.bnch3 = false;
+            $scope.selectedSector.bnch4 = false;
         }
         $scope.selectUnableSecondary = function() {
-            $scope.selectedSector.toggleUnableSecondary();
+            $scope.selectedSector.bnchSecondaryNotAvailable = !$scope.selectedSector.bnchSecondaryNotAvailable;
+            $scope.selectedSector.bnch3 = false;
+            $scope.selectedSector.bnch4 = false;
         }
 
     })
