@@ -168,19 +168,19 @@
                 </button>
                 <button ng-show="sector.sectorType.manyBenchmarkBars>0" class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
                     <span class="benchmarks_icon">
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.bnch1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && sector.bnch1 && !sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
                         <!--<img ng-show="sector.unable_primary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
 
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=2" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2 && !sector.bnch2"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2 && sector.bnch2"   class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
 
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <!--<img ng-show="sector.sectorType.manyBenchmarkBars>=3" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3 && !sector.bnch3"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3 && sector.bnch3"   class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
                         <!--<img ng-show=" sector.unable_secondary" class="benchmark_bar_img" src="img/bnch_bar_red.png"/>-->
 
-                        <img ng-show="sector.sectorType.manyBenchmarkBars==4" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <!--<img ng-show="sector.bnch>=12" class="benchmark_bar_img" src="img/bnch_bar_green.png"/>-->
+                        <img ng-show="sector.sectorType.manyBenchmarkBars==4 && !sector.bnch4"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
+                        <img ng-show="sector.sectorType.manyBenchmarkBars>=4 && sector.bnch4"   class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
                     </span>
                     BNCH
                 </button>
@@ -733,15 +733,15 @@
         <button ng-click="selectBnch(1)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=1}">
             Primary All Clear
         </button>
-        <button ng-click="selectBnch(5)" class="benchmark_item_btn"
+        <button ng-click="selectBnch(2)" class="benchmark_item_btn"
                 ng-class="{glowlightgreen: selectedSector.bnch>=5, button_disabled:selectedSector.bnch<1}"
                 ng-disabled="selectedSector.bnch<1">Under Control
         </button>
-        <button ng-click="selectBnch(9)" class="benchmark_item_btn"
+        <button ng-click="selectBnch(3)" class="benchmark_item_btn"
                 ng-class="{glowlightgreen: selectedSector.bnch>=9, button_disabled:selectedSector.bnch<5}"
                 ng-disabled="selectedSector.bnch<5">Secondary All Clear
         </button>
-        <button ng-click="selectBnch(12)" class="benchmark_item_btn"
+        <button ng-click="selectBnch(4)" class="benchmark_item_btn"
                 ng-class="{glowlightgreen: selectedSector.bnch>=12, button_disabled:selectedSector.bnch<9}"
                 ng-disabled="selectedSector.bnch<9">Loss Stop
         </button>

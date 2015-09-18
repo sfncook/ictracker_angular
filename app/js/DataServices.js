@@ -2,7 +2,7 @@
 var DEPARTMENT_DEF = ['name_short', 'name_long', 'app_key', 'js_key'];
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'strategy', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
-var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit'];
+var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit', 'bnch1', 'bnch2', 'bnch3', 'bnch4'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
