@@ -418,7 +418,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 $scope.forAcct=false;
                 $("#units_dlg").dialog( "close" );
             } else {
-                $scope.selectedSector.addUnit(unit);
+                $scope.selectUnit(unit);
             }
         };
 
