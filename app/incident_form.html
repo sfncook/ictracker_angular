@@ -724,7 +724,7 @@
                 ng-class="{glowpink: selectedSector.bnchPrimaryNotAvailable}">
             Unable to Obtain Primary
         </button>
-        <button class='disabled benchmark_double_btn benchmark_item_btn'
+        <button class='benchmark_double_btn benchmark_item_btn'
                 ng-click="selectUnableSecondary()"
                 ng-class="{glowpink: selectedSector.bnchSecondaryNotAvailable}">
             Unable to Obtain Secondary
@@ -763,14 +763,20 @@
             Challenge Strategy
         </button>
     </div>
-    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=5 && selectedSector.bnch<9">
-        <button ng-click="selectBnch(6)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=6}">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn"
+                ng-click="showParDlgFromBnch()"
+                ng-class="{glowlightgreen: doesSectorHavePar(selectedSector), button_disabled:selectedSector.units.length==0}">
             PAR
         </button>
-        <button ng-click="selectBnch(7)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=7}">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(6)"
+                ng-class="{glowlightgreen: selectedSector.bnch6}">
             Notify Alarm
         </button>
-        <button ng-click="selectBnch(8)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=8}">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(7)"
+                ng-class="{glowlightgreen: selectedSector.bnch7}">
             Obtain Secondary
         </button>
     </div>

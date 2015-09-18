@@ -279,8 +279,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('BnchDlg', function($scope, DataStore){
+    .controller('BnchDlg', function($scope, DataStore, DoesSectorHavePar){
         var selectedSector = {};
+
+        $scope.doesSectorHavePar = DoesSectorHavePar;
 
         DataStore.showBnchDlg = function(sector) {
             $scope.selectedSector = sector;
@@ -312,6 +314,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $scope.selectedSector.bnchSecondaryNotAvailable = !$scope.selectedSector.bnchSecondaryNotAvailable;
             $scope.selectedSector.bnch3 = false;
             $scope.selectedSector.bnch4 = false;
+        }
+
+        $scope.showParDlgFromBnch = function() {
+            DataStore.openParDlg($scope.selectedSector);
         }
 
     })
