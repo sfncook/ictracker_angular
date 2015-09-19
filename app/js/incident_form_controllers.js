@@ -286,7 +286,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         DataStore.showBnchDlg = function(sector) {
             $scope.selectedSector = sector;
-            $("#bnch_dlg").dialog( "open" );
+            if(sector.sectorType.hasClassicBnch) {
+                $("#bnch_dlg").dialog( "open" );
+            } else if(sector.sectorType.hasVentBnch) {
+                $("#bnch_vent_dlg").dialog( "open" );
+            }
         }
 
         $scope.selectBnch = function(bnchIndex) {
@@ -766,6 +770,7 @@ function initDialogs() {
     $( "#sector_name_dlg" ).dialog({resizable: false, modal: true, width:940});
     $( "#par-dlg" ).dialog({resizable: false, modal: true, width:839});
     $( "#bnch_dlg" ).dialog({resizable: false, width:515, modal: true});
+    $( "#bnch_vent_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#units_dlg" ).dialog({resizable: false, modal: true, width:855});
     $( "#actions_dlg" ).dialog({resizable: false, modal: true, width:810});
     $( "#cmdxfer_dialog" ).dialog({resizable: false, modal: true, width:350});

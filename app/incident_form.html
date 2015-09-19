@@ -752,58 +752,34 @@
             Loss Stop
         </button>
     </div>
-    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=1 && selectedSector.bnch<5">
+</div>
+<!-- Benchmarks Dialog -->
+
+<!-- Benchmark Dialog -->
+<div id="bnch_vent_dlg" title="Ventilation Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(1)"
+                ng-class="{glowlightgreen: selectedSector.bnch1}">
+            Primary All Clear
+        </button>
         <button class="benchmark_item_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch>=2}">
-            PAR
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            Under Control
         </button>
         <button class="benchmark_item_btn"
                 ng-click="selectBnch(3)"
-                ng-class="{glowlightgreen: selectedSector.bnch>=3}">
-            Notify Alarm
+                ng-class="{glowlightgreen: selectedSector.bnch3}">
+            Secondary All Clear
         </button>
         <button class="benchmark_item_btn"
                 ng-click="selectBnch(4)"
-                ng-class="{glowlightgreen: selectedSector.bnch>=4}">
-            Challenge Strategy
-        </button>
-    </div>
-    <div class="benchmark_col_container">
-        <button class="benchmark_item_btn"
-                ng-click="showParDlgFromBnch()"
-                ng-class="{glowlightgreen: doesSectorHavePar(selectedSector), button_disabled:selectedSector.units.length==0}">
-            PAR
-        </button>
-        <button class="benchmark_item_btn"
-                ng-click="selectBnch(6)"
-                ng-class="{glowlightgreen: selectedSector.bnch6}">
-            Notify Alarm
-        </button>
-        <button class="benchmark_item_btn"
-                ng-click="selectBnch(7)"
-                ng-class="{glowlightgreen: selectedSector.bnch7}">
-            Obtain Secondary
-        </button>
-    </div>
-    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=9 && selectedSector.bnch<12">
-        <button ng-click="selectBnch(10)" class="benchmark_item_btn"
-                ng-class="{glowlightgreen: selectedSector.bnch>=10}">PAR
-        </button>
-        <button ng-click="selectBnch(11)" class="benchmark_item_btn"
-                ng-class="{glowlightgreen: selectedSector.bnch>=11}">Notify Alarm
-        </button>
-    </div>
-    <div class="benchmark_col_container" ng-show="selectedSector.bnch>=12">
-        <button ng-click="selectBnch(13)" class="benchmark_item_btn"
-                ng-class="{glowlightgreen: selectedSector.bnch>=13}">PAR
-        </button>
-        <button ng-click="selectBnch(14)" class="benchmark_item_btn"
-                ng-class="{glowlightgreen: selectedSector.bnch>=14}">Notify Alarm
+                ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
+            Loss Stop
         </button>
     </div>
 </div>
-<!-- Benchmarks Dialog -->
 
 
 <!-- Reports Dialog -->
