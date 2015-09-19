@@ -753,13 +753,19 @@
         </button>
     </div>
     <div class="benchmark_col_container" ng-show="selectedSector.bnch>=1 && selectedSector.bnch<5">
-        <button ng-click="selectBnch(2)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=2}">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch>=2}">
             PAR
         </button>
-        <button ng-click="selectBnch(3)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=3}">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(3)"
+                ng-class="{glowlightgreen: selectedSector.bnch>=3}">
             Notify Alarm
         </button>
-        <button ng-click="selectBnch(4)" class="benchmark_item_btn" ng-class="{glowlightgreen: selectedSector.bnch>=4}">
+        <button class="benchmark_item_btn"
+                ng-click="selectBnch(4)"
+                ng-class="{glowlightgreen: selectedSector.bnch>=4}">
             Challenge Strategy
         </button>
     </div>

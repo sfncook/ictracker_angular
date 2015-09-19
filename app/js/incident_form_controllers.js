@@ -289,18 +289,19 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $("#bnch_dlg").dialog( "open" );
         }
 
-        $scope.selectBnch = function(bnch) {
-            if(bnch==1) {
-                $scope.selectedSector.bnch1 = !$scope.selectedSector.bnch1;
-                $scope.selectedSector.bnchPrimaryNotAvailable = false;
-            } else if(bnch==2) {
-                $scope.selectedSector.bnch2 = !$scope.selectedSector.bnch2;
-            } else if(bnch==3) {
-                $scope.selectedSector.bnch3 = !$scope.selectedSector.bnch3;
-                $scope.selectedSector.bnchSecondaryNotAvailable = false;
-            } else if(bnch==4) {
-                $scope.selectedSector.bnch4 = !$scope.selectedSector.bnch4;
-            }
+        $scope.selectBnch = function(bnchIndex) {
+            $scope.selectedSector['bnch'+bnchIndex] = !$scope.selectedSector['bnch'+bnchIndex];
+            //if(bnch==1) {
+            //    $scope.selectedSector.bnch1 = !$scope.selectedSector.bnch1;
+            //    $scope.selectedSector.bnchPrimaryNotAvailable = false;
+            //} else if(bnch==2) {
+            //    $scope.selectedSector.bnch2 = !$scope.selectedSector.bnch2;
+            //} else if(bnch==3) {
+            //    $scope.selectedSector.bnch3 = !$scope.selectedSector.bnch3;
+            //    $scope.selectedSector.bnchSecondaryNotAvailable = false;
+            //} else if(bnch==4) {
+            //    $scope.selectedSector.bnch4 = !$scope.selectedSector.bnch4;
+            //}
         }
 
         $scope.selectUnablePrimary = function() {
@@ -762,42 +763,48 @@ function initDialogs() {
         autoOpen: false,
         modal: true
     });
-    $( "#sector_name_dlg" ).dialog( "option", "width", 940 );
-    $( "#par-dlg" ).dialog( "option", "width", 839 );
-    $( "#bnch_dlg" ).dialog( "option", "width", 515 );
-    $( "#units_dlg" ).dialog( "option", "width", 855 );
-    $( "#actions_dlg" ).dialog( "option", "width", 810 );
-    $( "#cmdxfer_dialog" ).dialog( "option", "width", 350 );
-    $( "#upgrade_dlg" ).dialog( "option", "width", 485 );
+    $( "#sector_name_dlg" ).dialog({resizable: false, modal: true, width:940});
+    $( "#par-dlg" ).dialog({resizable: false, modal: true, width:839});
+    $( "#bnch_dlg" ).dialog({resizable: false, width:515, modal: true});
+    $( "#units_dlg" ).dialog({resizable: false, modal: true, width:855});
+    $( "#actions_dlg" ).dialog({resizable: false, modal: true, width:810});
+    $( "#cmdxfer_dialog" ).dialog({resizable: false, modal: true, width:350});
+    $( "#upgrade_dlg" ).dialog({resizable: false, modal: true, width:485});
     $( "#osr_dlg" ).dialog({
-    		width: 420,
-    		close: function(event, ui){
-    			angular.element('#osr_dlg').scope().dataStore.osr.save();	
-    		}
-    	
+        resizable: false,
+        modal: true,
+        width: 420,
+        close: function(event, ui){
+            angular.element('#osr_dlg').scope().dataStore.osr.save();
+        }
+
     });
     $( "#objectives_dlg" ).dialog({
-    		width: 230,
-    		close: function(event, ui){
-    			angular.element('#objectives_dlg').scope().dataStore.objectives.save();	
-    		}
+        resizable: false,
+        modal: true,
+        width: 230,
+        close: function(event, ui){
+            angular.element('#objectives_dlg').scope().dataStore.objectives.save();
+        }
     	
     });
     $( "#iap_dlg" ).dialog({
-    	width: 616,
-    	close: function(event, ui){
-    		angular.element('#iap_dlg').scope().dataStore.iap.save();
-    	}
+        resizable: false,
+        modal: true,
+        width: 616,
+        close: function(event, ui){
+            angular.element('#iap_dlg').scope().dataStore.iap.save();
+        }
     });
-    $( "#unit_options_dlg" ).dialog( "option", "width", 575 );
-    $( "#psi_dlg" ).dialog( "option", "width", 423 );
-    $( "#address_dialog" ).dialog( "option", "width", 450 );
-    $( "#reports_dlg" ).dialog( "option", "width", 820 );
-    $( "#clear_mayday_dlg" ).dialog( "option", "width", 348 );
-    $( "#incident_info_dlg" ).dialog( "option", "width", 450 );
-    $( "#branch_dlg" ).dialog( "option", "width", 550 );
-    $( "#strategy_dlg" ).dialog( "option", "width", 258 );
-    $( "#settings_dlg" ).dialog( "option", "width", 258 );
+    $( "#unit_options_dlg" ).dialog({resizable: false, modal: true, width:575});
+    $( "#psi_dlg" ).dialog({resizable: false, modal: true, width:423});
+    $( "#address_dialog" ).dialog({resizable: false, modal: true, width:450});
+    $( "#reports_dlg" ).dialog({resizable: false, modal: true, width:820});
+    $( "#clear_mayday_dlg" ).dialog({resizable: false, modal: true, width:348});
+    $( "#incident_info_dlg" ).dialog({resizable: false, modal: true, width:450});
+    $( "#branch_dlg" ).dialog({resizable: false, modal: true, width:550});
+    $( "#strategy_dlg" ).dialog({resizable: false, modal: true, width:258});
+    $( "#settings_dlg" ).dialog({resizable: false, modal: true, width:258});
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
