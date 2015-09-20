@@ -730,7 +730,7 @@
             Unable to Obtain Secondary
         </button>
     </div>
-    <div class="benchmark_col_container benchmark_1st_col_container">
+    <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
                 ng-class="{glowlightgreen: selectedSector.bnch1}">
@@ -800,6 +800,21 @@
                 ng-click="selectBnch(4)"
                 ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
             Exiting Structure
+        </button>
+    </div>
+</div>
+
+<div id="bnch_safety_dlg" title="Safety Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(1)"
+                ng-class="{glowlightgreen: selectedSector.bnch1}">
+            Agrees With Strategy
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            360 Recon
         </button>
     </div>
 </div>

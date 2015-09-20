@@ -292,22 +292,19 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 $("#bnch_vent_dlg").dialog( "open" );
             } else if(sector.sectorType.hasIricBnch) {
                 $("#bnch_iric_dlg").dialog( "open" );
+            } else if(sector.sectorType.hasSafetyBnch) {
+                $("#bnch_safety_dlg").dialog( "open" );
             }
         }
 
         $scope.selectBnch = function(bnchIndex) {
             $scope.selectedSector['bnch'+bnchIndex] = !$scope.selectedSector['bnch'+bnchIndex];
-            //if(bnch==1) {
-            //    $scope.selectedSector.bnch1 = !$scope.selectedSector.bnch1;
-            //    $scope.selectedSector.bnchPrimaryNotAvailable = false;
-            //} else if(bnch==2) {
-            //    $scope.selectedSector.bnch2 = !$scope.selectedSector.bnch2;
-            //} else if(bnch==3) {
-            //    $scope.selectedSector.bnch3 = !$scope.selectedSector.bnch3;
-            //    $scope.selectedSector.bnchSecondaryNotAvailable = false;
-            //} else if(bnch==4) {
-            //    $scope.selectedSector.bnch4 = !$scope.selectedSector.bnch4;
-            //}
+            if(bnchIndex==1) {
+                $scope.selectedSector.bnchPrimaryNotAvailable = false;
+            }
+            if(bnchIndex==3) {
+                $scope.selectedSector.bnchSecondaryNotAvailable = false;
+            }
         }
 
         $scope.selectUnablePrimary = function() {
@@ -771,9 +768,10 @@ function initDialogs() {
     });
     $( "#sector_name_dlg" ).dialog({resizable: false, modal: true, width:940});
     $( "#par-dlg" ).dialog({resizable: false, modal: true, width:839});
-    $( "#bnch_dlg" ).dialog({resizable: false, width:515, modal: true});
+    $( "#bnch_dlg" ).dialog({resizable: false, width:343, modal: true});
     $( "#bnch_vent_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#bnch_iric_dlg" ).dialog({resizable: false, width:250, modal: true});
+    $( "#bnch_safety_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#units_dlg" ).dialog({resizable: false, modal: true, width:855});
     $( "#actions_dlg" ).dialog({resizable: false, modal: true, width:810});
     $( "#cmdxfer_dialog" ).dialog({resizable: false, modal: true, width:350});
