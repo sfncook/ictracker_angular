@@ -716,7 +716,7 @@
 </div>
 
 
-<!-- Benchmarks Dialog -->
+<!-- Benchmarks Dialogs -->
 <div id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
@@ -731,55 +731,79 @@
         </button>
     </div>
     <div class="benchmark_col_container benchmark_1st_col_container">
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
                 ng-class="{glowlightgreen: selectedSector.bnch1}">
             Primary All Clear
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
                 ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
             Under Control
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(3)"
                 ng-class="{glowlightgreen: selectedSector.bnch3}">
             Secondary All Clear
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(4)"
                 ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
             Loss Stop
         </button>
     </div>
 </div>
-<!-- Benchmarks Dialog -->
 
-<!-- Benchmark Dialog -->
 <div id="bnch_vent_dlg" title="Ventilation Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
                 ng-class="{glowlightgreen: selectedSector.bnch1}">
-            Primary All Clear
+            Holes Cut
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
                 ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
-            Under Control
+            Positive Return
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(3)"
                 ng-class="{glowlightgreen: selectedSector.bnch3}">
-            Secondary All Clear
+            Off the Roof
         </button>
-        <button class="benchmark_item_btn"
+        <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(4)"
                 ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
-            Loss Stop
+            PAR
         </button>
     </div>
 </div>
+
+<div id="bnch_iric_dlg" title="IRIC Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(1)"
+                ng-class="{glowlightgreen: selectedSector.bnch1}">
+            Entering Structure
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            Located Down FF
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(3)"
+                ng-class="{glowlightgreen: selectedSector.bnch3}">
+            Trans Fill Complete
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(4)"
+                ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
+            Exiting Structure
+        </button>
+    </div>
+</div>
+<!-- Benchmarks Dialogs -->
 
 
 <!-- Reports Dialog -->

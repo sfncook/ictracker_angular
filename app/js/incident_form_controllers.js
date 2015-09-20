@@ -290,6 +290,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 $("#bnch_dlg").dialog( "open" );
             } else if(sector.sectorType.hasVentBnch) {
                 $("#bnch_vent_dlg").dialog( "open" );
+            } else if(sector.sectorType.hasIricBnch) {
+                $("#bnch_iric_dlg").dialog( "open" );
             }
         }
 
@@ -771,6 +773,7 @@ function initDialogs() {
     $( "#par-dlg" ).dialog({resizable: false, modal: true, width:839});
     $( "#bnch_dlg" ).dialog({resizable: false, width:515, modal: true});
     $( "#bnch_vent_dlg" ).dialog({resizable: false, width:250, modal: true});
+    $( "#bnch_iric_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#units_dlg" ).dialog({resizable: false, modal: true, width:855});
     $( "#actions_dlg" ).dialog({resizable: false, modal: true, width:810});
     $( "#cmdxfer_dialog" ).dialog({resizable: false, modal: true, width:350});
