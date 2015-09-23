@@ -727,6 +727,10 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
 .benchmark_btn_parent_div {
     padding: 5px 0 5px 0;
 }
+.benchmark_triage_input {
+    width: 50px;
+    margin: 10px;
+}
 
 #address_dialog>*>input {
     margin: 5px;

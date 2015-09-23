@@ -818,6 +818,63 @@
         </button>
     </div>
 </div>
+
+<div id="bnch_treatment_dlg" title="Treatment Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(1)"
+                ng-class="{glowlightgreen: selectedSector.bnch1}">
+            All Immediates Tx
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            All Delayed Txt
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            All PT's treated or Tx
+        </button>
+    </div>
+</div>
+
+<div id="bnch_lz_dlg" title="LZ Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <div class="benchmark_col_container">
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(1)"
+                ng-class="{glowlightgreen: selectedSector.bnch1}">
+            Hilo Landed
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            PT Care Transferred
+        </button>
+        <button class="benchmark_item_btn benchmark_single_btn"
+                ng-click="selectBnch(2)"
+                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+            Hilo Taken Off
+        </button>
+    </div>
+</div>
+
+<div id="bnch_triage_dlg" title="Triage Benchmarks" ng-controller="BnchDlg" class="dialog">
+    <table style="margin-left:10px">
+        <tr>
+            <td style="text-align: right">Immediates:</td>
+            <td><input id="benchmark_triage_1" type="number" class="benchmark_triage_input"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Delayed:</td>
+            <td><input id="benchmark_triage_2" type="number" class="benchmark_triage_input"/></td>
+        </tr>
+        <tr>
+            <td style="text-align: right">Total Number of PT:</td>
+            <td><input id="benchmark_triage_3" type="number" class="benchmark_triage_input"/></td>
+        </tr>
+    </table>
+</div>
 <!-- Benchmarks Dialogs -->
 
 
