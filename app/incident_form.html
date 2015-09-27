@@ -854,15 +854,27 @@
     <table style="margin-left:10px">
         <tr>
             <td style="text-align: right">Immediates:</td>
-            <td><input id="benchmark_triage_1" type="number" class="benchmark_triage_input"/></td>
+            <td><input id="benchmark_triage_1"
+                       type="number"
+                       class="benchmark_triage_input"
+                       ng-model="dataStore.selectedSector.bnchTri1"
+                    /></td>
         </tr>
         <tr>
             <td style="text-align: right">Delayed:</td>
-            <td><input id="benchmark_triage_2" type="number" class="benchmark_triage_input"/></td>
+            <td><input id="benchmark_triage_2"
+                       type="number"
+                       class="benchmark_triage_input"
+                       ng-model="dataStore.selectedSector.bnchTri2"
+                    /></td>
         </tr>
         <tr>
             <td style="text-align: right">Total Number of PT:</td>
-            <td><input id="benchmark_triage_3" type="number" class="benchmark_triage_input"/></td>
+            <td><input id="benchmark_triage_3"
+                       type="number"
+                       class="benchmark_triage_input"
+                       ng-model="dataStore.selectedSector.bnchTri3"
+                    /></td>
         </tr>
     </table>
 </div>

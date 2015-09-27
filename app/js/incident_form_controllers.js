@@ -364,6 +364,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 $("#bnch_safety_dlg").dialog( "open" );
             } else if(sector.sectorType.hasTreatmentBnch) {
                 $("#bnch_treatment_dlg").dialog( "open" );
+            } else if(sector.sectorType.hasTriageBnch) {
+                $("#bnch_triage_dlg").dialog( "open" );
             }
         }
 
@@ -845,6 +847,7 @@ function initDialogs() {
     $( "#bnch_iric_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#bnch_safety_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#bnch_treatment_dlg" ).dialog({resizable: false, width:250, modal: true});
+    $( "#bnch_triage_dlg" ).dialog({resizable: false, width:250, modal: true});
     $( "#units_dlg" ).dialog({resizable: false, modal: true, width:855});
     $( "#actions_dlg" ).dialog({resizable: false, modal: true, width:810});
     $( "#cmdxfer_dialog" ).dialog({resizable: false, modal: true, width:350});
