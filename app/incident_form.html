@@ -711,35 +711,35 @@
 <div id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
-                ng-click="selectBnch(bnchCls1)"
-                ng-class="{glowpink: dataStore.selectedSector.bnchCls1}">
+                ng-click="selectBnch(bnchClsUnablePrim)"
+                ng-class="{glowpink: dataStore.selectedSector.bnchClsUnablePrim}">
             Unable to Obtain Primary
         </button>
         <button class='benchmark_double_btn benchmark_item_btn'
-                ng-click="selectBnch(bnchCls2)"
-                ng-class="{glowpink: dataStore.selectedSector.bnchCls2}">
+                ng-click="selectBnch(bnchClsUnableSec)"
+                ng-class="{glowpink: dataStore.selectedSector.bnchClsUnableSec}">
             Unable to Obtain Secondary
         </button>
     </div>
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(bnchCls3)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls3}">
+                ng-click="selectBnch(bnchCls1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls1}">
             Primary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(bnchCls4)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls4 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchCls2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             Under Control
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(bnchCls5)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls5}">
+                ng-click="selectBnch(bnchCls3)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls3}">
             Secondary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(bnchCls6)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls6 && !dataStore.selectedSector.bnchSecondaryNotAvailable}">
+                ng-click="selectBnch(bnchCls4)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls4 && !dataStore.selectedSector.bnchSecondaryNotAvailable}">
             Loss Stop
         </button>
     </div>

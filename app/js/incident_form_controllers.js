@@ -139,8 +139,24 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.doesSectorHavePar = DoesSectorHavePar;
 
         $scope.getBnchColor = function(sector, bnchIndex) {
-            if(sector.sectorType.hasClassicBnch && sector['bnchCls' + bnchIndex]) {
-                return "benchmark_green";
+            if(sector.sectorType.hasClassicBnch) {
+                if(bnchIndex==1) {
+                    if(sector.bnchClsUnablePrim) {
+                        return "benchmark_red";
+                    } else if(sector.bnchCls1) {
+                        return "benchmark_green";
+                    }
+                } else if(bnchIndex==3) {
+                    if(sector.bnchClsUnableSec) {
+                        return "benchmark_red";
+                    } else if(sector.bnchCls3) {
+                        return "benchmark_green";
+                    }
+                } else {
+                    if(sector['bnchCls' + bnchIndex]) {
+                        return "benchmark_green";
+                    }
+                }
             } else if(sector.sectorType.hasVentBnch) {
                 if(bnchIndex==4 && $scope.doesSectorHavePar(sector)) {
                     return "benchmark_green";
@@ -312,6 +328,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.dataStore = DataStore;
         $scope.doesSectorHavePar = DoesSectorHavePar;
 
+        $scope.bnchClsUnablePrim = 'bnchClsUnablePrim';
+        $scope.bnchClsUnableSec = 'bnchClsUnableSec';
         $scope.bnchCls1 = 'bnchCls1';
         $scope.bnchCls2 = 'bnchCls2';
         $scope.bnchCls3 = 'bnchCls3';
@@ -355,21 +373,21 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             $scope.dataStore.selectedSector[bnchIndex] = !$scope.dataStore.selectedSector[bnchIndex];
 
             switch(bnchIndex) {
-                case $scope.bnchCls1:
-                    $scope.dataStore.selectedSector.bnch1 = false;
-                    $scope.dataStore.selectedSector.bnch2 = false;
-                    $scope.dataStore.selectedSector.bnch3 = false;
-                    $scope.dataStore.selectedSector.bnch4 = false;
+                case $scope.bnchClsUnablePrim:
+                    $scope.dataStore.selectedSector.bnchCls1 = false;
+                    $scope.dataStore.selectedSector.bnchCls2 = false;
+                    $scope.dataStore.selectedSector.bnchCls3 = false;
+                    $scope.dataStore.selectedSector.bnchCls4 = false;
+                    break;
+                case $scope.bnchClsUnableSec:
+                    $scope.dataStore.selectedSector.bnchCls3 = false;
+                    $scope.dataStore.selectedSector.bnchCls4 = false;
                     break;
                 case $scope.bnchCls2:
-                    $scope.dataStore.selectedSector.bnch3 = false;
-                    $scope.dataStore.selectedSector.bnch4 = false;
+                    $scope.dataStore.selectedSector.bnchClsUnablePrim = false;
                     break;
-                case $scope.bnchCls3:
-                    $scope.dataStore.selectedSector.bnchCls1 = false;
-                    break;
-                case $scope.bnchCls5:
-                    $scope.dataStore.selectedSector.bnchCls2 = false;
+                case $scope.bnchCls4:
+                    $scope.dataStore.selectedSector.bnchClsUnableSec = false;
                     break;
             }
 
