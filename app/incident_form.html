@@ -773,23 +773,23 @@
 <div id="bnch_iric_dlg" title="IRIC Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
+                ng-click="selectBnch(bnchIrc1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchIrc1}">
             Entering Structure
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchIrc2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchIrc2}">
             Located Down FF
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(3)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch3}">
+                ng-click="selectBnch(bnchIrc3)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchIrc3}">
             Trans Fill Complete
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(4)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch4 && !dataStore.selectedSector.bnchSecondaryNotAvailable}">
+                ng-click="selectBnch(bnchIrc4)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchIrc4}">
             Exiting Structure
         </button>
     </div>
