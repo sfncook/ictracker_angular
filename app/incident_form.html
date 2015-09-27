@@ -798,13 +798,13 @@
 <div id="bnch_safety_dlg" title="Safety Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
+                ng-click="selectBnch(bnchSaf1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchSaf1}">
             Agrees With Strategy
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchSaf2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchSaf2}">
             360 Recon
         </button>
     </div>
@@ -813,18 +813,18 @@
 <div id="bnch_treatment_dlg" title="Treatment Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
+                ng-click="selectBnch(bnchTrt1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchTrt1}">
             All Immediates Tx
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchTrt2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchTrt2}">
             All Delayed Txt
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchTrt3)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchTrt3}">
             All PT's treated or Tx
         </button>
     </div>
@@ -833,18 +833,18 @@
 <div id="bnch_lz_dlg" title="LZ Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
+                ng-click="selectBnch(bnchLzo1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchLzo1}">
             Hilo Landed
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchLzo2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchLzo2}">
             PT Care Transferred
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchLzo3)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchLzo3}">
             Hilo Taken Off
         </button>
     </div>

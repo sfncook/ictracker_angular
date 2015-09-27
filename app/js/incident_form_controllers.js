@@ -167,7 +167,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 return "benchmark_green";
             } else if(sector.sectorType.hasSafetyBnch && sector['bnchSaf' + bnchIndex]) {
                 return "benchmark_green";
-            } else if(sector.sectorType.hasTreatmentBnch && sector['bnchTri' + bnchIndex]) {
+            } else if(sector.sectorType.hasTreatmentBnch && sector['bnchTrt' + bnchIndex]) {
                 return "benchmark_green";
             }
             return "benchmark_black";
@@ -347,9 +347,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.bnchSaf2 = 'bnchSaf2';
         $scope.bnchTrt1 = 'bnchTrt1';
         $scope.bnchTrt2 = 'bnchTrt2';
-        $scope.bnchTri1 = 'bnchTri1';
-        $scope.bnchTri2 = 'bnchTri2';
-        $scope.bnchTri3 = 'bnchTri3';
+        $scope.bnchTrt3 = 'bnchTrt3';
         $scope.bnchLzo1 = 'bnchLzo1';
         $scope.bnchLzo2 = 'bnchLzo2';
         $scope.bnchLzo3 = 'bnchLzo3';
