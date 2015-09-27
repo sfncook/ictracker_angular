@@ -168,19 +168,10 @@
                 </button>
                 <button ng-show="sector.sectorType.manyBenchmarkBars>0" class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
                     <span class="benchmarks_icon">
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && !sector.bnch1 && !sector.bnchPrimaryNotAvailable" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && sector.bnch1 && !sector.bnchPrimaryNotAvailable"  class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && sector.bnchPrimaryNotAvailable"                   class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
-
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2 && !sector.bnch2"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=2 && sector.bnch2"   class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
-
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3 && !sector.bnch3 && !sector.bnchSecondaryNotAvailable" class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=3 && sector.bnch3 && !sector.bnchSecondaryNotAvailable"  class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=1 && sector.bnchSecondaryNotAvailable"                   class="benchmark_bar_img" src="img/bnch_bar_red.png"/>
-
-                        <img ng-show="sector.sectorType.manyBenchmarkBars==4 && !sector.bnch4"  class="benchmark_bar_img" src="img/bnch_bar_black.png"/>
-                        <img ng-show="sector.sectorType.manyBenchmarkBars>=4 && sector.bnch4"   class="benchmark_bar_img" src="img/bnch_bar_green.png"/>
+                        <div ng-repeat="n in [] | range:sector.sectorType.manyBenchmarkBars"
+                             class="benchmark_bar_div"
+                             ng-class="getBnchColor(sector, $index+1)">&nbsp;
+                        </div>
                     </span>
                     BNCH
                 </button>
@@ -720,35 +711,35 @@
 <div id="bnch_dlg" title="Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
-                ng-click="selectUnablePrimary()"
-                ng-class="{glowpink: selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchCls1)"
+                ng-class="{glowpink: selectedSector.bnchCls1}">
             Unable to Obtain Primary
         </button>
         <button class='benchmark_double_btn benchmark_item_btn'
-                ng-click="selectUnableSecondary()"
-                ng-class="{glowpink: selectedSector.bnchSecondaryNotAvailable}">
+                ng-click="selectBnch(bnchCls2)"
+                ng-class="{glowpink: selectedSector.bnchCls2}">
             Unable to Obtain Secondary
         </button>
     </div>
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-click="selectBnch(bnchCls3)"
+                ng-class="{glowlightgreen: selectedSector.bnchCls3}">
             Primary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchCls4)"
+                ng-class="{glowlightgreen: selectedSector.bnchCls4 && !selectedSector.bnchPrimaryNotAvailable}">
             Under Control
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(3)"
-                ng-class="{glowlightgreen: selectedSector.bnch3}">
+                ng-click="selectBnch(bnchCls5)"
+                ng-class="{glowlightgreen: selectedSector.bnchCls5}">
             Secondary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(4)"
-                ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
+                ng-click="selectBnch(bnchCls6)"
+                ng-class="{glowlightgreen: selectedSector.bnchCls6 && !selectedSector.bnchSecondaryNotAvailable}">
             Loss Stop
         </button>
     </div>

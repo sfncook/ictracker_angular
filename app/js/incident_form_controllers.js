@@ -10,6 +10,16 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .filter('range', function() {
+        return function(input, total) {
+            total = parseInt(total);
+            for (var i=0; i<total; i++) {
+                input.push(i);
+            }
+            return input;
+        };
+    })
+
     .controller('LoadingSplashDlg', function($scope, DataStore){
         $scope.dataStore = DataStore;
     })
@@ -127,6 +137,22 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.doesSectorHavePar = DoesSectorHavePar;
+
+        $scope.getBnchColor = function(sector, bnchIndex) {
+            if(sector.sectorType.hasClassicBnch && sector['bnchCls' + bnchIndex]) {
+                return "benchmark_green";
+            } else if(sector.sectorType.hasVentBnch && sector['bnchVnt' + bnchIndex]) {
+                //doesSectorHavePar(sector)
+                return "benchmark_green";
+            } else if(sector.sectorType.hasIricBnch && sector['bnchIrc' + bnchIndex]) {
+                return "benchmark_green";
+            } else if(sector.sectorType.hasSafetyBnch && sector['bnchSaf' + bnchIndex]) {
+                return "benchmark_green";
+            } else if(sector.sectorType.hasTreatmentBnch && sector['bnchTri' + bnchIndex]) {
+                return "benchmark_green";
+            }
+            return "benchmark_black";
+        }
 
     })
     .filter('acctUnitName', function() {
@@ -280,9 +306,32 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .controller('BnchDlg', function($scope, DataStore, DoesSectorHavePar){
-        var selectedSector = {};
-
+        $scope.selectedSector = {};
         $scope.doesSectorHavePar = DoesSectorHavePar;
+
+        $scope.bnchCls1 = 'bnchCls1';
+        $scope.bnchCls2 = 'bnchCls2';
+        $scope.bnchCls3 = 'bnchCls3';
+        $scope.bnchCls4 = 'bnchCls4';
+        $scope.bnchCls5 = 'bnchCls5';
+        $scope.bnchCls6 = 'bnchCls6';
+        $scope.bnchVnt1 = 'bnchVnt1';
+        $scope.bnchVnt2 = 'bnchVnt2';
+        $scope.bnchVnt3 = 'bnchVnt3';
+        $scope.bnchIrc1 = 'bnchIrc1';
+        $scope.bnchIrc2 = 'bnchIrc2';
+        $scope.bnchIrc3 = 'bnchIrc3';
+        $scope.bnchIrc4 = 'bnchIrc4';
+        $scope.bnchSaf1 = 'bnchSaf1';
+        $scope.bnchSaf2 = 'bnchSaf2';
+        $scope.bnchTrt1 = 'bnchTrt1';
+        $scope.bnchTrt2 = 'bnchTrt2';
+        $scope.bnchTri1 = 'bnchTri1';
+        $scope.bnchTri2 = 'bnchTri2';
+        $scope.bnchTri3 = 'bnchTri3';
+        $scope.bnchLzo1 = 'bnchLzo1';
+        $scope.bnchLzo2 = 'bnchLzo2';
+        $scope.bnchLzo3 = 'bnchLzo3';
 
         DataStore.showBnchDlg = function(sector) {
             $scope.selectedSector = sector;
@@ -300,26 +349,26 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.selectBnch = function(bnchIndex) {
-            $scope.selectedSector['bnch'+bnchIndex] = !$scope.selectedSector['bnch'+bnchIndex];
-            if(bnchIndex==1) {
-                $scope.selectedSector.bnchPrimaryNotAvailable = false;
-            }
-            if(bnchIndex==3) {
-                $scope.selectedSector.bnchSecondaryNotAvailable = false;
-            }
-        }
+            $scope.selectedSector[bnchIndex] = !$scope.selectedSector[bnchIndex];
 
-        $scope.selectUnablePrimary = function() {
-            $scope.selectedSector.bnchPrimaryNotAvailable = !$scope.selectedSector.bnchPrimaryNotAvailable;
-            $scope.selectedSector.bnch1 = false;
-            $scope.selectedSector.bnch2 = false;
-            $scope.selectedSector.bnch3 = false;
-            $scope.selectedSector.bnch4 = false;
-        }
-        $scope.selectUnableSecondary = function() {
-            $scope.selectedSector.bnchSecondaryNotAvailable = !$scope.selectedSector.bnchSecondaryNotAvailable;
-            $scope.selectedSector.bnch3 = false;
-            $scope.selectedSector.bnch4 = false;
+            switch(bnchIndex) {
+                case $scope.bnchCls1:
+                    $scope.selectedSector.bnch1 = false;
+                    $scope.selectedSector.bnch2 = false;
+                    $scope.selectedSector.bnch3 = false;
+                    $scope.selectedSector.bnch4 = false;
+                    break;
+                case $scope.bnchCls2:
+                    $scope.selectedSector.bnch3 = false;
+                    $scope.selectedSector.bnch4 = false;
+                    break;
+                case $scope.bnchCls3:
+                    $scope.selectedSector.bnchCls1 = false;
+                    break;
+                case $scope.bnchCls5:
+                    $scope.selectedSector.bnchCls2 = false;
+                    break;
+            }
         }
 
         $scope.showParDlgFromBnch = function() {

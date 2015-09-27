@@ -33,10 +33,22 @@ tbar {
     margin-right: 4px;
     float:left;
 }
-
 .benchmark_bar_img {
     margin-bottom: 1px;
     display:block;
+}
+.benchmark_bar_div {
+    width: 14px;
+    height: 3px;
+    margin-right: 4px;
+    margin-bottom: 1px;
+    float:left;
+}
+.benchmark_green {
+    background-color: green;
+}
+.benchmark_black {
+    background-color: black;
 }
 
 .tbar_col_div {

@@ -2,7 +2,7 @@
 var DEPARTMENT_DEF = ['name_short', 'name_long', 'app_key', 'js_key'];
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'strategy', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
-var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit', 'bnch1', 'bnch2', 'bnch3', 'bnch4', 'bnch5', 'bnch6', 'bnch7', 'bnchPrimaryNotAvailable', 'bnchSecondaryNotAvailable'];
+var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit', 'bnchCls1','bnchCls2','bnchCls3','bnchCls4','bnchCls5','bnchCls6','bnchVnt1','bnchVnt2','bnchVnt3','bnchIrc1','bnchIrc2','bnchIrc3','bnchIrc4','bnchSaf1','bnchSaf2','bnchTrt1','bnchTrt2','bnchTri1','bnchTri2','bnchTri3','bnchLzo1','bnchLzo2','bnchLzo3'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible', 'hasClassicBnch', 'hasVentBnch', 'hasIricBnch', 'hasSafetyBnch', 'hasTreatmentBnch', 'hasLzBnch', 'hasTriageBnch'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
