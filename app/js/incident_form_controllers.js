@@ -308,7 +308,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('BnchDlg', function($scope, DataStore, DoesSectorHavePar){
+    .controller('BnchDlg', function($scope, DataStore, DoesSectorHavePar, DefaultErrorLogger){
         $scope.dataStore = DataStore;
         $scope.doesSectorHavePar = DoesSectorHavePar;
 
@@ -372,6 +372,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     $scope.dataStore.selectedSector.bnchCls2 = false;
                     break;
             }
+
+            $scope.dataStore.selectedSector.save(null, DefaultErrorLogger);
         }
 
         $scope.showParDlgFromBnch = function() {
