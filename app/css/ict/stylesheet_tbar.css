@@ -45,10 +45,14 @@ tbar {
     float:left;
 }
 .benchmark_green {
-    background-color: green;
+    background-color: lightgreen;
+    border: 1px grey solid;
 }
 .benchmark_black {
     background-color: black;
+}
+.benchmark_red {
+    background-color: red;
 }
 
 .tbar_col_div {

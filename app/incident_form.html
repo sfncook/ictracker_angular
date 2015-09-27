@@ -712,34 +712,34 @@
     <div class="benchmark_col_container benchmark_0th_col_container">
         <button class='benchmark_double_btn benchmark_item_btn'
                 ng-click="selectBnch(bnchCls1)"
-                ng-class="{glowpink: selectedSector.bnchCls1}">
+                ng-class="{glowpink: dataStore.selectedSector.bnchCls1}">
             Unable to Obtain Primary
         </button>
         <button class='benchmark_double_btn benchmark_item_btn'
                 ng-click="selectBnch(bnchCls2)"
-                ng-class="{glowpink: selectedSector.bnchCls2}">
+                ng-class="{glowpink: dataStore.selectedSector.bnchCls2}">
             Unable to Obtain Secondary
         </button>
     </div>
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(bnchCls3)"
-                ng-class="{glowlightgreen: selectedSector.bnchCls3}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls3}">
             Primary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(bnchCls4)"
-                ng-class="{glowlightgreen: selectedSector.bnchCls4 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls4 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             Under Control
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(bnchCls5)"
-                ng-class="{glowlightgreen: selectedSector.bnchCls5}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls5}">
             Secondary All Clear
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(bnchCls6)"
-                ng-class="{glowlightgreen: selectedSector.bnchCls6 && !selectedSector.bnchSecondaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchCls6 && !dataStore.selectedSector.bnchSecondaryNotAvailable}">
             Loss Stop
         </button>
     </div>
@@ -748,23 +748,23 @@
 <div id="bnch_vent_dlg" title="Ventilation Benchmarks" ng-controller="BnchDlg" class="dialog">
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-click="selectBnch(bnchVnt1)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchVnt1}">
             Holes Cut
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-click="selectBnch(bnchVnt2)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchVnt2}">
             Positive Return
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(3)"
-                ng-class="{glowlightgreen: selectedSector.bnch3}">
+                ng-click="selectBnch(bnchVnt3)"
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnchVnt3}">
             Off the Roof
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
-                ng-click="selectBnch(4)"
-                ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
+                ng-click="showParDlgFromBnch()"
+                ng-class="{glowlightgreen: doesSectorHavePar(dataStore.selectedSector)}">
             PAR
         </button>
     </div>
@@ -774,22 +774,22 @@
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
             Entering Structure
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             Located Down FF
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(3)"
-                ng-class="{glowlightgreen: selectedSector.bnch3}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch3}">
             Trans Fill Complete
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(4)"
-                ng-class="{glowlightgreen: selectedSector.bnch4 && !selectedSector.bnchSecondaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch4 && !dataStore.selectedSector.bnchSecondaryNotAvailable}">
             Exiting Structure
         </button>
     </div>
@@ -799,12 +799,12 @@
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
             Agrees With Strategy
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             360 Recon
         </button>
     </div>
@@ -814,17 +814,17 @@
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
             All Immediates Tx
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             All Delayed Txt
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             All PT's treated or Tx
         </button>
     </div>
@@ -834,17 +834,17 @@
     <div class="benchmark_col_container">
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(1)"
-                ng-class="{glowlightgreen: selectedSector.bnch1}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch1}">
             Hilo Landed
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             PT Care Transferred
         </button>
         <button class="benchmark_item_btn benchmark_single_btn"
                 ng-click="selectBnch(2)"
-                ng-class="{glowlightgreen: selectedSector.bnch2 && !selectedSector.bnchPrimaryNotAvailable}">
+                ng-class="{glowlightgreen: dataStore.selectedSector.bnch2 && !dataStore.selectedSector.bnchPrimaryNotAvailable}">
             Hilo Taken Off
         </button>
     </div>
