@@ -169,6 +169,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 return "benchmark_green";
             } else if(sector.sectorType.hasTreatmentBnch && sector['bnchTrt' + bnchIndex]) {
                 return "benchmark_green";
+            } else if(sector.sectorType.hasTriageBnch && sector['bnchTri' + bnchIndex]>0) {
+                return "benchmark_green";
             }
             return "benchmark_black";
         }
@@ -396,6 +398,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.showParDlgFromBnch = function() {
             DataStore.openParDlg($scope.dataStore.selectedSector);
+        }
+
+        $scope.onChangeTriage = function() {
+            $scope.dataStore.selectedSector.save(null, DefaultErrorLogger);
         }
 
     })
