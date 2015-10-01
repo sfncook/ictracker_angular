@@ -17,7 +17,7 @@ var DISPATCHED_UNITS_DEF = ['incident', 'unitTypes'];
 var USER_DEF = ['username', 'email', 'name', 'department'];
 var ROLE_DEF = ['name', 'users', 'roles'];
 
-angular.module('DataServices', ['ParseServices'])
+angular.module('DataServices', ['ParseServices', 'AdapterServices'])
     .factory('DefaultCity', function() {
         return "Mesa";
     })
@@ -93,16 +93,10 @@ angular.module('DataServices', ['ParseServices'])
         }
     }])
 
-    .factory('InitDatabase', ['InitDbForDepartment', 'InitDefaultDatabase', function (InitDbForDepartment, InitDefaultDatabase) {
+    .factory('InitDatabase', function (AdapterStore) {
         return function () {
-            if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
-                var app_key =   localStorage.getItem('app_key');
-                var js_key =    localStorage.getItem('js_key');
-                if(app_key && js_key) {
-                    Parse.initialize(app_key, js_key);
-                }
-            }
+            AdapterStore.adapter.init();
         }
-    }])
+    })
 
 ;
