@@ -59,7 +59,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         promises.push(LoadAllMaydaysForIncident(incident));
                         promises.push(LoadIAPForIncident(incident));
                         promises.push(LoadObjectivesForIncident(incident));
-                        LoadOSRForIncident($scope, incident);
+                        promises.push(LoadOSRForIncident(incident));
                         LoadUpgradeForIncident($scope, incident);
                         LoadDispatchedUnitsForIncident($scope, incident);
 

@@ -3,9 +3,9 @@
 angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
 
     .controller('UpgradeDlg', function($scope, DataStore){
-		$scope.dataStore = DataStore;
-		$scope.upgrade_secondary=1;
-		$scope.displayUpgradeLabel='';
+        $scope.dataStore = DataStore;
+        $scope.upgrade_secondary=1;
+        $scope.displayUpgradeLabel='';
 
         $scope.updateUpgrade = function(whichButton) {
             alert(whichButton);
@@ -52,29 +52,28 @@ angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
         }
     })
 
-    .factory('LoadUpgradeForIncident', ['ParseQuery', 'ConvertParseObject', 'DataStore', 'CreateNewUpgrade',
-        function (ParseQuery, ConvertParseObject, DataStore, CreateNewUpgrade) {
+    .factory('LoadUpgradeForIncident', function (ParseQuery, ConvertParseObject, DataStore, CreateNewUpgrade) {
         return function ($scope, incident) {
            var queryUpgrade = new Parse.Query(Parse.Object.extend('Upgrade'));
            queryUpgrade.equalTo("incident", incident);
-        	ParseQuery(queryUpgrade, {functionToCall:'first'}).then(function(upgradeObject){
-        		if (upgradeObject){
-        			ConvertParseObject(upgradeObject, UPGRADE_DEF);
-        			DataStore.upgrade = upgradeObject;
-        		} else {
-					DataStore.upgrade = CreateNewUpgrade(incident);
-        		}
-        		angular.element('#upgrade_dlg').scope().fixUpgLabelDisplay();
+            ParseQuery(queryUpgrade, {functionToCall:'first'}).then(function(upgradeObject){
+                if (upgradeObject){
+                    ConvertParseObject(upgradeObject, UPGRADE_DEF);
+                    DataStore.upgrade = upgradeObject;
+                } else {
+                    DataStore.upgrade = CreateNewUpgrade(incident);
+                }
+                angular.element('#upgrade_dlg').scope().fixUpgLabelDisplay();
             });
         }
-    }])
+    })
 
     .factory('CreateNewUpgrade', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
         return function (curIncident) {
-        	var UpgradeParseObj = Parse.Object.extend('Upgrade');
-			var upgradeObject = new UpgradeParseObj();
-			ConvertParseObject(upgradeObject, UPGRADE_DEF);
-			upgradeObject.incident = curIncident;
+            var UpgradeParseObj = Parse.Object.extend('Upgrade');
+            var upgradeObject = new UpgradeParseObj();
+            ConvertParseObject(upgradeObject, UPGRADE_DEF);
+            upgradeObject.incident = curIncident;
             upgradeObject.isWorkingFire = false;
             upgradeObject.is1stAlarm = false;
             upgradeObject.is2ndAlarm = false;
