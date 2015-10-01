@@ -7,7 +7,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
 
     .factory('LoadSectorsForIncident',
         function ($q, LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
-        return function ($scope, incident) {
+        return function (incident) {
             var deferred = $q.defer();
             var promises = [];
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));

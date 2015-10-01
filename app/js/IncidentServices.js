@@ -37,10 +37,11 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         }
     }])
 
-    .factory('LoadIncident', [
-        'ConvertParseObject', 'ParseQuery', 'DataStore', 'LoadAllMaydaysForIncident', 'LoadSectorsForIncident', 'LoadIAPForIncident', 'LoadObjectivesForIncident', 'LoadOSRForIncident', 'LoadUpgradeForIncident', 'LoadDispatchedUnitsForIncident',
-        function (ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
+    .factory('LoadIncident',
+        function ($q, ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
         return function (incidentObjectId, $scope) {
+            var deferred = $q.defer();
+            var promises = [];
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('incidentType');
@@ -54,8 +55,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                             DataStore.incident.inc_type_obj= incidentTypeObj;
                         });
 
-                        LoadSectorsForIncident($scope, incident);
-                        LoadAllMaydaysForIncident($scope, incident);
+                        promises.push(LoadSectorsForIncident(incident));
+                        LoadAllMaydaysForIncident(incident);
                         LoadIAPForIncident($scope, incident);
                         LoadObjectivesForIncident($scope, incident);
                         LoadOSRForIncident($scope, incident);
@@ -77,8 +78,20 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                     console.log('Failed to LoadIncident, with error code: ' + error.message);
                 }
             });
+            $q.all(promises)
+                .then(
+                function(results) {
+                    deferred.resolve(results);
+                },
+                function(errors) {
+                    deferred.reject(errors);
+                },
+                function(updates) {
+                    deferred.update(updates);
+                });
+            return deferred.promise;
         }
-    }])
+    })
 
     .factory('Incidents', function() {
         return new Array();

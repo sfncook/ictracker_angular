@@ -205,10 +205,10 @@ angular.module("ictApp")
         }
     }])
 
-    .factory('LoadAllMaydaysForIncident', [
-        'Maydays', 'ParseQuery', 'ConvertParseObject', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday',
-        function (Maydays, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
-        return function ($scope, incident) {
+    .factory('LoadAllMaydaysForIncident', function ($q, Maydays, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
+        return function (incident) {
+            var deferred = $q.defer();
+            var promises = [];
             var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
             queryMaydays.equalTo("incident", incident);
             queryMaydays.include('unitType');
@@ -219,16 +219,28 @@ angular.module("ictApp")
                         var mayday = maydays[i];
                         ConvertParseObject(mayday, MAYDAY_DEF);
                         Maydays.push(mayday);
-                        FetchUnitTypeForMayday($scope, mayday);
-                        FetchSectorTypeForMayday($scope, mayday);
+                        promises.push(FetchUnitTypeForMayday(mayday));
+                        promises.push(FetchSectorTypeForMayday(mayday));
                     }
                 },
                 error: function(error) {
                     console.log('Failed to LoadActionTypes, with error code: ' + error.message);
                 }
             });
+            $q.all(promises)
+                .then(
+                function(results) {
+                    deferred.resolve(results);
+                },
+                function(errors) {
+                    deferred.reject(errors);
+                },
+                function(updates) {
+                    deferred.update(updates);
+                });
+            return deferred.promise;
         }
-    }])
+    })
 
     .factory('UpdateMaydays', [
         'Maydays', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday', 'ConvertParseObject',
@@ -271,41 +283,37 @@ angular.module("ictApp")
             }
         }])
 
-    .factory('FetchUnitTypeForMayday', ['ConvertParseObject', function (ConvertParseObject) {
-        return function ($scope, mayday) {
+    .factory('FetchUnitTypeForMayday', function (ConvertParseObject) {
+        return function (mayday) {
             if(mayday.unitType) {
-                mayday.unitType.fetch({
-                    success: function(unitType) {
-                        $scope.$apply(function(){
-                            ConvertParseObject(unitType, UNIT_TYPE_DEF);
-                            mayday.unitType = unitType;
-                        });
+                return mayday.unitType.fetch().then(
+                    function(unitType) {
+                        ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                        mayday.unitType = unitType;
                     },
-                    error: function(error) {
+                    function(error) {
                         console.log('Failed to FetchUnitTypeForMayday, with error code: ' + error.message);
                     }
-                });
+                );
             }
         }
-    }])
+    })
 
-    .factory('FetchSectorTypeForMayday', ['ConvertParseObject', function (ConvertParseObject) {
-        return function ($scope, mayday) {
+    .factory('FetchSectorTypeForMayday', function (ConvertParseObject) {
+        return function (mayday) {
             if(mayday.sectorType) {
-                mayday.sectorType.fetch({
-                    success: function(sectorType) {
-                        $scope.$apply(function(){
-                            ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
-                            mayday.sectorType = sectorType;
-                        });
+                return mayday.sectorType.fetch().then(
+                    function(sectorType) {
+                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+                        mayday.sectorType = sectorType;
                     },
-                    error: function(error) {
+                    function(error) {
                         console.log('Failed to FetchSectorTypeForMayday, with error code: ' + error.message);
                     }
-                });
+                );
             }
         }
-    }])
+    })
 
     .factory('DeleteMayday', ['Maydays', function (Maydays) {
         return function (mayday) {
