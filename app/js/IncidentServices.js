@@ -60,7 +60,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         promises.push(LoadIAPForIncident(incident));
                         promises.push(LoadObjectivesForIncident(incident));
                         promises.push(LoadOSRForIncident(incident));
-                        LoadUpgradeForIncident($scope, incident);
+                        promises.push(LoadUpgradeForIncident(incident));
                         LoadDispatchedUnitsForIncident($scope, incident);
 
                         setTimeout(function(){

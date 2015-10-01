@@ -52,19 +52,20 @@ angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
         }
     })
 
-    .factory('LoadUpgradeForIncident', function (ParseQuery, ConvertParseObject, DataStore, CreateNewUpgrade) {
-        return function ($scope, incident) {
-           var queryUpgrade = new Parse.Query(Parse.Object.extend('Upgrade'));
-           queryUpgrade.equalTo("incident", incident);
-            ParseQuery(queryUpgrade, {functionToCall:'first'}).then(function(upgradeObject){
-                if (upgradeObject){
-                    ConvertParseObject(upgradeObject, UPGRADE_DEF);
-                    DataStore.upgrade = upgradeObject;
-                } else {
-                    DataStore.upgrade = CreateNewUpgrade(incident);
+    .factory('LoadUpgradeForIncident', function (ConvertParseObject, DataStore, CreateNewUpgrade) {
+        return function (incident) {
+            var queryUpgrade = new Parse.Query(Parse.Object.extend('Upgrade'));
+            queryUpgrade.equalTo("incident", incident);
+            return queryUpgrade.first().then(
+                function(upgradeObject){
+                    if (upgradeObject){
+                        ConvertParseObject(upgradeObject, UPGRADE_DEF);
+                        DataStore.upgrade = upgradeObject;
+                    } else {
+                        DataStore.upgrade = CreateNewUpgrade(incident);
+                    }
                 }
-                angular.element('#upgrade_dlg').scope().fixUpgLabelDisplay();
-            });
+            );
         }
     })
 
