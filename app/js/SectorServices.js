@@ -5,10 +5,11 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
         return new Array();
     })
 
-    .factory('LoadSectorsForIncident', [
-        'LoadUnitsForSector', 'AddDefaultTbars', 'SaveTbars', 'TbarSectors', 'ParseQuery', 'ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
-        function (LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+    .factory('LoadSectorsForIncident',
+        function ($q, LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function ($scope, incident) {
+            var deferred = $q.defer();
+            var promises = [];
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
             querySectors.find({
@@ -20,10 +21,10 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                         for(var i=0; i<sectors.length; i++) {
                             var sector = sectors[i];
                             ConvertParseObject(sector, SECTOR_DEF);
-                            FetchTypeForSector($scope, sector);
+                            promises.push(FetchTypeForSector(sector));
                             TbarSectors.push(sector);
-                            LoadUnitsForSector(sector, $scope);
-                            FetchAcctTypeForSector($scope, sector);
+                            promises.push(LoadUnitsForSector(sector));
+                            promises.push(FetchAcctTypeForSector(sector));
                         }
                     }
                 },
@@ -31,44 +32,48 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                     console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                 }
             });
+            $q.all(promises)
+                .then(
+                function(results) {
+                    deferred.resolve(results);
+                },
+                function(errors) {
+                    deferred.reject(errors);
+                },
+                function(updates) {
+                    deferred.update(updates);
+                });
+            return deferred.promise;
         }
-    }])
+    })
 
     .factory('FetchAcctTypeForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function ($scope, sector) {
-            var acctUnit = sector.acctUnit;
-            if(acctUnit) {
-                acctUnit.fetch({
-                    success: function(acctUnit) {
-                        $scope.$apply(function(){
-                            ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
-                            sector.acctUnit = acctUnit;
-                        });
+        return function (sector) {
+            if(sector.acctUnit){
+                sector.acctUnit.fetch().then(
+                    function(acctUnit) {
+                        ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
+                        sector.acctUnit = acctUnit;
                     },
-                    error: function(error) {
+                    function(error) {
                         console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);
                     }
-                });
+                );
             }
         }
     }])
 
     .factory('FetchTypeForSector', ['ConvertParseObject', function (ConvertParseObject) {
-        return function ($scope, sector) {
-            var type = sector.sectorType;
-            if(type) {
-                type.fetch({
-                    success: function(type) {
-                        $scope.$apply(function(){
-                            ConvertParseObject(type, SECTOR_TYPE_DEF);
-                            sector.sectorType= type;
-                        });
-                    },
-                    error: function(error) {
-                        console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
-                    }
-                });
-            }
+        return function (sector) {
+            sector.sectorType.fetch().then(
+                function(type) {
+                    ConvertParseObject(type, SECTOR_TYPE_DEF);
+                    sector.sectorType= type;
+                },
+                function(error) {
+                    console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
+                }
+            );
         }
     }])
 

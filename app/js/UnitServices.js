@@ -51,6 +51,17 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                     console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
                 }
             });
+            $q.all(promises)
+                .then(
+                function(results) {
+                    deferred.resolve(results);
+                },
+                function(errors) {
+                    deferred.reject(errors);
+                },
+                function(updates) {
+                    deferred.update(updates);
+                });
             return deferred.promise;
         }
     })
