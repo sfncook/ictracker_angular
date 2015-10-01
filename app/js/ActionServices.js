@@ -27,10 +27,10 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('LoadActionsForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function ($scope, unit) {
+        return function (unit) {
             var relation = unit.relation("actions");
-            relation.query().find({
-                success: function(actions) {
+            return relation.query().find().then(
+                function(actions) {
                     if(!unit.actionsArr) {
                         unit.actionsArr = new Array();
                     }
@@ -39,10 +39,10 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
                         ConvertParseObject(action, ACTION_TYPE_DEF);
                         unit.actionsArr.push(action);
                     }
-                }, error: function(obj, error) {
+                }, function(obj, error) {
                     console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
                 }
-            });
+            );
         }
     }])
 

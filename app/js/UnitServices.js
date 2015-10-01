@@ -26,8 +26,10 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('LoadUnitsForSector', ['ParseQuery', 'ConvertParseObject', 'LoadActionsForUnit', 'FetchTypeForUnit', function (ParseQuery, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit) {
-        return function (sector, $scope) {
+    .factory('LoadUnitsForSector', function ($q, ParseQuery, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit) {
+        return function (sector) {
+            var deferred = $q.defer();
+            var promises = [];
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
             queryUnits.equalTo("sector", sector);
@@ -36,8 +38,8 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                     for(var i=0; i<units.length; i++) {
                         var unit = units[i];
                         ConvertParseObject(unit, UNIT_DEF);
-                        FetchTypeForUnit($scope, unit);
-                        LoadActionsForUnit($scope, unit);
+                        promises.push(FetchTypeForUnit(unit));
+                        promises.push(LoadActionsForUnit(unit));
                         sector.units.push(unit);
                     }
 
@@ -49,8 +51,9 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                     console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
                 }
             });
+            return deferred.promise;
         }
-    }])
+    })
 
 
 
@@ -60,8 +63,8 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                 var unit = sector.units[i];
                 unit.fetch({
                     success:function(unit) {
-                        FetchTypeForUnit($scope, unit);
-                        LoadActionsForUnit($scope, unit);
+                        FetchTypeForUnit(unit);
+                        LoadActionsForUnit(unit);
                     },
                     error: function(error) {
                         console.log('Failed to UpdateUnitsForSector, with error code: ' + error.message);
@@ -72,21 +75,16 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
     }])
 
     .factory('FetchTypeForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function ($scope, unit) {
-            var type = unit.type;
-            if(type) {
-                type.fetch({
-                    success: function(type) {
-                        $scope.$apply(function(){
-                            ConvertParseObject(type, UNIT_TYPE_DEF);
-                            unit.type= type;
-                        });
-                    },
-                    error: function(error) {
-                        console.log('Failed to FetchTypeForUnit, with error code: ' + error.message);
-                    }
-                });
-            }
+        return function (unit) {
+            return unit.type.fetch().then(
+                function(type) {
+                    ConvertParseObject(type, UNIT_TYPE_DEF);
+                    unit.type= type;
+                },
+                function(error) {
+                    console.log('Failed to FetchTypeForUnit, with error code: ' + error.message);
+                }
+            );
         }
     }])
 
