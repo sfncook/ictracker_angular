@@ -1,5 +1,5 @@
 
-angular.module('ParseAdapter', ['IncidentServices'])
+angular.module('ParseAdapter', [])
 
     .factory('ParseAdapter', function(LoadIncident) {
         return {
