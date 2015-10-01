@@ -85,7 +85,7 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('FetchTypeForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+    .factory('FetchTypeForUnit', function (ConvertParseObject) {
         return function (unit) {
             return unit.type.fetch().then(
                 function(type) {
@@ -97,7 +97,7 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
                 }
             );
         }
-    }])
+    })
 
     .factory('CreateNewUnit', ['ConvertParseObject', 'DefaultErrorLogger', function (ConvertParseObject, DefaultErrorLogger) {
         return function (sector, unitType) {
