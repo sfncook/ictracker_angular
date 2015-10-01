@@ -2,12 +2,20 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
-    .run(function(IsLoggedIn) {
+    .run(function(IsLoggedIn, LoadIncident, DataStore) {
         if(!IsLoggedIn()){
             ResetSavedDepartment();
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
+
+        var incidentObjectId = getHttpRequestByName('i');
+        LoadIncident(incidentObjectId).then(
+            function(incident){
+                DataStore.loadSuccess = true;
+                DataStore.waitingToLoad = false;
+            }
+        );
     })
 
     .filter('range', function() {
@@ -24,16 +32,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.dataStore = DataStore;
     })
 
-    .controller('HeaderContainer2', function($scope, $http, LoadIncident, DataStore, LoadSectorTypes, LoadIAPForIncident){
-        var incidentObjectId = getHttpRequestByName('i');
-
+    .controller('HeaderContainer2', function($scope, DataStore){
         $scope.dataStore = DataStore;
-        LoadIncident(incidentObjectId).then(
-            function(incident){
-                DataStore.loadSuccess = true;
-                DataStore.waitingToLoad = false;
-            }
-        );
 
         $scope.showIncInfoDlg = function() {
             DataStore.showIncInfoDlg();
