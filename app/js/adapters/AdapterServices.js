@@ -1,14 +1,8 @@
-angular.module('AdapterServices', ['ParseServices'])
-    .factory('DefaultCity', function() {
-        return "Mesa";
-    })
+angular.module('AdapterServices', ['ParseAdapter'])
 
-    .factory('DataStore', function() {
+    .factory('AdapterStore', function(ParseAdapter) {
         return {
-            incident:{},
-            currentUser:{},
-            waitingToLoad:true,
-            loadSuccess:false
+            adapter:ParseAdapter
         };
     })
 

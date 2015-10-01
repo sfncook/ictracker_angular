@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
+angular.module("ictApp", ['gridster', 'AdapterServices', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
-    .run(function(IsLoggedIn, LoadIncident, DataStore) {
+    .run(function(IsLoggedIn, AdapterStore, LoadIncident, DataStore) {
+        AdapterStore.adapter.init();
+        
         if(!IsLoggedIn()){
             ResetSavedDepartment();
             var urlLink = "login.html";
