@@ -61,7 +61,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         promises.push(LoadObjectivesForIncident(incident));
                         promises.push(LoadOSRForIncident(incident));
                         promises.push(LoadUpgradeForIncident(incident));
-                        LoadDispatchedUnitsForIncident($scope, incident);
+                        promises.push(LoadDispatchedUnitsForIncident(incident));
 
                         setTimeout(function(){
                             DataStore.loadSuccess = true;
@@ -124,49 +124,54 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     }])
 
 
-    .factory('LoadDispatchedUnitsForIncident', [
-        'ParseQuery', 'ConvertParseObject', 'DataStore',
-        function (ParseQuery, ConvertParseObject, DataStore) {
-            return function ($scope, incident) {
-                var queryDispatchedUnits = new Parse.Query(Parse.Object.extend('DispatchedUnits'));
-                queryDispatchedUnits.equalTo("incident", incident);
-                return queryDispatchedUnits.first({
-                    success: function(dispatchedUnitsObj) {
-                        if(!dispatchedUnitsObj) {
-                            var DispatchedUnitsObj = Parse.Object.extend('DispatchedUnits');
-                            dispatchedUnitsObj = new DispatchedUnitsObj();
-                            ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
-                            dispatchedUnitsObj.incident = incident;
-                            dispatchedUnitsObj.unitTypes = new Array();
-                            DataStore.dispatchedUnits = dispatchedUnitsObj;
-                            dispatchedUnitsObj.save(null, {
-                                error: function(error) {
-                                    console.log('(2) Failed to save dispatechedUnitsObj with error code: ' + error.message);
-                                }
-                            });
-                        } else {
-                            ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
-                            DataStore.dispatchedUnits = dispatchedUnitsObj;
-                            var promises = new Array();
-                            for(var i=0; i<dispatchedUnitsObj.unitTypes.length; i++) {
-                                var unitType = dispatchedUnitsObj.unitTypes[i];
-                                ConvertParseObject(unitType, UNIT_TYPE_DEF);
-                                var promise = unitType.fetch();
-                                promises.push(promise);
+    .factory('LoadDispatchedUnitsForIncident', function ($q, ConvertParseObject, DataStore) {
+        return function (incident) {
+            var queryDispatchedUnits = new Parse.Query(Parse.Object.extend('DispatchedUnits'));
+            queryDispatchedUnits.equalTo("incident", incident);
+            return queryDispatchedUnits.first().then(
+                function(dispatchedUnitsObj) {
+                    if(!dispatchedUnitsObj) {
+                        var DispatchedUnitsObj = Parse.Object.extend('DispatchedUnits');
+                        dispatchedUnitsObj = new DispatchedUnitsObj();
+                        ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
+                        dispatchedUnitsObj.incident = incident;
+                        dispatchedUnitsObj.unitTypes = new Array();
+                        DataStore.dispatchedUnits = dispatchedUnitsObj;
+                        return dispatchedUnitsObj.save(null, {
+                            error: function(error) {
+                                console.log('(2) Failed to save dispatechedUnitsObj with error code: ' + error.message);
                             }
-                            Promise.all(promises).then(
-                                function(unitTypes) {
-                                    DataStore.dispatchedUnits.unitTypes = unitTypes;
-                                }
-                            );
+                        });
+                    } else {
+                        var deferred = $q.defer();
+                        var promises = [];
+                        ConvertParseObject(dispatchedUnitsObj , DISPATCHED_UNITS_DEF);
+                        DataStore.dispatchedUnits = dispatchedUnitsObj;
+                        for(var i=0; i<dispatchedUnitsObj.unitTypes.length; i++) {
+                            var unitType = dispatchedUnitsObj.unitTypes[i];
+                            ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                            promises.push(unitType.fetch());
                         }
-                    },
-                    error: function(error) {
-                        console.log('Failed to LoadDispatchedUnitsForIncident, with error code: ' + error.message);
+                        $q.all(promises)
+                            .then(
+                            function(results) {
+                                deferred.resolve(results);
+                            },
+                            function(errors) {
+                                deferred.reject(errors);
+                            },
+                            function(updates) {
+                                deferred.update(updates);
+                            });
+                        return deferred.promise;
                     }
-                });
-            }
-        }])
+                },
+                function(error) {
+                    console.log('Failed to LoadDispatchedUnitsForIncident, with error code: ' + error.message);
+                }
+            );
+        }
+    })
 
 ;
 
