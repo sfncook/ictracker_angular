@@ -28,7 +28,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         var incidentObjectId = getHttpRequestByName('i');
 
         $scope.dataStore = DataStore;
-        LoadIncident(incidentObjectId, $scope);
+        LoadIncident(incidentObjectId).then(
+            function(incident){
+                DataStore.loadSuccess = true;
+                DataStore.waitingToLoad = false;
+            }
+        );
 
         $scope.showIncInfoDlg = function() {
             DataStore.showIncInfoDlg();

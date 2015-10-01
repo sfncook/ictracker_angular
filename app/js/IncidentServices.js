@@ -39,7 +39,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
 
     .factory('LoadIncident',
         function ($q, ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
-        return function (incidentObjectId, $scope) {
+        return function (incidentObjectId) {
             var deferred = $q.defer();
             var promises = [];
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
@@ -50,10 +50,10 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                     if(incident) {
                         ConvertParseObject(incident, INCIDENT_DEF);
                         DataStore.incident = incident;
-                        DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
+                        promises.push(DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
                             ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
                             DataStore.incident.inc_type_obj= incidentTypeObj;
-                        });
+                        }));
 
                         promises.push(LoadSectorsForIncident(incident));
                         promises.push(LoadAllMaydaysForIncident(incident));
@@ -63,11 +63,11 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         promises.push(LoadUpgradeForIncident(incident));
                         promises.push(LoadDispatchedUnitsForIncident(incident));
 
-                        setTimeout(function(){
-                            DataStore.loadSuccess = true;
-                            DataStore.waitingToLoad = false;
-                            $scope.$apply();
-                        }, 3500);
+                        //setTimeout(function(){
+                        //    DataStore.loadSuccess = true;
+                        //    DataStore.waitingToLoad = false;
+                        //    $scope.$apply();
+                        //}, 3500);
 
                     } else {
                         DataStore.loadSuccess = false;
