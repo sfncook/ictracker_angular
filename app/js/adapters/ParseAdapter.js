@@ -41,23 +41,14 @@ angular.module('ParseAdapter', ['ParseServices'])
                             promises.push(FetchAcctTypeForSector(sector));
                         }
                     }
+                    console.log("check 1");
+                    return sectors;
                 },
                 error: function(error) {
                     console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                 }
             });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
+            return $q.all(promises);
         }
     })
 

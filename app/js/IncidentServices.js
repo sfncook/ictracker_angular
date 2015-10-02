@@ -38,7 +38,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     }])
 
     .factory('LoadIncident',
-        function ($q, ConvertParseObject, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
+        function ($q, ConvertParseObject, DataStore, FetchTypeForIncident, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
         return function (incidentObjectId) {
             var deferred = $q.defer();
             var promises = [];
@@ -49,12 +49,8 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                 success: function(incident) {
                     if(incident) {
                         ConvertParseObject(incident, INCIDENT_DEF);
-                        DataStore.incident = incident;
-                        promises.push(DataStore.incident.incidentType.fetch().then(function(incidentTypeObj){
-                            ConvertParseObject(incidentTypeObj, INCIDENT_TYPE_DEF);
-                            DataStore.incident.inc_type_obj= incidentTypeObj;
-                        }));
 
+                        promises.push(FetchTypeForIncident(incident));
                         promises.push(LoadSectorsForIncident(incident));
                         promises.push(LoadAllMaydaysForIncident(incident));
                         promises.push(LoadIAPForIncident(incident));
@@ -62,34 +58,14 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                         promises.push(LoadOSRForIncident(incident));
                         promises.push(LoadUpgradeForIncident(incident));
                         promises.push(LoadDispatchedUnitsForIncident(incident));
-
-                        //setTimeout(function(){
-                        //    DataStore.loadSuccess = true;
-                        //    DataStore.waitingToLoad = false;
-                        //    $scope.$apply();
-                        //}, 3500);
-
-                    } else {
-                        DataStore.loadSuccess = false;
-                        DataStore.waitingToLoad = false;
                     }
+                    return incident;
                 },
                 error: function(error) {
                     console.log('Failed to LoadIncident, with error code: ' + error.message);
                 }
             });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
+            return $q.all(promises);
         }
     })
 
@@ -97,7 +73,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         return new Array();
     })
 
-    .factory('LoadAllIncidents', ['ConvertParseObject', 'ParseQuery', 'Incidents', 'DataStore', function (ConvertParseObject, ParseQuery, Incidents, DataStore) {
+    .factory('LoadAllIncidents', function (ConvertParseObject, Incidents, DataStore, FetchTypeForIncident) {
         return function ($scope) {
             Incidents.removeAll();
             var query = new Parse.Query(Parse.Object.extend('Incident'));
@@ -106,7 +82,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                     for(var i=0; i<incidents.length; i++) {
                         var incident = incidents[i];
                         ConvertParseObject(incident, INCIDENT_DEF);
-                        fetchTypeForIncident(incident, $scope, ConvertParseObject);
+                        FetchTypeForIncident(incident);
                         Incidents.push(incident);
                     }
                     setTimeout(function(){
@@ -121,7 +97,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                 }
             });
         }
-    }])
+    })
 
 
     .factory('LoadDispatchedUnitsForIncident', function ($q, ConvertParseObject, DataStore) {
@@ -173,22 +149,21 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         }
     })
 
-;
-
-function fetchTypeForIncident(incident, $scope, ConvertParseObject) {
-    var type = incident.incidentType;
-    if(type) {
-        type.fetch({
-            success: function(type) {
-                $scope.$apply(function(){
+    .factory('FetchTypeForIncident', function (ConvertParseObject) {
+        return function (incident) {
+            return incident.incidentType.fetch().then(
+                function(type) {
                     ConvertParseObject(type, INCIDENT_TYPE_DEF);
                     incident.incidentType = type;
-                });
-            },
-            error: function(error) {
-                console.log('Failed to fetchTypeForIncident, with error code: ' + error.message);
-            }
-        });
-    }
-}
+                    return type;
+                },
+                function(error) {
+                    console.log('Failed to FetchTypeForIncident, with error code: ' + error.message);
+                }
+            );
+        }
+    })
+
+;
+
 
