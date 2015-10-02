@@ -1,7 +1,7 @@
 
 angular.module('ParseAdapter', ['ParseServices'])
 
-    .factory('ParseAdapter', function(LoadUnitsForSector) {
+    .factory('ParseAdapter', function(LoadUnitsForSector, FetchAcctTypeForSector) {
         return {
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
@@ -15,7 +15,8 @@ angular.module('ParseAdapter', ['ParseServices'])
                     }
                 }
             },
-            LoadUnitsForSector: LoadUnitsForSector
+            LoadUnitsForSector: LoadUnitsForSector,
+            FetchAcctTypeForSector: FetchAcctTypeForSector
         };
     })
 
@@ -107,6 +108,22 @@ angular.module('ParseAdapter', ['ParseServices'])
                     console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
                 }
             );
+        }
+    })
+
+    .factory('FetchAcctTypeForSector', function (ConvertParseObject) {
+        return function (sector) {
+            if(sector.acctUnit){
+                sector.acctUnit.fetch().then(
+                    function(acctUnit) {
+                        ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
+                        sector.acctUnit = acctUnit;
+                    },
+                    function(error) {
+                        console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);
+                    }
+                );
+            }
         }
     })
 

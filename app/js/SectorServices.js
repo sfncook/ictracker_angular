@@ -24,7 +24,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
                             promises.push(FetchTypeForSector(sector));
                             TbarSectors.push(sector);
                             promises.push(AdapterStore.adapter.LoadUnitsForSector(sector));
-                            promises.push(FetchAcctTypeForSector(sector));
+                            promises.push(AdapterStore.adapter.FetchAcctTypeForSector(sector));
                         }
                     }
                 },
@@ -47,23 +47,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
         }
     })
 
-    .factory('FetchAcctTypeForSector', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function (sector) {
-            if(sector.acctUnit){
-                sector.acctUnit.fetch().then(
-                    function(acctUnit) {
-                        ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
-                        sector.acctUnit = acctUnit;
-                    },
-                    function(error) {
-                        console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);
-                    }
-                );
-            }
-        }
-    }])
-
-    .factory('FetchTypeForSector', ['ConvertParseObject', function (ConvertParseObject) {
+    .factory('FetchTypeForSector', function (ConvertParseObject) {
         return function (sector) {
             sector.sectorType.fetch().then(
                 function(type) {
@@ -75,7 +59,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
                 }
             );
         }
-    }])
+    })
 
     .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
         return function () {
@@ -128,9 +112,8 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
     }])
 
 
-    .factory('UpdateSectorsAsNeeded', [
-        'TbarSectors', 'ConvertParseObject', 'FetchTypeForSector', 'UpdateUnitsForSector', 'DiffUpdatedTimes',
-        function (TbarSectors, ConvertParseObject, FetchTypeForSector, UpdateUnitsForSector, DiffUpdatedTimes) {
+    .factory('UpdateSectorsAsNeeded',
+    function (TbarSectors, ConvertParseObject, UpdateUnitsForSector, DiffUpdatedTimes) {
         return function ($scope) {
             for(var i=0; i<TbarSectors.length; i++) {
                 var sector = TbarSectors[i];
@@ -144,7 +127,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
                 });
             }
         }
-    }])
+    })
 
     .factory('DiffUpdatedTimes', ['ConvertParseObject', 'UpdateSector', function (ConvertParseObject, UpdateSector) {
         return function ($scope, sector) {
