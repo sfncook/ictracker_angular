@@ -1,12 +1,12 @@
 
-angular.module('SectorServices', ['ParseServices', 'DataServices'])
+angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServices'])
 
     .factory('SectorTypes', function() {
         return new Array();
     })
 
     .factory('LoadSectorsForIncident',
-        function ($q, LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+        function ($q, LoadUnitsForSector, AdapterStore, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function (incident) {
             var deferred = $q.defer();
             var promises = [];
@@ -23,7 +23,7 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
                             ConvertParseObject(sector, SECTOR_DEF);
                             promises.push(FetchTypeForSector(sector));
                             TbarSectors.push(sector);
-                            promises.push(LoadUnitsForSector(sector));
+                            promises.push(AdapterStore.adapter.LoadUnitsForSector(sector));
                             promises.push(FetchAcctTypeForSector(sector));
                         }
                     }

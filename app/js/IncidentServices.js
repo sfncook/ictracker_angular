@@ -38,7 +38,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
     }])
 
     .factory('LoadIncident',
-        function ($q, ConvertParseObject, ParseQuery, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
+        function ($q, ConvertParseObject, DataStore, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
         return function (incidentObjectId) {
             var deferred = $q.defer();
             var promises = [];

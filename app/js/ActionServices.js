@@ -26,26 +26,6 @@ angular.module('ActionServices', ['ParseServices', 'DataServices'])
         }
     }])
 
-    .factory('LoadActionsForUnit', ['ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
-        return function (unit) {
-            var relation = unit.relation("actions");
-            return relation.query().find().then(
-                function(actions) {
-                    if(!unit.actionsArr) {
-                        unit.actionsArr = new Array();
-                    }
-                    for(var i=0; i<actions.length; i++) {
-                        var action = actions[i];
-                        ConvertParseObject(action, ACTION_TYPE_DEF);
-                        unit.actionsArr.push(action);
-                    }
-                }, function(obj, error) {
-                    console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
-                }
-            );
-        }
-    }])
-
     .factory('ToggleActionTypeForUnit', ['DefaultErrorLogger', function (DefaultErrorLogger) {
         return function (unit, actionType) {
             var addedAction = false;
