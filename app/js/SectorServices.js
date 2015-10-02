@@ -5,59 +5,9 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
         return new Array();
     })
 
-    .factory('LoadSectorsForIncident',
-        function ($q, LoadUnitsForSector, AdapterStore, AddDefaultTbars, SaveTbars, TbarSectors, ParseQuery, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+    .factory('LoadSectorsForIncident', function (AdapterStore) {
         return function (incident) {
-            var deferred = $q.defer();
-            var promises = [];
-            var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-            querySectors.equalTo("incident", incident);
-            querySectors.find({
-                success: function(sectors) {
-                    if(sectors.length==0) {
-                        AddDefaultTbars(incident);
-                        SaveTbars();
-                    } else {
-                        for(var i=0; i<sectors.length; i++) {
-                            var sector = sectors[i];
-                            ConvertParseObject(sector, SECTOR_DEF);
-                            promises.push(FetchTypeForSector(sector));
-                            TbarSectors.push(sector);
-                            promises.push(AdapterStore.adapter.LoadUnitsForSector(sector));
-                            promises.push(AdapterStore.adapter.FetchAcctTypeForSector(sector));
-                        }
-                    }
-                },
-                error: function(error) {
-                    console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
-                }
-            });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
-        }
-    })
-
-    .factory('FetchTypeForSector', function (ConvertParseObject) {
-        return function (sector) {
-            sector.sectorType.fetch().then(
-                function(type) {
-                    ConvertParseObject(type, SECTOR_TYPE_DEF);
-                    sector.sectorType= type;
-                },
-                function(error) {
-                    console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
-                }
-            );
+            return AdapterStore.adapter.LoadSectorsForIncident(incident);
         }
     })
 
