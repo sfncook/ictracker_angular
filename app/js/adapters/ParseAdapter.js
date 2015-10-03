@@ -22,12 +22,11 @@ angular.module('ParseAdapter', ['ParseServices'])
     .factory('LoadSectorsForIncidentParse',
     function ($q, LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function (incident) {
-            var deferred = $q.defer();
-            var promises = [];
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
-            querySectors.find({
+            return querySectors.find({
                 success: function(sectors) {
+                    var promises = [];
                     if(sectors.length==0) {
                         AddDefaultTbars(incident);
                         SaveTbars();
@@ -35,29 +34,19 @@ angular.module('ParseAdapter', ['ParseServices'])
                         for(var i=0; i<sectors.length; i++) {
                             var sector = sectors[i];
                             ConvertParseObject(sector, SECTOR_DEF);
-                            promises.push(FetchTypeForSector(sector));
                             TbarSectors.push(sector);
+                            promises.push(FetchTypeForSector(sector));
                             promises.push(LoadUnitsForSector(sector));
                             promises.push(FetchAcctTypeForSector(sector));
                         }
                     }
+                    //console.log("End of LoadSectorsForIncidentParse");
+                    return $q.all(promises);
                 },
                 error: function(error) {
                     console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
                 }
             });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
         }
     })
 
@@ -67,6 +56,8 @@ angular.module('ParseAdapter', ['ParseServices'])
                 function(type) {
                     ConvertParseObject(type, SECTOR_TYPE_DEF);
                     sector.sectorType= type;
+                    //console.log("End of FetchTypeForSector");
+                    return sector;
                 },
                 function(error) {
                     console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
@@ -77,41 +68,32 @@ angular.module('ParseAdapter', ['ParseServices'])
 
     .factory('LoadUnitsForSector', function ($q, ParseQuery, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit) {
         return function (sector) {
-            var deferred = $q.defer();
-            var promises = [];
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
             queryUnits.equalTo("sector", sector);
-            queryUnits.find({
+            return queryUnits.find({
                 success: function(units) {
+                    var promises = [];
                     for(var i=0; i<units.length; i++) {
                         var unit = units[i];
                         ConvertParseObject(unit, UNIT_DEF);
+                        sector.units.push(unit);
                         promises.push(FetchTypeForUnit(unit));
                         promises.push(LoadActionsForUnit(unit));
-                        sector.units.push(unit);
                     }
 
                     if(units.length>0) {
                         sector.selectedUnit=units[0];
                     }
+                    return $q.all(promises);
                 },
                 error: function(error) {
                     console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
                 }
+            }).then(function(units){
+                console.log("End of LoadUnitsForSector units:", units);
+                return units;
             });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
         }
     })
 
@@ -138,6 +120,8 @@ angular.module('ParseAdapter', ['ParseServices'])
                 function(type) {
                     ConvertParseObject(type, UNIT_TYPE_DEF);
                     unit.type= type;
+                    console.log("End of FetchTypeForUnit");
+                    return unit;
                 },
                 function(error) {
                     console.log('Failed to FetchTypeForUnit, with error code: ' + error.message);
@@ -159,6 +143,8 @@ angular.module('ParseAdapter', ['ParseServices'])
                         ConvertParseObject(action, ACTION_TYPE_DEF);
                         unit.actionsArr.push(action);
                     }
+                    console.log("End of LoadActionsForUnit");
+                    return unit;
                 }, function(obj, error) {
                     console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
                 }
