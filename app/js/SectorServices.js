@@ -7,7 +7,13 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
 
     .factory('LoadSectorsForIncident', function (AdapterStore) {
         return function (incident) {
-            return AdapterStore.adapter.LoadSectorsForIncident(incident);
+            //return AdapterStore.adapter.LoadSectorsForIncident(incident);
+            var p = new Promise(
+                function(resolve, reject) {
+                    window.setTimeout(function() {console.log("LoadSectorsForIncident Promise p4"); incident['key_A4']='value_A4'; resolve(incident);}, 2000);
+                }
+            );
+            return p;
         }
     })
 

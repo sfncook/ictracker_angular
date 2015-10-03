@@ -40,7 +40,6 @@ angular.module('ParseAdapter', ['ParseServices'])
                             promises.push(FetchAcctTypeForSector(sector));
                         }
                     }
-                    //console.log("End of LoadSectorsForIncidentParse");
                     return $q.all(promises);
                 },
                 error: function(error) {
@@ -56,7 +55,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                 function(type) {
                     ConvertParseObject(type, SECTOR_TYPE_DEF);
                     sector.sectorType= type;
-                    //console.log("End of FetchTypeForSector");
+                    console.log("End of FetchTypeForSector");
                     return sector;
                 },
                 function(error) {
@@ -90,9 +89,6 @@ angular.module('ParseAdapter', ['ParseServices'])
                 error: function(error) {
                     console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
                 }
-            }).then(function(units){
-                console.log("End of LoadUnitsForSector units:", units);
-                return units;
             });
         }
     })
@@ -155,10 +151,11 @@ angular.module('ParseAdapter', ['ParseServices'])
     .factory('FetchAcctTypeForSector', function (ConvertParseObject) {
         return function (sector) {
             if(sector.acctUnit){
-                sector.acctUnit.fetch().then(
+                return sector.acctUnit.fetch().then(
                     function(acctUnit) {
                         ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
                         sector.acctUnit = acctUnit;
+                        return acctUnit;
                     },
                     function(error) {
                         console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);

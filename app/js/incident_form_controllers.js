@@ -13,7 +13,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(
-            function(incident){
+            function(incidents){
+                var incident = incidents[0];
+                console.log("After LoadIncident incident:", incident.incidentType);
+                DataStore.incident = incident;
                 DataStore.loadSuccess = true;
                 DataStore.waitingToLoad = false;
             }
