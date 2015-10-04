@@ -22,30 +22,58 @@ angular.module('ParseAdapter', ['ParseServices'])
     .factory('LoadSectorsForIncidentParse',
     function ($q, LoadUnitsForSector, AddDefaultTbars, SaveTbars, TbarSectors, ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
         return function (incident) {
+            //var p = new Promise(
+            //    function(resolve, reject) {
+            //        window.setTimeout(function() {console.log("LoadSectorsForIncidentParse Promise p4"); incident['key_A4']='value_A4'; resolve(incident);}, 2000);
+            //    }
+            //);
+            //return p;
+
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
-            return querySectors.find({
-                success: function(sectors) {
+            return querySectors.find().then(
+                function(sectors){
                     var promises = [];
-                    if(sectors.length==0) {
-                        AddDefaultTbars(incident);
-                        SaveTbars();
-                    } else {
-                        for(var i=0; i<sectors.length; i++) {
-                            var sector = sectors[i];
-                            ConvertParseObject(sector, SECTOR_DEF);
-                            TbarSectors.push(sector);
-                            promises.push(FetchTypeForSector(sector));
-                            promises.push(LoadUnitsForSector(sector));
-                            promises.push(FetchAcctTypeForSector(sector));
-                        }
+                    for(var i=0; i<sectors.length; i++) {
+                        var sector = sectors[i];
+                        ConvertParseObject(sector, SECTOR_DEF);
+                        TbarSectors.push(sector);
+                        promises.push(FetchTypeForSector(sector));
+                        //promises.push(LoadUnitsForSector(sector));
+                        //promises.push(FetchAcctTypeForSector(sector));
                     }
+                    console.log("End of querySectors.first()");
                     return $q.all(promises);
                 },
-                error: function(error) {
-                    console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
+                function(error) {
+                    console.log('Failed to LoadIncident, with error code: ' + error.message);
                 }
-            });
+            );
+
+            //var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+            //querySectors.equalTo("incident", incident);
+            //return querySectors.find({
+            //    success: function(sectors) {
+            //        var promises = [];
+            //        if(sectors.length==0) {
+            //            AddDefaultTbars(incident);
+            //            SaveTbars();
+            //        } else {
+            //            for(var i=0; i<sectors.length; i++) {
+            //                var sector = sectors[i];
+            //                ConvertParseObject(sector, SECTOR_DEF);
+            //                TbarSectors.push(sector);
+            //                promises.push(FetchTypeForSector(sector));
+            //                promises.push(LoadUnitsForSector(sector));
+            //                promises.push(FetchAcctTypeForSector(sector));
+            //            }
+            //        }
+            //        return $q.all(promises);
+            //    },
+            //    error: function(error) {
+            //        console.log('Failed to LoadSectorsForIncident, with error code: ' + error.message);
+            //    }
+            //});
         }
     })
 

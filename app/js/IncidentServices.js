@@ -49,6 +49,7 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
                     var promises = [];
                     if(incident) {
                         ConvertParseObject(incident, INCIDENT_DEF);
+                        promises.push(LoadSectorsForIncident(incident));
                         promises.push(FetchTypeForIncident(incident));
                         //promises.push(LoadIAPForIncident_A(incident));
                     }
