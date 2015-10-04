@@ -64,26 +64,27 @@ angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
                     } else {
                         DataStore.upgrade = CreateNewUpgrade(incident);
                     }
+                    return incident;
                 }
             );
         }
     })
 
-    .factory('CreateNewUpgrade', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
-        return function (curIncident) {
+    .factory('CreateNewUpgrade', function (ConvertParseObject, DataStore) {
+        return function (incident) {
             var UpgradeParseObj = Parse.Object.extend('Upgrade');
             var upgradeObject = new UpgradeParseObj();
             ConvertParseObject(upgradeObject, UPGRADE_DEF);
-            upgradeObject.incident = curIncident;
+            upgradeObject.incident      = incident;
             upgradeObject.isWorkingFire = false;
-            upgradeObject.is1stAlarm = false;
-            upgradeObject.is2ndAlarm = false;
-            upgradeObject.is3rdAlarm = false;
-            upgradeObject.is4thAlarm = false;
-            upgradeObject.isBalanceTo = false;
-            upgradeObject.isEnRoute = false;
+            upgradeObject.is1stAlarm    = false;
+            upgradeObject.is2ndAlarm    = false;
+            upgradeObject.is3rdAlarm    = false;
+            upgradeObject.is4thAlarm    = false;
+            upgradeObject.isBalanceTo   = false;
+            upgradeObject.isEnRoute     = false;
             return upgradeObject;
         }
-    }])
+    })
 
 ;
