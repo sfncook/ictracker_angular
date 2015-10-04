@@ -7,7 +7,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             return incident.incidentType.fetch().then(function(type) {
                 ConvertParseObject(type, INCIDENT_TYPE_DEF);
                 incident.incidentType = type;
-                console.log("End of FetchTypeForIncident_A");
                 return incident;
             });
         }
@@ -25,7 +24,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     } else {
                         incident.iap = 'UNDEFINED';
                     }
-                    console.log("End of LoadIAPForIncident_A");
                     return incident;
                 }
             );
@@ -39,7 +37,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     function(acctUnit) {
                         ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
                         sector.acctUnit = acctUnit;
-                        console.log("End of FetchAcctTypeForSector_A");
                         return sector;
                     },
                     function(error) {
@@ -56,7 +53,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 function(type) {
                     ConvertParseObject(type, SECTOR_TYPE_DEF);
                     sector.sectorType= type;
-                    console.log("End of FetchTypeForSector_A");
                     return sector;
                 },
                 function(error) {
@@ -72,7 +68,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 function(type) {
                     ConvertParseObject(type, UNIT_TYPE_DEF);
                     unit.type= type;
-                    console.log("End of FetchTypeForUnit_A");
                     return unit;
                 },
                 function(error) {
@@ -95,7 +90,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                         ConvertParseObject(action, ACTION_TYPE_DEF);
                         unit.actionsArr.push(action);
                     }
-                    console.log("End of FetchActionsForUnit_A");
                     return unit;
                 }, function(obj, error) {
                     console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
@@ -119,7 +113,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     promises.push(FetchTypeForUnit_A(unit));
                     promises.push(FetchActionsForUnit_A(unit));
                 }
-                console.log("End of queryUnits.find()");
                 return $q.all(promises);
             });
         }
@@ -141,122 +134,14 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     promises.push(LoadUnitsForSector_A(sector));
                     promises.push(FetchAcctTypeForSector_A(sector));
                 }
-                console.log("End of querySectors.find()");
                 return $q.all(promises);
             });
         }
     })
 
-    .factory('createPromise1', function () {
-        return function (incident) {
-            var p = new Promise(
-                function(resolve, reject) {
-                    window.setTimeout(function() {console.log("Promise p1"); incident['key_A1']='value_A1'; resolve(incident);}, 1000);
-                }
-            );
-            return p;
-        }
-    })
-    .factory('createPromise2', function () {
-        return function (incident) {
-            var p = new Promise(
-                function(resolve, reject) {
-                    window.setTimeout(function() {console.log("Promise p2"); incident['key_A2']='value_A2'; resolve(incident);}, 2000);
-                }
-            );
-            return p;
-        }
-    })
-    .factory('createPromise3', function () {
-        return function (incident) {
-            var p = new Promise(
-                function(resolve, reject) {
-                    window.setTimeout(function() {console.log("Promise p3"); incident['key_A3']='value_A3'; resolve(incident);}, 3000);
-                }
-            );
-            return p;
-        }
-    })
-    .factory('createPromise4', function () {
-        return function (incident) {
-            var p = new Promise(
-                function(resolve, reject) {
-                    window.setTimeout(function() {console.log("Promise p4"); incident['key_A4']='value_A4'; resolve(incident);}, 4000);
-                }
-            );
-            return p;
-        }
-    })
-
     .factory('LoadIncident_A', function (
-        $q,
-        FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A,
-        ConvertParseObject,
-        createPromise1, createPromise2, createPromise3, createPromise4) {
+        $q, FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A, ConvertParseObject) {
         return function (incidentObjectId) {
-
-            //var p1 = new Promise(
-            //    function(resolve, reject) {
-            //        window.setTimeout(function() {console.log("Promise p1"); obj['key_A1']='value_A1'; resolve(obj);}, 1000);
-            //    }
-            //);
-            //var p2 = new Promise(
-            //    function(resolve, reject) {
-            //        window.setTimeout(function() {console.log("Promise p2"); obj['key_A2']='value_A2'; resolve(obj);}, 3000);
-            //    }
-            //);
-            //var p3 = new Promise(
-            //    function(resolve, reject) {
-            //        window.setTimeout(function() {console.log("Promise p3"); obj['key_A3']='value_A3'; resolve(obj);}, 5000);
-            //    }
-            //);
-            //var p4 = p1.then(
-            //    function(obj) {
-            //        console.log("Promise p4");
-            //        obj['type'] = 'this is a type';
-            //        deferred.resolve(obj);
-            //        return obj;
-            //    },
-            //    function(error) {
-            //        console.log('p4 Failed, with error code: ' + error.message);
-            //    }
-            //);
-            //
-            //// #### WORKS #####
-            //var obj = {'foo':'bar'};
-            //var p1 = createPromise1(obj);
-            //var p2 = createPromise2(obj);
-            //var p3 = createPromise3(obj);
-            //
-            //var deferred = $q.defer();
-            //var promises = [];
-            //promises.push(p1);
-            //promises.push(p2);
-            //promises.push(p3);
-            //
-            //return $q.all(promises);
-
-
-            //// #### WORKS #####
-            //var obj = {'foo':'bar'};
-            //var p1 = createPromise1(obj);
-            //return p1.then(function(obj_) {
-            //    var p2 = createPromise2(obj_);
-            //    var p3 = createPromise3(obj_);
-            //    var p4 = createPromise4(obj_);
-            //
-            //    var deferred = $q.defer();
-            //    var promises = [];
-            //    promises.push(p2);
-            //    promises.push(p3);
-            //    promises.push(p4);
-            //
-            //    return $q.all(promises);
-            //});
-
-
-
-
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
             queryIncident.include('incidentType');
@@ -274,36 +159,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     //promises.push(LoadUpgradeForIncident(incident));
                     //promises.push(LoadDispatchedUnitsForIncident(incident));
                 }
-                console.log("End of queryIncident.first()");
-                return $q.all(promises).then(function(obj){
-                    console.log("The last ending obj:",obj);
+                return $q.all(promises).then(function(bunchOfObjects){
+                    // Ignore the bunchOfObjects.  We just want to return the incident:
                     return incident;
                 });
             });
-
-
-
-            //var obj = {'foo':'bar'};
-            //var p4 = new Promise(
-            //    function(resolve, reject) {
-            //        window.setTimeout(function() {console.log("Promise p4"); obj['key_A4']='value_A4'; resolve(obj);}, 2000);
-            //    }
-            //);
-            //var p5 = p4.then(
-            //    function(obj) {
-            //        console.log("Promise p5");
-            //        var promises = [];
-            //        promises.push(createPromise1(obj));
-            //        promises.push(createPromise2(obj));
-            //        promises.push(createPromise3(obj));
-            //        $q.all(promises).then(function(obj){
-            //            console.log("After Promise p5 obj:", obj);
-            //        });
-            //        return obj;
-            //    }
-            //);
-            //
-            //return p5.then();
         }
     })
 
@@ -317,63 +177,12 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         var incidentObjectId = getHttpRequestByName('i');
-        //LoadIncident(incidentObjectId).then(
-        //    function(incident){
-        //        console.log("check 2");
-        //        DataStore.incident = incident;
-        //        DataStore.loadSuccess = true;
-        //        DataStore.waitingToLoad = false;
-        //    }
-        //);
-
         LoadIncident_A(incidentObjectId).then(function(incident){
             console.log("LoadA afterwards incident:", incident);
             DataStore.loadSuccess = true;
             DataStore.waitingToLoad = false;
             DataStore.incident = incident;
         })
-
-        //var deferred = $q.defer();
-        //var urlCalls = [];
-        //
-        //var promiseCount = 0;
-        //var thisPromiseCount = ++promiseCount;
-        //
-        //var p1 = new Promise(
-        //    function(resolve, reject) {
-        //        window.setTimeout(function() {resolve({'name':'A'});}, 1000);
-        //    }
-        //);
-        //var p2 = new Promise(
-        //    function(resolve, reject) {
-        //        window.setTimeout(function() {resolve({'name':'B'});}, 3000);
-        //    }
-        //);
-        //var p3 = new Promise(
-        //    function(resolve, reject) {
-        //        window.setTimeout(function() {resolve({'name':'C'});}, 2000);
-        //    }
-        //);
-
-        //p1.then(function(obj){
-        //    console.log("p1 afterwards obj:", obj);
-        //});
-        //p2.then(function(obj){
-        //    console.log("p2 afterwards obj:", obj);
-        //});
-        //p3.then(function(obj){
-        //    console.log("p3 afterwards obj:", obj);
-        //});
-
-        //var deferred = $q.defer();
-        //var promises = [];
-        //promises.push(p1);
-        //promises.push(p2);
-        //promises.push(p3);
-        //$q.all(promises).then(function(obj){
-        //    console.log("$q afterwards obj:", obj);
-        //})
-
     })
 
     .filter('range', function() {
