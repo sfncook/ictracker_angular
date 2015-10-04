@@ -77,6 +77,38 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .factory('FetchUnitTypeForMayday_A', function (ConvertParseObject) {
+        return function (mayday) {
+            if(mayday.unitType) {
+                return mayday.unitType.fetch().then(
+                    function(unitType) {
+                        ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                        mayday.unitType = unitType;
+                        return mayday;
+                    },
+                    function(error) {
+                        console.log('Failed to FetchUnitTypeForMayday, with error code: ' + error.message);
+                    }
+                );
+            }
+        }
+    })
+    .factory('FetchSectorTypeForMayday_A', function (ConvertParseObject) {
+        return function (mayday) {
+            if(mayday.sectorType) {
+                return mayday.sectorType.fetch().then(
+                    function(sectorType) {
+                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+                        mayday.sectorType = sectorType;
+                        return mayday;
+                    },
+                    function(error) {
+                        console.log('Failed to FetchSectorTypeForMayday, with error code: ' + error.message);
+                    }
+                );
+            }
+        }
+    })
     .factory('FetchActionsForUnit_A', function (ConvertParseObject) {
         return function (unit) {
             var relation = unit.relation("actions");
@@ -97,7 +129,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             );
         }
     })
-
     .factory('LoadUnitsForSector_A',
     function ($q, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit, FetchTypeForUnit_A, FetchActionsForUnit_A) {
         return function (sector) {
@@ -117,7 +148,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             });
         }
     })
-
     .factory('LoadSectorsForIncident_A',
     function ($q, ConvertParseObject, FetchAcctTypeForSector_A, TbarSectors, FetchTypeForSector_A, LoadUnitsForSector_A) {
         return function (incident) {
@@ -138,9 +168,28 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             });
         }
     })
-
+    .factory('LoadAllMaydaysForIncident_A',
+    function ($q, Maydays, ConvertParseObject, FetchUnitTypeForMayday_A, FetchSectorTypeForMayday_A) {
+        return function (incident) {
+            var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
+            queryMaydays.equalTo("incident", incident);
+            queryMaydays.include('unitType');
+            queryMaydays.include('sectorType');
+            return queryMaydays.find().then(function(maydays){
+                var promises = [];
+                for(var i=0; i<maydays.length; i++) {
+                    var mayday = maydays[i];
+                    ConvertParseObject(mayday, MAYDAY_DEF);
+                    Maydays.push(mayday);
+                    promises.push(FetchUnitTypeForMayday_A(mayday));
+                    promises.push(FetchSectorTypeForMayday_A(mayday));
+                }
+                return $q.all(promises);
+            });
+        }
+    })
     .factory('LoadIncident_A', function (
-        $q, FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A, ConvertParseObject) {
+        $q, ConvertParseObject, FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A, LoadAllMaydaysForIncident_A) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -152,7 +201,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     var promises = [];
                     promises.push(FetchTypeForIncident_A(incident));
                     promises.push(LoadSectorsForIncident_A(incident));
-                    //promises.push(LoadAllMaydaysForIncident(incident));
+                    promises.push(LoadAllMaydaysForIncident_A(incident));
                     promises.push(LoadIAPForIncident_A(incident));
                     //promises.push(LoadObjectivesForIncident(incident));
                     //promises.push(LoadOSRForIncident(incident));
