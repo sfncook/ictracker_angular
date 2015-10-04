@@ -32,6 +32,121 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
+    .factory('FetchAcctTypeForSector_A', function (ConvertParseObject) {
+        return function (sector) {
+            if(sector.acctUnit) {
+                return sector.acctUnit.fetch().then(
+                    function(acctUnit) {
+                        ConvertParseObject(acctUnit, UNIT_TYPE_DEF);
+                        sector.acctUnit = acctUnit;
+                        console.log("End of FetchAcctTypeForSector_A");
+                        return sector;
+                    },
+                    function(error) {
+                        console.log('Failed to FetchAcctTypeForSector, with error code: ' + error.message);
+                    }
+                );
+            }
+        }
+    })
+
+    .factory('FetchTypeForSector_A', function (ConvertParseObject) {
+        return function (sector) {
+            return sector.sectorType.fetch().then(
+                function(type) {
+                    ConvertParseObject(type, SECTOR_TYPE_DEF);
+                    sector.sectorType= type;
+                    console.log("End of FetchTypeForSector_A");
+                    return sector;
+                },
+                function(error) {
+                    console.log('Failed to FetchTypeForSector, with error code: ' + error.message);
+                }
+            );
+        }
+    })
+
+    .factory('FetchTypeForUnit_A', function (ConvertParseObject) {
+        return function (unit) {
+            return unit.type.fetch().then(
+                function(type) {
+                    ConvertParseObject(type, UNIT_TYPE_DEF);
+                    unit.type= type;
+                    console.log("End of FetchTypeForUnit_A");
+                    return unit;
+                },
+                function(error) {
+                    console.log('Failed to FetchTypeForUnit_A, with error code: ' + error.message);
+                }
+            );
+        }
+    })
+
+    .factory('FetchActionsForUnit_A', function (ConvertParseObject) {
+        return function (unit) {
+            var relation = unit.relation("actions");
+            return relation.query().find().then(
+                function(actions) {
+                    if(!unit.actionsArr) {
+                        unit.actionsArr = new Array();
+                    }
+                    for(var i=0; i<actions.length; i++) {
+                        var action = actions[i];
+                        ConvertParseObject(action, ACTION_TYPE_DEF);
+                        unit.actionsArr.push(action);
+                    }
+                    console.log("End of FetchActionsForUnit_A");
+                    return unit;
+                }, function(obj, error) {
+                    console.log('Failed to LoadActionsForUnit, with error code: ' + error.message);
+                }
+            );
+        }
+    })
+
+    .factory('LoadUnitsForSector_A',
+    function ($q, ConvertParseObject, LoadActionsForUnit, FetchTypeForUnit, FetchTypeForUnit_A, FetchActionsForUnit_A) {
+        return function (sector) {
+            sector.units = new Array();
+            var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
+            queryUnits.equalTo("sector", sector);
+            return queryUnits.find().then(function(units){
+                var promises = [];
+                for(var i=0; i<units.length; i++) {
+                    var unit = units[i];
+                    ConvertParseObject(unit, UNIT_DEF);
+                    sector.units.push(unit);
+                    promises.push(FetchTypeForUnit_A(unit));
+                    promises.push(FetchActionsForUnit_A(unit));
+                }
+                console.log("End of queryUnits.find()");
+                return $q.all(promises);
+            });
+        }
+    })
+
+    .factory('LoadSectorsForIncident_A',
+    function ($q, ConvertParseObject, FetchAcctTypeForSector_A, TbarSectors, FetchTypeForSector_A, LoadUnitsForSector_A) {
+        return function (incident) {
+            var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+            querySectors.equalTo("incident", incident);
+            querySectors.include('sectorType');
+            return querySectors.find().then(function(sectors){
+                var promises = [];
+                for(var i=0; i<sectors.length; i++) {
+                    var sector = sectors[i];
+                    ConvertParseObject(sector, SECTOR_DEF);
+                    TbarSectors.push(sector);
+                    promises.push(FetchTypeForSector_A(sector));
+                    promises.push(LoadUnitsForSector_A(sector));
+                    promises.push(FetchAcctTypeForSector_A(sector));
+                }
+                console.log("End of querySectors.find()");
+                return $q.all(promises);
+            });
+        }
+    })
+
     .factory('createPromise1', function () {
         return function (incident) {
             var p = new Promise(
@@ -74,7 +189,8 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     })
 
     .factory('LoadIncident_A', function (
-        $q, FetchTypeForIncident_A, LoadIAPForIncident_A,
+        $q,
+        FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A,
         ConvertParseObject,
         createPromise1, createPromise2, createPromise3, createPromise4) {
         return function (incidentObjectId) {
@@ -150,7 +266,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
                     var promises = [];
                     promises.push(FetchTypeForIncident_A(incident));
-                    //promises.push(LoadSectorsForIncident(incident));
+                    promises.push(LoadSectorsForIncident_A(incident));
                     //promises.push(LoadAllMaydaysForIncident(incident));
                     promises.push(LoadIAPForIncident_A(incident));
                     //promises.push(LoadObjectivesForIncident(incident));
@@ -159,7 +275,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                     //promises.push(LoadDispatchedUnitsForIncident(incident));
                 }
                 console.log("End of queryIncident.first()");
-                return $q.all(promises);
+                return $q.all(promises).then(function(obj){
+                    console.log("The last ending obj:",obj);
+                    return incident;
+                });
             });
 
 
@@ -207,9 +326,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         //    }
         //);
 
-        LoadIncident_A(incidentObjectId).then(function(obj){
-            console.log("LoadA afterwards obj:", obj);
-            console.log("LoadA afterwards obj[0]:", obj[0].incidentType);
+        LoadIncident_A(incidentObjectId).then(function(incident){
+            console.log("LoadA afterwards incident:", incident);
+            DataStore.loadSuccess = true;
+            DataStore.waitingToLoad = false;
+            DataStore.incident = incident;
         })
 
         //var deferred = $q.defer();
