@@ -152,7 +152,7 @@
 
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
-        <tbar gridster-item="sector" ng-repeat="sector in tbar_sectors">
+        <tbar gridster-item="sector" ng-repeat="sector in dataStore.incident.sectors">
             <div class="tbar_title_container">
                 <button ng-disabled="sector.units.length==0"
                         class="par-btn sector_toprow_btn"
@@ -254,7 +254,7 @@
         <div class="grid_item_1_5" ng-repeat="sectorType in OrderedSectorTypes">
             <button
                     class="dlg_sector_name_btn sector_name_btn"
-                    ng-class="{button_hidden:!sectorType.isVisible, glowlightgreen: tbar_sectors.findSectorByName(sectorType.name)>-1}"
+                    ng-class="{button_hidden:!sectorType.isVisible, glowlightgreen: incident.sectors.findSectorByName(sectorType.name)>-1}"
                     ng-click="selectSectorType(sectorType)">
                 {{sectorType.name}}
                 <img class="clock_icon"
@@ -353,7 +353,7 @@
                 <button class="unit_dlg_btn unit_btn"
                         ng-repeat="unit in type.units"
                         ng-click="selectUnit(unit)"
-                        ng-class="{glowlightgreen: tbar_sectors.unitInSectors().findUnitByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
+                        ng-class="{glowlightgreen: incident.sectors.unitInSectors().findUnitByName(unit.name)>-1, btn_smtext: unit.name.length>5, btn_medtext: unit.name.length>4}">
                     {{unit.name}}
                 </button>
             </div>

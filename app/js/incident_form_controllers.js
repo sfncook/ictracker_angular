@@ -107,7 +107,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, TbarSectors, DoesSectorHavePar){
+    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, DoesSectorHavePar){
 
         $scope.openMaydayDlg = function () {
             console.log("click TbarContainer");
@@ -115,7 +115,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         $scope.gridsterOpts = GridsterOpts;
-        $scope.tbar_sectors = TbarSectors;
+        $scope.dataStore = DataStore;
 
         $scope.showParDlg = function(sector) {
             DataStore.openParDlg(sector);
