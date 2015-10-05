@@ -3,13 +3,17 @@
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
 
     .run(function($q, IsLoggedIn, InitDatabase, DataStore, LoadIncident) {
-        InitDatabase();
+        if(!InitDatabase()) {
+            var urlLink = "login.html";
+            window.location.href = urlLink;
+        }
 
         if(!IsLoggedIn()){
             ResetSavedDepartment();
             var urlLink = "login.html";
             window.location.href = urlLink;
         }
+
 
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(function(incident){

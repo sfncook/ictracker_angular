@@ -1,7 +1,7 @@
 
 angular.module('ParseAdapter', ['ParseServices'])
 
-    .factory('ParseAdapter', function(LoadIncident_A) {
+    .factory('ParseAdapter', function(LoadIncident_Parse) {
         return {
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
@@ -9,18 +9,24 @@ angular.module('ParseAdapter', ['ParseServices'])
                     var js_key =    localStorage.getItem('department_js_key');
                     if(app_key && js_key) {
                         Parse.initialize(app_key, js_key);
+                        return true;
                     } else {
                         console.log("app_key and js_key not defined.  Logging out.");
-                        Parse.User.logOut();
+                        try{
+                            Parse.User.logOut();
+                        } catch(err) {
+                            console.log("Error try to run Parse.User.logOut()  err:", err);
+                        }
+                        return false;
                     }
                 }
             },
-            LoadIncident: LoadIncident_A
+            LoadIncident: LoadIncident_Parse
         };
     })
 
 
-    .factory('FetchTypeForIncident_A', function (ConvertParseObject) {
+    .factory('FetchTypeForIncident_Parse', function (ConvertParseObject) {
         return function (incident) {
             return incident.incidentType.fetch().then(function(type) {
                 ConvertParseObject(type, INCIDENT_TYPE_DEF);
@@ -29,7 +35,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             });
         }
     })
-    .factory('LoadIAPForIncident_A', function (ConvertParseObject) {
+    .factory('LoadIAPForIncident_Parse', function (ConvertParseObject) {
         return function (incident) {
             var queryIap = new Parse.Query(Parse.Object.extend('Iap'));
             queryIap.equalTo("incident", incident);
@@ -48,7 +54,7 @@ angular.module('ParseAdapter', ['ParseServices'])
         }
     })
 
-    .factory('FetchAcctTypeForSector_A', function (ConvertParseObject) {
+    .factory('FetchAcctTypeForSector_Parse', function (ConvertParseObject) {
         return function (sector) {
             if(sector.acctUnit) {
                 return sector.acctUnit.fetch().then(
@@ -65,7 +71,7 @@ angular.module('ParseAdapter', ['ParseServices'])
         }
     })
 
-    .factory('FetchTypeForSector_A', function (ConvertParseObject) {
+    .factory('FetchTypeForSector_Parse', function (ConvertParseObject) {
         return function (sector) {
             return sector.sectorType.fetch().then(
                 function(type) {
@@ -80,7 +86,7 @@ angular.module('ParseAdapter', ['ParseServices'])
         }
     })
 
-    .factory('FetchTypeForUnit_A', function (ConvertParseObject) {
+    .factory('FetchTypeForUnit_Parse', function (ConvertParseObject) {
         return function (unit) {
             return unit.type.fetch().then(
                 function(type) {
@@ -89,13 +95,13 @@ angular.module('ParseAdapter', ['ParseServices'])
                     return unit;
                 },
                 function(error) {
-                    console.log('Failed to FetchTypeForUnit_A, with error code: ' + error.message);
+                    console.log('Failed to FetchTypeForUnit_Parse, with error code: ' + error.message);
                 }
             );
         }
     })
 
-    .factory('FetchUnitTypeForMayday_A', function (ConvertParseObject) {
+    .factory('FetchUnitTypeForMayday_Parse', function (ConvertParseObject) {
         return function (mayday) {
             if(mayday.unitType) {
                 return mayday.unitType.fetch().then(
@@ -111,7 +117,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             }
         }
     })
-    .factory('FetchSectorTypeForMayday_A', function (ConvertParseObject) {
+    .factory('FetchSectorTypeForMayday_Parse', function (ConvertParseObject) {
         return function (mayday) {
             if(mayday.sectorType) {
                 return mayday.sectorType.fetch().then(
@@ -127,7 +133,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             }
         }
     })
-    .factory('FetchActionsForUnit_A', function (ConvertParseObject) {
+    .factory('FetchActionsForUnit_Parse', function (ConvertParseObject) {
         return function (unit) {
             var relation = unit.relation("actions");
             return relation.query().find().then(
@@ -147,8 +153,8 @@ angular.module('ParseAdapter', ['ParseServices'])
             );
         }
     })
-    .factory('LoadUnitsForSector_A',
-    function ($q, ConvertParseObject, FetchTypeForUnit_A, FetchActionsForUnit_A) {
+    .factory('LoadUnitsForSector_Parse',
+    function ($q, ConvertParseObject, FetchTypeForUnit_Parse, FetchActionsForUnit_Parse) {
         return function (sector) {
             sector.units = new Array();
             var queryUnits = new Parse.Query(Parse.Object.extend('Unit'));
@@ -159,35 +165,36 @@ angular.module('ParseAdapter', ['ParseServices'])
                     var unit = units[i];
                     ConvertParseObject(unit, UNIT_DEF);
                     sector.units.push(unit);
-                    promises.push(FetchTypeForUnit_A(unit));
-                    promises.push(FetchActionsForUnit_A(unit));
+                    promises.push(FetchTypeForUnit_Parse(unit));
+                    promises.push(FetchActionsForUnit_Parse(unit));
                 }
                 return $q.all(promises);
             });
         }
     })
-    .factory('LoadSectorsForIncident_A',
-    function ($q, ConvertParseObject, FetchAcctTypeForSector_A, TbarSectors, FetchTypeForSector_A, LoadUnitsForSector_A) {
+    .factory('LoadSectorsForIncident_Parse',
+    function ($q, ConvertParseObject, FetchAcctTypeForSector_Parse, FetchTypeForSector_Parse, LoadUnitsForSector_Parse) {
         return function (incident) {
             var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
             querySectors.equalTo("incident", incident);
             querySectors.include('sectorType');
             return querySectors.find().then(function(sectors){
+                incident.sectors = new Array();
                 var promises = [];
                 for(var i=0; i<sectors.length; i++) {
                     var sector = sectors[i];
                     ConvertParseObject(sector, SECTOR_DEF);
-                    TbarSectors.push(sector);
-                    promises.push(FetchTypeForSector_A(sector));
-                    promises.push(LoadUnitsForSector_A(sector));
-                    promises.push(FetchAcctTypeForSector_A(sector));
+                    incident.sectors.push(sector);
+                    promises.push(FetchTypeForSector_Parse(sector));
+                    promises.push(LoadUnitsForSector_Parse(sector));
+                    promises.push(FetchAcctTypeForSector_Parse(sector));
                 }
                 return $q.all(promises);
             });
         }
     })
-    .factory('LoadAllMaydaysForIncident_A',
-    function ($q, Maydays, ConvertParseObject, FetchUnitTypeForMayday_A, FetchSectorTypeForMayday_A) {
+    .factory('LoadAllMaydaysForIncident_Parse',
+    function ($q, ConvertParseObject, FetchUnitTypeForMayday_Parse, FetchSectorTypeForMayday_Parse) {
         return function (incident) {
             var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
             queryMaydays.equalTo("incident", incident);
@@ -195,18 +202,19 @@ angular.module('ParseAdapter', ['ParseServices'])
             queryMaydays.include('sectorType');
             return queryMaydays.find().then(function(maydays){
                 var promises = [];
+                incident.maydays = new Array();
                 for(var i=0; i<maydays.length; i++) {
                     var mayday = maydays[i];
                     ConvertParseObject(mayday, MAYDAY_DEF);
-                    Maydays.push(mayday);
-                    promises.push(FetchUnitTypeForMayday_A(mayday));
-                    promises.push(FetchSectorTypeForMayday_A(mayday));
+                    incident.maydays.push(mayday);
+                    promises.push(FetchUnitTypeForMayday_Parse(mayday));
+                    promises.push(FetchSectorTypeForMayday_Parse(mayday));
                 }
                 return $q.all(promises);
             });
         }
     })
-    .factory('CreateNewObjectives_A', function (ConvertParseObject, DataStore) {
+    .factory('CreateNewObjectives_Parse', function (ConvertParseObject, DataStore) {
         return function (incident) {
             var ObjectivesParseObj = Parse.Object.extend('Objectives');
             var objectivesObject = new ObjectivesParseObj();
@@ -226,7 +234,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             return objectivesObject;
         }
     })
-    .factory('FetchObjectivesForIncident_A', function (ConvertParseObject, CreateNewObjectives_A, DataStore) {
+    .factory('FetchObjectivesForIncident_Parse', function (ConvertParseObject, CreateNewObjectives_Parse, DataStore) {
         return function (incident) {
             var queryObjectives = new Parse.Query(Parse.Object.extend('Objectives'));
             queryObjectives.equalTo("incident", incident);
@@ -236,14 +244,14 @@ angular.module('ParseAdapter', ['ParseServices'])
                         ConvertParseObject(objectivesObject, OBJECTIVES_DEF);
                         DataStore.objectives = objectivesObject;
                     } else {
-                        DataStore.objectives = CreateNewObjectives_A(incident);
+                        DataStore.objectives = CreateNewObjectives_Parse(incident);
                     }
                     return incident;
                 }
             );
         }
     })
-    .factory('FetchOSRForIncident_A', function (ConvertParseObject, DataStore, CreateNewOSR_A) {
+    .factory('FetchOSRForIncident_Parse', function (ConvertParseObject, DataStore, CreateNewOSR_Parse) {
         return function (incident) {
             var queryOSR = new Parse.Query(Parse.Object.extend('OSR'));
             queryOSR.equalTo("incident", incident);
@@ -253,7 +261,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                         ConvertParseObject(osrObject, OSR_DEF);
                         DataStore.osr = osrObject;
                     } else {
-                        DataStore.osr = CreateNewOSR_A(incident);
+                        DataStore.osr = CreateNewOSR_Parse(incident);
                     }
                     DataStore.updateOSRPerc();
                     return incident;
@@ -261,7 +269,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             );
         }
     })
-    .factory('CreateNewOSR_A', function (ConvertParseObject) {
+    .factory('CreateNewOSR_Parse', function (ConvertParseObject) {
         return function (incident) {
             var OSRParseObj = Parse.Object.extend('OSR');
             var osrObject = new OSRParseObj();
@@ -295,7 +303,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             return osrObject;
         }
     })
-    .factory('LoadDispatchedUnitsForIncident_A', function ($q, ConvertParseObject, DataStore) {
+    .factory('LoadDispatchedUnitsForIncident_Parse', function ($q, ConvertParseObject, DataStore) {
         return function (incident) {
             var queryDispatchedUnits = new Parse.Query(Parse.Object.extend('DispatchedUnits'));
             queryDispatchedUnits.equalTo("incident", incident);
@@ -324,11 +332,11 @@ angular.module('ParseAdapter', ['ParseServices'])
             });
         }
     })
-    .factory('LoadIncident_A', function (
+    .factory('LoadIncident_Parse', function (
         $q, ConvertParseObject,
-        FetchTypeForIncident_A, LoadIAPForIncident_A, LoadSectorsForIncident_A,
-        LoadAllMaydaysForIncident_A, FetchObjectivesForIncident_A, FetchOSRForIncident_A,
-        LoadUpgradeForIncident, LoadDispatchedUnitsForIncident_A) {
+        FetchTypeForIncident_Parse, LoadIAPForIncident_Parse, LoadSectorsForIncident_Parse,
+        LoadAllMaydaysForIncident_Parse, FetchObjectivesForIncident_Parse, FetchOSRForIncident_Parse,
+        LoadUpgradeForIncident, LoadDispatchedUnitsForIncident_Parse) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -338,14 +346,14 @@ angular.module('ParseAdapter', ['ParseServices'])
                     ConvertParseObject(incident, INCIDENT_DEF);
 
                     var promises = [];
-                    promises.push(FetchTypeForIncident_A(incident));
-                    promises.push(LoadSectorsForIncident_A(incident));
-                    promises.push(LoadAllMaydaysForIncident_A(incident));
-                    promises.push(LoadIAPForIncident_A(incident));
-                    promises.push(FetchObjectivesForIncident_A(incident));
-                    promises.push(FetchOSRForIncident_A(incident));
+                    promises.push(FetchTypeForIncident_Parse(incident));
+                    promises.push(LoadSectorsForIncident_Parse(incident));
+                    promises.push(LoadAllMaydaysForIncident_Parse(incident));
+                    promises.push(LoadIAPForIncident_Parse(incident));
+                    promises.push(FetchObjectivesForIncident_Parse(incident));
+                    promises.push(FetchOSRForIncident_Parse(incident));
                     promises.push(LoadUpgradeForIncident(incident));
-                    promises.push(LoadDispatchedUnitsForIncident_A(incident));
+                    promises.push(LoadDispatchedUnitsForIncident_Parse(incident));
                 }
                 return $q.all(promises).then(function(bunchOfObjects){
                     // Ignore the bunchOfObjects.  We just want to return the incident:

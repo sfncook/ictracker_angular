@@ -95,7 +95,7 @@ angular.module('DataServices', ['ParseServices', 'AdapterServices'])
 
     .factory('InitDatabase', function (AdapterStore) {
         return function () {
-            AdapterStore.adapter.init();
+            return AdapterStore.adapter.init();
         }
     })
 
