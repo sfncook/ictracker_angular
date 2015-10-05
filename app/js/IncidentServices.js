@@ -37,35 +37,9 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         }
     }])
 
-    .factory('LoadIncident',
-        function ($q, ConvertParseObject, DataStore, FetchTypeForIncident, LoadAllMaydaysForIncident, LoadSectorsForIncident, LoadIAPForIncident, LoadObjectivesForIncident, LoadOSRForIncident, LoadUpgradeForIncident, LoadDispatchedUnitsForIncident) {
+    .factory('LoadIncident', function (AdapterStore) {
         return function (incidentObjectId) {
-            var deferred = $q.defer();
-            var promises = [];
-            var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
-            queryIncident.equalTo("objectId", incidentObjectId);
-            queryIncident.include('incidentType');
-            queryIncident.first({
-                success: function(incident) {
-                    if(incident) {
-                        ConvertParseObject(incident, INCIDENT_DEF);
-
-                        promises.push(FetchTypeForIncident(incident));
-                        promises.push(LoadSectorsForIncident(incident));
-                        promises.push(LoadAllMaydaysForIncident(incident));
-                        promises.push(LoadIAPForIncident(incident));
-                        promises.push(LoadObjectivesForIncident(incident));
-                        promises.push(LoadOSRForIncident(incident));
-                        promises.push(LoadUpgradeForIncident(incident));
-                        promises.push(LoadDispatchedUnitsForIncident(incident));
-                    }
-                    return incident;
-                },
-                error: function(error) {
-                    console.log('Failed to LoadIncident, with error code: ' + error.message);
-                }
-            });
-            return $q.all(promises);
+            return AdapterStore.adapter.LoadIncident(incidentObjectId);
         }
     })
 

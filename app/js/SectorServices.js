@@ -1,14 +1,8 @@
 
-angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServices'])
+angular.module('SectorServices', ['ParseServices', 'DataServices'])
 
     .factory('SectorTypes', function() {
         return new Array();
-    })
-
-    .factory('LoadSectorsForIncident', function (AdapterStore) {
-        return function (incident) {
-            return AdapterStore.adapter.LoadSectorsForIncident(incident);
-        }
     })
 
     .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
@@ -61,21 +55,71 @@ angular.module('SectorServices', ['ParseServices', 'DataServices', 'AdapterServi
         }
     }])
 
+    .factory('UpdateUnitsForSector', function () {
+        return function ($scope, sector) {
+            //for(var i=0; i<sector.units.length; i++) {
+            //    var unit = sector.units[i];
+            //    unit.fetch({
+            //        success:function(unit) {
+            //            FetchTypeForUnit(unit);
+            //            LoadActionsForUnit(unit);
+            //        },
+            //        error: function(error) {
+            //            console.log('Failed to UpdateUnitsForSector, with error code: ' + error.message);
+            //        }
+            //    });
+            //}
+        }
+    })
+
+    //.factory('UpdateUnitsForSector', ['LoadActionsForUnit', 'FetchTypeForUnit', function (LoadActionsForUnit, FetchTypeForUnit) {
+    //    return function ($scope, sector) {
+    //        for(var i=0; i<sector.units.length; i++) {
+    //            var unit = sector.units[i];
+    //            unit.fetch({
+    //                success:function(unit) {
+    //                    FetchTypeForUnit(unit);
+    //                    LoadActionsForUnit(unit);
+    //                },
+    //                error: function(error) {
+    //                    console.log('Failed to UpdateUnitsForSector, with error code: ' + error.message);
+    //                }
+    //            });
+    //        }
+    //    }
+    //}])
+    //
+    //.factory('UpdateSectorsAsNeeded',
+    //function (TbarSectors, ConvertParseObject, UpdateUnitsForSector, DiffUpdatedTimes) {
+    //    return function ($scope) {
+    //        for(var i=0; i<TbarSectors.length; i++) {
+    //            var sector = TbarSectors[i];
+    //            var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+    //            querySectors.equalTo("objectId", sector.id);
+    //            querySectors.first({
+    //                success: DiffUpdatedTimes($scope, sector),
+    //                error: function(error) {
+    //                    console.log('Failed to UpdateSectors, with error code: ' + error.message);
+    //                }
+    //            });
+    //        }
+    //    }
+    //})
 
     .factory('UpdateSectorsAsNeeded',
-    function (TbarSectors, ConvertParseObject, UpdateUnitsForSector, DiffUpdatedTimes) {
+    function () {
         return function ($scope) {
-            for(var i=0; i<TbarSectors.length; i++) {
-                var sector = TbarSectors[i];
-                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                querySectors.equalTo("objectId", sector.id);
-                querySectors.first({
-                    success: DiffUpdatedTimes($scope, sector),
-                    error: function(error) {
-                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
-                    }
-                });
-            }
+            //for(var i=0; i<TbarSectors.length; i++) {
+            //    var sector = TbarSectors[i];
+            //    var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+            //    querySectors.equalTo("objectId", sector.id);
+            //    querySectors.first({
+            //        success: DiffUpdatedTimes($scope, sector),
+            //        error: function(error) {
+            //            console.log('Failed to UpdateSectors, with error code: ' + error.message);
+            //        }
+            //    });
+            //}
         }
     })
 

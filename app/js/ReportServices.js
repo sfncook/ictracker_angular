@@ -5,37 +5,42 @@ angular.module("ReportServices", ['DataServices'])
         return new Array();
     })
 
-    .factory('LoadReportsForIncident', [
-        'ReportActions', 'ConvertParseObject', 'FetchTypeForSector',
-        function (ReportActions, ConvertParseObject, FetchTypeForSector) {
+    .factory('LoadReportsForIncident',
+        function (ReportActions, ConvertParseObject) {
             return function ($scope, incident) {
-                var queryReportActions = new Parse.Query(Parse.Object.extend('ReportAction'));
-                queryReportActions.equalTo("incident", incident);
-                ReportActions.removeAll();
-                return queryReportActions.find({
-                    success: function(reportActions) {
-                        for(var i=0; i<reportActions.length; i++) {
-                            var reportAction = reportActions[i];
-                            ConvertParseObject(reportAction, REPORT_ACTION_DEF);
-                            reportAction.sector.fetch({
-                                success: function(sector) {
-                                    ConvertParseObject(sector, SECTOR_DEF);
-                                    FetchTypeForSector($scope, sector);
-                                    reportAction.sector = sector;
-                                },
-                                error: function(error) {
-                                    console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
-                                }
-                            });
-                            ReportActions.push(reportAction);
-                        }
-                    },
-                    error: function(error) {
-                        console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
-                    }
-                });
             }
-        }])
+        })
+    //.factory('LoadReportsForIncident', [
+    //    'ReportActions', 'ConvertParseObject', 'FetchTypeForSector',
+    //    function (ReportActions, ConvertParseObject, FetchTypeForSector) {
+    //        return function ($scope, incident) {
+    //            var queryReportActions = new Parse.Query(Parse.Object.extend('ReportAction'));
+    //            queryReportActions.equalTo("incident", incident);
+    //            ReportActions.removeAll();
+    //            return queryReportActions.find({
+    //                success: function(reportActions) {
+    //                    for(var i=0; i<reportActions.length; i++) {
+    //                        var reportAction = reportActions[i];
+    //                        ConvertParseObject(reportAction, REPORT_ACTION_DEF);
+    //                        reportAction.sector.fetch({
+    //                            success: function(sector) {
+    //                                ConvertParseObject(sector, SECTOR_DEF);
+    //                                FetchTypeForSector($scope, sector);
+    //                                reportAction.sector = sector;
+    //                            },
+    //                            error: function(error) {
+    //                                console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
+    //                            }
+    //                        });
+    //                        ReportActions.push(reportAction);
+    //                    }
+    //                },
+    //                error: function(error) {
+    //                    console.log('Failed to LoadReportsForIncident, with error code: ' + error.message);
+    //                }
+    //            });
+    //        }
+    //    }])
 
     .filter('getDateStr', function () {
 
