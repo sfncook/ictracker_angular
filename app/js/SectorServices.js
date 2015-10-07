@@ -88,66 +88,49 @@ angular.module('SectorServices', ['ParseServices', 'DataServices'])
     //        }
     //    }
     //}])
-    //
-    //.factory('UpdateSectorsAsNeeded',
-    //function (TbarSectors, ConvertParseObject, UpdateUnitsForSector, DiffUpdatedTimes) {
-    //    return function ($scope) {
-    //        for(var i=0; i<TbarSectors.length; i++) {
-    //            var sector = TbarSectors[i];
-    //            var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-    //            querySectors.equalTo("objectId", sector.id);
-    //            querySectors.first({
-    //                success: DiffUpdatedTimes($scope, sector),
-    //                error: function(error) {
-    //                    console.log('Failed to UpdateSectors, with error code: ' + error.message);
-    //                }
-    //            });
-    //        }
-    //    }
-    //})
-
-    .factory('UpdateSectorsAsNeeded',
-    function () {
-        return function ($scope) {
-            //for(var i=0; i<TbarSectors.length; i++) {
-            //    var sector = TbarSectors[i];
-            //    var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-            //    querySectors.equalTo("objectId", sector.id);
-            //    querySectors.first({
-            //        success: DiffUpdatedTimes($scope, sector),
-            //        error: function(error) {
-            //            console.log('Failed to UpdateSectors, with error code: ' + error.message);
-            //        }
-            //    });
-            //}
-        }
-    })
-
-    .factory('DiffUpdatedTimes', ['ConvertParseObject', 'UpdateSector', function (ConvertParseObject, UpdateSector) {
-        return function ($scope, sector) {
-            return function(sectorNew) {
-                if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
-                    sector.fetch({
-                        success: UpdateSector($scope, sector),
-                        error: function(error) {
-                            console.log('Failed to updateSector, with error code: ' + error.message);
-                        }
-                    });
-                }
-            };
-        }
-    }])
-
-    .factory('UpdateSector', ['ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
-        function (ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
-        return function ($scope, sector) {
-            return function(sectorNew) {
-//                console.log(sector);
-                FetchTypeForSector($scope, sector);
-                FetchAcctTypeForSector($scope, sector);
-            };
-        }
-    }])
+//
+//    .factory('UpdateSectorsAsNeeded',
+//    function (DataStore, ConvertParseObject, DiffUpdatedTimes) {
+//        return function ($scope) {
+//            for(var i=0; i<DataStore.incident.sectors.length; i++) {
+//                var sector = DataStore.incident.sectors[i];
+//                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
+//                querySectors.equalTo("objectId", sector.id);
+//                querySectors.first({
+//                    success: DiffUpdatedTimes($scope, sector),
+//                    error: function(error) {
+//                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
+//                    }
+//                });
+//            }
+//        }
+//    })
+//
+//    .factory('DiffUpdatedTimes', ['ConvertParseObject', 'UpdateSector', function (ConvertParseObject, UpdateSector) {
+//        return function ($scope, sector) {
+//            return function(sectorNew) {
+//                if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
+//                    sector.fetch({
+//                        success: UpdateSector($scope, sector),
+//                        error: function(error) {
+//                            console.log('Failed to updateSector, with error code: ' + error.message);
+//                        }
+//                    });
+//                }
+//            };
+//        }
+//    }])
+//
+//    .factory('UpdateSector', ['ConvertParseObject', 'FetchTypeForSector', 'FetchAcctTypeForSector',
+//        function (ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+//        return function ($scope, sector) {
+//            return function(sectorNew) {
+////                console.log(sector);
+//                FetchTypeForSector($scope, sector);
+//                FetchAcctTypeForSector($scope, sector);
+//            };
+//        }
+//    }])
 
 ;
 

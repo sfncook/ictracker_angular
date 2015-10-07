@@ -1,20 +1,22 @@
 
 angular.module('ictApp')
 
-    .controller('UpdateFetchTimer', function($scope, $interval, DataStore, UpdateSectorsAsNeeded, UpdateMaydays){
+    .controller('UpdateFetchTimer', function($scope, $interval, AdapterStore){
         function updateIncidentData() {
-            var prevTxId = DataStore.incident.txid;
-            //DataStore.incident.fetch({
-            //    success:function(incident){
-            //        if(incident.get('txid')!=prevTxId) {
-            //            UpdateSectorsAsNeeded($scope);
-            //            UpdateMaydays($scope);
-            //        }
-            //    },
-            //    error: function(obj, error) {
-            //        console.log('Failed to create new object, with error code: ' + error.message);
-            //    }
-            //});
+            if(DataStore.incident) {
+                var prevTxId = DataStore.incident.txid;
+                DataStore.incident.fetch({
+                    success:function(incident){
+                        if(incident.get('txid')!=prevTxId) {
+                            UpdateSectorsAsNeeded($scope);
+                            //UpdateMaydays($scope);
+                        }
+                    },
+                    error: function(obj, error) {
+                        console.log('Failed to create new object, with error code: ' + error.message);
+                    }
+                });
+            }
         }
         $interval(updateIncidentData, 3000);
 
