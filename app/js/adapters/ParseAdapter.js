@@ -365,14 +365,14 @@ angular.module('ParseAdapter', ['ParseServices'])
 
 
     .factory('UpdateIncidentAsNeeded_Parse',
-    function (DataStore, ConvertParseObject, DiffUpdatedTimes) {
+    function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
         return function ($scope) {
             for(var i=0; i<DataStore.incident.sectors.length; i++) {
                 var sector = DataStore.incident.sectors[i];
                 var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
                 querySectors.equalTo("objectId", sector.id);
                 querySectors.first({
-                    success: DiffUpdatedTimes($scope, sector),
+                    success: DiffUpdatedTimes_Parse($scope, sector),
                     error: function(error) {
                         console.log('Failed to UpdateSectors, with error code: ' + error.message);
                     }
@@ -382,14 +382,14 @@ angular.module('ParseAdapter', ['ParseServices'])
     })
 
     .factory('UpdateSectorsAsNeeded_Parse',
-    function (DataStore, ConvertParseObject, DiffUpdatedTimes) {
+    function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
         return function ($scope) {
             for(var i=0; i<DataStore.incident.sectors.length; i++) {
                 var sector = DataStore.incident.sectors[i];
                 var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
                 querySectors.equalTo("objectId", sector.id);
                 querySectors.first({
-                    success: DiffUpdatedTimes($scope, sector),
+                    success: DiffUpdatedTimes_Parse($scope, sector),
                     error: function(error) {
                         console.log('Failed to UpdateSectors, with error code: ' + error.message);
                     }
@@ -398,12 +398,12 @@ angular.module('ParseAdapter', ['ParseServices'])
         }
     })
 
-    .factory('DiffUpdatedTimes_Parse', function (ConvertParseObject, UpdateSector) {
+    .factory('DiffUpdatedTimes_Parse', function (ConvertParseObject, UpdateSector_Parse) {
         return function ($scope, sector) {
             return function(sectorNew) {
                 if(sector.updatedAt.getTime()!=sectorNew.updatedAt.getTime()) {
                     sector.fetch({
-                        success: UpdateSector($scope, sector),
+                        success: UpdateSector_Parse($scope, sector),
                         error: function(error) {
                             console.log('Failed to updateSector, with error code: ' + error.message);
                         }
@@ -414,12 +414,12 @@ angular.module('ParseAdapter', ['ParseServices'])
     })
 
     .factory('UpdateSector_Parse',
-    function (ConvertParseObject, FetchTypeForSector, FetchAcctTypeForSector) {
+    function (ConvertParseObject, FetchTypeForSector_Parse, FetchAcctTypeForSector_Parse) {
         return function ($scope, sector) {
             return function(sectorNew) {
 //                console.log(sector);
-                FetchTypeForSector($scope, sector);
-                FetchAcctTypeForSector($scope, sector);
+                FetchTypeForSector_Parse($scope, sector);
+                FetchAcctTypeForSector_Parse($scope, sector);
             };
         }
     })
