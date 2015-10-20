@@ -11,7 +11,8 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
         }
     })
 
-    .controller('SplashCtrl', function($scope, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment){
+    .controller('SplashCtrl', function($scope, $interval, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment, DataStore){
+        $scope.dataStore = DataStore;
 
         if(!IsLoggedIn()) {
             console.log("Not logged in. Redirecting to login.html");
@@ -20,23 +21,23 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             window.location.href = urlLink;
         }
 
-        //if(!SetSavedDepartment()) {
-        //    alert("No department stored locally.");
-        //} else {
-            LoadIncidentTypes().then(function(){
-                $scope.incidentTypes = IncidentTypes;
-                $scope.$apply();
-            });
+        LoadIncidentTypes().then(function(){
+            $scope.incidentTypes = IncidentTypes;
+            $scope.$apply();
+        });
 
-            LoadAllIncidents().then(function(){
-                $scope.incident_list = Incidents;
-                $scope.$apply();
-            });
+        LoadAllIncidents().then(function(){
+            $scope.incident_list = Incidents;
+            function hideLoadingSplash() {
+                $scope.dataStore.loadSuccess = true;
+                $scope.dataStore.waitingToLoad = false;
+            }
+            $interval(hideLoadingSplash, 1000);
+        });
 
-            var IncidentParseObj = Parse.Object.extend('Incident');
-            $scope.incidentObj = new IncidentParseObj();
-            ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
-        //}
+        var IncidentParseObj = Parse.Object.extend('Incident');
+        $scope.incidentObj = new IncidentParseObj();
+        ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
 
         $scope.userLogout = function() {
             UserLogout();
