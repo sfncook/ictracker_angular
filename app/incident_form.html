@@ -318,10 +318,11 @@
     <div id="dispatched_units_div">
         <div id="title_dispatched_units_div">Dispatched Units</div>
         <div id="units_dispatched_units_div">
-            <button class="unit_dlg_btn unit_btn"
-                    ng-repeat="unitType in dataStore.dispatchedUnits.unitTypes"
-                    ng-click="selectDispatchedUnit(unitType)">
-                {{unitType.name}}
+            <button class="unit_dlg_btn unit_btn glowlightgreen"
+                    ng-repeat="unit in dataStore.incident.sectors.unitInSectors() | orderBy:'+type.name' | unique_units_by_type"
+                    ng-click="selectUnit(unit)"
+                    ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4}">
+                {{unit.type.name}}
             </button>
             <div id="units_dispatched_units_div_clear_float" class="clear_float"></div>
         </div>

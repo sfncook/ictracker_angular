@@ -477,7 +477,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                         console.log('Failed to $scope.selectedSector.save() for acctUnit, with error code: ' + error.message);
                     }
                 });
-            } else if($scope.forDispUnits) {
+            } /*else if($scope.forDispUnits) {
                 if($scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
                     $scope.dataStore.dispatchedUnits.unitTypes.remByVal(unitType);
                 } else {
@@ -488,7 +488,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                         console.log('Failed to $scope.dataStore.dispatchedUnits.save() for acctUnit, with error code: ' + error.message);
                     }
                 });
-            } else {
+            }*/ else {
                 var wasAdded = ToggleUnitTypeForSector($scope.selectedSector, unitType);
                 if(wasAdded) {
                     if(!$scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
@@ -566,6 +566,26 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 return "P";
             } else {
                 return unitPar;
+            }
+        };
+    })
+
+    .filter('unique_units_by_type', function() {
+        return function(units) {
+            if(units) {
+                var output_units = [];
+                angular.forEach(units, function (unit) {
+                    var is_found = false;
+                    angular.forEach(output_units, function (out_unit) {
+                        if (out_unit.type.name == unit.type.name) {
+                            is_found = true;
+                        }
+                    });
+                    if (is_found) { return; }
+                    output_units.push(unit);
+
+                });
+                return output_units;
             }
         };
     })
