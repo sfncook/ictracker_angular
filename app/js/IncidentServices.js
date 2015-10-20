@@ -43,35 +43,47 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         }
     })
 
+    .factory('LoadAllIncidents', function (AdapterStore) {
+        return function () {
+            return AdapterStore.adapter.LoadAllIncidents();
+        }
+    })
+
+    .factory('UpdateIncidentAsNeeded', function (AdapterStore) {
+        return function (incidentObjectId) {
+            return AdapterStore.adapter.UpdateIncidentAsNeeded();
+        }
+    })
+
     .factory('Incidents', function() {
         return new Array();
     })
 
-    .factory('LoadAllIncidents', function (ConvertParseObject, Incidents, DataStore, FetchTypeForIncident) {
-        return function ($scope) {
-            Incidents.removeAll();
-            var query = new Parse.Query(Parse.Object.extend('Incident'));
-            return query.find({
-                success: function(incidents) {
-                    for(var i=0; i<incidents.length; i++) {
-                        var incident = incidents[i];
-                        ConvertParseObject(incident, INCIDENT_DEF);
-                        FetchTypeForIncident(incident);
-                        Incidents.push(incident);
-                    }
-                    setTimeout(function(){
-                        console.log("DONE");
-                        DataStore.loadSuccess = true;
-                        DataStore.waitingToLoad = false;
-                        $scope.$apply();
-                    }, 1500);
-                },
-                error: function(error) {
-                    console.log('Failed to LoadAllIncidents, with error code: ' + error.message);
-                }
-            });
-        }
-    })
+    //.factory('LoadAllIncidents', function (ConvertParseObject, Incidents, DataStore, FetchTypeForIncident) {
+    //    return function ($scope) {
+    //        Incidents.removeAll();
+    //        var query = new Parse.Query(Parse.Object.extend('Incident'));
+    //        return query.find({
+    //            success: function(incidents) {
+    //                for(var i=0; i<incidents.length; i++) {
+    //                    var incident = incidents[i];
+    //                    ConvertParseObject(incident, INCIDENT_DEF);
+    //                    FetchTypeForIncident(incident);
+    //                    Incidents.push(incident);
+    //                }
+    //                setTimeout(function(){
+    //                    console.log("DONE");
+    //                    DataStore.loadSuccess = true;
+    //                    DataStore.waitingToLoad = false;
+    //                    $scope.$apply();
+    //                }, 1500);
+    //            },
+    //            error: function(error) {
+    //                console.log('Failed to LoadAllIncidents, with error code: ' + error.message);
+    //            }
+    //        });
+    //    }
+    //})
 
 
     .factory('LoadDispatchedUnitsForIncident', function ($q, ConvertParseObject, DataStore) {

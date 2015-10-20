@@ -1,7 +1,7 @@
 
 angular.module('ParseAdapter', ['ParseServices'])
 
-    .factory('ParseAdapter', function(LoadIncident_Parse, UpdateIncidentAsNeeded_Parse) {
+    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, UpdateIncidentAsNeeded_Parse) {
         return {
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
@@ -21,6 +21,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                     }
                 }
             },
+            LoadAllIncidents: LoadAllIncidents_Parse,
             LoadIncident: LoadIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse
         };
@@ -364,6 +365,25 @@ angular.module('ParseAdapter', ['ParseServices'])
     })
 
 
+    .factory('LoadAllIncidents_Parse',
+    function ($q,ConvertParseObject, Incidents, DataStore, FetchTypeForIncident_Parse) {
+        return function () {
+            var queryIncidents = new Parse.Query(Parse.Object.extend('Incident'));
+            return queryIncidents.find().then(function(incidents){
+                Incidents.removeAll();
+                var promises = [];
+                for(var i=0; i<incidents.length; i++) {
+                    var incident = incidents[i];
+                    ConvertParseObject(incident, INCIDENT_DEF);
+                    FetchTypeForIncident_Parse(incident);
+                    Incidents.push(incident);
+                }
+                return $q.all(promises);
+            });
+        }
+    })
+
+
     .factory('UpdateIncidentAsNeeded_Parse',
     function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
         return function ($scope) {
@@ -380,7 +400,6 @@ angular.module('ParseAdapter', ['ParseServices'])
             }
         }
     })
-
     .factory('UpdateSectorsAsNeeded_Parse',
     function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
         return function ($scope) {
@@ -397,7 +416,6 @@ angular.module('ParseAdapter', ['ParseServices'])
             }
         }
     })
-
     .factory('DiffUpdatedTimes_Parse', function (ConvertParseObject, UpdateSector_Parse) {
         return function ($scope, sector) {
             return function(sectorNew) {
@@ -412,7 +430,6 @@ angular.module('ParseAdapter', ['ParseServices'])
             };
         }
     })
-
     .factory('UpdateSector_Parse',
     function (ConvertParseObject, FetchTypeForSector_Parse, FetchAcctTypeForSector_Parse) {
         return function ($scope, sector) {

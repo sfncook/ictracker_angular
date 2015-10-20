@@ -28,7 +28,7 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
                 $scope.$apply();
             });
 
-            LoadAllIncidents($scope).then(function(){
+            LoadAllIncidents().then(function(){
                 $scope.incident_list = Incidents;
                 $scope.$apply();
             });
@@ -78,11 +78,11 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             if (response == true) {
                 incident.destroy({
                     success: function(myObject) {
-                        LoadAllIncidents($scope);
+                        LoadAllIncidents();
                     },
                     error: function(myObject, error) {
                         console.log("Error:"+error);
-                        LoadAllIncidents($scope);
+                        LoadAllIncidents();
                     }
                 });
             }

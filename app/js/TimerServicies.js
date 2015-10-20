@@ -1,7 +1,7 @@
 
 angular.module('ictApp')
 
-    .controller('UpdateFetchTimer', function($scope, $interval, AdapterStore){
+    .controller('UpdateFetchTimer', function($scope, $interval, DataStore){
         //function updateIncidentData() {
         //    if(DataStore.incident) {
         //        var prevTxId = DataStore.incident.txid;
@@ -19,9 +19,9 @@ angular.module('ictApp')
         //    }
         //}
         //$interval(updateIncidentData, 3000);
-        //
-        //
-        //
+
+
+
         //DataStore.timer_text = "00:00";
         //DataStore.hourRollOverDone = false;
         //var t0 = (new Date()).getTime();
