@@ -396,7 +396,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                     var incidentType = incidentTypes[i];
                     ConvertParseObject(incidentType, INCIDENT_TYPE_DEF);
                     var nameRefor = incidentType.nameShort.toUpperCase();
-                    IncidentTypes[nameRefor] = incidentType;
+                    IncidentTypes.push(incidentType);
                 }
                 return IncidentTypes;
             });

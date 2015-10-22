@@ -22,8 +22,7 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
         }
 
         LoadIncidentTypes().then(function(incidentTypes){
-            console.log(incidentTypes);
-            $scope.incidentTypes = IncidentTypes;
+            $scope.incidentTypes = incidentTypes;
         });
 
         LoadAllIncidents().then(function(){
