@@ -17,35 +17,19 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
         }
     })
 
-    .factory('LoadIncidentTypes', ['IncidentTypes', 'ParseQuery', 'ConvertParseObject', function (IncidentTypes, ParseQuery, ConvertParseObject) {
-        return function () {
-            var queryIncidentTypes = new Parse.Query(Parse.Object.extend('IncidentType'));
-            return queryIncidentTypes.find({
-                success: function(incidentTypes) {
-                    for(var i=0; i<incidentTypes.length; i++) {
-                        var incidentType = incidentTypes[i];
-                        ConvertParseObject(incidentType, INCIDENT_TYPE_DEF);
-                        IncidentTypes.push(incidentType);
-                        var nameRefor = incidentType.nameShort.toUpperCase();
-                        IncidentTypes[nameRefor] = incidentType;
-                    }
-                },
-                error: function(error) {
-                    console.log('Failed to LoadIncidentTypes, with error code: ' + error.message);
-                }
-            });
-        }
-    }])
-
     .factory('LoadIncident', function (AdapterStore) {
         return function (incidentObjectId) {
             return AdapterStore.adapter.LoadIncident(incidentObjectId);
         }
     })
-
     .factory('LoadAllIncidents', function (AdapterStore) {
         return function () {
             return AdapterStore.adapter.LoadAllIncidents();
+        }
+    })
+    .factory('LoadIncidentTypes', function (AdapterStore) {
+        return function () {
+            return AdapterStore.adapter.LoadIncidentTypes();
         }
     })
 

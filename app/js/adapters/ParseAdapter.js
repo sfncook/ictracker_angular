@@ -1,7 +1,7 @@
 
 angular.module('ParseAdapter', ['ParseServices'])
 
-    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, UpdateIncidentAsNeeded_Parse) {
+    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse) {
         return {
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
@@ -21,6 +21,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                     }
                 }
             },
+            LoadIncidentTypes: LoadIncidentTypes_Parse,
             LoadAllIncidents: LoadAllIncidents_Parse,
             LoadIncident: LoadIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse
@@ -379,6 +380,25 @@ angular.module('ParseAdapter', ['ParseServices'])
                     Incidents.push(incident);
                 }
                 return $q.all(promises);
+            });
+        }
+    })
+
+
+
+    .factory('LoadIncidentTypes_Parse',
+    function (ConvertParseObject, IncidentTypes) {
+        return function () {
+            var queryIncidentTypes = new Parse.Query(Parse.Object.extend('IncidentType'));
+            return queryIncidentTypes.find().then(function(incidentTypes){
+                IncidentTypes.removeAll();
+                for(var i=0; i<incidentTypes.length; i++) {
+                    var incidentType = incidentTypes[i];
+                    ConvertParseObject(incidentType, INCIDENT_TYPE_DEF);
+                    var nameRefor = incidentType.nameShort.toUpperCase();
+                    IncidentTypes[nameRefor] = incidentType;
+                }
+                return IncidentTypes;
             });
         }
     })

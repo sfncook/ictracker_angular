@@ -21,9 +21,9 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             window.location.href = urlLink;
         }
 
-        LoadIncidentTypes().then(function(){
+        LoadIncidentTypes().then(function(incidentTypes){
+            console.log(incidentTypes);
             $scope.incidentTypes = IncidentTypes;
-            $scope.$apply();
         });
 
         LoadAllIncidents().then(function(){
