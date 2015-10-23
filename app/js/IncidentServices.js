@@ -136,9 +136,11 @@ angular.module('IncidentServices', ['ParseServices', 'DataServices', 'IapService
 
     .filter('sortIncTypeByOrder', function(){
         return function(array) {
-            array.sort(function(a, b){
-                return a.order - b.order;
-            });
+            if(array) {
+                array.sort(function(a, b){
+                    return a.order - b.order;
+                });
+            }
             return array;
         }
     })
