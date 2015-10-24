@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices'])
+angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices', 'TimerServices'])
 
-    .run(function($q, IsLoggedIn, InitDatabase, DataStore, LoadIncident) {
+    .run(function($q, IsLoggedIn, InitDatabase, DataStore, LoadIncident, StartIncidentTimer) {
         if(!InitDatabase()) {
             var urlLink = "login.html";
             window.location.href = urlLink;
@@ -23,7 +23,9 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             DataStore.loadSuccess = true;
             DataStore.waitingToLoad = false;
             DataStore.incident = incident;
-        })
+        }).then(function() {
+            StartIncidentTimer();
+        });
     })
 
     .filter('range', function() {
