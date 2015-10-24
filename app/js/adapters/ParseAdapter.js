@@ -407,18 +407,13 @@ angular.module('ParseAdapter', ['ParseServices'])
     .factory('UpdateIncidentAsNeeded_Parse',
     function (DataStore, LoadIncident_Parse) {
         return function () {
-            console.log("UpdateIncidentAsNeeded_Parse");
             var prevTxId = DataStore.incident.txid;
             DataStore.incident.fetch({
                 success:function(incident){
                     if(incident.get('txid')!=prevTxId) {
-                        console.log("UpdateSectorsAsNeeded_Parse");
                         LoadIncident_Parse(incident.id).then(function(incident){
-                            console.log("LoadB afterwards incident:", incident);
                             DataStore.incident = incident;
                         });
-                        //UpdateSectorsAsNeeded_Parse();
-                        //UpdateMaydays($scope);
                     }
                 },
                 error: function(obj, error) {
