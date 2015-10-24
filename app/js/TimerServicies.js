@@ -9,7 +9,8 @@ angular.module('TimerServices', ['DataServices'])
             if(DataStore.incident && DataStore.incident.inc_startDate) {
                 var t0 = (new Date(DataStore.incident.inc_startDate)).getTime();
             } else {
-                var t0 = (new Date()).getTime();
+                DataStore.incident.inc_startDate = new Date();
+                var t0 = (DataStore.incident.inc_startDate).getTime();
             }
             function updateTimer() {
                 var t1 = (new Date()).getTime();
