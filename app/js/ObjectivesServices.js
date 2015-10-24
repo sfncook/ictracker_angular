@@ -2,7 +2,7 @@
 
 angular.module('ObjectivesServices', ['ParseServices', 'DataServices'])
 
-    .controller('ObjDlg', function($scope, DataStore){
+    .controller('ObjDlg', function($scope, DataStore, UpdateObjectivesPercent){
         $scope.dataStore = DataStore;
         DataStore.showObjectivesDlg = function() {
             $("#objectives_dlg").dialog( "open" );
@@ -10,24 +10,26 @@ angular.module('ObjectivesServices', ['ParseServices', 'DataServices'])
         $scope.showObjectivesDlg = function() {
             DataStore.showObjectivesDlg();
         }
-        DataStore.updateObjPerc = function() {
+    })
+
+    .factory('UpdateObjectivesPercent', function () {
+        return function (incident) {
             var fullAmt=11.0;
             var amtChecked=0;
-            if (DataStore.objectives.upgradeToFullRescue){ amtChecked++; }
-            if (DataStore.objectives.assingSafety){ amtChecked++; }
-            if (DataStore.objectives.establishSupplyLine){ amtChecked++; }
-            if (DataStore.objectives.secureUtilities){ amtChecked++; }
-            if (DataStore.objectives.ventiliation){ amtChecked++; }
-            if (DataStore.objectives.createOnDeck){ amtChecked++; }
-            if (DataStore.objectives.pressurizeExposures){ amtChecked++; }
-            if (DataStore.objectives.monitorChannel16){ amtChecked++; }
-            if (DataStore.objectives.salvage){ amtChecked++; }
-            if (DataStore.objectives.establishRehab){ amtChecked++; }
-            if (DataStore.objectives.customerService){ amtChecked++; }
-            angular.element('#objectives_perc_bar').css('width', ((amtChecked*100.0)/fullAmt) + '%');
-        }
-        $scope.updateObjPerc = function() {
-            DataStore.updateObjPerc();
+            if(incident.objectives) {
+                if (incident.objectives.upgradeToFullRescue){ amtChecked++; }
+                if (incident.objectives.assingSafety){ amtChecked++; }
+                if (incident.objectives.establishSupplyLine){ amtChecked++; }
+                if (incident.objectives.secureUtilities){ amtChecked++; }
+                if (incident.objectives.ventiliation){ amtChecked++; }
+                if (incident.objectives.createOnDeck){ amtChecked++; }
+                if (incident.objectives.pressurizeExposures){ amtChecked++; }
+                if (incident.objectives.monitorChannel16){ amtChecked++; }
+                if (incident.objectives.salvage){ amtChecked++; }
+                if (incident.objectives.establishRehab){ amtChecked++; }
+                if (incident.objectives.customerService){ amtChecked++; }
+                angular.element('#objectives_perc_bar').css('width', ((amtChecked*100.0)/fullAmt) + '%');
+            }
         }
     })
 

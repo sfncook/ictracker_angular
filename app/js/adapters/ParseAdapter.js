@@ -1,5 +1,5 @@
 
-angular.module('ParseAdapter', ['ParseServices'])
+angular.module('ParseAdapter', ['ParseServices','ObjectivesServices'])
 
     .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse) {
         return {
@@ -239,7 +239,7 @@ angular.module('ParseAdapter', ['ParseServices'])
             });
         }
     })
-    .factory('CreateNewObjectives_Parse', function (ConvertParseObject, DataStore) {
+    .factory('CreateNewObjectives_Parse', function (ConvertParseObject) {
         return function (incident) {
             var ObjectivesParseObj = Parse.Object.extend('Objectives');
             var objectivesObject = new ObjectivesParseObj();
@@ -259,18 +259,20 @@ angular.module('ParseAdapter', ['ParseServices'])
             return objectivesObject;
         }
     })
-    .factory('FetchObjectivesForIncident_Parse', function (ConvertParseObject, CreateNewObjectives_Parse, DataStore) {
+    .factory('FetchObjectivesForIncident_Parse', function (ConvertParseObject, CreateNewObjectives_Parse, UpdateObjectivesPercent) {
         return function (incident) {
             var queryObjectives = new Parse.Query(Parse.Object.extend('Objectives'));
             queryObjectives.equalTo("incident", incident);
             return queryObjectives.first().then(
                 function(objectivesObject){
+                    console.log(objectivesObject);
                     if (objectivesObject){
                         ConvertParseObject(objectivesObject, OBJECTIVES_DEF);
-                        DataStore.objectives = objectivesObject;
+                        incident.objectives = objectivesObject;
                     } else {
-                        DataStore.objectives = CreateNewObjectives_Parse(incident);
+                        incident.objectives = CreateNewObjectives_Parse(incident);
                     }
+                    UpdateObjectivesPercent(incident);
                     return incident;
                 }
             );

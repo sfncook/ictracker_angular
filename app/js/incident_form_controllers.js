@@ -2,7 +2,7 @@
 
 angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionServices', 'UnitServices', 'IncidentServices', 'ReportServices', 'IapServices', 'BranchServices', 'UserServices', 'TimerServices'])
 
-    .run(function($q, IsLoggedIn, InitDatabase, DataStore, LoadIncident, StartIncidentTimer, StartIncidentUpdateTimer) {
+    .run(function($q, IsLoggedIn, InitDatabase, DataStore, LoadIncident, StartIncidentTimer, StartIncidentUpdateTimer, UpdateObjectivesPercent) {
         if(!InitDatabase()) {
             var urlLink = "login.html";
             window.location.href = urlLink;
@@ -18,11 +18,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(function(incident){
             console.log("LoadA afterwards incident:", incident);
-            //DataStore.objectives = incident.objectives;
-            DataStore.updateObjPerc();
             DataStore.loadSuccess = true;
             DataStore.waitingToLoad = false;
             DataStore.incident = incident;
+            //DataStore.objectives = incident.objectives;
+            UpdateObjectivesPercent(incident);
         }).then(function() {
             StartIncidentTimer();
             StartIncidentUpdateTimer();
@@ -894,7 +894,7 @@ function initDialogs() {
         modal: true,
         width: 230,
         close: function(event, ui){
-            angular.element('#objectives_dlg').scope().dataStore.objectives.save();
+            angular.element('#objectives_dlg').scope().dataStore.incident.objectives.save();
         }
     	
     });
