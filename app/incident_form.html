@@ -606,27 +606,27 @@
         <tr>
             <td class="iap_label_td">Critical Fireground Factors:</td>
             <td>
-                <button ng-click="dataStore.iap.isBuilding=!dataStore.iap.isBuilding" ng-class="{glow_orange:dataStore.iap.isBuilding}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isBuilding=!dataStore.incident.iap.isBuilding" ng-class="{glow_orange:dataStore.incident.iap.isBuilding}" class="iap_toggle_btn">
                     Building
                 </button>
-                <button ng-click="dataStore.iap.isFire=!dataStore.iap.isFire" ng-class="{glow_orange:dataStore.iap.isFire}" class="iap_toggle_btn">Fire
+                <button ng-click="dataStore.incident.iap.isFire=!dataStore.incident.iap.isFire" ng-class="{glow_orange:dataStore.incident.iap.isFire}" class="iap_toggle_btn">Fire
                 </button>
-                <button ng-click="dataStore.iap.isOccupancy=!dataStore.iap.isOccupancy" ng-class="{glow_orange:dataStore.iap.isOccupancy}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isOccupancy=!dataStore.incident.iap.isOccupancy" ng-class="{glow_orange:dataStore.incident.iap.isOccupancy}" class="iap_toggle_btn">
                     Occupancy
                 </button>
-                <button ng-click="dataStore.iap.isLifeHazard=!dataStore.iap.isLifeHazard" ng-class="{glow_orange:dataStore.iap.isLifeHazard}" class="iap_toggle_btn">Life
+                <button ng-click="dataStore.incident.iap.isLifeHazard=!dataStore.incident.iap.isLifeHazard" ng-class="{glow_orange:dataStore.incident.iap.isLifeHazard}" class="iap_toggle_btn">Life
                     Hazard
                 </button>
-                <button ng-click="dataStore.iap.isArrangement=!dataStore.iap.isArrangement" ng-class="{glow_orange:dataStore.iap.isArrangement}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isArrangement=!dataStore.incident.iap.isArrangement" ng-class="{glow_orange:dataStore.incident.iap.isArrangement}" class="iap_toggle_btn">
                     Arrangement
                 </button>
-                <button ng-click="dataStore.iap.isResources=!dataStore.iap.isResources" ng-class="{glow_orange:dataStore.iap.isResources}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isResources=!dataStore.incident.iap.isResources" ng-class="{glow_orange:dataStore.incident.iap.isResources}" class="iap_toggle_btn">
                     Resources
                 </button>
-                <button ng-click="dataStore.iap.isActionEffect=!dataStore.iap.isActionEffect" ng-class="{glow_orange:dataStore.iap.isActionEffect}" class="iap_toggle_btn">Action
+                <button ng-click="dataStore.incident.iap.isActionEffect=!dataStore.incident.iap.isActionEffect" ng-class="{glow_orange:dataStore.incident.iap.isActionEffect}" class="iap_toggle_btn">Action
                     Effect
                 </button>
-                <button ng-click="dataStore.iap.isSpecial=!dataStore.iap.isSpecial" ng-class="{glow_orange:dataStore.iap.isSpecial}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isSpecial=!dataStore.incident.iap.isSpecial" ng-class="{glow_orange:dataStore.incident.iap.isSpecial}" class="iap_toggle_btn">
                     Special
                 </button>
                 <div class="clear_float"></div>
@@ -634,16 +634,16 @@
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Rescue:</td>
-            <td><textarea class="iap_input" ng-model="dataStore.iap.rescue"></textarea></td>
+            <td><textarea class="iap_input" ng-model="dataStore.incident.iap.rescue"></textarea></td>
         </tr>
         <tr>
             <td class="iap_blue_label iap_label_td">Fire Control:</td>
             <td>
-                <textarea class="iap_input" ng-model="dataStore.iap.fireControl"></textarea>
-                <button ng-click="dataStore.iap.isVent=!dataStore.iap.isVent" ng-class="{glow_orange:dataStore.iap.isVent}" class="iap_toggle_btn">
+                <textarea class="iap_input" ng-model="dataStore.incident.iap.fireControl"></textarea>
+                <button ng-click="dataStore.incident.iap.isVent=!dataStore.incident.iap.isVent" ng-class="{glow_orange:dataStore.incident.iap.isVent}" class="iap_toggle_btn">
                 	Vent
                 </button>
-                <button ng-click="dataStore.iap.isSprinkler=!dataStore.iap.isSprinkler" ng-class="{glow_orange:dataStore.iap.isSprinkler}" class="iap_toggle_btn">
+                <button ng-click="dataStore.incident.iap.isSprinkler=!dataStore.incident.iap.isSprinkler" ng-class="{glow_orange:dataStore.incident.iap.isSprinkler}" class="iap_toggle_btn">
                 	Sprinkler
                 </button>
             </td>
@@ -651,7 +651,7 @@
         <tr>
             <td class="iap_blue_label iap_label_td">Property/People:</td>
             <td>
-                <textarea class="iap_input" ng-model="dataStore.iap.propertyPeople"></textarea>
+                <textarea class="iap_input" ng-model="dataStore.incident.iap.propertyPeople"></textarea>
                 <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true" class="iap_btn_evacloc">Show Evacuation
                     Location
                 </button>
@@ -660,13 +660,13 @@
                 </button>
                 <div class="clear_both"></div>
                 <div ng-show="iap_evlc_show">
-                    <textarea id="iap_evacloc_input" ng-model="dataStore.iap.evacuationLocation">Evacuation Location</textarea>
+                    <textarea id="iap_evacloc_input" ng-model="dataStore.incident.iap.evacuationLocation">Evacuation Location</textarea>
                 </div>
             </td>
         </tr>
         <tr>
             <td class="iap_red_label iap_label_td">Firefighter Safety:</td>
-            <td><textarea class="iap_input" ng-model="dataStore.iap.firefighterSafety"></textarea></td>
+            <td><textarea class="iap_input" ng-model="dataStore.incident.iap.firefighterSafety"></textarea></td>
         </tr>
     </table>
 </div>

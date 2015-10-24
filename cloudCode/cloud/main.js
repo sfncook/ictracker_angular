@@ -1,6 +1,6 @@
 
 
-function incTxId_mayday(request) {
+function incTxId(request) {
     query = new Parse.Query("Incident");
     query.get(request.object.get("incident").id, {
         success: function(incident) {
@@ -12,24 +12,24 @@ function incTxId_mayday(request) {
         }
     });
 }
-Parse.Cloud.afterSave("Mayday", incTxId_mayday);
-Parse.Cloud.afterDelete("Mayday", incTxId_mayday);
+Parse.Cloud.afterSave("Mayday", incTxId);
+Parse.Cloud.afterDelete("Mayday", incTxId);
 
 
-function incTxId_sector(request) {
-    query = new Parse.Query("Incident");
-    query.get(request.object.get("incident").id, {
-        success: function(incident) {
-            incident.increment("txid");
-            incident.save();
-        },
-        error: function(error) {
-            console.error("Got an error saving Sector " + error.code + " : " + error.message);
-        }
-    });
-}
-Parse.Cloud.afterSave("Sector", incTxId_sector);
-Parse.Cloud.afterDelete("Sector", incTxId_sector);
+Parse.Cloud.afterSave("Sector", incTxId);
+Parse.Cloud.afterDelete("Sector", incTxId);
+
+Parse.Cloud.afterSave("Iap", incTxId);
+Parse.Cloud.afterDelete("Iap", incTxId);
+
+Parse.Cloud.afterSave("Objectives", incTxId);
+Parse.Cloud.afterDelete("Objectives", incTxId);
+
+Parse.Cloud.afterSave("OSR", incTxId);
+Parse.Cloud.afterDelete("OSR", incTxId);
+
+Parse.Cloud.afterSave("Upgrade", incTxId);
+Parse.Cloud.afterDelete("Upgrade", incTxId);
 
 
 function incTxId_unit(request) {
@@ -54,3 +54,5 @@ function incTxId_unit(request) {
 }
 Parse.Cloud.afterSave("Unit", incTxId_unit);
 Parse.Cloud.afterDelete("Unit", incTxId_unit);
+
+

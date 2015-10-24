@@ -10,9 +10,9 @@ angular.module('IapServices', ['ParseServices', 'DataServices'])
         $scope.showIapDlg = function() {
             DataStore.showIapDlg();
         }
-        //$scope.updateIapData = function() {
-        //	DataStore.iap.save();
-        //}
+        $scope.updateIapData = function() {
+        	DataStore.iap.save();
+        }
     })
 
     .factory('LoadIAPForIncident', function (ConvertParseObject, DataStore, CreateNewIap) {

@@ -903,7 +903,7 @@ function initDialogs() {
         modal: true,
         width: 616,
         close: function(event, ui){
-            angular.element('#iap_dlg').scope().dataStore.iap.save();
+            angular.element('#iap_dlg').scope().dataStore.incident.iap.save();
         }
     });
     $( "#unit_options_dlg" ).dialog({resizable: false, modal: true, width:575});

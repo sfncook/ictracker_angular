@@ -37,10 +37,33 @@ angular.module('ParseAdapter', ['ParseServices'])
             });
         }
     })
-    .factory('LoadIAPForIncident_Parse', function (ConvertParseObject) {
+    .factory('CreateNewIap_Parse', function (ConvertParseObject) {
+        return function (incident) {
+            var IapParseObj = Parse.Object.extend('Iap');
+            var iapObject = new IapParseObj();
+            ConvertParseObject(iapObject, IAP_DEF);
+            iapObject.isActionEffect=false;
+            iapObject.isArrangement=false;
+            iapObject.isBuilding=false;
+            iapObject.isFire=false;
+            iapObject.isLifeHazard=false;
+            iapObject.isOccupancy=false;
+            iapObject.isResources=false;
+            iapObject.isSpecial=false;
+            iapObject.isSprinkler=false;
+            iapObject.isVent=false;
+            iapObject.fireControl="";
+            iapObject.firefighterSafety="";
+            iapObject.propertyPeople="";
+            iapObject.evacuationLocation="";
+            iapObject.rescue="";
+            iapObject.incident=incident;
+            return iapObject;
+        }
+    })
+    .factory('LoadIAPForIncident_Parse', function (ConvertParseObject, CreateNewIap_Parse) {
         return function (incident) {
             var queryIap = new Parse.Query(Parse.Object.extend('Iap'));
-            queryIap.equalTo("incident", incident);
             queryIap.equalTo("incident", incident);
             return queryIap.first().then(
                 function(iapObject){
@@ -48,7 +71,7 @@ angular.module('ParseAdapter', ['ParseServices'])
                         ConvertParseObject(iapObject, IAP_DEF);
                         incident.iap = iapObject;
                     } else {
-                        incident.iap = 'UNDEFINED';
+                        incident.iap = CreateNewIap_Parse(incident);
                     }
                     return incident;
                 }
