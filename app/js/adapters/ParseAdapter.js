@@ -405,24 +405,31 @@ angular.module('ParseAdapter', ['ParseServices'])
 
 
     .factory('UpdateIncidentAsNeeded_Parse',
-    function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
-        return function ($scope) {
-            for(var i=0; i<DataStore.incident.sectors.length; i++) {
-                var sector = DataStore.incident.sectors[i];
-                var querySectors = new Parse.Query(Parse.Object.extend('Sector'));
-                querySectors.equalTo("objectId", sector.id);
-                querySectors.first({
-                    success: DiffUpdatedTimes_Parse($scope, sector),
-                    error: function(error) {
-                        console.log('Failed to UpdateSectors, with error code: ' + error.message);
+    function (DataStore, LoadIncident_Parse) {
+        return function () {
+            console.log("UpdateIncidentAsNeeded_Parse");
+            var prevTxId = DataStore.incident.txid;
+            DataStore.incident.fetch({
+                success:function(incident){
+                    if(incident.get('txid')!=prevTxId) {
+                        console.log("UpdateSectorsAsNeeded_Parse");
+                        LoadIncident_Parse(incident.id).then(function(incident){
+                            console.log("LoadB afterwards incident:", incident);
+                            DataStore.incident = incident;
+                        });
+                        //UpdateSectorsAsNeeded_Parse();
+                        //UpdateMaydays($scope);
                     }
-                });
-            }
+                },
+                error: function(obj, error) {
+                    console.log('Failed to create new object, with error code: ' + error.message);
+                }
+            });
         }
     })
     .factory('UpdateSectorsAsNeeded_Parse',
-    function (DataStore, ConvertParseObject, DiffUpdatedTimes_Parse) {
-        return function ($scope) {
+    function (DataStore, DiffUpdatedTimes_Parse) {
+        return function () {
             for(var i=0; i<DataStore.incident.sectors.length; i++) {
                 var sector = DataStore.incident.sectors[i];
                 var querySectors = new Parse.Query(Parse.Object.extend('Sector'));

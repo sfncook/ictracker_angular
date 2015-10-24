@@ -1,5 +1,5 @@
 
-angular.module('TimerServices', ['DataServices'])
+angular.module('TimerServices', ['DataServices', 'IncidentServices'])
 
     .factory('StartIncidentTimer',
     function ($interval, DataStore) {
@@ -38,28 +38,36 @@ angular.module('TimerServices', ['DataServices'])
         }
     })
 
-;
+    .factory('StartIncidentUpdateTimer',
+    function ($interval, DataStore, UpdateIncidentAsNeeded) {
+        return function () {
+            function updateIncidentData() {
+                UpdateIncidentAsNeeded();
+                //if(DataStore.incident) {
+                //    var prevTxId = DataStore.incident.txid;
+                //    DataStore.incident.fetch({
+                //        success:function(incident){
+                //            if(incident.get('txid')!=prevTxId) {
+                //                UpdateSectorsAsNeeded($scope);
+                //                //UpdateMaydays($scope);
+                //            }
+                //        },
+                //        error: function(obj, error) {
+                //            console.log('Failed to create new object, with error code: ' + error.message);
+                //        }
+                //    });
+                //}
+            }
+            $interval(updateIncidentData, 3000);
+        }
+    })
 
+;
+//
 //angular.module('ictApp')
 //
 //    .controller('TimerServices', function($scope, $interval, DataStore){
-//        //function updateIncidentData() {
-//        //    if(DataStore.incident) {
-//        //        var prevTxId = DataStore.incident.txid;
-//        //        DataStore.incident.fetch({
-//        //            success:function(incident){
-//        //                if(incident.get('txid')!=prevTxId) {
-//        //                    UpdateSectorsAsNeeded($scope);
-//        //                    //UpdateMaydays($scope);
-//        //                }
-//        //            },
-//        //            error: function(obj, error) {
-//        //                console.log('Failed to create new object, with error code: ' + error.message);
-//        //            }
-//        //        });
-//        //    }
-//        //}
-//        //$interval(updateIncidentData, 3000);
+//
 //
 //    })
 
