@@ -10,6 +10,9 @@ angular.module('ObjectivesServices', ['ParseServices', 'DataServices'])
         $scope.showObjectivesDlg = function() {
             DataStore.showObjectivesDlg();
         }
+        $scope.updateObjPerc = function() {
+            UpdateObjectivesPercent(DataStore.incident);
+        }
     })
 
     .factory('UpdateObjectivesPercent', function () {
