@@ -265,7 +265,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             queryObjectives.equalTo("incident", incident);
             return queryObjectives.first().then(
                 function(objectivesObject){
-                    console.log(objectivesObject);
                     if (objectivesObject){
                         ConvertParseObject(objectivesObject, OBJECTIVES_DEF);
                         incident.objectives = objectivesObject;

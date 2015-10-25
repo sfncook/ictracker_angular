@@ -21,7 +21,6 @@ angular.module('OSRServices', ['ParseServices', 'DataServices'])
 
     .factory('UpdateOsrPercent', function () {
         return function (incident) {
-            console.log("UpdateOsrPercent incident:",incident);
             var fullAmt=9.0;
             var amtChecked=0;
             if(incident) {
