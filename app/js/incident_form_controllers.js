@@ -889,6 +889,7 @@ function initDialogs() {
         }
 
     });
+    $( "#dispatch_address_dlg" ).dialog({resizable: false, modal: true, width:450});
     $( "#objectives_dlg" ).dialog({
         resizable: false,
         modal: true,

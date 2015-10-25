@@ -425,6 +425,18 @@
     <div class="clear_both"></div>
 </div>
 
+<!-- Address Dialog -->
+<div id="dispatch_address_dlg" title="Dispatch Address" ng-controller="OsrDlg" class="dialog">
+    <input type="text" ng-model="dispatchAddress_temp">
+    <button ng-click="clickDispatchAddressClear()">Clear</button>
+    <div class="clear_float"></div>
+    <div>
+        <button ng-click="clickDispatchAddressOk()" class="confirm_btn">OK</button>
+        <button ng-click="clickDispatchAddressCancel()" class="confirm_btn">Cancel</button>
+        <div class="clear_float"></div>
+    </div>
+</div>
+
 <!-- OSR Dialog -->
 <div id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg" class="dialog">
     <div id="osr_left_col">
@@ -465,7 +477,7 @@
                 ng-class="{glowlightgreen:dataStore.incident.osr.unit}">{{dataStore.incident.osr.unit || "Unit"}}</button>
 
         <button class="osr_btn_lg"
-                ng-click="showAddressDlg()"
+                ng-click="showDispatchAddressDlg()"
                 ng-class="{glowlightgreen:dataStore.incident.osr.dispatchAddress}"
                 style="margin-bottom:10px; margin-top: 10px;">{{dataStore.incident.osr.dispatchAddress || "Dispatch Address"}}</button>
 
