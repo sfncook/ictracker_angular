@@ -428,7 +428,6 @@
 <!-- OSR Dialog -->
 <div id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg" class="dialog">
     <div id="osr_left_col">
-        <button class="osr_btn" ng-click="showUnitsDlgForOsr()" ng-class="{glowlightgreen:dataStore.incident.osr.unit}">{{dataStore.incident.osr.unit || "Unit" }}</button>
         <button class="osr_btn" ng-click="dataStore.incident.osr.address_left_osr=!dataStore.incident.osr.address_left_osr; updateOSRPerc()"
                 ng-class="{glowlightgreen:dataStore.incident.osr.address_left_osr}">Address
         </button>
@@ -461,12 +460,15 @@
         </button>
     </div>
     <div id="osr_right_col">
-        <!-- TODO: highlight Address if disp address is set -->
-        <button class="osr_address_btn"
+        <button class="osr_btn_lg"
+                ng-click="showUnitsDlgForOsr()"
+                ng-class="{glowlightgreen:dataStore.incident.osr.unit}">{{dataStore.incident.osr.unit || "Unit"}}</button>
+
+        <button class="osr_btn_lg"
                 ng-click="showAddressDlg()"
-                ng-class="{glowlightgreen:dataStore.incident.osr.disp_address!='Dispatch Address'}"
-                style="margin-bottom:10px; margin-top: 10px;">{{disp_address}}
-        </button>
+                ng-class="{glowlightgreen:dataStore.incident.osr.dispatchAddress}"
+                style="margin-bottom:10px; margin-top: 10px;">{{dataStore.incident.osr.dispatchAddress || "Dispatch Address"}}</button>
+
         <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.type_of_bldg!='Type of building'}" ng-model="dataStore.incident.osr.type_of_bldg">
             <option disabled="disabled" selected="selected">Type of building</option>
             <option>Residential Home</option>

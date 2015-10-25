@@ -532,9 +532,10 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     margin: 10px 0 15px 0;
     height: 25px;
 }
-.osr_address_btn {
+.osr_btn_lg {
     width: 220px;
-    margin:5px 0 15px 0;
+    margin:5px 0;
+    display:block;
 }
 .osr_select {
     text-align: center;
