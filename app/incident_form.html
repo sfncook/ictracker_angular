@@ -428,46 +428,46 @@
 <!-- OSR Dialog -->
 <div id="osr_dlg" title="On Scene Report (OSR)" ng-controller="OsrDlg" class="dialog">
     <div id="osr_left_col">
-        <button class="osr_btn" ng-click="unit_osr=!unit_osr" ng-class="{glowlightgreen:unit_osr}">Unit ID</button>
-        <button class="osr_btn" ng-click="address_left_osr=!address_left_osr"
-                ng-class="{glowlightgreen:address_left_osr}">Address
+        <button class="osr_btn" ng-click="showUnitsDlgForOsr()" ng-class="{glowlightgreen:dataStore.incident.osr.unit}">{{dataStore.incident.osr.unit || "Unit" }}</button>
+        <button class="osr_btn" ng-click="dataStore.incident.osr.address_left_osr=!dataStore.incident.osr.address_left_osr; updateOSRPerc()"
+                ng-class="{glowlightgreen:dataStore.incident.osr.address_left_osr}">Address
         </button>
-        <button class="osr_btn" ng-click="occupancy_osr=!occupancy_osr" ng-class="{glowlightgreen:occupancy_osr}">
+        <button class="osr_btn" ng-click="dataStore.incident.osr.isOccupancy=!dataStore.incident.osr.isOccupancy; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.isOccupancy}">
             Occupancy
         </button>
-        <button class="osr_btn" ng-click="construction_osr=!construction_osr"
-                ng-class="{glowlightgreen:construction_osr}">Construction
+        <button class="osr_btn" ng-click="dataStore.incident.osr.construction_osr=!dataStore.incident.osr.construction_osr; updateOSRPerc()"
+                ng-class="{glowlightgreen:dataStore.incident.osr.construction_osr}">Construction
         </button>
-        <button class="osr_btn" ng-click="conditions_osr=!conditions_osr" ng-class="{glowlightgreen:conditions_osr}">
+        <button class="osr_btn" ng-click="dataStore.incident.osr.conditions_osr=!dataStore.incident.osr.conditions_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.conditions_osr}">
             Conditions
         </button>
-        <button class="osr_btn" ng-click="assumecmd_osr=!assumecmd_osr" ng-class="{glowlightgreen:assumecmd_osr}">Assume
+        <button class="osr_btn" ng-click="dataStore.incident.osr.assumecmd_osr=!dataStore.incident.osr.assumecmd_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.assumecmd_osr}">Assume
             Command
         </button>
-        <button class="osr_btn" ng-click="location_osr=!location_osr" ng-class="{glowlightgreen:location_osr}">
+        <button class="osr_btn" ng-click="dataStore.incident.osr.location_osr=!dataStore.incident.osr.location_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.location_osr}">
             Location(mobile/cab)
         </button>
-        <button class="osr_btn" ng-click="mode_osr=!mode_osr" ng-class="{glowlightgreen:mode_osr}">Strategy
+        <button class="osr_btn" ng-click="dataStore.incident.osr.mode_osr=!dataStore.incident.osr.mode_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.mode_osr}">Strategy
             (off./def.)
         </button>
-        <button class="osr_btn" ng-click="attach_line=!attach_line" ng-class="{glowlightgreen:attach_line}">Attack
+        <button class="osr_btn" ng-click="dataStore.incident.osr.attach_line=!dataStore.incident.osr.attach_line; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.attach_line}">Attack
             line
         </button>
-        <button class="osr_btn" ng-click="water_supply=!water_supply" ng-class="{glowlightgreen:water_supply}">Water
+        <button class="osr_btn" ng-click="dataStore.incident.osr.water_supply=!dataStore.incident.osr.water_supply; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.water_supply}">Water
             supply
         </button>
-        <button class="osr_btn" ng-click="iric_osr=!iric_osr" ng-class="{glowlightgreen:iric_osr}">IRIC</button>
-        <button class="osr_btn" ng-click="acct_osr=!acct_osr" ng-class="{glowlightgreen:acct_osr}">Accountability
+        <button class="osr_btn" ng-click="dataStore.incident.osr.iric_osr=!dataStore.incident.osr.iric_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.iric_osr}">IRIC</button>
+        <button class="osr_btn" ng-click="dataStore.incident.osr.acct_osr=!dataStore.incident.osr.acct_osr; updateOSRPerc()" ng-class="{glowlightgreen:dataStore.incident.osr.acct_osr}">Accountability
         </button>
     </div>
     <div id="osr_right_col">
         <!-- TODO: highlight Address if disp address is set -->
         <button class="osr_address_btn"
                 ng-click="showAddressDlg()"
-                ng-class="{glowlightgreen:disp_address!='Dispatch Address'}"
+                ng-class="{glowlightgreen:dataStore.incident.osr.disp_address!='Dispatch Address'}"
                 style="margin-bottom:10px; margin-top: 10px;">{{disp_address}}
         </button>
-        <select class="osr_select" ng-class="{glowlightgreen:type_of_bldg!='Type of building'}" ng-model="type_of_bldg">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.type_of_bldg!='Type of building'}" ng-model="dataStore.incident.osr.type_of_bldg">
             <option disabled="disabled" selected="selected">Type of building</option>
             <option>Residential Home</option>
             <option>Duplex</option>
@@ -480,7 +480,7 @@
             <option>Specialized/Other</option>
         </select>
 
-        <select class="osr_select" ng-class="{glowlightgreen:num_floors!='Number of floors'}" ng-model="num_floors">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.num_floors!='Number of floors'}" ng-model="dataStore.incident.osr.num_floors">
             <option disabled="disabled" selected="selected">Number of floors</option>
             <option>1 floor</option>
             <option>2 floors</option>
@@ -508,8 +508,8 @@
             <option>24 floors</option>
             <option>25 floors</option>
         </select>
-        <select class="osr_select" ng-class="{glowlightgreen:size_building!='Size of building'}"
-                ng-model="size_building">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.size_building!='Size of building'}"
+                ng-model="dataStore.incident.osr.size_building">
             <option disabled="disabled" selected="selected">Size of building</option>
             <option>Small building</option>
             <option>Medium building</option>
@@ -517,14 +517,14 @@
         </select>
 
         <div class="osr_toggle_container_div">
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==1}" ng-click="basement=1">Basement
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.basement==1}" ng-click="dataStore.incident.osr.basement=1">Basement
             </button>
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:basement==2}" ng-click="basement=2">No Basement
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.basement==2}" ng-click="dataStore.incident.osr.basement=2">No Basement
             </button>
         </div>
 
-        <select class="osr_select" ng-class="{glowlightgreen:construction!='Construction type'}"
-                ng-model="construction">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.construction!='Construction type'}"
+                ng-model="dataStore.incident.osr.construction">
             <option disabled="disabled" selected="selected">Construction type</option>
             <option>Light weight construction</option>
             <option>Wood frame construction</option>
@@ -534,7 +534,7 @@
             <option>Specialized/Other construction</option>
         </select>
 
-        <select class="osr_select" ng-class="{glowlightgreen:roof!='Roof'}" ng-model="roof">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.roof!='Roof'}" ng-model="dataStore.incident.osr.roof">
             <option disabled="disabled" selected="selected">Roof</option>
             <option>Pitched - tile roof</option>
             <option>Pitched - asphalt roof</option>
@@ -543,7 +543,7 @@
             <option>Arched roof</option>
         </select>
 
-        <select class="osr_select" ng-class="{glowlightgreen:conditions!='Conditions'}" ng-model="conditions">
+        <select class="osr_select" ng-class="{glowlightgreen:dataStore.incident.osr.conditions!='Conditions'}" ng-model="dataStore.incident.osr.conditions">
             <option disabled="disabled" selected="selected">Conditions</option>
             <option>Nothing showing</option>
             <option>Smoke showing</option>
@@ -551,15 +551,15 @@
         </select>
 
         <div class="osr_toggle_container_div">
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==1}" ng-click="location=1">Mobile</button>
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:location==2}" ng-click="location=2">Stationary
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.location==1}" ng-click="dataStore.incident.osr.location=1">Mobile</button>
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.location==2}" ng-click="dataStore.incident.osr.location=2">Stationary
             </button>
         </div>
 
         <div class="osr_toggle_container_div">
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==1}" ng-click="strategy=1">Offensive
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.strategy==1}" ng-click="dataStore.incident.osr.strategy=1">Offensive
             </button>
-            <button class="osr_toggle_btn" ng-class="{glowlightgreen:strategy==2}" ng-click="strategy=2">Defensive
+            <button class="osr_toggle_btn" ng-class="{glowlightgreen:dataStore.incident.osr.strategy==2}" ng-click="dataStore.incident.osr.strategy=2">Defensive
             </button>
         </div>
     </div>

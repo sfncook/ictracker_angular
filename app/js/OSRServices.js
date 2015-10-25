@@ -2,30 +2,40 @@
 
 angular.module('OSRServices', ['ParseServices', 'DataServices'])
 
-    .controller('OsrDlg', function($scope, DataStore){
+    .controller('OsrDlg', function($scope, DataStore, UpdateOsrPercent){
         $scope.dataStore = DataStore;
         DataStore.showOSRDlg = function() {
             $("#osr_dlg").dialog( "open" );
         }
+
         $scope.showOSRDlg = function() {
             DataStore.showOSRDlg();
         }
-        DataStore.updateOSRPerc = function() {
+
+        $scope.updateOSRPerc = function() {
+            UpdateOsrPercent(DataStore.incident);
+        }
+
+        $scope.showUnitsDlgForOsr = DataStore.showUnitsDlgForOsr;
+    })
+
+    .factory('UpdateOsrPercent', function () {
+        return function (incident) {
+            console.log("UpdateOsrPercent incident:",incident);
             var fullAmt=9.0;
             var amtChecked=0;
-            if (DataStore.osr.unit!=''){ amtChecked++; }
-            if (DataStore.osr.dispatchAddress!=''){ amtChecked++; }
-            if (DataStore.osr.conditions!=''){ amtChecked++; }
-            if (DataStore.osr.isOccupancy){ amtChecked++; }
-            if (DataStore.osr.isConstruction){ amtChecked++; }
-            if (DataStore.osr.isAssumeCommand){ amtChecked++; }
-            if (DataStore.osr.isAttackLine){ amtChecked++; }
-            if (DataStore.osr.isWaterSupply){ amtChecked++; }
-            if (DataStore.osr.accountability!=''){ amtChecked++; }
+            if(incident) {
+                if (incident.osr.unit!=''){ amtChecked++; }
+                if (incident.osr.dispatchAddress!=''){ amtChecked++; }
+                if (incident.osr.conditions!=''){ amtChecked++; }
+                if (incident.osr.isOccupancy){ amtChecked++; }
+                if (incident.osr.isConstruction){ amtChecked++; }
+                if (incident.osr.isAssumeCommand){ amtChecked++; }
+                if (incident.osr.isAttackLine){ amtChecked++; }
+                if (incident.osr.isWaterSupply){ amtChecked++; }
+                if (incident.osr.accountability!=''){ amtChecked++; }
+            }
             angular.element('#osr_perc_bar').css('width', ((amtChecked*100.0)/fullAmt) + '%');
-        }
-        $scope.updateOSRPerc = function() {
-            DataStore.updateOSRPerc();
         }
     })
 

@@ -460,25 +460,16 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             if($scope.forAcct) {
                 $scope.selectedSector.acctUnit = unitType;
                 ReportFunctions.addEvent_unitType_to_acct($scope.selectedSector, unitType);
-                $scope.forAcct=false;
                 $("#units_dlg").dialog( "close" );
                 $scope.selectedSector.save(null, {
                     error: function(error) {
                         console.log('Failed to $scope.selectedSector.save() for acctUnit, with error code: ' + error.message);
                     }
                 });
-            } /*else if($scope.forDispUnits) {
-                if($scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
-                    $scope.dataStore.dispatchedUnits.unitTypes.remByVal(unitType);
-                } else {
-                    $scope.dataStore.dispatchedUnits.unitTypes.push(unitType);
-                }
-                $scope.dataStore.dispatchedUnits.save(null, {
-                    error: function(error) {
-                        console.log('Failed to $scope.dataStore.dispatchedUnits.save() for acctUnit, with error code: ' + error.message);
-                    }
-                });
-            }*/ else {
+            } else if($scope.forOsr) {
+                $scope.dataStore.incident.osr.unit = unitType.name;
+                $("#units_dlg").dialog( "close" );
+            } else {
                 var wasAdded = ToggleUnitTypeForSector($scope.selectedSector, unitType);
                 if(wasAdded) {
                     if(!$scope.dataStore.dispatchedUnits.unitTypes.contains(unitType)){
@@ -518,6 +509,10 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
                 }
                 $("#units_dlg").dialog( "close" );
             }
+            $scope.forAcct=false;
+            $scope.forDispUnits = false;
+            $scope.forOsr = false;
+
         };
 
         $scope.selectDispatchedUnit = function(unit) {
@@ -542,6 +537,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         DataStore.showUnitsDlgForDispUnits = function() {
             $scope.forDispUnits=true;
+            DataStore.showUnitsDlg();
+        }
+
+        DataStore.showUnitsDlgForOsr = function() {
+            $scope.forOsr=true;
             DataStore.showUnitsDlg();
         }
 
@@ -885,7 +885,7 @@ function initDialogs() {
         modal: true,
         width: 420,
         close: function(event, ui){
-            angular.element('#osr_dlg').scope().dataStore.osr.save();
+            angular.element('#osr_dlg').scope().dataStore.incident.osr.save();
         }
 
     });

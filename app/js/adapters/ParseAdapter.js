@@ -1,5 +1,5 @@
 
-angular.module('ParseAdapter', ['ParseServices','ObjectivesServices'])
+angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices'])
 
     .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse) {
         return {
@@ -278,24 +278,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices'])
             );
         }
     })
-    .factory('FetchOSRForIncident_Parse', function (ConvertParseObject, DataStore, CreateNewOSR_Parse) {
-        return function (incident) {
-            var queryOSR = new Parse.Query(Parse.Object.extend('OSR'));
-            queryOSR.equalTo("incident", incident);
-            return queryOSR.first().then(
-                function(osrObject){
-                    if (osrObject){
-                        ConvertParseObject(osrObject, OSR_DEF);
-                        DataStore.osr = osrObject;
-                    } else {
-                        DataStore.osr = CreateNewOSR_Parse(incident);
-                    }
-                    DataStore.updateOSRPerc();
-                    return incident;
-                }
-            );
-        }
-    })
     .factory('CreateNewOSR_Parse', function (ConvertParseObject) {
         return function (incident) {
             var OSRParseObj = Parse.Object.extend('OSR');
@@ -327,7 +309,26 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices'])
             osrObject.conditions                = '';
 
             osrObject.incident                  = incident;
+
             return osrObject;
+        }
+    })
+    .factory('FetchOSRForIncident_Parse', function (ConvertParseObject, CreateNewOSR_Parse, UpdateOsrPercent) {
+        return function (incident) {
+            var queryOSR = new Parse.Query(Parse.Object.extend('OSR'));
+            queryOSR.equalTo("incident", incident);
+            return queryOSR.first().then(
+                function(osrObject){
+                    if (osrObject){
+                        ConvertParseObject(osrObject, OSR_DEF);
+                        incident.osr = osrObject;
+                    } else {
+                        incident.osr = CreateNewOSR_Parse(incident);
+                    }
+                    UpdateOsrPercent(incident);
+                    return incident;
+                }
+            );
         }
     })
     .factory('LoadDispatchedUnitsForIncident_Parse', function ($q, ConvertParseObject, DataStore) {
