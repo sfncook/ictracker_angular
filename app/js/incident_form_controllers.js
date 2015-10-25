@@ -883,7 +883,7 @@ function initDialogs() {
     $( "#osr_dlg" ).dialog({
         resizable: false,
         modal: true,
-        width: 420,
+        width: 460,
         close: function(event, ui){
             angular.element('#osr_dlg').scope().dataStore.incident.osr.save();
         }
