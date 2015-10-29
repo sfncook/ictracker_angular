@@ -3,6 +3,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
 
     .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse) {
         return {
+            adapter_id_str:'parse',
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
                     var app_key =   localStorage.getItem('department_app_key');
