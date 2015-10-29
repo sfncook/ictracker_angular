@@ -2,7 +2,7 @@ angular.module('StaticAdapter', [])
 
     .factory('StaticAdapter', function(
         LoadIncidentTypes_Static, LoadAllIncidents_Static, LoadIncident_Static, isLoggedIn_Static,
-        LoadActionTypes_Static
+        LoadActionTypes_Static, LoadSectorTypes_Static
     ) {
         return {
             adapter_id_str:'static',
@@ -12,7 +12,8 @@ angular.module('StaticAdapter', [])
             LoadIncident: LoadIncident_Static,
             UpdateIncidentAsNeeded: function(){console.log("StaticAdapter UpdateIncidentAsNeeded");},
             isLoggedIn: isLoggedIn_Static,
-            LoadActionTypes: LoadActionTypes_Static
+            LoadActionTypes: LoadActionTypes_Static,
+            LoadSectorTypes: LoadSectorTypes_Static
         };
     })
 
@@ -47,6 +48,13 @@ angular.module('StaticAdapter', [])
     .factory('LoadActionTypes_Static', function ($q) {
         return function () {
             var promise = $q.when(ACTION_TYPES);
+            return promise;
+        }
+    })
+
+    .factory('LoadSectorTypes_Static', function ($q) {
+        return function () {
+            var promise = $q.when(SECTOR_TYPES);
             return promise;
         }
     })
@@ -191,4 +199,62 @@ var ACTION_TYPES = [
     {"action_type":"Lines", "is_warning":false, "name":"Horizontal Standpipe"},
     {"action_type":"Lines", "is_warning":false, "name":"Support Sprinklers"},
     {"action_type":"Lines", "is_warning":false, "name":"Standpipe"}
+]
+
+var SECTOR_TYPES = [
+    {"name":"Interior", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Sector 1", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"North Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"A-Side Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Sector 2", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Eat Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Bravo Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"Ventilation", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Sector 3", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"South Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Charlie Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"Roof", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Sector 4", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"West Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Delta Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Sector ####", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"On Deck", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Overhaul", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"IRIC", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Medical", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"Staging", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Salvage", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"RIC", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Triage", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"Lobby", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Customer Service", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"RESCUE", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Treatment", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"Accountability", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Evacuation", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Safety", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Transportation", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"Resource", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+    {"name":"ReHab", "hasClock":false, "hasAcctBtn":false, "hasPsiBtn":false, "hasActions":false},
+    {"name":"", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true}
+
 ]

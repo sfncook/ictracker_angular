@@ -1,35 +1,41 @@
 
-angular.module('SectorServices', ['ParseServices', 'DataServices'])
+angular.module('SectorServices', ['DataServices', 'AdapterStore'])
 
     .factory('SectorTypes', function() {
         return new Array();
     })
 
-    .factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadSectorTypes', function (AdapterStore) {
         return function () {
-            var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
-            return querySectorTypes.find({
-                success: function(sectorTypes) {
-                    for(var i=0; i<sectorTypes.length; i++) {
-                        var sectorType = sectorTypes[i];
-                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
-                        SectorTypes.push(sectorType);
-                        var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
-                        SectorTypes[nameRefor] = sectorType;
-                        if (sectorType.name=="Sector Name") {
-                            SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
-                        }
-                        if (sectorType.name=="Sector ####") {
-                            SectorTypes.SECTOR_NUM = sectorType;
-                        }
-                    }//for
-                },
-                error: function(error) {
-                    console.log('Failed to LoadSectorTypes, with error code: ' + error.message);
-                }
-            });
+            return AdapterStore.adapter.LoadSectorTypes();
         }
-    }])
+    })
+
+    //.factory('LoadSectorTypes', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
+    //    return function () {
+    //        var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
+    //        return querySectorTypes.find({
+    //            success: function(sectorTypes) {
+    //                for(var i=0; i<sectorTypes.length; i++) {
+    //                    var sectorType = sectorTypes[i];
+    //                    ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+    //                    SectorTypes.push(sectorType);
+    //                    var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
+    //                    SectorTypes[nameRefor] = sectorType;
+    //                    if (sectorType.name=="Sector Name") {
+    //                        SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
+    //                    }
+    //                    if (sectorType.name=="Sector ####") {
+    //                        SectorTypes.SECTOR_NUM = sectorType;
+    //                    }
+    //                }//for
+    //            },
+    //            error: function(error) {
+    //                console.log('Failed to LoadSectorTypes, with error code: ' + error.message);
+    //            }
+    //        });
+    //    }
+    //}])
 
     .factory('DoesSectorHavePar', [function () {
         return function (sector) {

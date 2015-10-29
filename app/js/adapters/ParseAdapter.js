@@ -3,7 +3,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
 
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
-        LoadActionTypes_Parse) {
+        LoadActionTypes_Parse, LoadSectorTypes_Parse) {
         return {
             adapter_id_str:'parse',
             init:function(){
@@ -29,7 +29,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadIncident: LoadIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
             isLoggedIn: isLoggedIn_Parse,
-            LoadActionTypes: LoadActionTypes_Parse
+            LoadActionTypes: LoadActionTypes_Parse,
+            LoadSectorTypes: LoadSectorTypes_Parse
         };
     })
 
@@ -516,6 +517,32 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 },
                 error: function(error) {
                     console.log('Failed to LoadActionTypes, with error code: ' + error.message);
+                }
+            });
+        }
+    }])
+
+    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
+        return function () {
+            var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
+            return querySectorTypes.find({
+                success: function(sectorTypes) {
+                    for(var i=0; i<sectorTypes.length; i++) {
+                        var sectorType = sectorTypes[i];
+                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
+                        SectorTypes.push(sectorType);
+                        var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
+                        SectorTypes[nameRefor] = sectorType;
+                        if (sectorType.name=="Sector Name") {
+                            SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
+                        }
+                        if (sectorType.name=="Sector ####") {
+                            SectorTypes.SECTOR_NUM = sectorType;
+                        }
+                    }//for
+                },
+                error: function(error) {
+                    console.log('Failed to LoadSectorTypes, with error code: ' + error.message);
                 }
             });
         }
