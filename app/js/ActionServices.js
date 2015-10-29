@@ -1,5 +1,5 @@
 
-angular.module('ActionServices', ['DataServices', 'AdapterStore'])
+angular.module('ActionServices', ['DataServices', 'AdapterServices'])
 
     .factory('ActionTypes', function() {
         return new Array();

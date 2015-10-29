@@ -1,5 +1,5 @@
 
-angular.module('SectorServices', ['DataServices', 'AdapterStore'])
+angular.module('SectorServices', ['DataServices', 'AdapterServices'])
 
     .factory('SectorTypes', function() {
         return new Array();

@@ -1,5 +1,5 @@
 
-angular.module('UnitServices', ['ParseServices', 'DataServices'])
+angular.module('UnitServices', ['DataServices', 'AdapterServices'])
 
     .factory('UnitTypes', function() {
         return new Array();
