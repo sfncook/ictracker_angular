@@ -523,7 +523,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         }
     }])
 
-    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
             return querySectorTypes.find({
@@ -531,16 +531,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     for(var i=0; i<sectorTypes.length; i++) {
                         var sectorType = sectorTypes[i];
                         ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
-                        SectorTypes.push(sectorType);
-                        var nameRefor = sectorType.name.replace(" ", "_").toUpperCase();
-                        SectorTypes[nameRefor] = sectorType;
-                        if (sectorType.name=="Sector Name") {
-                            SectorTypes.DEFAULT_SECTOR_TYPE = sectorType;
-                        }
-                        if (sectorType.name=="Sector ####") {
-                            SectorTypes.SECTOR_NUM = sectorType;
-                        }
                     }//for
+                    return sectorType;
                 },
                 error: function(error) {
                     console.log('Failed to LoadSectorTypes, with error code: ' + error.message);

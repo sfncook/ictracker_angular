@@ -267,7 +267,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.dataStore = DataStore;
 
         LoadSectorTypes().then(
-            function() {
+            function(sectorTypes) {
                 // Make all sector_types visible
                 for(var i=0; i<SectorTypes.length; i++) {
                     SectorTypes[i].isVisible = true;
