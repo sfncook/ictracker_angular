@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('UserServices', ['DataServices', 'DepartmentServices'])
+angular.module('UserServices', ['DataServices', 'DepartmentServices', 'AdapterServices'])
 
-    .factory('IsLoggedIn', [function () {
+    .factory('IsLoggedIn', function (AdapterStore) {
         return function () {
-            return Parse.User.current();
+            return AdapterStore.isLoggedIn();
         }
-    }])
+    })
 
     .factory('LoadCurrentUser', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
         return function () {

@@ -1,7 +1,7 @@
 
 angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices'])
 
-    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse) {
+    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse) {
         return {
             adapter_id_str:'parse',
             init:function(){
@@ -25,8 +25,15 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadIncidentTypes: LoadIncidentTypes_Parse,
             LoadAllIncidents: LoadAllIncidents_Parse,
             LoadIncident: LoadIncident_Parse,
-            UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse
+            UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
+            isLoggedIn: isLoggedIn_Parse
         };
+    })
+
+    .factory('isLoggedIn_Parse', function () {
+        return function () {
+            return Parse.User.current();
+        }
     })
 
     .factory('FetchTypeForIncident_Parse', function (ConvertParseObject) {

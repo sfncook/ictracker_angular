@@ -23,6 +23,9 @@ angular.module('AdapterServices', ['ParseAdapter', 'StaticAdapter'])
                 } else {
                     return null;
                 }
+            },
+            isLoggedIn:function() {
+                return this.adapter.isLoggedIn();
             }
         };
     })
