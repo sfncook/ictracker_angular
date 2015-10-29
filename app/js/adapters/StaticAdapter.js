@@ -41,7 +41,7 @@ angular.module('StaticAdapter', [])
     .factory('LoadIncident_Static', function ($q) {
         return function () {
             console.log("NOTE: You are using the Static Adapter so the inc_id config parameter is ignored.  The same incident data is always returned.");
-            var promise = $q.when(INCIDENT);
+            var promise = $q.when(INCIDENTS[0]);
             return promise;
         }
     })
@@ -136,16 +136,27 @@ var INCIDENTS = [
     {
         "id":"inc_001_id",
         "inc_number":"inc_001",
+        "inc_address":"100 W. Main St",
         "incidentType": {
             "type": "fire",
             "icon": "img/icons/fire.png",
             "nameLong": "Fire Incident",
             "order":1
-        }
+        },
+        "sectors":[
+            {
+                "sectorType": {"name":"Interior", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
+                "units":[],
+                "direction":null,
+                "number":null,
+
+            }
+        ]
     },
     {
         "id":"inc_002_id",
         "inc_number":"inc_002",
+        "inc_address":"200 W. Broadway Ave",
         "incidentType": {
             "type": "palm",
             "icon": "img/icons/palm.png",
@@ -155,16 +166,6 @@ var INCIDENTS = [
     }
 ];
 
-var INCIDENT = {
-    "id":"inc_001_id",
-    "inc_number":"inc_001",
-    "incidentType": {
-        "type": "fire",
-        "icon": "img/icons/fire.png",
-        "nameLong": "Fire Incident",
-        "order":1
-    }
-}
 
 var ACTION_TYPES = [
     {"action_type":"Engine", "is_warning":false, "name":"Supply"},
