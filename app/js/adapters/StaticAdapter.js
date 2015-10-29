@@ -3,7 +3,7 @@ angular.module('StaticAdapter', [])
     .factory('StaticAdapter', function(LoadIncidentTypes_Static, LoadAllIncidents_Static, isLoggedIn_Static) {
         return {
             adapter_id_str:'static',
-            init:function(){console.log("StaticAdapter init");},
+            init:function(){return true;},
             LoadIncidentTypes: LoadIncidentTypes_Static,
             LoadAllIncidents: LoadAllIncidents_Static,
             LoadIncident: function(){console.log("StaticAdapter LoadIncident");},
