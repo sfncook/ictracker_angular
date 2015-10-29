@@ -3,7 +3,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
 
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
-        LoadActionTypes_Parse, LoadSectorTypes_Parse) {
+        LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse) {
         return {
             adapter_id_str:'parse',
             init:function(){
@@ -30,7 +30,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
             isLoggedIn: isLoggedIn_Parse,
             LoadActionTypes: LoadActionTypes_Parse,
-            LoadSectorTypes: LoadSectorTypes_Parse
+            LoadSectorTypes: LoadSectorTypes_Parse,
+            LoadUnitTypes: LoadUnitTypes_Parse
         };
     })
 
@@ -547,4 +548,25 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             });
         }
     }])
+
+    .factory('LoadUnitTypes_Parse', ['UnitTypes', 'ParseQuery', 'ConvertParseObject', function (UnitTypes, ParseQuery, ConvertParseObject) {
+            return function () {
+                var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
+                queryUniTypes.limit(1000);
+                return queryUniTypes.find({
+                    success: function(unitTypes) {
+                        for(var i=0; i<unitTypes.length; i++) {
+                            var unitType = unitTypes[i];
+                            ConvertParseObject(unitType, UNIT_TYPE_DEF);
+                            UnitTypes.push(unitType);
+                            var nameRefor = unitType.name.toUpperCase();
+                            UnitTypes[nameRefor] = unitType;
+                        }//for
+                    },
+                    error: function(error) {
+                        console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
+                    }
+                });
+            }
+        }])
 ;

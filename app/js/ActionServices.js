@@ -5,7 +5,6 @@ angular.module('ActionServices', ['DataServices', 'AdapterStore'])
         return new Array();
     })
 
-
     .factory('LoadActionTypes', function (AdapterStore) {
         return function () {
             return AdapterStore.adapter.LoadActionTypes();

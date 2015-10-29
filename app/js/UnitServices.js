@@ -5,26 +5,11 @@ angular.module('UnitServices', ['ParseServices', 'DataServices'])
         return new Array();
     })
 
-    .factory('LoadUnitTypes', ['UnitTypes', 'ParseQuery', 'ConvertParseObject', function (UnitTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadUnitTypes', function (AdapterStore) {
         return function () {
-            var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
-            queryUniTypes.limit(1000);
-            return queryUniTypes.find({
-                success: function(unitTypes) {
-                    for(var i=0; i<unitTypes.length; i++) {
-                        var unitType = unitTypes[i];
-                        ConvertParseObject(unitType, UNIT_TYPE_DEF);
-                        UnitTypes.push(unitType);
-                        var nameRefor = unitType.name.toUpperCase();
-                        UnitTypes[nameRefor] = unitType;
-                    }//for
-                },
-                error: function(error) {
-                    console.log('Failed to LoadUnitTypes, with error code: ' + error.message);
-                }
-            });
+            return AdapterStore.adapter.LoadUnitTypes();
         }
-    }])
+    })
 
 
     .factory('CreateNewUnit', ['ConvertParseObject', 'DefaultErrorLogger', function (ConvertParseObject, DefaultErrorLogger) {
