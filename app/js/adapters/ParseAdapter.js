@@ -1,7 +1,9 @@
 
 angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices'])
 
-    .factory('ParseAdapter', function(LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse) {
+    .factory('ParseAdapter', function(
+        LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
+        LoadActionTypes_Parse) {
         return {
             adapter_id_str:'parse',
             init:function(){
@@ -26,7 +28,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadAllIncidents: LoadAllIncidents_Parse,
             LoadIncident: LoadIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
-            isLoggedIn: isLoggedIn_Parse
+            isLoggedIn: isLoggedIn_Parse,
+            LoadActionTypes: LoadActionTypes_Parse
         };
     })
 
@@ -495,4 +498,26 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             };
         }
     })
+
+
+    .factory('LoadActionTypes_Parse', ['ActionTypes', 'ParseQuery', 'ConvertParseObject', function (ActionTypes, ParseQuery, ConvertParseObject) {
+        return function () {
+            var queryActionTypes = new Parse.Query(Parse.Object.extend('ActionType'));
+            queryActionTypes.limit(1000);
+            return queryActionTypes.find({
+                success: function(actionTypes) {
+                    for(var i=0; i<actionTypes.length; i++) {
+                        var actionType = actionTypes[i];
+                        ConvertParseObject(actionType, ACTION_TYPE_DEF);
+                        ActionTypes.push(actionType);
+                        var nameRefor = actionType.name.toUpperCase();
+                        ActionTypes[nameRefor] = actionType;
+                    }//for
+                },
+                error: function(error) {
+                    console.log('Failed to LoadActionTypes, with error code: ' + error.message);
+                }
+            });
+        }
+    }])
 ;

@@ -1,30 +1,16 @@
 
-angular.module('ActionServices', ['ParseServices', 'DataServices'])
+angular.module('ActionServices', ['DataServices', 'AdapterServices'])
 
     .factory('ActionTypes', function() {
         return new Array();
     })
 
-    .factory('LoadActionTypes', ['ActionTypes', 'ParseQuery', 'ConvertParseObject', function (ActionTypes, ParseQuery, ConvertParseObject) {
+
+    .factory('LoadActionTypes', function (AdapterStore) {
         return function () {
-            var queryActionTypes = new Parse.Query(Parse.Object.extend('ActionType'));
-            queryActionTypes.limit(1000);
-            return queryActionTypes.find({
-                success: function(actionTypes) {
-                    for(var i=0; i<actionTypes.length; i++) {
-                        var actionType = actionTypes[i];
-                        ConvertParseObject(actionType, ACTION_TYPE_DEF);
-                        ActionTypes.push(actionType);
-                        var nameRefor = actionType.name.toUpperCase();
-                        ActionTypes[nameRefor] = actionType;
-                    }//for
-                },
-                error: function(error) {
-                    console.log('Failed to LoadActionTypes, with error code: ' + error.message);
-                }
-            });
+            return AdapterStore.adapter.LoadActionTypes();
         }
-    }])
+    })
 
     .factory('ToggleActionTypeForUnit', ['DefaultErrorLogger', function (DefaultErrorLogger) {
         return function (unit, actionType) {
