@@ -1,12 +1,12 @@
 angular.module('StaticAdapter', [])
 
-    .factory('StaticAdapter', function(LoadIncidentTypes_Static, LoadAllIncidents_Static, isLoggedIn_Static) {
+    .factory('StaticAdapter', function(LoadIncidentTypes_Static, LoadAllIncidents_Static, LoadIncident_Static, isLoggedIn_Static) {
         return {
             adapter_id_str:'static',
             init:function(){return true;},
             LoadIncidentTypes: LoadIncidentTypes_Static,
             LoadAllIncidents: LoadAllIncidents_Static,
-            LoadIncident: function(){console.log("StaticAdapter LoadIncident");},
+            LoadIncident: LoadIncident_Static,
             UpdateIncidentAsNeeded: function(){console.log("StaticAdapter UpdateIncidentAsNeeded");},
             isLoggedIn: isLoggedIn_Static
         };
@@ -28,6 +28,14 @@ angular.module('StaticAdapter', [])
     .factory('LoadAllIncidents_Static', function ($q) {
         return function () {
             var promise = $q.when(INCIDENTS);
+            return promise;
+        }
+    })
+
+    .factory('LoadIncident_Static', function ($q) {
+        return function () {
+            console.log("NOTE: You are using the Static Adapter so the inc_id config parameter is ignored.  The same incident data is always returned.");
+            var promise = $q.when(INCIDENT);
             return promise;
         }
     })
@@ -119,3 +127,14 @@ var INCIDENTS = [
         }
     }
 ];
+
+var INCIDENT = {
+    "id":"inc_001_id",
+    "inc_number":"inc_001",
+    "incidentType": {
+        "type": "fire",
+        "icon": "img/icons/fire.png",
+        "nameLong": "Fire Incident",
+        "order":1
+    }
+}
