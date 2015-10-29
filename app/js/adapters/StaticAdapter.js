@@ -99,11 +99,21 @@ var INC_TYPES = [
 
 var INCIDENTS = [
     {
-        "id":"gFGa4HMohQ",
-        "json":"{\"inc_address\":\"add007\",\"inc_number\":\"inc007\",\"incidentType\":{\"icon\":\"img/icons/fire.png\",\"nameLong\":\"Fire Incident\",\"nameShort\":\"fire\",\"order\":1},\"iap\":{\"fireControl\": \"Shawn update 01 fire control\",\"firefighterSafety\": \"Shawn update 01 firefighter safety\",\"isActionEffect\": false,\"isArrangement\": false,\"isBuilding\": false,\"isFire\": true,\"isLifeHazard\": true,\"isOccupancy\": false,\"isResources\": true,\"isSpecial\": true,\"isSprinkler\": true,\"isVent\": true,\"propertyPeople\": \"Shawn update 01 property people\",\"rescue\": \"Shawn update 01 rescue\"}}"
+        "inc_number":"inc_001",
+        "incidentType": {
+            "type": "fire",
+            "icon": "img/icons/fire.png",
+            "nameLong": "Fire Incident",
+            "order":1
+        }
     },
     {
-        "id":"mL9SQdUvPL",
-        "json":"{\"inc_address\":\"add008\",\"inc_number\":\"inc008\",\"incidentType\":{\"icon\":\"img/icons/hazmat.png\",\"nameLong\":\"HazMat Incident\",\"nameShort\":\"hazmat\",\"order\":1}}"
+        "inc_number":"inc_002",
+        "incidentType": {
+            "type": "palm",
+            "icon": "img/icons/palm.png",
+            "nameLong": "Palm Rescue",
+            "order":8
+        }
     }
 ];

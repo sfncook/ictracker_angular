@@ -25,8 +25,9 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             $scope.incidentTypes = incidentTypes;
         });
 
-        LoadAllIncidents().then(function(){
-            $scope.incident_list = Incidents;
+        LoadAllIncidents().then(function(incidents){
+            console.log("incidents: ", incidents);
+            $scope.incident_list = incidents;
             function hideLoadingSplash() {
                 $scope.dataStore.loadSuccess = true;
                 $scope.dataStore.waitingToLoad = false;
