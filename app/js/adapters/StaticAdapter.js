@@ -99,6 +99,7 @@ var INC_TYPES = [
 
 var INCIDENTS = [
     {
+        "id":"inc_001_id",
         "inc_number":"inc_001",
         "incidentType": {
             "type": "fire",
@@ -108,6 +109,7 @@ var INCIDENTS = [
         }
     },
     {
+        "id":"inc_002_id",
         "inc_number":"inc_002",
         "incidentType": {
             "type": "palm",
