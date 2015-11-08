@@ -115,36 +115,34 @@ angular.module("ReportServices", ['DataServices'])
 
     })
 
-    .factory('SaveReportAction', [
-        'DefaultErrorLogger', 'DataStore',
-        function (DefaultErrorLogger, DataStore) {
-            return function (sector, text) {
-                var ReportAction = Parse.Object.extend("ReportAction");
-                var reportAction = new ReportAction();
-                reportAction.set("incident", DataStore.incident);
-                reportAction.set("sector", sector);
-                reportAction.set("text", text);
-                reportAction.save(null, DefaultErrorLogger);
-            }
-        }])
+    //.factory('SaveReportAction', [
+    //    'DefaultErrorLogger', 'DataStore',
+    //    function (DefaultErrorLogger, DataStore) {
+    //        return function (sector, text) {
+    //            var ReportAction = Parse.Object.extend("ReportAction");
+    //            var reportAction = new ReportAction();
+    //            reportAction.set("incident", DataStore.incident);
+    //            reportAction.set("sector", sector);
+    //            reportAction.set("text", text);
+    //            reportAction.save(null, DefaultErrorLogger);
+    //        }
+    //    }])
 
-    .factory('ReportFunctions', [
-        'SaveReportAction',
-        function(SaveReportAction) {
-            return {
-                addEvent_title_to_sector:       function(sector)                        {SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},
-                addEvent_unit_to_sector:        function(sector, unit)                  {SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
-                addEvent_unitType_to_acct:      function(sector, unitType)              {SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
-                addEvent_action_to_unit:        function(sector, unit, actionType)      {SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-                addEvent_sector_has_par:        function(sector)                        {SaveReportAction(sector, "Sector has par - Sector: " + sector.sectorType.name);},
-                addEvent_unit_has_par:          function(sector, unit)                  {SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-                addEvent_person_has_par:        function(sector, unit)                  {SaveReportAction(sector, "Fire fighter has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
-                addEvent_benchmark:             function(sector, benchmarkText)         {SaveReportAction(sector, "Benchmark:" + benchmarkText + " for Sector: " + sector.sectorType.name);},
-                addEvent_osr:                   function(osrText)                       {SaveReportAction(sector, "OSR:" + osrText);},
-                addEvent_objective:             function(objectiveText)                 {SaveReportAction(sector, "Objective:" + objectiveText);},
-                addEvent_iap:                   function(iapText)                       {SaveReportAction(sector, "IAP:" + iapText);},
-            };
-        }])
+    .factory('ReportFunctions', function(AdapterStore) {
+        return {
+            addEvent_title_to_sector:       function(sector)                        {AdapterStore.SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},
+            addEvent_unit_to_sector:        function(sector, unit)                  {AdapterStore.SaveReportAction(sector, "Unit: " + unit.type.name + " added to Sector: " + sector.sectorType.name);},
+            addEvent_unitType_to_acct:      function(sector, unitType)              {AdapterStore.SaveReportAction(sector, "Accountability Unit: " + unitType.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_action_to_unit:        function(sector, unit, actionType)      {AdapterStore.SaveReportAction(sector, "Action: " + actionType.name + " Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_sector_has_par:        function(sector)                        {AdapterStore.SaveReportAction(sector, "Sector has par - Sector: " + sector.sectorType.name);},
+            addEvent_unit_has_par:          function(sector, unit)                  {AdapterStore.SaveReportAction(sector, "Unit has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_person_has_par:        function(sector, unit)                  {AdapterStore.SaveReportAction(sector, "Fire fighter has par - Unit:" + unit.type.name + " for Sector: " + sector.sectorType.name);},
+            addEvent_benchmark:             function(sector, benchmarkText)         {AdapterStore.SaveReportAction(sector, "Benchmark:" + benchmarkText + " for Sector: " + sector.sectorType.name);},
+            addEvent_osr:                   function(osrText)                       {AdapterStore.SaveReportAction(sector, "OSR:" + osrText);},
+            addEvent_objective:             function(objectiveText)                 {AdapterStore.SaveReportAction(sector, "Objective:" + objectiveText);},
+            addEvent_iap:                   function(iapText)                       {AdapterStore.SaveReportAction(sector, "IAP:" + iapText);},
+        };
+    })
 
 
 ;

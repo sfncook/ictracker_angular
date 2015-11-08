@@ -3,7 +3,7 @@ angular.module('StaticAdapter', [])
     .factory('StaticAdapter', function(
         LoadIncidentTypes_Static, LoadAllIncidents_Static, LoadIncident_Static, isLoggedIn_Static,
         LoadActionTypes_Static, LoadSectorTypes_Static, LoadUnitTypes_Static,
-        SaveSector_Static
+        SaveSector_Static, SaveReportAction_Static
     ) {
         return {
             adapter_id_str:'static',
@@ -16,7 +16,8 @@ angular.module('StaticAdapter', [])
             LoadActionTypes:        LoadActionTypes_Static,
             LoadSectorTypes:        LoadSectorTypes_Static,
             LoadUnitTypes:          LoadUnitTypes_Static,
-            SaveSector:             SaveSector_Static
+            SaveSector:             SaveSector_Static,
+            SaveReportAction:       SaveReportAction_Static
         };
     })
 
@@ -79,6 +80,14 @@ angular.module('StaticAdapter', [])
     .factory('SaveSector_Static', function ($q) {
         return function (sector) {
             console.log("SaveSector_Static - Do nothing.  Always returns TRUE.");
+            var promise = $q.when(true);
+            return promise;
+        }
+    })
+
+    .factory('SaveReportAction_Static', function ($q) {
+        return function (sector, text) {
+            console.log("SaveReportAction_Static - Do nothing.  Always returns TRUE.");
             var promise = $q.when(true);
             return promise;
         }

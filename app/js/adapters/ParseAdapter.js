@@ -4,7 +4,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
-        SaveSector_Parse
+        SaveSector_Parse, SaveReportAction_Parse
     ) {
         return {
             adapter_id_str:'parse',
@@ -34,7 +34,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadActionTypes:        LoadActionTypes_Parse,
             LoadSectorTypes:        LoadSectorTypes_Parse,
             LoadUnitTypes:          LoadUnitTypes_Parse,
-            SaveSector:             SaveSector_Parse
+            SaveSector:             SaveSector_Parse,
+            SaveReportAction:       SaveReportAction_Parse
         };
     })
 
@@ -570,6 +571,17 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     .factory('SaveSector_Parse', function (DefaultErrorLogger) {
             return function (sector) {
                 return sector.save(null, DefaultErrorLogger);
+            }
+        })
+
+    .factory('SaveReportAction_Parse', function (DefaultErrorLogger, DataStore) {
+            return function (sector, text) {
+                var ReportAction = Parse.Object.extend("ReportAction");
+                var reportAction = new ReportAction();
+                reportAction.set("incident", DataStore.incident);
+                reportAction.set("sector", sector);
+                reportAction.set("text", text);
+                reportAction.save(null, DefaultErrorLogger);
             }
         })
 
