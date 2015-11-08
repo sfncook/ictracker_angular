@@ -414,11 +414,44 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             });
         }
     })
+    .factory('CreateNewUpgrade_Parse', function (ConvertParseObject, DataStore) {
+        return function (incident) {
+            var UpgradeParseObj = Parse.Object.extend('Upgrade');
+            var upgradeObject = new UpgradeParseObj();
+            ConvertParseObject(upgradeObject, UPGRADE_DEF);
+            upgradeObject.incident      = incident;
+            upgradeObject.isWorkingFire = false;
+            upgradeObject.is1stAlarm    = false;
+            upgradeObject.is2ndAlarm    = false;
+            upgradeObject.is3rdAlarm    = false;
+            upgradeObject.is4thAlarm    = false;
+            upgradeObject.isBalanceTo   = false;
+            upgradeObject.isEnRoute     = false;
+            return upgradeObject;
+        }
+    })
+    .factory('LoadUpgradeForIncident_Parse', function (ConvertParseObject, DataStore, CreateNewUpgrade_Parse) {
+        return function (incident) {
+            var queryUpgrade = new Parse.Query(Parse.Object.extend('Upgrade'));
+            queryUpgrade.equalTo("incident", incident);
+            return queryUpgrade.first().then(
+                function(upgradeObject){
+                    if (upgradeObject){
+                        ConvertParseObject(upgradeObject, UPGRADE_DEF);
+                        DataStore.upgrade = upgradeObject;
+                    } else {
+                        DataStore.upgrade = CreateNewUpgrade_Parse(incident);
+                    }
+                    return incident;
+                }
+            );
+        }
+    })
     .factory('LoadIncident_Parse', function (
         $q, ConvertParseObject,
         FetchTypeForIncident_Parse, LoadIAPForIncident_Parse, LoadSectorsForIncident_Parse,
         LoadAllMaydaysForIncident_Parse, FetchObjectivesForIncident_Parse, FetchOSRForIncident_Parse,
-        LoadUpgradeForIncident, LoadDispatchedUnitsForIncident_Parse) {
+        LoadUpgradeForIncident_Parse, LoadDispatchedUnitsForIncident_Parse) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -434,7 +467,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     promises.push(LoadIAPForIncident_Parse(incident));
                     promises.push(FetchObjectivesForIncident_Parse(incident));
                     promises.push(FetchOSRForIncident_Parse(incident));
-                    promises.push(LoadUpgradeForIncident(incident));
+                    promises.push(LoadUpgradeForIncident_Parse(incident));
                     promises.push(LoadDispatchedUnitsForIncident_Parse(incident));
                 }
                 return $q.all(promises).then(function(bunchOfObjects){

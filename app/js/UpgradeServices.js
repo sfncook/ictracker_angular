@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
+angular.module('UpgradeServices', ['DataServices'])
 
     .controller('UpgradeDlg', function($scope, DataStore){
         $scope.dataStore = DataStore;
@@ -49,41 +49,6 @@ angular.module('UpgradeServices', ['ParseServices', 'DataServices'])
             DataStore.upgrade.isBalanceTo=!DataStore.upgrade.isBalanceTo;
             $scope.fixUpgLabelDisplay();
             DataStore.upgrade.save();
-        }
-    })
-
-    .factory('LoadUpgradeForIncident', function (ConvertParseObject, DataStore, CreateNewUpgrade) {
-        return function (incident) {
-            var queryUpgrade = new Parse.Query(Parse.Object.extend('Upgrade'));
-            queryUpgrade.equalTo("incident", incident);
-            return queryUpgrade.first().then(
-                function(upgradeObject){
-                    if (upgradeObject){
-                        ConvertParseObject(upgradeObject, UPGRADE_DEF);
-                        DataStore.upgrade = upgradeObject;
-                    } else {
-                        DataStore.upgrade = CreateNewUpgrade(incident);
-                    }
-                    return incident;
-                }
-            );
-        }
-    })
-
-    .factory('CreateNewUpgrade', function (ConvertParseObject, DataStore) {
-        return function (incident) {
-            var UpgradeParseObj = Parse.Object.extend('Upgrade');
-            var upgradeObject = new UpgradeParseObj();
-            ConvertParseObject(upgradeObject, UPGRADE_DEF);
-            upgradeObject.incident      = incident;
-            upgradeObject.isWorkingFire = false;
-            upgradeObject.is1stAlarm    = false;
-            upgradeObject.is2ndAlarm    = false;
-            upgradeObject.is3rdAlarm    = false;
-            upgradeObject.is4thAlarm    = false;
-            upgradeObject.isBalanceTo   = false;
-            upgradeObject.isEnRoute     = false;
-            return upgradeObject;
         }
     })
 
