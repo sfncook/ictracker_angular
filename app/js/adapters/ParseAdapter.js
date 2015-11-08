@@ -57,6 +57,26 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         };
     })
 
+    .factory('ConvertParseObject', [function () {
+        return function (parseObject, fields) {
+            //add dynamic properties from fields array
+            for (var i = 0; i < fields.length; i++) {
+                //add closure
+                (function () {
+                    var propName = fields[i];
+                    Object.defineProperty(parseObject, propName, {
+                        get: function () {
+                            return parseObject.get(propName);
+                        },
+                        set: function (value) {
+                            parseObject.set(propName, value);
+                        }
+                    });
+                })();
+            }
+        }
+    }])
+
     .factory('isLoggedIn_Parse', function () {
         return function () {
             return Parse.User.current();
