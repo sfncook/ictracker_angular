@@ -24,9 +24,8 @@ angular.module('AdapterServices', ['ParseAdapter', 'StaticAdapter'])
                     return null;
                 }
             },
-            isLoggedIn:function() {
-                return this.adapter.isLoggedIn();
-            }
+            isLoggedIn:function()       {return this.adapter.isLoggedIn();},
+            SaveSector:function(sector) {return this.adapter.SaveSector(sector);}
         };
     })
 

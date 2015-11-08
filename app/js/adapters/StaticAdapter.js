@@ -2,19 +2,21 @@ angular.module('StaticAdapter', [])
 
     .factory('StaticAdapter', function(
         LoadIncidentTypes_Static, LoadAllIncidents_Static, LoadIncident_Static, isLoggedIn_Static,
-        LoadActionTypes_Static, LoadSectorTypes_Static, LoadUnitTypes_Static
+        LoadActionTypes_Static, LoadSectorTypes_Static, LoadUnitTypes_Static,
+        SaveSector_Static
     ) {
         return {
             adapter_id_str:'static',
             init:function(){return true;},
-            LoadIncidentTypes: LoadIncidentTypes_Static,
-            LoadAllIncidents: LoadAllIncidents_Static,
-            LoadIncident: LoadIncident_Static,
+            LoadIncidentTypes:      LoadIncidentTypes_Static,
+            LoadAllIncidents:       LoadAllIncidents_Static,
+            LoadIncident:           LoadIncident_Static,
             UpdateIncidentAsNeeded: function(){console.log("StaticAdapter UpdateIncidentAsNeeded");},
-            isLoggedIn: isLoggedIn_Static,
-            LoadActionTypes: LoadActionTypes_Static,
-            LoadSectorTypes: LoadSectorTypes_Static,
-            LoadUnitTypes: LoadUnitTypes_Static
+            isLoggedIn:             isLoggedIn_Static,
+            LoadActionTypes:        LoadActionTypes_Static,
+            LoadSectorTypes:        LoadSectorTypes_Static,
+            LoadUnitTypes:          LoadUnitTypes_Static,
+            SaveSector:             SaveSector_Static
         };
     })
 
@@ -70,6 +72,14 @@ angular.module('StaticAdapter', [])
     .factory('LoadUnitTypes_Static', function ($q) {
         return function () {
             var promise = $q.when(UNIT_TYPES);
+            return promise;
+        }
+    })
+
+    .factory('SaveSector_Static', function ($q) {
+        return function (sector) {
+            console.log("SaveSector_Static - Do nothing.  Always returns TRUE.");
+            var promise = $q.when(true);
             return promise;
         }
     })

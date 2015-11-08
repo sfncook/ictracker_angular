@@ -262,7 +262,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         $scope.doesSectorHavePar = DoesSectorHavePar;
     })
 
-    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, DefaultErrorLogger){
+    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, SaveSector){
         $scope.selectedSector = {};
         $scope.dataStore = DataStore;
 
@@ -302,7 +302,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.selectSectorType = function(sectorType) {
             $scope.selectedSector.sectorType = sectorType;
-            $scope.selectedSector.save(null, DefaultErrorLogger);
+            SaveSector($scope.selectedSector);
 
             if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
 
@@ -312,11 +312,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         };
         $scope.setDir = function(sector_dir) {
             $scope.selectedSector.direction=sector_dir.tbar;
-            $scope.selectedSector.save(null, DefaultErrorLogger);
+            SaveSector($scope.selectedSector);
         };
         $scope.setNum = function(sector_num) {
             $scope.selectedSector.number=sector_num;
-            $scope.selectedSector.save(null, DefaultErrorLogger);
+            SaveSector($scope.selectedSector);
         };
 
         $scope.isSectorTypeSelected = function(sectorType) {

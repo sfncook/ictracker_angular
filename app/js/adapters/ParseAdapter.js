@@ -3,7 +3,9 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
 
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
-        LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse) {
+        LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
+        SaveSector_Parse
+    ) {
         return {
             adapter_id_str:'parse',
             init:function(){
@@ -24,14 +26,15 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     }
                 }
             },
-            LoadIncidentTypes: LoadIncidentTypes_Parse,
-            LoadAllIncidents: LoadAllIncidents_Parse,
-            LoadIncident: LoadIncident_Parse,
+            LoadIncidentTypes:      LoadIncidentTypes_Parse,
+            LoadAllIncidents:       LoadAllIncidents_Parse,
+            LoadIncident:           LoadIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
-            isLoggedIn: isLoggedIn_Parse,
-            LoadActionTypes: LoadActionTypes_Parse,
-            LoadSectorTypes: LoadSectorTypes_Parse,
-            LoadUnitTypes: LoadUnitTypes_Parse
+            isLoggedIn:             isLoggedIn_Parse,
+            LoadActionTypes:        LoadActionTypes_Parse,
+            LoadSectorTypes:        LoadSectorTypes_Parse,
+            LoadUnitTypes:          LoadUnitTypes_Parse,
+            SaveSector:             SaveSector_Parse
         };
     })
 
@@ -563,4 +566,11 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 });
             }
         }])
+
+    .factory('SaveSector_Parse', function (DefaultErrorLogger) {
+            return function (sector) {
+                return sector.save(null, DefaultErrorLogger);
+            }
+        })
+
 ;
