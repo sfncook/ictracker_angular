@@ -408,16 +408,18 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     function ($q,ConvertParseObject, Incidents, DataStore, FetchTypeForIncident_Parse) {
         return function () {
             var queryIncidents = new Parse.Query(Parse.Object.extend('Incident'));
-            return queryIncidents.find().then(function(incidents){
-                Incidents.removeAll();
+            return queryIncidents.find().then(function(incidents_qry){
+                var incidents = new Array();
                 var promises = [];
-                for(var i=0; i<incidents.length; i++) {
-                    var incident = incidents[i];
+                for(var i=0; i<incidents_qry.length; i++) {
+                    var incident = incidents_qry[i];
                     ConvertParseObject(incident, INCIDENT_DEF);
                     FetchTypeForIncident_Parse(incident);
-                    Incidents.push(incident);
+                    incidents.push(incident);
                 }
-                return $q.all(promises);
+                return $q.all(promises).then(function(obj){
+                    return incidents;
+                });
             });
         }
     })
