@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ObjectivesServices', ['ParseServices', 'DataServices'])
+angular.module('ObjectivesServices', ['DataServices'])
 
     .controller('ObjDlg', function($scope, DataStore, UpdateObjectivesPercent){
         $scope.dataStore = DataStore;
@@ -35,44 +35,5 @@ angular.module('ObjectivesServices', ['ParseServices', 'DataServices'])
             }
         }
     })
-
-    .factory('LoadObjectivesForIncident', function (ConvertParseObject, DataStore, CreateNewObjectives) {
-        return function ($scope, incident) {
-            var queryObjectives = new Parse.Query(Parse.Object.extend('Objectives'));
-            queryObjectives.equalTo("incident", incident);
-            return queryObjectives.first().then(
-                function(objectivesObject){
-                    if (objectivesObject){
-                        ConvertParseObject(objectivesObject, OBJECTIVES_DEF);
-                        DataStore.objectives = objectivesObject;
-                    } else {
-                        DataStore.objectives = CreateNewObjectives(incident);
-                    }
-                    DataStore.updateObjPerc();
-                }
-            );
-        }
-    })
-
-    .factory('CreateNewObjectives', ['ConvertParseObject', 'DataStore', function (ConvertParseObject, DataStore) {
-        return function (curIncident) {
-            var ObjectivesParseObj = Parse.Object.extend('Objectives');
-            var objectivesObject = new ObjectivesParseObj();
-            ConvertParseObject(objectivesObject, OBJECTIVES_DEF);
-            objectivesObject.upgradeToFullRescue = false;
-            objectivesObject.assingSafety = false;
-            objectivesObject.establishSupplyLine = false;
-            objectivesObject.secureUtilities = false;
-            objectivesObject.ventiliation = false;
-            objectivesObject.createOnDeck = false;
-            objectivesObject.pressurizeExposures = false;
-            objectivesObject.monitorChannel16 = false;
-            objectivesObject.salvage = false;
-            objectivesObject.establishRehab = false;
-            objectivesObject.customerService = false;
-            objectivesObject.incident=curIncident;
-            return objectivesObject;
-        }
-    }])
 
 ;
