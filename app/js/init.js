@@ -64,6 +64,18 @@ Array.prototype.findUnitByName = function (name) {
 }
 
 /*
+ * 'this' must be an array of objects that all have a 'name' attribute
+ */
+Array.prototype.findObjByName = function (name) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i].name && this[i].name === name) {
+            return this[i];
+        }
+    }
+    return null;
+}
+
+/*
  * 'this' must be an array of tbar objects such that this.units is
  * an array of unit objects such that unit.name is the name of the
  * unit.

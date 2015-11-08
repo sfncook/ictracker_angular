@@ -41,7 +41,14 @@ angular.module('StaticAdapter', [])
     .factory('LoadIncident_Static', function ($q) {
         return function () {
             console.log("NOTE: You are using the Static Adapter so the inc_id config parameter is ignored.  The same incident data is always returned.");
-            var promise = $q.when(INCIDENTS[0]);
+            var incident = INCIDENTS[0];
+            var sectors = incident.sectors;
+            for(var i=0; i<sectors.length; i++) {
+                var sector = sectors[i];
+                sector.sectorType = SECTOR_TYPES.findObjByName(sector.sectorType.name);
+            }
+
+            var promise = $q.when(incident);
             return promise;
         }
     })
