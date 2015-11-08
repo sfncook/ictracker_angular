@@ -1,5 +1,5 @@
 
-angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices'])
+angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices', 'ActionServices', 'SectorServices', 'UnitServices'])
 
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,

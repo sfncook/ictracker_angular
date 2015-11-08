@@ -144,14 +144,20 @@ var INCIDENTS = [
             "order":1
         },
         "sectors":[
-            {
-                "sectorType": {"name":"Interior", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-                "units":[],
-                "direction":null,
-                "number":null,
-
-            }
+            {"col": 3,"id": "rwjawwLK6o","row": 0,"sectorType": {"name":"Sector 1"}, "units":[] },
+            {"col": 3,"id": "XH3meqm1L9","row": 0,"sectorType": {"name":"Sector 2"}, "units":[] },
+            {"col": 3,"id": "r29PW2kZwX","row": 2,"sectorType": {"name":"Sector 3"}, "units":[] },
+            {"col": 2,"id": "3Jh3oHnTTJ","row": 0,"sectorType": {"name":"Sector 4"}, "units":[] },
+            {"col": 2,"id": "f7YzFHsKzC","row": 1,"sectorType": {"name":"Sector 5"}, "units":[] },
+            {"col": 1,"id": "0H5sKys9x1","row": 0,"sectorType": {"name":"Sector 6"}, "units":[] },
+            {"col": 2,"id": "tzqwpCLfY2","row": 2,"sectorType": {"name":"Sector 7"}, "units":[] },
+            {"col": 0,"id": "sITyWAb5ex","row": 0,"sectorType": {"name":"Sector 8"}, "units":[] },
+            {"col": 0,"id": "F0HEuGoQNF","row": 1,"sectorType": {"name":"Sector 9"}, "units":[] },
+            {"col": 0,"id": "2mAQPFlG0w","row": 0,"sectorType": {"name":"Alpha Sector"}, "units":[] },
+            {"col": 1,"id": "2l1uDY4sV7","row": 0,"sectorType": {"name":"Bravo Sector"}, "units":[] },
+            {"col": 1,"id": "2l1uDY4sV7","row": 2,"sectorType": {"name":"Charlie Sector"}, "units":[] }
         ]
+
     },
     {
         "id":"inc_002_id",
@@ -211,59 +217,50 @@ var ACTION_TYPES = [
 ]
 
 var SECTOR_TYPES = [
-    {"name":"Interior", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Ventilation", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Roof", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"On Deck", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Staging", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"IRIC", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"RIC", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"RESCUE", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Safety", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Delta Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Overhaul", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Medical", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Salvage", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-
-    {"name":"Sector 1", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 2", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 3", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 4", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 5", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 6", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 7", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 8", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector 9", "hasClock":true, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Sector ####", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-
-    {"name":"Alpha Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Bravo Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Charlie Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Delta Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"North Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"East Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"South Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"West Sector", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-
-    {"name":"Salvage", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Overhaul", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Evacuation", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Customer Service", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"ReHab", "hasClock":false, "hasAcctBtn":false, "hasPsiBtn":false, "hasActions":false},
-    {"name":"Lobby", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Resource", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Accountability", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-
-    {"name":"Triage", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Extrication", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Treatment", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Transportation", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-    {"name":"Lz", "hasClock":false, "hasAcctBtn":true, "hasPsiBtn":true, "hasActions":true},
-
-
-
-
-
+    {"name":"Interior",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Ventilation",      "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":false, "hasVentBnch":true,     "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Roof",             "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":false, "hasVentBnch":true,     "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"On Deck",          "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Staging",          "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"IRIC",             "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":true,     "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"RIC",              "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":true,     "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"RESCUE",           "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":true,     "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Safety",           "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":2,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":true,   "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Delta Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Overhaul",         "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Medical",          "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Salvage",          "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 1",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 2",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 3",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 4",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 5",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 6",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 7",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 8",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector 9",         "hasClock":true,    "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Sector ####",      "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Alpha Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Bravo Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Charlie Sector",   "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Delta Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"North Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"East Sector",      "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"South Sector",     "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"West Sector",      "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":4,  "hasClassicBnch":true,  "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Salvage",          "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Overhaul",         "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Evacuation",       "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Customer Service", "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"ReHab",            "hasClock":false,   "hasAcctBtn":false, "hasPsiBtn":false,  "hasActions":false ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Lobby",            "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Resource",         "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Accountability",   "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Triage",           "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":3,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":true    },
+    {"name":"Extrication",      "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Treatment",        "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":3,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":true,    "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Transportation",   "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
+    {"name":"Lz",               "hasClock":false,   "hasAcctBtn":true,  "hasPsiBtn":true,   "hasActions":true  ,"isVisible":true,   "manyBenchmarkBars":0,  "hasClassicBnch":false, "hasVentBnch":false,    "hasIricBnch":false,    "hasSafetyBnch":false,  "hasTreatmentBnch":false,   "hasLzBnch":false,  "hasTriageBnch":false   },
 ]
 
 var UNIT_TYPES = [
