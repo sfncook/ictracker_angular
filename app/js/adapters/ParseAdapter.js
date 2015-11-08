@@ -525,7 +525,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         }
     }])
 
-    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (ParseQuery, ConvertParseObject) {
+    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
             return querySectorTypes.find({

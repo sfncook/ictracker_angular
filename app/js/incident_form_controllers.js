@@ -324,6 +324,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         DataStore.showSectorNameDlg = function(sector) {
+            console.log("sector.sectorType:",sector.sectorType);
             $scope.selectedSector = sector;
             $("#sector_name_dlg").dialog( "open" );
         }
