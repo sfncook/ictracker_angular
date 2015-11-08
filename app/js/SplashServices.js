@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices'])
+angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices', 'AdapterServices'])
     .run(function(IsLoggedIn, InitDatabase, ResetSavedDepartment) {
         InitDatabase();
 
@@ -11,7 +11,11 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
         }
     })
 
-    .controller('SplashCtrl', function($scope, $interval, LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, ConvertParseObject, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment, DataStore){
+    .controller('SplashCtrl', function(
+        $scope, $interval,
+        LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment, DataStore,
+        SaveIncident, AdapterStore
+    ){
         $scope.dataStore = DataStore;
 
         if(!IsLoggedIn()) {
@@ -34,9 +38,7 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             $interval(hideLoadingSplash, 1000);
         });
 
-        var IncidentParseObj = Parse.Object.extend('Incident');
-        $scope.incidentObj = new IncidentParseObj();
-        ConvertParseObject($scope.incidentObj, INCIDENT_DEF);
+        $scope.incidentObj = {};
 
         $scope.userLogout = function() {
             UserLogout();
@@ -58,18 +60,16 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
                 $scope.incidentObj.inc_number = "[Incident Number]"
             }
 
-            $scope.incidentObj.save(null, DefaultErrorLogger).then(function(incidentObj) {
-                //console.log(incidentObj);
-                //ConvertParseObject(incidentObj, INCIDENT_DEF);
+            SaveIncident($scope.incidentObj).then(function(incidentObj) {
                 $scope.loadIncident(incidentObj.id);
             }, function(error) {
                 console.log("Error saving new incident: "+error);
-            });;
+            });
         };
 
 
         $scope.loadIncident = function(incidentId) {
-            var urlLink = "incident_form.html?i="+incidentId;
+            var urlLink = "incident_form.html?i="+incidentId+"&adapter="+AdapterStore.adapter.adapter_id_str;
             window.location.href = urlLink;
         };
 

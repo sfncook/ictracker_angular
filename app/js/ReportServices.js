@@ -115,19 +115,6 @@ angular.module("ReportServices", ['DataServices'])
 
     })
 
-    //.factory('SaveReportAction', [
-    //    'DefaultErrorLogger', 'DataStore',
-    //    function (DefaultErrorLogger, DataStore) {
-    //        return function (sector, text) {
-    //            var ReportAction = Parse.Object.extend("ReportAction");
-    //            var reportAction = new ReportAction();
-    //            reportAction.set("incident", DataStore.incident);
-    //            reportAction.set("sector", sector);
-    //            reportAction.set("text", text);
-    //            reportAction.save(null, DefaultErrorLogger);
-    //        }
-    //    }])
-
     .factory('ReportFunctions', function(AdapterStore) {
         return {
             addEvent_title_to_sector:       function(sector)                        {AdapterStore.SaveReportAction(sector, "Sector initialized: "+sector.sectorType.name);},

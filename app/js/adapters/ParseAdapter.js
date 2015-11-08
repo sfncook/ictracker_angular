@@ -4,7 +4,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
-        SaveSector_Parse, SaveReportAction_Parse
+        SaveIncident_Parse, SaveSector_Parse, SaveReportAction_Parse
     ) {
         return {
             adapter_id_str:'parse',
@@ -34,6 +34,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadActionTypes:        LoadActionTypes_Parse,
             LoadSectorTypes:        LoadSectorTypes_Parse,
             LoadUnitTypes:          LoadUnitTypes_Parse,
+            SaveIncident:           SaveIncident_Parse,
             SaveSector:             SaveSector_Parse,
             SaveReportAction:       SaveReportAction_Parse
         };
@@ -508,7 +509,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     })
 
 
-    .factory('LoadActionTypes_Parse', ['ActionTypes', 'ParseQuery', 'ConvertParseObject', function (ActionTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadActionTypes_Parse', function (ActionTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var queryActionTypes = new Parse.Query(Parse.Object.extend('ActionType'));
             queryActionTypes.limit(1000);
@@ -527,9 +528,9 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 }
             });
         }
-    }])
+    })
 
-    .factory('LoadSectorTypes_Parse', ['SectorTypes', 'ParseQuery', 'ConvertParseObject', function (SectorTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadSectorTypes_Parse', function (SectorTypes, ParseQuery, ConvertParseObject) {
         return function () {
             var querySectorTypes = new Parse.Query(Parse.Object.extend('SectorType'));
             return querySectorTypes.find({
@@ -545,9 +546,9 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 }
             });
         }
-    }])
+    })
 
-    .factory('LoadUnitTypes_Parse', ['UnitTypes', 'ParseQuery', 'ConvertParseObject', function (UnitTypes, ParseQuery, ConvertParseObject) {
+    .factory('LoadUnitTypes_Parse', function (UnitTypes, ParseQuery, ConvertParseObject) {
             return function () {
                 var queryUniTypes = new Parse.Query(Parse.Object.extend('UnitType'));
                 queryUniTypes.limit(1000);
@@ -566,7 +567,13 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     }
                 });
             }
-        }])
+        })
+
+    .factory('SaveIncident_Parse', function (DefaultErrorLogger) {
+            return function (incident) {
+                return incident.save(null, DefaultErrorLogger);
+            }
+        })
 
     .factory('SaveSector_Parse', function (DefaultErrorLogger) {
             return function (sector) {
