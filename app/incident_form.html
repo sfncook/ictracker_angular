@@ -1013,11 +1013,11 @@
         <table id="mayday_table_main">
         <tr>
             <td id="mayday_left_td">
-                <button id="new_mayday_btn" class="glowpink" ng-click="addNewMayday()">
+               <!--<button id="new_mayday_btn" class="glowpink" ng-click="addNewMayday()">
                     <img id="new_mayday_btn_icon" class='plus_icon' src='img/plus.png'/>
                     <div id="new_mayday_btn_text">New Mayday</div>
                     <div class="clear_float"></div>
-                </button>
+                </button>-->
                 <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div" style="margin-left:4px;">
                     <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn" ng-click="clearMayday()">Clear</button>
                     <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #<span>{{selectedMayday.number}}</span></div>
@@ -1127,7 +1127,7 @@
             </td>
             <td id="mayday_right_td">
                 <div id="mayday_list_box">
-                    <div ng-repeat="mayday in maydays | orderBy:'+number'"
+                    <div ng-repeat="mayday in dataStore.incident.maydays | orderBy:'+number'"
                          class="mayday_saved"
                          ng-class="{mayday_saved_selected:selectedMayday==mayday}"
                          ng-click="selectMayday(mayday)">
@@ -1173,6 +1173,7 @@
                         <div class="mayday_misc_pack mayday_misc_value" ng-class="{glowgreen:!mayday.isPackIssue}">Pack Issue</div>
                         <div class="clear_float"></div>
                     </div>
+                    <div class="mayday_saved create_new_mayday_box" ng-click="addNewMayday()">+ Create New Mayday</div>
                     <div class="clear_float"></div>
                 </div>
                 <div class="clear_float"></div>

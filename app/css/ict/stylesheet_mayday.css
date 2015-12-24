@@ -155,6 +155,14 @@
     background: darkgray;
     cursor: pointer;
 }
+.create_new_mayday_box {
+    height: 274px;
+    text-align: center;
+    font-size: x-large;
+    padding-top: 60px;
+    border-radius: 10px;
+    background: pink;
+}
 .mayday_misc_value {
     width:104px;
     height: 20px;
