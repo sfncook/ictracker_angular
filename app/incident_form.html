@@ -651,14 +651,14 @@
             <td class="iap_blue_label iap_label_td">Property/People:</td>
             <td>
                 <textarea class="iap_input" ng-model="dataStore.incident.iap.propertyPeople"></textarea>
-                <button ng-show="!iap_evlc_show" ng-click="iap_evlc_show=true" class="iap_btn_evacloc">Show Evacuation
+                <button ng-show="!dataStore.incident.iap.showEvacutionLocation" ng-click="dataStore.incident.iap.showEvacutionLocation=true" class="iap_btn_evacloc">Show Evacuation
                     Location
                 </button>
-                <button ng-show="iap_evlc_show" ng-click="iap_evlc_show=false" class="iap_btn_evacloc">Hide Evacuation
+                <button ng-show="dataStore.incident.iap.showEvacutionLocation" ng-click="dataStore.incident.iap.showEvacutionLocation=false" class="iap_btn_evacloc glow_orange">Hide Evacuation
                     Location
                 </button>
                 <div class="clear_both"></div>
-                <div ng-show="iap_evlc_show">
+                <div ng-show="dataStore.incident.iap.showEvacutionLocation">
                     <textarea id="iap_evacloc_input" ng-model="dataStore.incident.iap.evacuationLocation">Evacuation Location</textarea>
                 </div>
             </td>
