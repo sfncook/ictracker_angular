@@ -17,7 +17,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         var incidentObjectId = getHttpRequestByName('i');
         LoadIncident(incidentObjectId).then(function(incident){
-            console.log("LoadA afterwards incident:", incident);
+            //console.log("LoadA afterwards incident:", incident);
             DataStore.loadSuccess = true;
             DataStore.waitingToLoad = false;
             DataStore.incident = incident;
