@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, TbarSectors, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore){
+    .controller('MaydayDlg', function($scope, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore){
 
         $scope.channels = [
             {channelname:"Channel"},
@@ -43,11 +43,11 @@ angular.module("ictApp")
             $scope.refreshIncidentUnitTypes();
 
             // Create new Mayday object, if needed
-            if($scope.maydays.length==0) {
-                var newMayday = CreateNewMayday();
-                $scope.maydays.push(newMayday);
-            }
-            if(!$scope.selectedMayday) {
+            //if($scope.maydays.length==0) {
+            //    var newMayday = CreateNewMayday();
+            //    $scope.maydays.push(newMayday);
+            //}
+            if($scope.maydays.length>0 && !$scope.selectedMayday) {
                 $scope.selectedMayday = $scope.maydays[0];
             }
 
@@ -92,8 +92,8 @@ angular.module("ictApp")
         $scope.refreshIncidentSectorTypes = function () {
             $scope.incidentSectorTypes = [];
             var sectorTypesMap = {};
-            for(var s=0; s<TbarSectors.length; s++) {
-                var sector = TbarSectors[s];
+            for(var s=0; s<$scope.dataStore.incident.sectors.length; s++) {
+                var sector = $scope.dataStore.incident.sectors[s];
                 sectorTypesMap[sector.sectorType.name] = sector.sectorType;
             }//for
             var sectorTypeNames = Object.keys(sectorTypesMap);
@@ -111,8 +111,8 @@ angular.module("ictApp")
         $scope.refreshIncidentUnitTypes = function () {
             $scope.incidentUnitTypes = [];
             var unitsMap = {};
-            for(var s=0; s<TbarSectors.length; s++) {
-                var sector = TbarSectors[s];
+            for(var s=0; s<$scope.dataStore.incident.sectors.length; s++) {
+                var sector = $scope.dataStore.incident.sectors[s];
                 if(sector.units) {
                     for(var u=0; u<sector.units.length; u++) {
                         var unit = sector.units[u];
@@ -120,6 +120,7 @@ angular.module("ictApp")
                     }
                 }
             }//for
+            console.log(unitsMap)
             var unitNames = Object.keys(unitsMap);
             unitNames.sort();
             for(var u=0; u<unitNames.length; u++) {
