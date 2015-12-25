@@ -8,14 +8,22 @@ angular.module('AdapterServices', ['ParseAdapter', 'StaticAdapter'])
                 var adapter_id_str = getHttpRequestByName('adapter');
 
                 if(adapter_id_str=="") {
-                    console.log("Missing required 'adapter' parameter. Using default 'static' adapter.");
-                    this.adapter = StaticAdapter;
-                } else if(ParseAdapter.adapter_id_str == adapter_id_str) {
-                    this.adapter = ParseAdapter;
-                } else if(StaticAdapter.adapter_id_str == adapter_id_str) {
-                    this.adapter = StaticAdapter;
-                } else {
-                    console.error("Invalid or unhandled adapter parameter: ",adapter);
+                    // Check for misspelling of work adapter
+                    adapter_id_str = getHttpRequestByName('adaptor');
+                    if(adapter_id_str=="") {
+                        console.log("Missing required 'adapter' parameter. Using default 'static' adapter.");
+                        this.adapter = ParseAdapter;
+                    }
+                }
+
+                if(adapter_id_str!="") {
+                    if (ParseAdapter.adapter_id_str == adapter_id_str) {
+                        this.adapter = ParseAdapter;
+                    } else if (StaticAdapter.adapter_id_str == adapter_id_str) {
+                        this.adapter = StaticAdapter;
+                    } else {
+                        console.error("Invalid or unhandled adapter parameter: ", adapter);
+                    }
                 }
 
                 if(this.adapter.init) {
