@@ -296,7 +296,13 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     background: white;
 }
 
-#mayday_btn {
+.new_mayday_btn {
+    font-size: medium;
+    padding: 0px 10px;
+    width: 100px;
+}
+
+.mayday_btn {
     margin-left: auto;
     background: red;
     color: white;
@@ -310,11 +316,11 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     border-left: 2px solid orange;
 }
 
-#mayday_btn:hover {
+.mayday_btn:hover {
     background: #FF9696;
 }
 
-#mayday_btn:active {
+.mayday_btn:active {
     background: #C20000;
 }
 

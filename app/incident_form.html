@@ -199,7 +199,7 @@
                             </div>
                             <div class="clear_float"></div>
                         </div>
-                        <button class="mayday_choice_animate unit_tbar_btn unit_btn"
+                        <button class="unit_tbar_btn unit_btn"
                                 ng-click="selectUnit(sector,unit)"
                                 ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4}">
                             {{unit.type.name}}
@@ -1001,7 +1001,8 @@
 <!-- ***** MAYDAY ***** -->
 <div id="mayday_container" ng-controller="MaydayDlg">
     <div id="top_header_mayday_container">
-        <button id="mayday_btn" class="button_top button" ng-click="showMaydayDlg()">MAYDAY</button>
+        <button class="new_mayday_btn mayday_btn button_top button" ng-click="showMaydayDlg()">+NEW MAYDAY</button>
+        <!--<button class="mayday_btn button_top button" ng-click="showMaydayDlg()">MAYDAY</button>-->
     </div>
 
     <!-- Clear Mayday Dialog -->
