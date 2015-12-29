@@ -184,8 +184,6 @@
 
             <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
                 <!--<button class="unit_move_cancel_btn">Cancel</button>-->
-                <button class="unit_add_btn" ng-click="showUnitsDlg(sector)">+Unit</button>
-                <div class="clear_both"></div>
                 <div class="left_scroll_pane scroll-pane">
                     <div ng-repeat="unit in sector.units"
                          ng-class="{unit_selected:sector.selectedUnit==unit}"
@@ -207,19 +205,21 @@
                             {{unit.type.name}}
                         </button>
                     </div>
+                    <button class="unit_add_btn"
+                            ng-click="showUnitsDlg(sector)"
+                            ng-show="sector.units.length<6">+Unit</button>
                 </div>
+                <button class="unit_add_btn"
+                        ng-click="showUnitsDlg(sector)"
+                        ng-show="sector.units.length>=6">+Unit</button>
             </div>
 
             <div class="action_col_right tbar_col_right_div tbar_col_div">
-                <button class="acct_unit_btn"
-                        ng-click="showUnitsDlgForAcct(sector)"
-                        ng-if="sector.sectorType.hasAcctBtn">
-                    {{sector.acctUnit | acctUnitName}}
-                </button>
-                <button class="action_add_btn"
-                        ng-click="showActionsDlg(sector)"
-                        ng-if="sector.units.length>0 && sector.sectorType.hasActions"">+Action</button>
-                <div class="clear_float"></div>
+                <!--<button class="acct_unit_btn"-->
+                        <!--ng-click="showUnitsDlgForAcct(sector)"-->
+                        <!--ng-if="sector.sectorType.hasAcctBtn">-->
+                    <!--{{sector.acctUnit | acctUnitName}}-->
+                <!--</button>-->
                 <div class="right_scroll_pane scroll-pane"
                      ng-if="sector.units.length>0">
                     <div ng-repeat="action in sector.selectedUnit.actionsArr">
@@ -228,7 +228,15 @@
                             {{action.name}}
                         </button>
                     </div>
+                    <button class="action_btn action_add_btn"
+                            ng-click="showActionsDlg(sector)"
+                            ng-if="sector.units.length>0 && sector.sectorType.hasActions"
+                            ng-show="sector.selectedUnit.actionsArr.length<6">+Action</button>
                 </div>
+                <button class="action_btn action_add_btn"
+                        ng-click="showActionsDlg(sector)"
+                        ng-if="sector.units.length>0 && sector.sectorType.hasActions"
+                        ng-show="sector.selectedUnit.actionsArr.length>=6">+Action</button>
             </div>
         </tbar>
     </div>

@@ -14,17 +14,13 @@ tbar {
 .unit_add_btn {
     width:57px;
     height:27px;
-    margin: 2px 4px;
+    margin: 2px 10px;
     float:right;
     background: #AAC7D1;
     border-bottom: 2px dotted #888 !important;
     border-radius: 10px;
     font-size: 1.0rem;
     padding:2px 0;
-}
-
-.action_add_btn {
-    margin:5px;
 }
 
 .benchmarks_icon {
@@ -118,15 +114,15 @@ tbar {
     border-radius: 10px;
 }
 .action_add_btn {
-    width:57px;
-    height:27px;
-    margin: 2px 4px;
-    float:right;
+    /*width:57px;*/
+    /*height:27px;*/
+    /*margin: 2px 4px;*/
+    /*float:right;*/
     background: #AAC7D1;
     border-bottom: 2px dotted #888 !important;
-    border-radius: 10px;
-    font-size:0.8rem;
-    padding:6px 0;
+    /*border-radius: 10px;*/
+    /*font-size:0.8rem;*/
+    /*padding:6px 0;*/
 }
 
 .par-btn {
