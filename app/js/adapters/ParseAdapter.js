@@ -404,7 +404,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         $q, ConvertParseObject,
         FetchTypeForIncident_Parse, LoadIAPForIncident_Parse, LoadSectorsForIncident_Parse,
         LoadAllMaydaysForIncident_Parse, FetchObjectivesForIncident_Parse, FetchOSRForIncident_Parse,
-        LoadUpgradeForIncident_Parse, LoadDispatchedUnitsForIncident_Parse) {
+        LoadUpgradeForIncident_Parse, LoadDispatchedUnitsForIncident_Parse,
+        FindAllMaydayUnitsForIncident) {
         return function (incidentObjectId) {
             var queryIncident = new Parse.Query(Parse.Object.extend('Incident'));
             queryIncident.equalTo("objectId", incidentObjectId);
@@ -425,6 +426,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 }
                 return $q.all(promises).then(function(bunchOfObjects){
                     // Ignore the bunchOfObjects.  We just want to return the incident:
+                    FindAllMaydayUnitsForIncident(incident);
                     return incident;
                 });
             });
@@ -616,27 +618,50 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         })
 
     .factory('LoadAllMaydaysForIncident_Parse',
-    function ($q, ConvertParseObject, FetchUnitForMayday_Parse, FetchSectorForMayday_Parse) {
+    function (ConvertParseObject) {
         return function (incident) {
             var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
             queryMaydays.equalTo("incident", incident);
             queryMaydays.include('unitType');
             queryMaydays.include('sectorType');
             return queryMaydays.find().then(function(maydays){
-                var promises = [];
                 incident.maydays = new Array();
                 for(var i=0; i<maydays.length; i++) {
                     var mayday = maydays[i];
                     ConvertParseObject(mayday, MAYDAY_DEF);
                     incident.maydays.push(mayday);
-                    promises.push(FetchUnitForMayday_Parse(mayday));
-                    promises.push(FetchSectorForMayday_Parse(mayday));
                 }
-                return $q.all(promises);
+                return incident.maydays;
             });
         }
     })
-    .factory('FetchUnitForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForUnit_Parse) {
+    .factory('FindAllMaydayUnitsForIncident', function () {
+        return function (incident) {
+            //console.log("maydays:",);
+            //console.log("sectors:",);
+            incident.maydays.forEach(function(mayday) {
+                // Find instantiation of this mayday's sector and unit in the sector list
+                var foundSector = false;
+                incident.sectors.forEach(function(sector) {
+                    if(sector.id == mayday.sector.id) {
+                        mayday.sector = sector;
+                        foundSector=true;
+                        sector.units.forEach(function(unit) {
+                            if(unit.id == mayday.unit.id) {
+                                mayday.unit = unit;
+                                unit.hasMayday = true;
+                                foundSector=true;
+                            }
+                        });
+                    }
+                });
+                if(!foundSector){
+                    console.log("Did not find sector!");
+                }
+            });
+        }
+    })
+    .factory('FindUnitForMayday_Parse', function (ConvertParseObject, FetchTypeForUnit_Parse) {
         return function (mayday) {
             if(mayday.unit) {
                 return mayday.unit.fetch().then(
@@ -655,7 +680,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             }
         }
     })
-    .factory('FetchSectorForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForSector_Parse) {
+    .factory('FindSectorForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForSector_Parse) {
         return function (mayday) {
             if(mayday.sector) {
                 return mayday.sector.fetch().then(
