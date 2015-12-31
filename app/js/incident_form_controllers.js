@@ -97,7 +97,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
     })
 
-    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, DoesSectorHavePar, AddNewMaydayForUnit){
+    .controller('TbarContainer', function($scope, DataStore, GridsterOpts, DoesSectorHavePar, AddNewMayday){
 
         $scope.openMaydayDlg = function () {
             $("#mayday_dlg").dialog("open");
@@ -136,7 +136,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.selectUnit = function(sector,unit) {
             if($scope.dataStore.choosing_unit_for_new_mayday) {
-                AddNewMaydayForUnit(unit);
+                AddNewMayday(sector, unit);
                 $scope.dataStore.choosing_unit_for_new_mayday = false;
             }
             sector.selectedUnit = unit;

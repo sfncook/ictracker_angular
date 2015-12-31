@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForUnit){
+    .controller('MaydayDlg', function($scope, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday){
         DataStore.maydays = new Array();
 
         $scope.channels = [
@@ -33,7 +33,7 @@ angular.module("ictApp")
         $scope.selectedMayday;
         $scope.dataStore = DataStore;
 
-        $scope.openMaydayDlgForUnit = OpenMaydayDlgForUnit;
+        $scope.openMaydayDlgForMayday = OpenMaydayDlgForMayday;
 
         $scope.clearMayday = function (method) {
             if(method) {
@@ -80,21 +80,24 @@ angular.module("ictApp")
         }, true);
     })
 
-    .factory('OpenMaydayDlgForUnit', function (DataStore) {
-        return function (unit) {
-            DataStore.selectedMaydayUnit = unit;
+    .factory('OpenMaydayDlgForMayday', function (DataStore) {
+        return function (mayday) {
+            DataStore.selectedMayday = mayday;
             $("#mayday_dlg").dialog("open");
+            $('#mayday_dlg').dialog('option', 'title', 'Mayday #'+mayday.number+" - "+mayday.sector.sectorType.name+" - "+mayday.unit.type.name);
         }
     })
 
-    .factory('AddNewMaydayForUnit', function (DataStore, OpenMaydayDlgForUnit) {
-        return function (unit) {
+    .factory('AddNewMayday', function (DataStore, OpenMaydayDlgForMayday) {
+        return function (sector, unit) {
+            console.log(sector);
             unit.hasMayday = true;
             var mayday = new Object();
             mayday.number = DataStore.maydays.length + 1;
+            mayday.sector = sector;
             mayday.unit = unit;
             DataStore.maydays.push(mayday);
-            OpenMaydayDlgForUnit(unit);
+            OpenMaydayDlgForMayday(mayday);
         }
     })
 

@@ -996,14 +996,58 @@
 <div id="mayday_container" ng-controller="MaydayDlg">
     <div id="top_header_mayday_container">
         <button class="new_mayday_btn mayday_btn button_top button" ng-click="click_new_mayday()">+ NEW MAYDAY</button>
-        <button class="mayday_btn_animate mayday_btn button_top button" ng-repeat="mayday in dataStore.maydays" ng-click="openMaydayDlgForUnit(mayday.unit)">
+        <button class="mayday_btn_animate mayday_btn button_top button" ng-repeat="mayday in dataStore.maydays" ng-click="openMaydayDlgForMayday(mayday)">
             Mayday #{{mayday.number}}<br>{{mayday.unit.type.name}}
         </button>
     </div>
 
     <!-- New/Edit Mayday Dialog -->
     <div id="mayday_dlg" title="Mayday" class="dialog">
-        <div>{{dataStore.selectedMaydayUnit.type.name}}</div>
+        <span class="mayday_name_label">Name:</span>
+        <input id="mayday_name_input" class="mayday_name_input" ng-model="dataStore.selectedMayday.unit.nameFFighter" type="text"/>
+        <button class="mayday_psi_btn psi_btn"
+                ng-click="openPsiDialog()"
+                ng-class="{psi_red:dataStore.selectedMayday.unit.psi<1500, psi_yellow:dataStore.selectedMayday.unit.psi<3000&&dataStore.selectedMayday.unit.psi>=1500, psi_green:dataStore.selectedMayday.unit.psi>=3000}">
+            {{dataStore.selectedMayday.unit.psi}}
+        </button>
+        <div id="mayday_timer" class="mayday_timer">00:00</div>
+        <div class="clear_float"></div>
+
+        <select id="mayday_channel_select"
+                class="mayday_select_half mayday_channel_select mayday_select"
+                ng-options="channel.channelname as channel.channelname for channel in channels track by channel.channelname"
+                ng-model="dataStore.selectedMayday.unit.channel"></select>
+
+
+        <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select" ng-model="dataStore.selectedMayday.unit.rank">
+            <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
+            <option class='mayday_rank_capt'>Captain</option>
+            <option class='mayday_rank_eng'>Engineer</option>
+            <option class='mayday_rank_ff'>Fire Fighter</option>
+        </select>
+        <div class="clear_float"></div>
+
+        <div class="mayday_row_div">
+            <button id="hoseline_mayday_btn"    ng-class="{glowgreen: dataStore.selectedMayday.unit.isOnHoseline}"  ng-click="dataStore.selectedMayday.unit.isOnHoseline=!dataStore.selectedMayday.unit.isOnHoseline" class="hoseline_mayday_btn    mayday_exclusive_toggle_left  mayday_toggle"    >ON Hoseline</button>
+            <button id="offhoseline_mayday_btn" ng-class="{glowgreen:!dataStore.selectedMayday.unit.isOnHoseline}"  ng-click="dataStore.selectedMayday.unit.isOnHoseline=!dataStore.selectedMayday.unit.isOnHoseline" class="offhoseline_mayday_btn mayday_exclusive_toggle_right mayday_toggle" >OFF Hoseline</button>
+            <div class="clear_float"></div>
+
+            <button id="uninjured_mayday_btn"   ng-class="{glowgreen: dataStore.selectedMayday.unit.isUnInjured}"  ng-click="dataStore.selectedMayday.unit.isUnInjured=!dataStore.selectedMayday.unit.isUnInjured" class="uninjured_mayday_btn mayday_exclusive_toggle_left   mayday_toggle">UNinjured</button>
+            <button id="injured_mayday_btn"     ng-class="{glowgreen:!dataStore.selectedMayday.unit.isUnInjured}"  ng-click="dataStore.selectedMayday.unit.isUnInjured=!dataStore.selectedMayday.unit.isUnInjured" class="injured_mayday_btn   mayday_exclusive_toggle_right  mayday_toggle">Injured</button>
+            <div class="clear_float"></div>
+        </div>
+
+        <div class="mayday_row_div">
+            <button id="lost_mayday_btn" ng-class="{glowgreen: dataStore.selectedMayday.unit.isLost}"              ng-click="dataStore.selectedMayday.unit.isLost=!           dataStore.selectedMayday.unit.isLost"           class="lost_mayday_btn mayday_single_toggle mayday_toggle">Lost</button>
+            <button id="trap_mayday_btn" ng-class="{glowgreen:!dataStore.selectedMayday.unit.isTrapped}"           ng-click="dataStore.selectedMayday.unit.isTrapped=!        dataStore.selectedMayday.unit.isTrapped"        class="trap_mayday_btn mayday_single_toggle mayday_toggle">Trapped</button>
+            <button id="oair_mayday_btn" ng-class="{glowgreen: dataStore.selectedMayday.unit.isOutOfAir}"          ng-click="dataStore.selectedMayday.unit.isOutOfAir=!       dataStore.selectedMayday.unit.isOutOfAir"       class="oair_mayday_btn mayday_single_toggle mayday_toggle">Out of Air</button>
+            <button id="regi_mayday_btn" ng-class="{glowgreen:!dataStore.selectedMayday.unit.isRegulatorIssue}"    ng-click="dataStore.selectedMayday.unit.isRegulatorIssue=! dataStore.selectedMayday.unit.isRegulatorIssue" class="regi_mayday_btn mayday_single_toggle mayday_toggle">Regulator Issue</button>
+            <button id="lair_mayday_btn" ng-class="{glowgreen: dataStore.selectedMayday.unit.isLowAir}"            ng-click="dataStore.selectedMayday.unit.isLowAir=!         dataStore.selectedMayday.unit.isLowAir"         class="lair_mayday_btn mayday_single_toggle mayday_toggle">Low Air</button>
+            <button id="pack_mayday_btn" ng-class="{glowgreen:!dataStore.selectedMayday.unit.isPackIssue}"         ng-click="dataStore.selectedMayday.unit.isPackIssue=!      dataStore.selectedMayday.unit.isPackIssue"      class="pack_mayday_btn mayday_single_toggle mayday_toggle">Pack Issue</button>
+            <div class="clear_float"></div>
+        </div>
+
+        <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn" ng-click="clearMayday()">Clear</button>
     </div>
 
     <!-- Clear Mayday Dialog -->

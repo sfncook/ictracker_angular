@@ -28,6 +28,19 @@
     margin: 5px;
 }
 
+.mayday_exclusive_toggle_left {
+    border-right: 0;
+    margin-right: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+.mayday_exclusive_toggle_right {
+    border-left: 0;
+    margin-left: 0;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
 #mayday_table_main {
     height:95%;
 }
@@ -51,6 +64,7 @@
     float: left;
     font-weight: bold;
     font-size:14px;
+    margin-top: 3px;
 }
 .mayday_value {
     padding-left:5px;
@@ -58,7 +72,10 @@
 .mayday_psi_btn {
     margin-top: 1px;
     margin-right: 4px;
-    float: right;
+    float: left;
+    width: 50px;
+    height: 25px;
+    padding-top: 1px;
 }
 
 .mayday_box_title_edit {
@@ -75,10 +92,10 @@
 }
 
 .mayday_clear_btn {
+    width: 200px;
     height: 24px;
     padding: 2px;
     margin-right: 4px;
-    float: left;
     font-size: 14px !important;
 }
 
@@ -89,7 +106,7 @@
 .mayday_timer {
     font-size: 1.1rem;
     color: #666;
-    float: right;
+    float: left;
     margin-right: 5px;
 }
 #new_mayday_btn_icon {
@@ -330,6 +347,10 @@
     margin: 5px;
 }
 
+#mayday_dlg {
+    padding:10px;
+}
+
 @keyframes mayday_choice_keyframes {
     0% {
         box-shadow: 0px 0px 5px darkred;
@@ -348,23 +369,14 @@
     animation-iteration-count: infinite;
 }
 
-/*@keyframes mayday_btn_keyframes {
-    0% {
-        box-shadow: 0px 0px 5px darkred;
-        animation-timing-function: ease-in;
-        background-color: red;
-    }
-    50% {
-        box-shadow: 0px 0px 5px darkred, 0px 0px 10px red;
-        animation-timing-function: ease-out;
-        background-color: pink;
-    }
+.mayday_sector_label {
+    float: left;
 }
-.mayday_btn_animate {
-    animation-name: mayday_btn_keyframes;
-    animation-duration: 0.5s;
-    animation-iteration-count: infinite;
-}*/
+
+.mayday_unit_label {
+    float: left;
+}
+
 @keyframes mayday_btn_keyframes {
     0%      { background: white;    border: 1px solid red;     box-shadow: none;}
     20%     { background: red;      border: 1px solid white;   box-shadow: 0px 0px 10px 5px red;}
