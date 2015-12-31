@@ -267,14 +267,14 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     height: 24px;
 }
 
-#top_header_container {
+.top_header_container {
     width: 100%;
     z-index: 50;
     padding-right: 100px;
     padding-bottom: 5px;
     pointer-events: none;
 }
-#top_header_container>* {
+.top_header_container>* {
     pointer-events: auto;
 }
 #top_header_mayday_container {
@@ -294,70 +294,6 @@ div#upgrade_btn_sub_label{ font-size: 12px; }
     float:left;
     border: none;
     background: white;
-}
-
-.new_mayday_btn {
-    width: 100px;
-}
-
-.mayday_btn {
-    font-size: medium;
-    padding: 0px 10px;
-    width: 110px;
-    margin-left: auto;
-    background: #FF9696;
-    color: black;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top: none;
-    border-right: 2px solid orange;
-    border-bottom: 2px solid orange;
-    border-left: 2px solid orange;
-}
-
-.mayday_btn:hover {
-    background: red;
-}
-
-.mayday_btn:active {
-    background: #C20000;
-}
-
-#mayday_clear_dialog {
-    width: 350px;
-}
-
-.mayday_clear_item_btn {
-    margin: 5px 0 5px 10px;
-    width: 325px;
-}
-
-.mayday_sector_title {
-    width:124px;
-    height: 27px;
-    padding: 4px 0 0 2px;
-    font-size: 0.7rem;
-    float:left;
-    margin:4px 2px;
-}
-.mayday_sector_btn_list {
-    float:right;
-}
-.mayday_row_div {
-    /*margin-top: 10px;*/
-}
-.mayday_info_tbl_l {
-    font-weight: bold;
-    text-align: right;
-}
-.mayday_info_tbl_r {
-    padding-left: 10px;
-    text-align: left;
-}
-.has_mayday {
-
 }
 
 

@@ -116,30 +116,47 @@
 </div>
 <!-- ict_header-->
 
-<div id="top_header_container" ng-controller="HeaderContainer2">
-    <button id="inc_info_btn"
-            class="button_top"
-            ng-click="showIncInfoDlg()">
-        <div id="inc_num">{{dataStore.incident.inc_number}}</div>
-        <div id="inc_add">{{dataStore.incident.inc_address}}</div>
+<div class="top_mayday_header_container" ng-controller="MaydayDlg" ng-show="dataStore.maydays.length>0">
+    <button class="mayday_btn_animate mayday_btn button_top button" ng-repeat="mayday in dataStore.maydays" ng-click="openMaydayDlgForMayday(mayday)">
+        Mayday #{{mayday.number}} - {{mayday.sector.sectorType.name}} - {{mayday.unit.type.name}} - {{mayday.timerText}}
     </button>
-    <img id="inc_type_icon" ng-src="{{dataStore.incident.incidentType.icon}}"/>
-    <button id="inc_map_btn" class="button_top" ng-click="openMap()">
-        <img class="map_btn_img" src="img/map_icon.png"/>Map
-    </button>
+</div>
 
-    <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
-    <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
-    <button id="settings_btn" class="button_top db_status"
-            ng-click="showSettingsDlg()">
-        <img class="settings_btn_img" src="img/settings.png"/>
-    </button>
-    <div id="db_status_msg_success"
-         class="button_top db_status"
-         ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess"
-         ng-class="{fadeout:!dataStore.waitingToLoad && dataStore.loadSuccess}">Load Succeeded</div>
-    <div id="db_status_msg_failed" class="button_top db_status" ng-show="!dataStore.waitingToLoad && !dataStore.loadSuccess">Load Failed</div>
-    <div class="clear_both"></div>
+<div class="top_header_container" ng-controller="HeaderContainer2">
+    <table style="width:100%">
+        <tr>
+            <td style="width:33%; height:25px">
+                <button id="inc_info_btn"
+                        class="button_top"
+                        ng-click="showIncInfoDlg()">
+                    <div id="inc_num">{{dataStore.incident.inc_number}}</div>
+                    <div id="inc_add">{{dataStore.incident.inc_address}}</div>
+                </button>
+                <img id="inc_type_icon" ng-src="{{dataStore.incident.incidentType.icon}}"/>
+                <button id="inc_map_btn" class="button_top" ng-click="openMap()">
+                    <img class="map_btn_img" src="img/map_icon.png"/>Map
+                </button>
+                <div class="clear_both"></div>
+            </td>
+            <td style="width:33%; height:25px; text-align: center">
+                <button class="new_mayday_btn button_top button" ng-click="click_new_mayday()" ng-controller="MaydayDlg">+ NEW MAYDAY</button>
+            </td>
+            <td style="width:33%; height:25px">
+                <button id="mode_btn" class="button_top" ng-class="{'glowgreen':(dataStore.incident.strategy=='OFFENSE'), 'glowred':(dataStore.incident.strategy=='DEFENSE')}" ng-click="showStrategyDlg()">{{(dataStore.incident.strategy==undefined || dataStore.incident.strategy=='') ? 'Strategy' : dataStore.incident.strategy}}</button>
+                <div id="db_status_msg" class="button_top db_status" ng-show="dataStore.waitingToLoad">Loading Incident</div>
+                <button id="settings_btn" class="button_top db_status"
+                        ng-click="showSettingsDlg()">
+                    <img class="settings_btn_img" src="img/settings.png"/>
+                </button>
+                <div id="db_status_msg_success"
+                     class="button_top db_status"
+                     ng-show="!dataStore.waitingToLoad && dataStore.loadSuccess"
+                     ng-class="{fadeout:!dataStore.waitingToLoad && dataStore.loadSuccess}">Load Succeeded</div>
+                <div id="db_status_msg_failed" class="button_top db_status" ng-show="!dataStore.waitingToLoad && !dataStore.loadSuccess">Load Failed</div>
+                <div class="clear_both"></div>
+            </td>
+        </tr>
+    </table>
 </div>
 
 
@@ -994,12 +1011,9 @@
 
 <!-- ***** MAYDAY ***** -->
 <div id="mayday_container" ng-controller="MaydayDlg">
-    <div id="top_header_mayday_container">
-        <button class="new_mayday_btn mayday_btn button_top button" ng-click="click_new_mayday()">+ NEW MAYDAY</button>
-        <button class="mayday_btn_animate mayday_btn button_top button" ng-repeat="mayday in dataStore.maydays" ng-click="openMaydayDlgForMayday(mayday)">
-            Mayday #{{mayday.number}}<br>{{mayday.unit.type.name}}
-        </button>
-    </div>
+    <!--<div id="top_header_mayday_container">
+        <button class="new_mayday_btn button_top button" ng-click="click_new_mayday()">+ NEW MAYDAY</button>
+    </div>-->
 
     <!-- New/Edit Mayday Dialog -->
     <div id="mayday_dlg" title="Mayday" class="dialog">
@@ -1010,7 +1024,7 @@
                 ng-class="{psi_red:dataStore.selectedMayday.unit.psi<1500, psi_yellow:dataStore.selectedMayday.unit.psi<3000&&dataStore.selectedMayday.unit.psi>=1500, psi_green:dataStore.selectedMayday.unit.psi>=3000}">
             {{dataStore.selectedMayday.unit.psi}}
         </button>
-        <div id="mayday_timer" class="mayday_timer">00:00</div>
+        <div class="mayday_timer">{{dataStore.selectedMayday.timerText}}</div>
         <div class="clear_float"></div>
 
         <select id="mayday_channel_select"

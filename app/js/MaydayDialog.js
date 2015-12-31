@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday){
+    .controller('MaydayDlg', function($scope, $interval, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday){
         DataStore.maydays = new Array();
 
         $scope.channels = [
@@ -78,6 +78,32 @@ angular.module("ictApp")
                 }
             }
         }, true);
+
+        function updateSelectedMaydayTimer() {
+            DataStore.maydays.forEach(function(mayday) {
+                mayday.timerText = "00:00";
+                var t0 = (new Date(mayday.startDate)).getTime();
+
+                var t1 = (new Date()).getTime();
+                var elapsed = parseInt(t1-t0);
+                var elapsedSec = parseInt((elapsed/1000)%60);
+                var elapsedMin = parseInt((elapsed/(1000*60))%60);
+                var elapsedHr = parseInt((elapsed/(1000*60*60))%60);
+
+                var secStr = (elapsedSec<10)?("0"+elapsedSec):elapsedSec;
+                var minStr = (elapsedMin<10)?("0"+elapsedMin):elapsedMin;
+                var hrStr = (elapsedHr<10)?("0"+elapsedHr):elapsedHr;
+
+                var new_timer_text = "";
+                if (elapsedHr>0) {
+                    new_timer_text = hrStr+":"+minStr+":"+secStr;
+                } else {
+                    new_timer_text = minStr+":"+secStr;
+                }
+                mayday.timerText = new_timer_text;
+            });
+        }
+        $interval(updateSelectedMaydayTimer, 1000);
     })
 
     .factory('OpenMaydayDlgForMayday', function (DataStore) {
@@ -90,12 +116,12 @@ angular.module("ictApp")
 
     .factory('AddNewMayday', function (DataStore, OpenMaydayDlgForMayday) {
         return function (sector, unit) {
-            console.log(sector);
             unit.hasMayday = true;
             var mayday = new Object();
             mayday.number = DataStore.maydays.length + 1;
             mayday.sector = sector;
             mayday.unit = unit;
+            mayday.startDate = new Date();
             DataStore.maydays.push(mayday);
             OpenMaydayDlgForMayday(mayday);
         }
