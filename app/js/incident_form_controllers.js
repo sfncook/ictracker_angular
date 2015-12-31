@@ -100,7 +100,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
     .controller('TbarContainer', function($scope, DataStore, GridsterOpts, DoesSectorHavePar, AddNewMaydayForUnit){
 
         $scope.openMaydayDlg = function () {
-            console.log("click TbarContainer");
             $("#mayday_dlg").dialog("open");
         }
 
@@ -921,6 +920,16 @@ function initDialogs() {
     $( "#branch_dlg" ).dialog({resizable: false, modal: true, width:550});
     $( "#strategy_dlg" ).dialog({resizable: false, modal: true, width:258});
     $( "#settings_dlg" ).dialog({resizable: false, modal: true, width:258});
+    $( "#osr_dlg" ).dialog({
+        resizable: false,
+        modal: true,
+        width: 460,
+        close: function(event, ui){
+            angular.element('#osr_dlg').scope().dataStore.incident.osr.save();
+        }
+
+    });
+    $( "#mayday_dlg" ).dialog({resizable: false, modal: true, width:400});
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");

@@ -53,12 +53,6 @@
     <div class="header_item"
          ng-class="{time_lg:!dataStore.hourRollOverDone}">{{dataStore.timer_text}}
     </div>
-    <!--<button id="dispatched_units_btn"
-            class="header_item button"
-            ng-click="showUnitsDlgForDispUnits()">
-        <div>Dispatched</div>
-        <div>Units</div>
-    </button>-->
     <button id="move_unit_btn"
             class="disabled header_item">
         <img class="move_btn_img" src="img/move_cross.png"/>Move Unit
@@ -1002,19 +996,22 @@
 <div id="mayday_container" ng-controller="MaydayDlg">
     <div id="top_header_mayday_container">
         <button class="new_mayday_btn mayday_btn button_top button" ng-click="click_new_mayday()">+ NEW MAYDAY</button>
-        <button
-                class="mayday_btn_animate mayday_btn button_top button"
-                ng-repeat="mayday in dataStore.maydays">
+        <button class="mayday_btn_animate mayday_btn button_top button" ng-repeat="mayday in dataStore.maydays" ng-click="openMaydayDlgForUnit(mayday.unit)">
             Mayday #{{mayday.number}}<br>{{mayday.unit.type.name}}
         </button>
     </div>
 
+    <!-- New/Edit Mayday Dialog -->
+    <div id="mayday_dlg" title="Mayday" class="dialog">
+        <div>{{dataStore.selectedMaydayUnit.type.name}}</div>
+    </div>
+
     <!-- Clear Mayday Dialog -->
     <div id="clear_mayday_dlg" title="Clear Mayday" class="dialog">
-        <button class="clear_mayday_dlg_button" ng-click="clearMayday('slfrs')"  >"Fighter self rescued"</button>
-        <button class="clear_mayday_dlg_button" ng-click="clearMayday('rescu')"      >"Fighter rescued"</button>
-        <button class="clear_mayday_dlg_button" ng-click="clearMayday('ffmia')"          >"Fighter MIA"</button>
-        <button class="clear_mayday_dlg_button" ng-click="clearMayday('cancl')"       >Cancel</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('slfrs')">"Fighter self rescued"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('rescu')">"Fighter rescued"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('ffmia')">"Fighter MIA"</button>
+        <button class="clear_mayday_dlg_button" ng-click="clearMayday('cancl')">Cancel</button>
     </div>
 
     <!-- Mayday Dialog -->
