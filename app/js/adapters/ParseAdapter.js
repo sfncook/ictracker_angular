@@ -7,7 +7,7 @@ var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
 var ACTION_TYPE_DEF = ['name', 'category', 'incidentType', 'isWarning'];
 var UPGRADE_DEF = ['incident', 'isWorkingFire', 'is1stAlarm', 'is2ndAlarm', 'is3rdAlarm', 'is4thAlarm', 'isBalanceTo', 'isEnRoute'];
-var MAYDAY_DEF = ['incident', 'number', 'unitType', 'sectorType', 'isOnHoseline', 'isUnInjured', 'isLost', 'isTrapped', 'isOutOfAir', 'isRegulatorIssue', 'isLowAir', 'isPackIssue', 'nameFFighter', 'psi', 'channel', 'rank'];
+var MAYDAY_DEF = ['incident', 'unit', 'sector', 'number', 'isOnHoseline', 'isUnInjured', 'isLost', 'isTrapped', 'isOutOfAir', 'isRegulatorIssue', 'isLowAir', 'isPackIssue', 'nameFFighter', 'psi', 'channel', 'rank', 'startDate'];
 var REPORT_ACTION_DEF = ['incident', 'sector', 'text'];
 var IAP_DEF = ['fireControl', 'firefighterSafety', 'incident', 'isActionEffect', 'isArrangement', 'isBuilding', 'isFire', 'isLifeHazard', 'isOccupancy', 'isResources', 'isSpecial', 'isSprinkler', 'isVent', 'propertyPeople', 'evacuationLocation', 'showEvacutionLocation', 'rescue'];
 var OSR_DEF = ['incident', 'isAddress', 'isOccupancy', 'isConstruction', 'isAssumeCommand', 'isLocation', 'isStrategy', 'isAttackLine', 'isWaterSupply', 'isIRIC', 'isBasement', 'isMobile', 'isDefensive', 'accountability', 'accountabilityLocation', 'unit', 'dispatchAddress', 'sizeOfBuilding', 'numberOfFloors', 'typeOfBuilding', 'subFloors', 'constructionType', 'roofType', 'conditions'];
@@ -184,38 +184,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         }
     })
 
-    .factory('FetchUnitTypeForMayday_Parse', function (ConvertParseObject) {
-        return function (mayday) {
-            if(mayday.unitType) {
-                return mayday.unitType.fetch().then(
-                    function(unitType) {
-                        ConvertParseObject(unitType, UNIT_TYPE_DEF);
-                        mayday.unitType = unitType;
-                        return mayday;
-                    },
-                    function(error) {
-                        console.log('Failed to FetchUnitTypeForMayday, with error code: ' + error.message);
-                    }
-                );
-            }
-        }
-    })
-    .factory('FetchSectorTypeForMayday_Parse', function (ConvertParseObject) {
-        return function (mayday) {
-            if(mayday.sectorType) {
-                return mayday.sectorType.fetch().then(
-                    function(sectorType) {
-                        ConvertParseObject(sectorType, SECTOR_TYPE_DEF);
-                        mayday.sectorType = sectorType;
-                        return mayday;
-                    },
-                    function(error) {
-                        console.log('Failed to FetchSectorTypeForMayday, with error code: ' + error.message);
-                    }
-                );
-            }
-        }
-    })
     .factory('FetchActionsForUnit_Parse', function (ConvertParseObject) {
         return function (unit) {
             var relation = unit.relation("actions");
@@ -271,27 +239,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     promises.push(FetchTypeForSector_Parse(sector));
                     promises.push(LoadUnitsForSector_Parse(sector));
                     promises.push(FetchAcctTypeForSector_Parse(sector));
-                }
-                return $q.all(promises);
-            });
-        }
-    })
-    .factory('LoadAllMaydaysForIncident_Parse',
-    function ($q, ConvertParseObject, FetchUnitTypeForMayday_Parse, FetchSectorTypeForMayday_Parse) {
-        return function (incident) {
-            var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
-            queryMaydays.equalTo("incident", incident);
-            queryMaydays.include('unitType');
-            queryMaydays.include('sectorType');
-            return queryMaydays.find().then(function(maydays){
-                var promises = [];
-                incident.maydays = new Array();
-                for(var i=0; i<maydays.length; i++) {
-                    var mayday = maydays[i];
-                    ConvertParseObject(mayday, MAYDAY_DEF);
-                    incident.maydays.push(mayday);
-                    promises.push(FetchUnitTypeForMayday_Parse(mayday));
-                    promises.push(FetchSectorTypeForMayday_Parse(mayday));
                 }
                 return $q.all(promises);
             });
@@ -665,6 +612,63 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             }
         })
 
+    .factory('LoadAllMaydaysForIncident_Parse',
+    function ($q, ConvertParseObject, FetchUnitForMayday_Parse, FetchSectorForMayday_Parse) {
+        return function (incident) {
+            var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
+            queryMaydays.equalTo("incident", incident);
+            queryMaydays.include('unitType');
+            queryMaydays.include('sectorType');
+            return queryMaydays.find().then(function(maydays){
+                var promises = [];
+                incident.maydays = new Array();
+                for(var i=0; i<maydays.length; i++) {
+                    var mayday = maydays[i];
+                    ConvertParseObject(mayday, MAYDAY_DEF);
+                    incident.maydays.push(mayday);
+                    promises.push(FetchUnitForMayday_Parse(mayday));
+                    promises.push(FetchSectorForMayday_Parse(mayday));
+                }
+                return $q.all(promises);
+            });
+        }
+    })
+    .factory('FetchUnitForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForUnit_Parse) {
+        return function (mayday) {
+            if(mayday.unit) {
+                return mayday.unit.fetch().then(
+                    function(unit) {
+                        ConvertParseObject(unit, UNIT_DEF);
+                        mayday.unit = unit;
+                        return FetchTypeForUnit_Parse(unit).then(function(ignoreThisObj){
+                            return mayday;
+                        });
+                    },
+                    function(error) {
+                        console.log('Failed to FetchUnitForMayday_Parse, with error code: ' + error.message);
+                    }
+                );
+            }
+        }
+    })
+    .factory('FetchSectorForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForSector_Parse) {
+        return function (mayday) {
+            if(mayday.sector) {
+                return mayday.sector.fetch().then(
+                    function(sector) {
+                        ConvertParseObject(sector, SECTOR_DEF);
+                        mayday.sector = sector;
+                        return FetchTypeForSector_Parse(sector).then(function(ignoreThisObj){
+                            return mayday;
+                        });
+                    },
+                    function(error) {
+                        console.log('Failed to FetchSectorForMayday_Parse, with error code: ' + error.message);
+                    }
+                );
+            }
+        }
+    })
     .factory('SaveMayday_Parse', function (DefaultErrorLogger) {
         return function (mayday) {
             return mayday.save(null, DefaultErrorLogger);

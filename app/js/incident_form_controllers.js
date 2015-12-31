@@ -21,7 +21,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             DataStore.loadSuccess = true;
             DataStore.waitingToLoad = false;
             DataStore.incident = incident;
-            //DataStore.objectives = incident.objectives;
+            DataStore.maydays = incident.maydays;
             UpdateObjectivesPercent(incident);
         }).then(function() {
             StartIncidentTimer();

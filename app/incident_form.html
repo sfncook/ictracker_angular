@@ -1018,7 +1018,7 @@
     <!-- New/Edit Mayday Dialog -->
     <div id="mayday_dlg" title="Mayday" class="dialog">
         <span class="mayday_name_label">Name:</span>
-        <input id="mayday_name_input" class="mayday_name_input" ng-model="dataStore.selectedMayday.unit.nameFFighter" type="text"/>
+        <input id="mayday_name_input" class="mayday_name_input" ng-model="dataStore.selectedMayday.nameFFighter" type="text"/>
         <button class="mayday_psi_btn psi_btn"
                 ng-click="openPsiDialog()"
                 ng-class="{psi_red:dataStore.selectedMayday.unit.psi<1500, psi_yellow:dataStore.selectedMayday.unit.psi<3000&&dataStore.selectedMayday.unit.psi>=1500, psi_green:dataStore.selectedMayday.unit.psi>=3000}">
