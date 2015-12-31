@@ -21,7 +21,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
-        SaveIncident_Parse, SaveSector_Parse, SaveReportAction_Parse
+        SaveIncident_Parse, SaveSector_Parse, SaveReportAction_Parse,
+        CreateNewMayday_Parse, SaveMayday_Parse
     ) {
         return {
             adapter_id_str:'parse',
@@ -53,7 +54,9 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadUnitTypes:          LoadUnitTypes_Parse,
             SaveIncident:           SaveIncident_Parse,
             SaveSector:             SaveSector_Parse,
-            SaveReportAction:       SaveReportAction_Parse
+            SaveReportAction:       SaveReportAction_Parse,
+            CreateNewMayday:        CreateNewMayday_Parse,
+            SaveMayday:             SaveMayday_Parse
         };
     })
 
@@ -661,5 +664,20 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 reportAction.save(null, DefaultErrorLogger);
             }
         })
+
+    .factory('SaveMayday_Parse', function (DefaultErrorLogger) {
+        return function (mayday) {
+            return mayday.save(null, DefaultErrorLogger);
+        }
+    })
+    .factory('CreateNewMayday_Parse', function (ConvertParseObject, DataStore) {
+        return function () {
+            var MaydayParseObj = Parse.Object.extend('Mayday');
+            var newMayday = new MaydayParseObj();
+            ConvertParseObject(newMayday, MAYDAY_DEF);
+            newMayday.incident          = DataStore.incident;
+            return newMayday;
+        }
+    })
 
 ;

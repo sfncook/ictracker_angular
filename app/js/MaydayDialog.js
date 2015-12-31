@@ -6,7 +6,7 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, $interval, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday){
+    .controller('MaydayDlg', function($scope, $interval, Maydays, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday, SaveSelectedMayday){
         DataStore.maydays = new Array();
 
         $scope.channels = [
@@ -34,6 +34,7 @@ angular.module("ictApp")
         $scope.dataStore = DataStore;
 
         $scope.openMaydayDlgForMayday = OpenMaydayDlgForMayday;
+        $scope.dataStore.saveSelectedMayday = SaveSelectedMayday;
 
         $scope.clearMayday = function (method) {
             if(method) {
@@ -104,6 +105,7 @@ angular.module("ictApp")
             });
         }
         $interval(updateSelectedMaydayTimer, 1000);
+
     })
 
     .factory('OpenMaydayDlgForMayday', function (DataStore) {
@@ -114,49 +116,42 @@ angular.module("ictApp")
         }
     })
 
-    .factory('AddNewMayday', function (DataStore, OpenMaydayDlgForMayday) {
+    .factory('AddNewMayday', function (AdapterStore, DataStore, OpenMaydayDlgForMayday, GetNextMaydayId) {
         return function (sector, unit) {
             unit.hasMayday = true;
-            var mayday = new Object();
-            mayday.number = DataStore.maydays.length + 1;
-            mayday.sector = sector;
-            mayday.unit = unit;
-            mayday.startDate = new Date();
+            var mayday = AdapterStore.adapter.CreateNewMayday();
+            mayday.number               = GetNextMaydayId();
+            mayday.sector               = sector;
+            mayday.unit                 = unit;
+            mayday.startDate            = new Date();
+            mayday.isOnHoseline         = true;
+            mayday.isUnInjured          = true;
+            mayday.isLost               = false;
+            mayday.isTrapped            = false;
+            mayday.isOutOfAir           = false;
+            mayday.isRegulatorIssue     = false;
+            mayday.isLowAir             = false;
+            mayday.isPackIssue          = false;
+            mayday.nameFFighter         = "";
+            mayday.psi                  = 4000;
+            mayday.channel              = "";
+            mayday.rank                 = "";
             DataStore.maydays.push(mayday);
             OpenMaydayDlgForMayday(mayday);
         }
     })
 
-    .factory('GetNextMaydayId', ['Maydays', function (Maydays) {
+    .factory('SaveSelectedMayday', function (DataStore, AdapterStore) {
         return function () {
-            return Maydays.length+1;
+            return AdapterStore.adapter.SaveMayday(DataStore.selectedMayday);
         }
-    }])
+    })
 
-    .factory('CreateNewMayday', ['ConvertParseObject', 'GetNextMaydayId', 'DataStore', function (ConvertParseObject, GetNextMaydayId, DataStore) {
+    .factory('GetNextMaydayId', function (DataStore) {
         return function () {
-            var MaydayParseObj = Parse.Object.extend('Mayday');
-            var newMayday = new MaydayParseObj();
-            ConvertParseObject(newMayday, MAYDAY_DEF);
-            newMayday.incident          = DataStore.incident;
-            newMayday.number            = GetNextMaydayId();
-//            newMayday.unitType          = ;
-//            newMayday.sectorType        = ;
-            newMayday.isOnHoseline      = true;
-            newMayday.isUnInjured       = true;
-            newMayday.isLost            = false;
-            newMayday.isTrapped         = false;
-            newMayday.isOutOfAir        = false;
-            newMayday.isRegulatorIssue  = false;
-            newMayday.isLowAir          = false;
-            newMayday.isPackIssue       = false;
-            newMayday.nameFFighter      = "";
-            newMayday.psi               = 4000;
-            newMayday.channel           = "";
-            newMayday.rank              = "";
-            return newMayday;
+            return DataStore.maydays.length + 1;
         }
-    }])
+    })
 
     .factory('SaveAllMaydays', ['Maydays', 'DefaultErrorLogger', function (Maydays, DefaultErrorLogger) {
         return function () {

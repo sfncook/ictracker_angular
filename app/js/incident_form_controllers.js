@@ -927,9 +927,16 @@ function initDialogs() {
         close: function(event, ui){
             angular.element('#osr_dlg').scope().dataStore.incident.osr.save();
         }
-
     });
-    $( "#mayday_dlg" ).dialog({resizable: false, modal: true, width:400});
+    $( "#mayday_dlg" ).dialog({
+        resizable: false,
+        modal: true,
+        width:400,
+        close: function(event, ui){
+            var dataStore = angular.element('#osr_dlg').scope().dataStore;
+            dataStore.saveSelectedMayday();
+        }
+    });
     $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
