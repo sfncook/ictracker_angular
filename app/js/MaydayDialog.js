@@ -180,6 +180,7 @@ angular.module("ictApp")
 
     .factory('AddNewMaydayForUnit', function (DataStore) {
         return function (unit) {
+            unit.hasMayday = true;
             var mayday = new Object();
             mayday.number = DataStore.maydays.length + 1;
             mayday.unit = unit;

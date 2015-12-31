@@ -201,7 +201,7 @@
                         </div>
                         <button class="unit_tbar_btn unit_btn"
                                 ng-click="selectUnit(sector,unit)"
-                                ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4, mayday_choice_animate: dataStore.choosing_unit_for_new_mayday}">
+                                ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4, mayday_choice_animate: dataStore.choosing_unit_for_new_mayday, unit_btn_hasmayday_animate: unit.hasMayday}">
                             {{unit.type.name}}
                         </button>
                     </div>
