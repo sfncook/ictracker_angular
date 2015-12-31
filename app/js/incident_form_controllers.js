@@ -8,11 +8,11 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
             window.location.href = urlLink;
         }
 
-        if(!IsLoggedIn()){
-            ResetSavedDepartment();
-            var urlLink = "login.html";
-            window.location.href = urlLink;
-        }
+        //if(!IsLoggedIn()){
+        //    ResetSavedDepartment();
+        //    var urlLink = "login.html";
+        //    window.location.href = urlLink;
+        //}
 
 
         var incidentObjectId = getHttpRequestByName('i');

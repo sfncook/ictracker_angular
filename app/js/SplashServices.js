@@ -4,11 +4,12 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
     .run(function(IsLoggedIn, InitDatabase, ResetSavedDepartment) {
         InitDatabase();
 
-        if(!IsLoggedIn()){
-            ResetSavedDepartment();
-            var urlLink = "login.html";
-            window.location.href = urlLink;
-        }
+        //if(!IsLoggedIn()){
+        //    console.log("Not logged in");
+            //ResetSavedDepartment();
+            //var urlLink = "login.html";
+            //window.location.href = urlLink;
+        //}
     })
 
     .controller('SplashCtrl', function(
@@ -18,12 +19,12 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
     ){
         $scope.dataStore = DataStore;
 
-        if(!IsLoggedIn()) {
-            console.log("Not logged in. Redirecting to login.html");
-            ResetSavedDepartment();
-            var urlLink = "login.html";
-            window.location.href = urlLink;
-        }
+        //if(!IsLoggedIn()) {
+        //    console.log("Not logged in. Redirecting to login.html");
+        //    ResetSavedDepartment();
+        //    var urlLink = "login.html";
+        //    window.location.href = urlLink;
+        //}
 
         LoadIncidentTypes().then(function(incidentTypes){
             $scope.incidentTypes = incidentTypes;
@@ -41,9 +42,9 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
         $scope.incidentObj = {};
 
         $scope.userLogout = function() {
-            UserLogout();
-            var urlLink = "login.html";
-            window.location.href = urlLink;
+            //UserLogout();
+            //var urlLink = "login.html";
+            //window.location.href = urlLink;
         };
 
         $scope.redirectAdmin = function() {

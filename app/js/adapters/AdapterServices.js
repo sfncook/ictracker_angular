@@ -11,7 +11,7 @@ angular.module('AdapterServices', ['ParseAdapter', 'StaticAdapter'])
                     // Check for misspelling of work adapter
                     adapter_id_str = getHttpRequestByName('adaptor');
                     if(adapter_id_str=="") {
-                        console.log("Missing required 'adapter' parameter. Using default 'static' adapter.");
+                        console.log("Missing required 'adapter' parameter. Using default 'parse' adapter.");
                         this.adapter = ParseAdapter;
                     }
                 }

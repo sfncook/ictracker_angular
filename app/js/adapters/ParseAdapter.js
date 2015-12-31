@@ -28,8 +28,10 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             adapter_id_str:'parse',
             init:function(){
                 if(ENABLE_SERVER_COMM && typeof Parse!='undefined') {
-                    var app_key =   localStorage.getItem('department_app_key');
-                    var js_key =    localStorage.getItem('department_js_key');
+                    //var app_key =   localStorage.getItem('department_app_key');
+                    //var js_key =    localStorage.getItem('department_js_key');
+                    var app_key = "Rx2vAi13xDnzOpbSCPZr3nAQycuQ7eA7k9JLhkxR";
+                    var js_key = "1Qc5tKwXrMNm9tOlBsRw4VapXgNUHe9DIyNU9XMp";
                     if(app_key && js_key) {
                         Parse.initialize(app_key, js_key);
                         return true;

@@ -14,7 +14,10 @@ var app = angular.module("LoginApp", ['UserServices', 'DataServices', 'Departmen
 
         // Respond to incident type button click
         $scope.login = function() {
+            // Skipping user login for now
             SetDepartment($scope.selected_department);
+            localStorage.setItem('department_app_key', department.app_key);
+            localStorage.setItem('department_js_key', department.js_key);
             UserLogin($scope.username, $scope.password,
                 function () {
                     var urlLink = "splash.html";
