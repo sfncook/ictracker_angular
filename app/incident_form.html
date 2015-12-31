@@ -201,7 +201,7 @@
                         </div>
                         <button class="unit_tbar_btn unit_btn"
                                 ng-click="selectUnit(sector,unit)"
-                                ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4}">
+                                ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4, mayday_choice_animate: dataStore.choosing_unit_for_new_mayday}">
                             {{unit.type.name}}
                         </button>
                     </div>
@@ -1001,8 +1001,12 @@
 <!-- ***** MAYDAY ***** -->
 <div id="mayday_container" ng-controller="MaydayDlg">
     <div id="top_header_mayday_container">
-        <button class="new_mayday_btn mayday_btn button_top button" ng-click="showMaydayDlg()">+NEW MAYDAY</button>
-        <!--<button class="mayday_btn button_top button" ng-click="showMaydayDlg()">MAYDAY</button>-->
+        <button class="new_mayday_btn mayday_btn button_top button" ng-click="click_new_mayday()">+ NEW MAYDAY</button>
+        <button
+                class="mayday_btn_animate mayday_btn button_top button"
+                ng-repeat="mayday in dataStore.maydays">
+            Mayday #{{mayday.number}}<br>{{mayday.unit.type.name}}
+        </button>
     </div>
 
     <!-- Clear Mayday Dialog -->

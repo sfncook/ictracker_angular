@@ -9,7 +9,8 @@ angular.module('DataServices', ['ParseServices', 'AdapterServices'])
             incident:{},
             currentUser:{},
             waitingToLoad:true,
-            loadSuccess:false
+            loadSuccess:false,
+            choosing_unit_for_new_mayday:false
         };
     })
 

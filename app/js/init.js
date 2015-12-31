@@ -5,6 +5,7 @@
  */
 
 document.addEventListener('click', function (event) {
+    //console.log("document.addEventListener('click')");
     if ($(event.target).hasClass("disabled") || $(event.target).parents(".disabled").length > 0) {
         event.stopPropagation();
     }

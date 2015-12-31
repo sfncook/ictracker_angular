@@ -7,6 +7,7 @@ angular.module("ictApp")
     }])
 
     .controller('MaydayDlg', function($scope, Maydays, CreateNewMayday, SaveAllMaydays, DeleteMayday, DataStore){
+        DataStore.maydays = new Array();
 
         $scope.channels = [
             {channelname:"Channel"},
@@ -164,6 +165,26 @@ angular.module("ictApp")
             $scope.selectedMayday.psi = psi;
         }
 
+        $scope.click_new_mayday = function () {
+            $scope.dataStore.choosing_unit_for_new_mayday = true;
+        }
+        document.addEventListener('click', function (event) {
+            if($scope.dataStore.choosing_unit_for_new_mayday) {
+                if(!$(event.target).hasClass("unit_tbar_btn")) {
+                    //console.log("MaydayDlg document.addEventListener - Cancelling choosing_unit_for_new_mayday");
+                    $scope.dataStore.choosing_unit_for_new_mayday = false;
+                }
+            }
+        }, true);
+    })
+
+    .factory('AddNewMaydayForUnit', function (DataStore) {
+        return function (unit) {
+            var mayday = new Object();
+            mayday.number = DataStore.maydays.length + 1;
+            mayday.unit = unit;
+            DataStore.maydays.push(mayday);
+        }
     })
 
     .factory('GetNextMaydayId', ['Maydays', function (Maydays) {
