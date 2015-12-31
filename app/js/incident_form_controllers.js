@@ -937,7 +937,6 @@ function initDialogs() {
             dataStore.saveSelectedMayday();
         }
     });
-    $("#mayday_form").hide();
 
     $(".ui-dialog .ui-dialog-titlebar-close").html("Close");
 

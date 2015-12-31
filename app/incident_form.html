@@ -58,7 +58,7 @@
         <img class="move_btn_img" src="img/move_cross.png"/>Move Unit
     </button>
     <button id="upgrade_btn"
-            class="header_item"
+            class="disabled header_item"
             ng-controller="UpgradeDlg"
             ng-click="showUpgradeDlg()">
         <div>Upgrade</div>
@@ -72,7 +72,7 @@
         <div>Transferred</div>
     </button>
     <button id="branch_btn"
-            class="header_item"
+            class="disabled header_item"
             ng-click="showBranchDlg()">Branch
     </button>
     <div ng-controller="OsrDlg">
@@ -101,13 +101,13 @@
     			ng-click="showIapDlg()">IAP</button>
 	</div>
 
-    <button id="cmd_term_btn" class="header_item">
+    <button id="cmd_term_btn" class="disabled header_item">
         <img class="terminate_icon" src="img/terminate.png"/>
         <div>Command</div>
         <div>Terminated</div>
     </button>
     <button id="report_btn"
-            class="header_item"
+            class="disabled header_item"
             ng-click="showReportsDlg()">
         <img class="report_icon" src="img/report.png"/>
 
@@ -1029,12 +1029,27 @@
 
         <select id="mayday_channel_select"
                 class="mayday_select_half mayday_channel_select mayday_select"
-                ng-options="channel.channelname as channel.channelname for channel in channels track by channel.channelname"
-                ng-model="dataStore.selectedMayday.channel"></select>
+                ng-model="dataStore.selectedMayday.channel">
+            <option>Channel 1</option>
+            <option>Channel 2</option>
+            <option>Channel 3</option>
+            <option>Channel 4</option>
+            <option>Channel 5</option>
+            <option>Channel 6</option>
+            <option>Channel 7</option>
+            <option>Channel 8</option>
+            <option>Channel 9</option>
+            <option>Channel 10</option>
+            <option>Channel 11</option>
+            <option>Channel 12</option>
+            <option>Channel 13</option>
+            <option>Channel 14</option>
+            <option>Channel 15</option>
+            <option>Channel 16</option>
+        </select>
 
 
         <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select" ng-model="dataStore.selectedMayday.rank">
-            <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
             <option class='mayday_rank_capt'>Captain</option>
             <option class='mayday_rank_eng'>Engineer</option>
             <option class='mayday_rank_ff'>Fire Fighter</option>
@@ -1071,246 +1086,6 @@
         <button class="clear_mayday_dlg_button" ng-click="clearMayday('ffmia')">"Fighter MIA"</button>
         <button class="clear_mayday_dlg_button" ng-click="clearMayday('cancl')">Cancel</button>
     </div>
-
-    <!-- Mayday Dialog -->
-    <!-- NOTE: This has to exist in the same container as the button above in order for the -->
-    <div id="mayday_form">
-        <div id="mayday_form_title_bar">Mayday</div>
-        <button id="mayday_form_close_btn" ng-click="closeMaydayDlg()">Close</button>
-
-        <table id="mayday_table_main">
-        <tr>
-            <td id="mayday_left_td">
-               <!--<button id="new_mayday_btn" class="glowpink" ng-click="addNewMayday()">
-                    <img id="new_mayday_btn_icon" class='plus_icon' src='img/plus.png'/>
-                    <div id="new_mayday_btn_text">New Mayday</div>
-                    <div class="clear_float"></div>
-                </button>-->
-                <div id="mayday_info_edit_div" class="yellow_bg mayday_info_div" style="margin-left:4px;">
-                    <button id="mayday_clear_btn" class="glowbabyblue mayday_clear_btn" ng-click="clearMayday()">Clear</button>
-                    <div id="mayday_mayday_title" class="mayday_box_title_edit mayday_box_title">Mayday #<span>{{selectedMayday.number}}</span></div>
-                    <div id="mayday_timer" class="mayday_timer">00:00</div>
-                    <div class="clear_float"></div>
-                    <div class="mayday_topstuff">
-                        <span class="mayday_name_label">Name:</span>
-                        <input id="mayday_name_input" class="mayday_name_input" ng-model="selectedMayday.nameFFighter" type="text"/>
-
-                        <button class="mayday_psi_btn psi_btn"
-                                ng-click="openPsiDialog()"
-                                ng-class="{psi_red:selectedMayday.psi<1500, psi_yellow:selectedMayday.psi<3000&&selectedMayday.psi>=1500, psi_green:selectedMayday.psi>=3000}">
-                            {{selectedMayday.psi}}
-                        </button>
-                        <div class="clear_float"></div>
-                    </div>
-
-                    <div id="mayday_units_all" class="mayday_row_div mayday_units_div" ng-show="incidentUnitTypes.length<=12">
-                        <button class="mayday_unit_edit_btn mayday_unit_btn unit_btn"
-                                ng-class="{btn_smtext: unitType.name.length>5, btn_medtext: unitType.name.length>4, glowred:selectedMayday.unitType.name==unitType.name}"
-                                ng-repeat="unitType in incidentUnitTypes"
-                                ng-click="selectedMayday.unitType=unitType">{{unitType.name}}</button>
-                    </div>
-                    <div ng-show="incidentUnitTypes.length>12">
-                        <select id="mayday_unit_select" style="float:left" class="mayday_select"
-                                ng-options="unitType.name for unitType in incidentUnitTypes track by unitType.name" ng-model="selectedMayday.unitType">
-                            <option id="mayday_unit_option_default" disabled='disabled' selected='selected' class='default_option'>UNIT</option>
-                        </select>
-                        <div class="clear_float"></div>
-                    </div>
-
-
-                    <div id="clear_float_between_units_and_sectors" class="clear_float"></div>
-
-                    <div id="mayday_sectors_all" class="mayday_row_div" ng-show="manyValidSectorTypes()<=6">
-                        <button ng-repeat="sectorType in incidentSectorTypes"
-                                class="mayday_sector_edit_btn mayday_sector_title"
-                                ng-show="sectorType.name!='Sector Name'"
-                                ng-click="selectedMayday.sectorType=sectorType"
-                                ng-class="{glowred:selectedMayday.sectorType.name==sectorType.name}">{{sectorType.name}}</button>
-                    </div>
-                    <div ng-show="manyValidSectorTypes()>6">
-                        <label for="mayday_unit_select" class="mayday_select_label">Sector:</label>
-                        <select id="mayday_sectors_select" class="mayday_select"
-                                ng-options="sectorType.name for sectorType in incidentSectorTypes track by sectorType.name" ng-model="selectedMayday.sectorType">
-                            <option id="mayday_sector_option_default" disabled='disabled' selected='selected' class='default_option'>SECTOR</option>
-                        </select>
-                        <div class="clear_float"></div>
-                    </div>
-
-                    <div class="clear_float"></div>
-
-                    <!--
-                    <select id="mayday_channel_select" class="mayday_select_half mayday_channel_select mayday_select" ng-model="selectedMayday.channel">
-                        <option id="mayday_channel_opt_default" disabled='disabled' selected='selected' class='default_option'>Channel</option>
-                        <option class='mayday_channel_1'>Channel 1</option>
-                        <option class='mayday_channel_2'>Channel 2</option>
-                        <option class='mayday_channel_3'>Channel 3</option>
-                        <option class='mayday_channel_4'>Channel 4</option>
-                        <option class='mayday_channel_5'>Channel 5</option>
-                        <option class='mayday_channel_6'>Channel 6</option>
-                        <option class='mayday_channel_7'>Channel 7</option>
-                        <option class='mayday_channel_8'>Channel 8</option>
-                        <option class='mayday_channel_9'>Channel 9</option>
-                        <option class='mayday_channel_10'>Channel 10</option>
-                        <option class='mayday_channel_11'>Channel 11</option>
-                        <option class='mayday_channel_12'>Channel 12</option>
-                        <option class='mayday_channel_13'>Channel 13</option>
-                        <option class='mayday_channel_14'>Channel 14</option>
-                        <option class='mayday_channel_15'>Channel 15</option>
-                        <option class='mayday_channel_16'>Channel 16</option>
-                    </select>
-                    -->
-                    <select id="mayday_channel_select"
-                            class="mayday_select_half mayday_channel_select mayday_select"
-                            ng-options="channel.channelname as channel.channelname for channel in channels track by channel.channelname"
-                            ng-model="selectedMayday.channel"></select>
-
-
-                    <select id="mayday_rank_select" class="mayday_select_half mayday_rank_select mayday_select" ng-model="selectedMayday.rank">
-                        <option disabled='disabled' selected='selected' class='default_option'>Rank</option>
-                        <option class='mayday_rank_capt'>Captain</option>
-                        <option class='mayday_rank_eng'>Engineer</option>
-                        <option class='mayday_rank_ff'>Fire Fighter</option>
-                    </select>
-                    <div class="clear_float"></div>
-
-                    <div class="mayday_row_div">
-                        <button id="hoseline_mayday_btn"    ng-class="{glowgreen:selectedMayday.isOnHoseline}"  ng-click="selectedMayday.isOnHoseline=!selectedMayday.isOnHoseline" class="hoseline_mayday_btn mayday_toggle">ON Hoseline</button>
-                        <button id="offhoseline_mayday_btn" ng-class="{glowgreen:!selectedMayday.isOnHoseline}" ng-click="selectedMayday.isOnHoseline=!selectedMayday.isOnHoseline" class="offhoseline_mayday_btn mayday_toggle">OFF Hoseline</button>
-
-                        <button id="uninjured_mayday_btn"   ng-class="{glowgreen:selectedMayday.isUnInjured}"  ng-click="selectedMayday.isUnInjured=!selectedMayday.isUnInjured" class="uninjured_mayday_btn mayday_toggle">UNinjured</button>
-                        <button id="injured_mayday_btn"     ng-class="{glowgreen:!selectedMayday.isUnInjured}" ng-click="selectedMayday.isUnInjured=!selectedMayday.isUnInjured" class="injured_mayday_btn mayday_toggle">Injured</button>
-                        <div class="clear_float"></div>
-                    </div>
-
-                    <div class="mayday_row_div">
-                        <button id="lost_mayday_btn" ng-class="{glowgreen:selectedMayday.isLost}"               ng-click="selectedMayday.isLost=!selectedMayday.isLost"                     class="lost_mayday_btn mayday_single_toggle mayday_toggle">Lost</button>
-                        <button id="trap_mayday_btn" ng-class="{glowgreen:!selectedMayday.isTrapped}"           ng-click="selectedMayday.isTrapped=!selectedMayday.isTrapped"               class="trap_mayday_btn mayday_single_toggle mayday_toggle">Trapped</button>
-                        <button id="oair_mayday_btn" ng-class="{glowgreen:selectedMayday.isOutOfAir}"           ng-click="selectedMayday.isOutOfAir=!selectedMayday.isOutOfAir"             class="oair_mayday_btn mayday_single_toggle mayday_toggle">Out of Air</button>
-                        <button id="regi_mayday_btn" ng-class="{glowgreen:!selectedMayday.isRegulatorIssue}"    ng-click="selectedMayday.isRegulatorIssue=!selectedMayday.isRegulatorIssue" class="regi_mayday_btn mayday_single_toggle mayday_toggle">Regulator Issue</button>
-                        <button id="lair_mayday_btn" ng-class="{glowgreen:selectedMayday.isLowAir}"             ng-click="selectedMayday.isLowAir=!selectedMayday.isLowAir"                 class="lair_mayday_btn mayday_single_toggle mayday_toggle">Low Air</button>
-                        <button id="pack_mayday_btn" ng-class="{glowgreen:!selectedMayday.isPackIssue}"         ng-click="selectedMayday.isPackIssue=!selectedMayday.isPackIssue"           class="pack_mayday_btn mayday_single_toggle mayday_toggle">Pack Issue</button>
-                        <div class="clear_float"></div>
-                    </div>
-                </div>
-            </td>
-            <td id="mayday_right_td">
-                <div id="mayday_list_box">
-                    <div ng-repeat="mayday in dataStore.incident.maydays | orderBy:'+number'"
-                         class="mayday_saved"
-                         ng-class="{mayday_saved_selected:selectedMayday==mayday}"
-                         ng-click="selectMayday(mayday)">
-                        <div class="mayday_box_title">Mayday #<span>{{mayday.number}}</span></div>
-                        <div class="mayday_timer">00:00</div>
-                        <div class="clear_float"></div>
-
-                        <table>
-                            <tr>
-                                <td class="mayday_info_tbl_l">Name:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_name_value mayday_value">{{mayday.nameFFighter}}</div></td>
-                            </tr>
-                            <tr>
-                                <td class="mayday_info_tbl_l">PSI:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_psi_value mayday_value">{{mayday.psi}}</div></td>
-                            </tr>
-                            <tr>
-                                <td class="mayday_info_tbl_l">Unit:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_unit_value mayday_value">{{mayday.unitType.name}}</div></td>
-                            </tr>
-                            <tr>
-                                <td class="mayday_info_tbl_l">Sector:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_sector_value mayday_value">{{mayday.sectorType.name}}</div></td>
-                            </tr>
-                            <tr>
-                                <td class="mayday_info_tbl_l">Channel:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_channel_value mayday_value">{{mayday.channel}}</div></td>
-                            </tr>
-                            <tr>
-                                <td class="mayday_info_tbl_l">Rank:</td>
-                                <td class="mayday_info_tbl_r"><div class="mayday_rank_value mayday_value">{{mayday.rank}}</div></td>
-                            </tr>
-                        </table>
-                        <div class="mayday_misc_onhs mayday_misc_value" ng-class="{glowgreen:mayday.isOnHoseline}" >ON Hoseline</div>
-                        <div class="mayday_misc_ofhs mayday_misc_value" ng-class="{glowgreen:!mayday.isOnHoseline}">OFF Hoseline</div>
-                        <div class="mayday_misc_unjr mayday_misc_value" ng-class="{glowgreen:mayday.isUnInjured}" >UNinjured</div>
-                        <div class="mayday_misc_injr mayday_misc_value" ng-class="{glowgreen:!mayday.isUnInjured}">Injured</div>
-                        <div class="mayday_misc_lost mayday_misc_value" ng-class="{glowgreen:mayday.isLost}">Lost</div>
-                        <div class="mayday_misc_trap mayday_misc_value" ng-class="{glowgreen:!mayday.isTrapped}">Trapped</div>
-                        <div class="mayday_misc_oair mayday_misc_value" ng-class="{glowgreen:mayday.isOutOfAir}">Out of Air</div>
-                        <div class="mayday_misc_regi mayday_misc_value" ng-class="{glowgreen:!mayday.isRegulatorIssue}">Regulator Issue</div>
-                        <div class="mayday_misc_lair mayday_misc_value" ng-class="{glowgreen:mayday.isLowAir}">Low Air</div>
-                        <div class="mayday_misc_pack mayday_misc_value" ng-class="{glowgreen:!mayday.isPackIssue}">Pack Issue</div>
-                        <div class="clear_float"></div>
-                    </div>
-                    <div class="mayday_saved create_new_mayday_box" ng-click="addNewMayday()">+ Create New Mayday</div>
-                    <div class="clear_float"></div>
-                </div>
-                <div class="clear_float"></div>
-                <div id="mayday_right_tab_div"  ng-init="selectedTab='rdio'">
-                    <button id="mayday_right_tab_radio"     class="mayday_right_tab_text tan_bg"    ng-click="selectedTab='rdio'" >Radio Transition</button>
-                    <button id="mayday_right_tab_grab"      class="mayday_right_tab_text green_bg"  ng-click="selectedTab='grab'" >GRAB-LIVES</button>
-                    <button id="mayday_right_tab_deploy"    class="mayday_right_tab_text gray_bg"   ng-click="selectedTab='dply'" >Deployment</button>
-                    <button id="mayday_right_tab_build"     class="mayday_right_tab_text blue_bg"   ng-click="selectedTab='bldo'" >Build Out</button>
-                    <div class="clear_float"></div>
-                </div>
-                <div id="mayday_tab_div_radio" class="mayday_tab_div tan_bg"    ng-show="selectedTab=='rdio'">
-                    <span class="mayday_list_title">Radio Transition and Alert</span>
-                    <ul class="mayday_list">
-                        <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_01}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_01=!mydaychck_01">Emergency Traffic Declaration: Alert fireground that a MAYDAY has been declared</li>
-                        <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_02}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_02=!mydaychck_02">If needed move non-affected units to secondary radio channel</li>
-                        <li class="list_med_font_size list_level_2" ng-class="{glowlightgreen:mydaychck_03}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_03=!mydaychck_03">Support officer/runs ongiong operations</li>
-                        <li class="list_med_font_size list_level_2" ng-class="{glowlightgreen:mydaychck_04}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_04=!mydaychck_04">Fireground channel/command directs rescue</li>
-                        <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_05}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_05=!mydaychck_05">PAR conducted by Operations on secondary channel</li>
-                        <li class="list_med_font_size"              ng-class="{glowlightgreen:mydaychck_06}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_06=!mydaychck_06">Immediately request additional alarm(s)</li>
-                    </ul>
-                </div>
-                <div id="mayday_tab_div_grab" class="mayday_tab_div green_bg"   ng-show="selectedTab=='grab'">
-                    <span class="mayday_list_title">GRAB-LIVES</span>
-                    <ul id="mayday_list_grablives" class="mayday_list">
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_07}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_07=!mydaychck_07">Gauge <span class="sm_font">(CHECK AIR)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_08}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_08=!mydaychck_08">Radio <span class="sm_font">(CALL for Help)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_09}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_09=!mydaychck_09">Activate <span class="sm_font">(Pass)</span></li>
-                        <li class="list_space_below first_char_red list_med_font_size"  ng-class="{glowlightgreen:mydaychck_10}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_10=!mydaychck_10">Breathing <span class="sm_font">(Control)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_11}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_11=!mydaychck_11">Low <span class="sm_font">(Stay Low)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_12}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_12=!mydaychck_12">Illuminate <span class="sm_font">(Flashlight)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_13}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_13=!mydaychck_13">Volume <span class="sm_font">(Make Noise)</span></li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_14}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_14=!mydaychck_14">Exit <span class="sm_font">(Find Exit)</span></li>
-                        <li class="list_space_below first_char_red list_med_font_size"  ng-class="{glowlightgreen:mydaychck_15}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_15=!mydaychck_15">Shield Airway</li>
-                        <li class="first_char_red list_med_font_size"                   ng-class="{glowlightgreen:mydaychck_16}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_16=!mydaychck_16">Air Level:_______</li>
-                    </ul>
-                </div>
-                <div id="mayday_tab_div_deploy" class="mayday_tab_div gray_bg"  ng-show="selectedTab=='dply'">
-                    <span class="mayday_list_title">Deployment Considerations</span>
-                    <ul class="mayday_list">
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_17}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_17=!mydaychck_17">Deploy Rescue</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_18}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_18=!mydaychck_18">Commit additional resources to the Rapid Intervention Team</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_19}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_19=!mydaychck_19">Change Plan to a high priority rescue effort</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_20}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_20=!mydaychck_20">Consider withdrawing companies from affected areas</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_21}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_21=!mydaychck_21">Re-enforce firefighting positions</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_22}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_22=!mydaychck_22">Open / Unlock all doors</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_23}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_23=!mydaychck_23">Ventilate - maintain tenability</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_24}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_24=!mydaychck_24">Provide additional lighting</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_25}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_25=!mydaychck_25">Closely coordinate and control search efforts</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_26}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_26=!mydaychck_26">Special call for TRT teams if needed</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_27}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_27=!mydaychck_27">Monitor structural stability</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_28}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_28=!mydaychck_28">Maintain strong supervision and control of crews</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_29}"><input type="checkbox" class="mayday_check"    ng-click="mydaychck_29=!mydaychck_29">Assign additional chief officers to area of rescue</li>
-                    </ul>
-                </div>
-                <div id="mayday_tab_div_build" class="mayday_tab_div blue_bg"   ng-show="selectedTab=='bldo'">
-                    <span class="mayday_list_title">Build out command and Control</span>
-                    <ul class="mayday_list">
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_30}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_30=!mydaychck_30">Use chief officers is critical location, fill out command team</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_31}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_31=!mydaychck_31">Build/effective rehab</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_32}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_32=!mydaychck_32">Control the media</li>
-                        <li class="list_space_below list_med_font_size" ng-class="{glowlightgreen:mydaychck_33}"><input type="checkbox" class="mayday_check" ng-click="mydaychck_33=!mydaychck_33">Put medical sector in place</li>
-                    </ul>
-                </div>
-                <div class="clear_float"></div>
-            </td>
-        </tr>
-        </table>
-    </div>
-    <!-- Mayday Dialog -->
 </div>
 
 

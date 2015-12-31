@@ -22,7 +22,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
         SaveIncident_Parse, SaveSector_Parse, SaveReportAction_Parse,
-        CreateNewMayday_Parse, SaveMayday_Parse
+        CreateNewMayday_Parse, SaveMayday_Parse, DeleteMayday_Parse
     ) {
         return {
             adapter_id_str:'parse',
@@ -56,7 +56,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             SaveSector:             SaveSector_Parse,
             SaveReportAction:       SaveReportAction_Parse,
             CreateNewMayday:        CreateNewMayday_Parse,
-            SaveMayday:             SaveMayday_Parse
+            SaveMayday:             SaveMayday_Parse,
+            DeleteMayday:           DeleteMayday_Parse
         };
     })
 
@@ -640,6 +641,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     function(unit) {
                         ConvertParseObject(unit, UNIT_DEF);
                         mayday.unit = unit;
+                        mayday.unit.hasMayday = true;
                         return FetchTypeForUnit_Parse(unit).then(function(ignoreThisObj){
                             return mayday;
                         });
@@ -681,6 +683,13 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             ConvertParseObject(newMayday, MAYDAY_DEF);
             newMayday.incident          = DataStore.incident;
             return newMayday;
+        }
+    })
+    .factory('DeleteMayday_Parse', function (DataStore, DefaultErrorLogger) {
+        return function (mayday) {
+            DataStore.maydays.remByVal(mayday);
+            mayday.unit.hasMayday = false;
+            return mayday.destroy(null, DefaultErrorLogger);
         }
     })
 

@@ -6,33 +6,9 @@ angular.module("ictApp")
         return new Array();
     }])
 
-    .controller('MaydayDlg', function($scope, $interval, Maydays, SaveAllMaydays, DeleteMayday, DataStore, OpenMaydayDlgForMayday, SaveSelectedMayday){
-        DataStore.maydays = new Array();
-
-        $scope.channels = [
-            {channelname:"Channel"},
-            {channelname:"Channel 1"},
-            {channelname:"Channel 2"},
-            {channelname:"Channel 3"},
-            {channelname:"Channel 4"},
-            {channelname:"Channel 5"},
-            {channelname:"Channel 6"},
-            {channelname:"Channel 7"},
-            {channelname:"Channel 8"},
-            {channelname:"Channel 9"},
-            {channelname:"Channel 10"},
-            {channelname:"Channel 11"},
-            {channelname:"Channel 12"},
-            {channelname:"Channel 13"},
-            {channelname:"Channel 14"},
-            {channelname:"Channel 15"},
-            {channelname:"Channel 16"}
-        ];
-        $scope.incidentSectorTypes = [];
-        $scope.incidentUnitTypes = [];
-        $scope.selectedMayday;
+    .controller('MaydayDlg', function($scope, $interval, DataStore, OpenMaydayDlgForMayday, SaveSelectedMayday, DeleteMayday){
         $scope.dataStore = DataStore;
-
+        DataStore.maydays = new Array();
         $scope.openMaydayDlgForMayday = OpenMaydayDlgForMayday;
         $scope.dataStore.saveSelectedMayday = SaveSelectedMayday;
 
@@ -41,15 +17,18 @@ angular.module("ictApp")
                 switch(method) {
                     case 'slfrs':
                         // TODO: log event for report
-                        DeleteMayday($scope.selectedMayday);
+                        DeleteMayday(DataStore.select);
+                        $("#mayday_dlg").dialog( "close" );
                         break;
                     case 'rescu':
                         // TODO: log event for report
-                        DeleteMayday($scope.selectedMayday);
+                        DeleteMayday(DataStore.selectedMayday);
+                        $("#mayday_dlg").dialog( "close" );
                         break;
                     case 'ffmia':
                         // TODO: log event for report
-                        DeleteMayday($scope.selectedMayday);
+                        DeleteMayday(DataStore.selectedMayday);
+                        $("#mayday_dlg").dialog( "close" );
                         break;
                     case 'cancl':
                         break;
@@ -65,7 +44,7 @@ angular.module("ictApp")
         }
 
         $scope.setPsiSelectedMayday = function (psi) {
-            $scope.selectedMayday.psi = psi;
+            DataStore.selectedMayday.unit.psi = psi;
         }
 
         $scope.click_new_mayday = function () {
@@ -153,93 +132,6 @@ angular.module("ictApp")
         }
     })
 
-    .factory('SaveAllMaydays', ['Maydays', 'DefaultErrorLogger', function (Maydays, DefaultErrorLogger) {
-        return function () {
-            for(var m=0; m<Maydays.length; m++) {
-                var mayday = Maydays[m];
-                mayday.save(null, DefaultErrorLogger);
-            }
-        }
-    }])
-
-    .factory('LoadAllMaydaysForIncident', function ($q, Maydays, ParseQuery, ConvertParseObject, FetchUnitTypeForMayday, FetchSectorTypeForMayday) {
-        return function (incident) {
-            var deferred = $q.defer();
-            var promises = [];
-            var queryMaydays = new Parse.Query(Parse.Object.extend('Mayday'));
-            queryMaydays.equalTo("incident", incident);
-            queryMaydays.include('unitType');
-            queryMaydays.include('sectorType');
-            queryMaydays.find({
-                success: function(maydays) {
-                    for(var i=0; i<maydays.length; i++) {
-                        var mayday = maydays[i];
-                        ConvertParseObject(mayday, MAYDAY_DEF);
-                        Maydays.push(mayday);
-                        promises.push(FetchUnitTypeForMayday(mayday));
-                        promises.push(FetchSectorTypeForMayday(mayday));
-                    }
-                },
-                error: function(error) {
-                    console.log('Failed to LoadActionTypes, with error code: ' + error.message);
-                }
-            });
-            $q.all(promises)
-                .then(
-                function(results) {
-                    deferred.resolve(results);
-                },
-                function(errors) {
-                    deferred.reject(errors);
-                },
-                function(updates) {
-                    deferred.update(updates);
-                });
-            return deferred.promise;
-        }
-    })
-
-    .factory('UpdateMaydays', [
-        'Maydays', 'FetchUnitTypeForMayday', 'FetchSectorTypeForMayday', 'ConvertParseObject',
-        function (Maydays, FetchUnitTypeForMayday, FetchSectorTypeForMayday, ConvertParseObject) {
-            return function ($scope) {
-                for(var i=0; i<Maydays.length; i++) {
-                    var mayday = Maydays[i];
-                    mayday.fetch({
-                        success:function(mayday){
-                            if(mayday.unitType) {
-                                mayday.unitType.fetch({
-                                    success: function(unitType) {
-                                        $scope.$apply(function(){
-                                            mayday.unitType = unitType;
-                                        });
-                                    },
-                                    error: function(error) {
-                                        console.log('Failed to UpdateMaydays(unitType), with error code: ' + error.message);
-                                    }
-                                });
-                            }
-                            if(mayday.sectorType) {
-                                mayday.sectorType.fetch({
-                                    success: function(sectorType) {
-                                        $scope.$apply(function(){
-                                            mayday.sectorType = sectorType;
-                                        });
-                                    },
-                                    error: function(error) {
-                                        console.log('Failed to UpdateMaydays(sectorType), with error code: ' + error.message);
-                                    }
-                                });
-                            }
-                        },
-                        error: function(error) {
-                            console.log('Failed to UpdateMaydays (mayday), with error code: ' + error.message);
-                        }
-                    });
-                }
-            }
-        }])
-
     .factory('FetchUnitTypeForMayday', function (ConvertParseObject) {
         return function (mayday) {
             if(mayday.unitType) {
@@ -272,11 +164,10 @@ angular.module("ictApp")
         }
     })
 
-    .factory('DeleteMayday', ['Maydays', function (Maydays) {
+    .factory('DeleteMayday', function (AdapterStore) {
         return function (mayday) {
-            Maydays.remByVal(mayday);
-            mayday.destroy(null, DefaultErrorLogger);
+            return AdapterStore.adapter.DeleteMayday(mayday);;
         }
-    }])
+    })
 
 ;
