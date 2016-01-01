@@ -51,6 +51,11 @@ angular.module('TbarServices', ['DataServices', 'SectorServices', 'AdapterServic
             rehabSector.incident = incident;
             safetSector.incident = incident;
 
+            rescuSector.initialized = true;
+            rehabSector.initialized = true;
+            safetSector.initialized = true;
+
+            incident.sectors = new Array();
             incident.sectors.push(rescuSector);
             incident.sectors.push(rehabSector);
             incident.sectors.push(safetSector);

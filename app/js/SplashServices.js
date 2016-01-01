@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices', 'AdapterServices'])
+angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserServices', 'DepartmentServices', 'AdapterServices', 'TbarServices'])
     .run(function(IsLoggedIn, InitDatabase, ResetSavedDepartment) {
         InitDatabase();
 
@@ -13,9 +13,11 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
     })
 
     .controller('SplashCtrl', function(
-        $scope, $interval,
-        LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes, DefaultErrorLogger, InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment, DataStore,
-        SaveIncident, AdapterStore
+        $q, $scope, $interval,
+        LoadAllIncidents, Incidents, LoadIncidentTypes, IncidentTypes,
+        LoadSectorTypes, DefaultErrorLogger,
+        InitDbForDepartment, UserLogout, IsLoggedIn, ResetSavedDepartment, DataStore,
+        SaveIncident, AdapterStore, LoadDefaultTbars, SaveSector
     ){
         $scope.dataStore = DataStore;
 
@@ -39,7 +41,9 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
             $interval(hideLoadingSplash, 1000);
         });
 
-        $scope.incidentObj = {};
+        LoadSectorTypes();
+
+        $scope.incidentObj = AdapterStore.adapter.CreateNewIncident();
 
         $scope.userLogout = function() {
             //UserLogout();
@@ -61,10 +65,19 @@ angular.module("SplashController", ['DataServices', 'IncidentServices', 'UserSer
                 $scope.incidentObj.inc_number = "[Incident Number]"
             }
 
-            SaveIncident($scope.incidentObj).then(function(incidentObj) {
-                $scope.loadIncident(incidentObj.id);
+            LoadDefaultTbars($scope.incidentObj);
+
+            SaveIncident($scope.incidentObj).then(function(ignoreThis) {
+                var promises = [];
+                $scope.incidentObj.sectors.forEach(function(sector) {
+                    promises.push(SaveSector(sector));
+                });
+
+                return $q.all(promises);
             }, function(error) {
                 console.log("Error saving new incident: "+error);
+            }).then(function(ignoreThis){
+                $scope.loadIncident($scope.incidentObj.id);
             });
         };
 

@@ -19,7 +19,8 @@ var ROLE_DEF = ['name', 'users', 'roles'];
 angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServices', 'ActionServices', 'SectorServices', 'UnitServices'])
 
     .factory('ParseAdapter', function(
-        LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
+        LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, CreateNewIncident_Parse,
+        UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, CreateNewSectorType_Parse, LoadUnitTypes_Parse,
         SaveIncident_Parse, SaveSector_Parse, CreateNewSector_Parse, SaveReportAction_Parse,
         CreateNewMayday_Parse, SaveMayday_Parse, DeleteMayday_Parse
@@ -49,6 +50,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadIncidentTypes:      LoadIncidentTypes_Parse,
             LoadAllIncidents:       LoadAllIncidents_Parse,
             LoadIncident:           LoadIncident_Parse,
+            CreateNewIncident:      CreateNewIncident_Parse,
             UpdateIncidentAsNeeded: UpdateIncidentAsNeeded_Parse,
             isLoggedIn:             isLoggedIn_Parse,
             LoadActionTypes:        LoadActionTypes_Parse,
@@ -434,6 +436,17 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             });
         }
     })
+    .factory('CreateNewIncident_Parse', function (ConvertParseObject) {
+        return function () {
+            var IncidentParseObj = Parse.Object.extend('Incident');
+            var incidentObject = new IncidentParseObj();
+            ConvertParseObject(incidentObject, INCIDENT_DEF);
+            incidentObject.inc_number =     "";
+            incidentObject.inc_address =    "";
+            incidentObject.strategy =       "";
+            return incidentObject;
+        }
+    })
 
 
     .factory('LoadAllIncidents_Parse',
@@ -662,9 +675,9 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             sectorObject.bnchLzo1           = false;
             sectorObject.bnchLzo2           = false;
             sectorObject.bnchLzo3           = false;
-            sectorObject.bnchTri1           = false;
-            sectorObject.bnchTri2           = false;
-            sectorObject.bnchTri3           = false;
+            sectorObject.bnchTri1           = 0;
+            sectorObject.bnchTri2           = 0;
+            sectorObject.bnchTri3           = 0;
             sectorObject.initialized        = false;
             return sectorObject;
         }
