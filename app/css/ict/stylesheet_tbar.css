@@ -7,6 +7,9 @@ tbar {
     border-radius: 3px;
     z-index:0;
 }
+.tbar_uninitialized {
+    border:1px solid rgba(173, 216, 230, 0.34);
+}
 
 .unit_tbar_btn {
     margin: 2px;

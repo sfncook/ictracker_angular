@@ -163,12 +163,13 @@
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
         <tbar gridster-item="sector"
-              ng-repeat="sector in dataStore.incident.sectors">
-            <div style="text-align:center; width: 100%; height:100%; cursor:pointer"
+              ng-repeat="sector in dataStore.incident.sectors"
+              ng-class="{tbar_uninitialized:!sector.initialized}">
+            <div style="text-align:center; width: 100%; height:100%; cursor:pointer; padding-top: 30px;"
                  ng-show="!sector.initialized"
                  ng-click="showSectorNameDlg(sector)">
                 <span style="color: rgba(0, 0, 255, 0.14); font-size:2.5rem;">Click to<br>add sector</span>
-                <img src="img/add_sector_icon.png" style="background: rgba(0, 0, 255, 0.14); width:50%"/>
+                <img src="img/add_sector_icon.png" style="background: rgba(0, 0, 255, 0.14); width:30%"/>
             </div>
             <div ng-show="sector.initialized">
                 <div class="tbar_title_container">
