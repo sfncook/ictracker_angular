@@ -311,6 +311,7 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
 
         $scope.selectSectorType = function(sectorType) {
             $scope.selectedSector.sectorType = sectorType;
+            $scope.selectedSector.initialized = true;
             SaveSector($scope.selectedSector);
 
             if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
@@ -333,7 +334,6 @@ angular.module("ictApp", ['gridster', 'DataServices', 'TbarServices', 'ActionSer
         }
 
         DataStore.showSectorNameDlg = function(sector) {
-            console.log("sector.sectorType:",sector.sectorType);
             $scope.selectedSector = sector;
             $("#sector_name_dlg").dialog( "open" );
         }

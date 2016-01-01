@@ -162,92 +162,102 @@
 
 <div id="tbar_container" ng-controller="TbarContainer">
     <div gridster="gridsterOpts">
-        <tbar gridster-item="sector" ng-repeat="sector in dataStore.incident.sectors">
-            <div class="tbar_title_container">
-                <button ng-disabled="sector.units.length==0"
-                        class="par-btn sector_toprow_btn"
-                        ng-class="{glowlightgreen: doesSectorHavePar(sector), button_disabled:sector.units.length==0}"
-                        ng-click="showParDlg(sector)">PAR
-                </button>
-                <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
-                    <table>
-                        <tr>
-                            <td class="tbar_title_dir_td">{{sector.direction}}</td>
-                            <td class="tbar_title_td">{{sector.sectorType.name}}</td>
-                            <td class="tbar_title_num_td">{{sector.number}}</td>
-                        </tr>
-                    </table>
-                </button>
-                <button ng-show="sector.sectorType.manyBenchmarkBars>0" class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
-                    <span class="benchmarks_icon">
-                        <div ng-repeat="n in [] | range:sector.sectorType.manyBenchmarkBars"
-                             class="benchmark_bar_div"
-                             ng-class="getBnchColor(sector, $index+1)">&nbsp;
-                        </div>
-                    </span>
-                    BNCH
-                </button>
-                <div class="clear_both"></div>
+        <tbar gridster-item="sector"
+              ng-repeat="sector in dataStore.incident.sectors">
+            <div style="text-align:center; width: 100%; height:100%; cursor:pointer"
+                 ng-show="!sector.initialized"
+                 ng-click="showSectorNameDlg(sector)">
+                <span style="color: rgba(0, 0, 255, 0.14); font-size:2.5rem;">Click to<br>add sector</span>
+                <img src="img/add_sector_icon.png" style="background: rgba(0, 0, 255, 0.14); width:50%"/>
             </div>
-
-
-            <div class="clear_both"></div>
-
-            <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
-                <!--<button class="unit_move_cancel_btn">Cancel</button>-->
-                <div class="left_scroll_pane scroll-pane">
-                    <div ng-repeat="unit in sector.units"
-                         ng-class="{unit_selected:sector.selectedUnit==unit}"
-                         class="tbar_unit_row">
-                        <div class="tbar_unit_info_btn"
-                             ng-click="showUnitOptionsDlg(unit)">
-                            <div class="personnel_tbar_btn personnel_btn"
-                                 ng-class="{bg_gray:unit.par==0, bg_orange:unit.par>0}"
-                                    >{{unit.par|getUnitPar}}</div>
-                            <div class="psi_tbar_btn psi_btn"
-                                    ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
-                                    ng-if="sector.sectorType.hasPsiBtn">{{unit.psi}}
+            <div ng-show="sector.initialized">
+                <div class="tbar_title_container">
+                    <button ng-disabled="sector.units.length==0"
+                            class="par-btn sector_toprow_btn"
+                            ng-class="{glowlightgreen: doesSectorHavePar(sector), button_disabled:sector.units.length==0}"
+                            ng-click="showParDlg(sector)">PAR
+                    </button>
+                    <button class="sector_name_btn sector_toprow_btn" ng-click="showSectorNameDlg(sector)">
+                        <table>
+                            <tr>
+                                <td class="tbar_title_dir_td">{{sector.direction}}</td>
+                                <td class="tbar_title_td">{{sector.sectorType.name}}</td>
+                                <td class="tbar_title_num_td">{{sector.number}}</td>
+                            </tr>
+                        </table>
+                    </button>
+                    <button ng-show="sector.sectorType.manyBenchmarkBars>0" class="bnch-btn sector_toprow_btn" ng-click="showBnchDlg(sector)">
+                        <span class="benchmarks_icon">
+                            <div ng-repeat="n in [] | range:sector.sectorType.manyBenchmarkBars"
+                                 class="benchmark_bar_div"
+                                 ng-class="getBnchColor(sector, $index+1)">&nbsp;
                             </div>
-                            <div class="clear_float"></div>
+                        </span>
+                        BNCH
+                    </button>
+                    <div class="clear_both"></div>
+                </div>
+
+
+                <div class="clear_both"></div>
+
+                <div class="unit_col_left unit_col tbar_col_left_div tbar_col_div">
+                    <!--<button class="unit_move_cancel_btn">Cancel</button>-->
+                    <div class="left_scroll_pane scroll-pane">
+                        <div ng-repeat="unit in sector.units"
+                             ng-class="{unit_selected:sector.selectedUnit==unit}"
+                             class="tbar_unit_row">
+                            <div class="tbar_unit_info_btn"
+                                 ng-click="showUnitOptionsDlg(unit)">
+                                <div class="personnel_tbar_btn personnel_btn"
+                                     ng-class="{bg_gray:unit.par==0, bg_orange:unit.par>0}"
+                                        >{{unit.par|getUnitPar}}</div>
+                                <div class="psi_tbar_btn psi_btn"
+                                        ng-class="{psi_red:unit.psi<1500, psi_yellow:unit.psi<3000&&unit.psi>=1500, psi_green:unit.psi>=3000}"
+                                        ng-if="sector.sectorType.hasPsiBtn">{{unit.psi}}
+                                </div>
+                                <div class="clear_float"></div>
+                            </div>
+                            <button class="unit_tbar_btn unit_btn"
+                                    ng-click="selectUnit(sector,unit)"
+                                    ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4, mayday_choice_animate: dataStore.choosing_unit_for_new_mayday, unit_btn_hasmayday_animate: unit.hasMayday}">
+                                {{unit.type.name}}
+                            </button>
                         </div>
-                        <button class="unit_tbar_btn unit_btn"
-                                ng-click="selectUnit(sector,unit)"
-                                ng-class="{btn_smtext: unit.type.name.length>5, btn_medtext: unit.type.name.length>4, mayday_choice_animate: dataStore.choosing_unit_for_new_mayday, unit_btn_hasmayday_animate: unit.hasMayday}">
-                            {{unit.type.name}}
-                        </button>
+                        <button class="unit_add_btn"
+                                ng-click="showUnitsDlg(sector)"
+                                ng-show="sector.units.length<6">+Unit</button>
                     </div>
                     <button class="unit_add_btn"
                             ng-click="showUnitsDlg(sector)"
-                            ng-show="sector.units.length<6">+Unit</button>
+                            ng-show="sector.units.length>=6">+Unit</button>
                 </div>
-                <button class="unit_add_btn"
-                        ng-click="showUnitsDlg(sector)"
-                        ng-show="sector.units.length>=6">+Unit</button>
-            </div>
 
-            <div class="action_col_right tbar_col_right_div tbar_col_div">
-                <!--<button class="acct_unit_btn"-->
-                        <!--ng-click="showUnitsDlgForAcct(sector)"-->
-                        <!--ng-if="sector.sectorType.hasAcctBtn">-->
-                    <!--{{sector.acctUnit | acctUnitName}}-->
-                <!--</button>-->
-                <div class="right_scroll_pane scroll-pane"
-                     ng-if="sector.units.length>0">
-                    <div ng-repeat="action in sector.selectedUnit.actionsArr">
-                        <button class="action_btn"
-                                ng-class="{font_red:action.is_warning}">
-                            {{action.name}}
-                        </button>
+                <div class="action_col_right tbar_col_right_div tbar_col_div">
+                    <!--<button class="acct_unit_btn"-->
+                            <!--ng-click="showUnitsDlgForAcct(sector)"-->
+                            <!--ng-if="sector.sectorType.hasAcctBtn">-->
+                        <!--{{sector.acctUnit | acctUnitName}}-->
+                    <!--</button>-->
+                    <div class="right_scroll_pane scroll-pane"
+                         ng-if="sector.units.length>0">
+                        <div ng-repeat="action in sector.selectedUnit.actionsArr">
+                            <button class="action_btn"
+                                    ng-class="{font_red:action.is_warning}">
+                                {{action.name}}
+                            </button>
+                        </div>
+                        <button class="action_btn action_add_btn"
+                                ng-click="showActionsDlg(sector)"
+                                ng-if="sector.units.length>0 && sector.sectorType.hasActions"
+                                ng-show="sector.selectedUnit.actionsArr.length<6">+Action</button>
                     </div>
                     <button class="action_btn action_add_btn"
                             ng-click="showActionsDlg(sector)"
                             ng-if="sector.units.length>0 && sector.sectorType.hasActions"
-                            ng-show="sector.selectedUnit.actionsArr.length<6">+Action</button>
+                            ng-show="sector.selectedUnit.actionsArr.length>=6">+Action</button>
                 </div>
-                <button class="action_btn action_add_btn"
-                        ng-click="showActionsDlg(sector)"
-                        ng-if="sector.units.length>0 && sector.sectorType.hasActions"
-                        ng-show="sector.selectedUnit.actionsArr.length>=6">+Action</button>
+                <div class="clear_both"></div>
             </div>
         </tbar>
     </div>

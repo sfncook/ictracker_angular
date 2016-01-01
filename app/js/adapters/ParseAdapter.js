@@ -1,7 +1,7 @@
 var DEPARTMENT_DEF = ['name_short', 'name_long', 'app_key', 'js_key'];
 var INCIDENT_DEF = ['inc_number', 'inc_address', 'incidentType', 'inc_startDate', 'strategy', 'txid'];
 var INCIDENT_TYPE_DEF = ['icon', 'nameLong', 'nameShort', 'order'];
-var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit', 'bnchClsUnablePrim', 'bnchClsUnableSec', 'bnchCls1','bnchCls2','bnchCls3','bnchCls4','bnchVnt1','bnchVnt2','bnchVnt3','bnchIrc1','bnchIrc2','bnchIrc3','bnchIrc4','bnchSaf1','bnchSaf2','bnchTrt1','bnchTrt2','bnchTrt3','bnchLzo1','bnchLzo2','bnchLzo3','bnchTri1','bnchTri2','bnchTri3'];
+var SECTOR_DEF = ['sectorType', 'direction', 'number', 'row', 'col', 'incident', 'acctUnit', 'bnchClsUnablePrim', 'bnchClsUnableSec', 'bnchCls1','bnchCls2','bnchCls3','bnchCls4','bnchVnt1','bnchVnt2','bnchVnt3','bnchIrc1','bnchIrc2','bnchIrc3','bnchIrc4','bnchSaf1','bnchSaf2','bnchTrt1','bnchTrt2','bnchTrt3','bnchLzo1','bnchLzo2','bnchLzo3','bnchTri1','bnchTri2','bnchTri3', 'initialized'];
 var SECTOR_TYPE_DEF = ['name', 'manyBenchmarkBars', 'hasAcctBtn', 'hasActions', 'hasClock', 'hasPsiBtn', 'isVisible', 'hasClassicBnch', 'hasVentBnch', 'hasIricBnch', 'hasSafetyBnch', 'hasTreatmentBnch', 'hasLzBnch', 'hasTriageBnch'];
 var UNIT_TYPE_DEF = ['name', 'type', 'city'];
 var UNIT_DEF = ['actions', 'manyPeople', 'manyPar', 'par', 'psi', 'sector', 'type'];
@@ -21,7 +21,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
         LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
-        SaveIncident_Parse, SaveSector_Parse, SaveReportAction_Parse,
+        SaveIncident_Parse, SaveSector_Parse, CreateNewSector_Parse, SaveReportAction_Parse,
         CreateNewMayday_Parse, SaveMayday_Parse, DeleteMayday_Parse
     ) {
         return {
@@ -56,6 +56,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             LoadUnitTypes:          LoadUnitTypes_Parse,
             SaveIncident:           SaveIncident_Parse,
             SaveSector:             SaveSector_Parse,
+            CreateNewSector:        CreateNewSector_Parse,
             SaveReportAction:       SaveReportAction_Parse,
             CreateNewMayday:        CreateNewMayday_Parse,
             SaveMayday:             SaveMayday_Parse,
@@ -605,6 +606,45 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 return sector.save(null, DefaultErrorLogger);
             }
         })
+    .factory('CreateNewSector_Parse', function (ConvertParseObject, DataStore) {
+        return function (incident) {
+            var SectorParseObj = Parse.Object.extend('Sector');
+            var sectorObject = new SectorParseObj();
+            ConvertParseObject(sectorObject, SECTOR_DEF);
+            sectorObject.sectorType;
+            sectorObject.direction          = "";
+            sectorObject.number             = "";
+            sectorObject.row                = 0;
+            sectorObject.col                = 0;
+            sectorObject.incident           = incident;
+            sectorObject.bnchClsUnablePrim  = false;
+            sectorObject.bnchClsUnableSec   = false;
+            sectorObject.bnchCls1           = false;
+            sectorObject.bnchCls2           = false;
+            sectorObject.bnchCls3           = false;
+            sectorObject.bnchCls4           = false;
+            sectorObject.bnchVnt1           = false;
+            sectorObject.bnchVnt2           = false;
+            sectorObject.bnchVnt3           = false;
+            sectorObject.bnchIrc1           = false;
+            sectorObject.bnchIrc2           = false;
+            sectorObject.bnchIrc3           = false;
+            sectorObject.bnchIrc4           = false;
+            sectorObject.bnchSaf1           = false;
+            sectorObject.bnchSaf2           = false;
+            sectorObject.bnchTrt1           = false;
+            sectorObject.bnchTrt2           = false;
+            sectorObject.bnchTrt3           = false;
+            sectorObject.bnchLzo1           = false;
+            sectorObject.bnchLzo2           = false;
+            sectorObject.bnchLzo3           = false;
+            sectorObject.bnchTri1           = false;
+            sectorObject.bnchTri2           = false;
+            sectorObject.bnchTri3           = false;
+            sectorObject.initialized        = false;
+            return sectorObject;
+        }
+    })
 
     .factory('SaveReportAction_Parse', function (DefaultErrorLogger, DataStore) {
             return function (sector, text) {
