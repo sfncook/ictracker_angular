@@ -73,5 +73,59 @@ angular.module('SectorServices', ['DataServices', 'AdapterServices'])
         }
     })
 
+//    .factory('AddDefaultTbars', function (GridsterOpts,  SectorTypes) {
+//        return function (incident) {
+//            var SectorParseObj = Parse.Object.extend('Sector');
+//
+//            var rescuSector = new SectorParseObj()
+//            var rehabSector = new SectorParseObj()
+//            var safetSector = new SectorParseObj()
+//
+//            new ConvertParseObject(rescuSector, SECTOR_DEF);
+//            new ConvertParseObject(rehabSector, SECTOR_DEF);
+//            new ConvertParseObject(safetSector, SECTOR_DEF);
+//
+//            rescuSector.sectorType = SectorTypes.RESCUE;
+//            rehabSector.sectorType = SectorTypes.REHAB;
+//            safetSector.sectorType = SectorTypes.SAFETY;
+//
+//            rescuSector.col = GridsterOpts.columns - 1;
+//            rescuSector.row = 0;
+//            rehabSector.col = GridsterOpts.columns - 1;
+//            rehabSector.row = 1;
+//            safetSector.col = GridsterOpts.columns - 1;
+//            safetSector.row = 2;
+//
+//            rescuSector.incident = incident;
+//            rehabSector.incident = incident;
+//            safetSector.incident = incident;
+//
+//            TbarSectors.push(rescuSector);
+//            TbarSectors.push(rehabSector);
+//            TbarSectors.push(safetSector);
+//
+////            var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
+////            for (var i = 0; i < manySectors; i++) {
+//            for(var col=0; col<GridsterOpts.columns; col++) {
+//                for(var row=0; row<GridsterOpts.rows; row++) {
+//                    if(
+//                        (row==rescuSector.row && col==rescuSector.col) ||
+//                        (row==rehabSector.row && col==rehabSector.col) ||
+//                        (row==safetSector.row && col==safetSector.col)
+//                    ) {
+//                    } else {
+//                        var blankSector = new SectorParseObj();
+//                        ConvertParseObject(blankSector, SECTOR_DEF);
+//                        blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE;
+//                        blankSector.row = row;
+//                        blankSector.col = col;
+//                        blankSector.incident = incident;
+//                        TbarSectors.push(blankSector);
+//                    }
+//                }
+//            }
+//        }
+//    })
+
 ;
 

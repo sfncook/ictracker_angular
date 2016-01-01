@@ -1,10 +1,5 @@
-'use strict';
 
-angular.module("ictApp")
-
-    .factory('Maydays', [function () {
-        return new Array();
-    }])
+angular.module('MaydayServices', ['DataServices', 'AdapterServices'])
 
     .controller('MaydayDlg', function($scope, $interval, DataStore, OpenMaydayDlgForMayday, SaveSelectedMayday, DeleteMayday){
         $scope.dataStore = DataStore;
@@ -171,3 +166,4 @@ angular.module("ictApp")
     })
 
 ;
+
