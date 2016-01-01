@@ -637,8 +637,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     })
     .factory('FindAllMaydayUnitsForIncident', function () {
         return function (incident) {
-            //console.log("maydays:",);
-            //console.log("sectors:",);
             incident.maydays.forEach(function(mayday) {
                 // Find instantiation of this mayday's sector and unit in the sector list
                 var foundSector = false;
@@ -661,43 +659,6 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             });
         }
     })
-    .factory('FindUnitForMayday_Parse', function (ConvertParseObject, FetchTypeForUnit_Parse) {
-        return function (mayday) {
-            if(mayday.unit) {
-                return mayday.unit.fetch().then(
-                    function(unit) {
-                        ConvertParseObject(unit, UNIT_DEF);
-                        mayday.unit = unit;
-                        mayday.unit.hasMayday = true;
-                        return FetchTypeForUnit_Parse(unit).then(function(ignoreThisObj){
-                            return mayday;
-                        });
-                    },
-                    function(error) {
-                        console.log('Failed to FetchUnitForMayday_Parse, with error code: ' + error.message);
-                    }
-                );
-            }
-        }
-    })
-    .factory('FindSectorForMayday_Parse', function ($q, ConvertParseObject, FetchTypeForSector_Parse) {
-        return function (mayday) {
-            if(mayday.sector) {
-                return mayday.sector.fetch().then(
-                    function(sector) {
-                        ConvertParseObject(sector, SECTOR_DEF);
-                        mayday.sector = sector;
-                        return FetchTypeForSector_Parse(sector).then(function(ignoreThisObj){
-                            return mayday;
-                        });
-                    },
-                    function(error) {
-                        console.log('Failed to FetchSectorForMayday_Parse, with error code: ' + error.message);
-                    }
-                );
-            }
-        }
-    })
     .factory('SaveMayday_Parse', function (DefaultErrorLogger) {
         return function (mayday) {
             return mayday.save(null, DefaultErrorLogger);
@@ -714,8 +675,8 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
     })
     .factory('DeleteMayday_Parse', function (DataStore, DefaultErrorLogger) {
         return function (mayday) {
-            DataStore.maydays.remByVal(mayday);
             mayday.unit.hasMayday = false;
+            DataStore.maydays.remByVal(mayday);
             return mayday.destroy(null, DefaultErrorLogger);
         }
     })

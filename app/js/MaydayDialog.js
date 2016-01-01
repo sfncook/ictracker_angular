@@ -17,7 +17,7 @@ angular.module("ictApp")
                 switch(method) {
                     case 'slfrs':
                         // TODO: log event for report
-                        DeleteMayday(DataStore.select);
+                        DeleteMayday(DataStore.selectedMayday);
                         $("#mayday_dlg").dialog( "close" );
                         break;
                     case 'rescu':
