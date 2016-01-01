@@ -5,6 +5,74 @@ angular.module('SectorServices', ['DataServices', 'AdapterServices'])
         return new Array();
     })
 
+    .controller('SectorNamesDlg', function($scope, $http, DataStore, ReportFunctions, LoadSectorTypes, SectorTypes, CreateBlankSectorType, SaveSector){
+        $scope.selectedSector = {};
+        $scope.dataStore = DataStore;
+
+        LoadSectorTypes().then(
+            function(sectorTypes) {
+                // Make all sector_types visible
+                for(var i=0; i<SectorTypes.length; i++) {
+                    SectorTypes[i].isVisible = true;
+                }
+
+                var orderedSectorTypes = [
+                    SectorTypes.INTERIOR,       SectorTypes.SECTOR_1,       SectorTypes.ALPHA_SECTOR,       SectorTypes.SALVAGE,            SectorTypes.TRIAGE,
+                    SectorTypes.VENTILATION,    SectorTypes.SECTOR_2,       SectorTypes.BRAVO_SECTOR,       SectorTypes.OVERHAUL,           SectorTypes.EXTRICATION,
+                    SectorTypes.ROOF,           SectorTypes.SECTOR_3,       SectorTypes.CHARLIE_SECTOR,     SectorTypes.EVACUATION,         SectorTypes.TREATMENT,
+                    SectorTypes.ON_DECK,        SectorTypes.SECTOR_4,       SectorTypes.DELTA_SECTOR,       SectorTypes.CUSTOMER_SERVICE,   SectorTypes.TRANSPORTATION,
+                    SectorTypes.STAGING,        SectorTypes.SECTOR_5,       CreateBlankSectorType(),        CreateBlankSectorType(),        CreateBlankSectorType(),
+                    CreateBlankSectorType(),    SectorTypes.SECTOR_6,       SectorTypes.NORTH_SECTOR,       SectorTypes.REHAB,              SectorTypes.LZ,
+                    SectorTypes.IRIC,           SectorTypes.SECTOR_7,       SectorTypes.EAST_SECTOR,        SectorTypes.LOBBY,              CreateBlankSectorType(),
+                    SectorTypes.RIC,            SectorTypes.SECTOR_8,       SectorTypes.SOUTH_SECTOR,       SectorTypes.RESOURCE,           CreateBlankSectorType(),
+                    SectorTypes.RESCUE,         SectorTypes.SECTOR_9,       SectorTypes.WEST_SECTOR,        SectorTypes.ACCOUNTABILITY,     CreateBlankSectorType(),
+                    SectorTypes.SAFETY,         SectorTypes.SECTOR_NUM
+
+                ];
+
+                $scope.OrderedSectorTypes = orderedSectorTypes;
+            }
+        );
+
+        $scope.sector_dir_btns = [
+            {"dialog":"Sub","tbar":"Sub",   "isWide":true},
+            {"dialog":"N",  "tbar":"North", "isWide":false},
+            {"dialog":"E",  "tbar":"East",  "isWide":false},
+            {"dialog":"S",  "tbar":"South", "isWide":false},
+            {"dialog":"W",  "tbar":"West",  "isWide":false}
+        ];
+        $scope.sector_num_btns = ["1","2","3","4","5","6","7","8","9"];
+
+        $scope.selectSectorType = function(sectorType) {
+            $scope.selectedSector.sectorType = sectorType;
+            $scope.selectedSector.initialized = true;
+            SaveSector($scope.selectedSector);
+
+            if(sectorType.name=="Customer Service") {DataStore.setCustSvcSector();}
+
+            ReportFunctions.addEvent_title_to_sector($scope.selectedSector);
+
+            $("#sector_name_dlg").dialog( "close" );
+        };
+        $scope.setDir = function(sector_dir) {
+            $scope.selectedSector.direction=sector_dir.tbar;
+            SaveSector($scope.selectedSector);
+        };
+        $scope.setNum = function(sector_num) {
+            $scope.selectedSector.number=sector_num;
+            SaveSector($scope.selectedSector);
+        };
+
+        $scope.isSectorTypeSelected = function(sectorType) {
+            console.log("sectorType:",sectorType);
+        }
+
+        DataStore.showSectorNameDlg = function(sector) {
+            $scope.selectedSector = sector;
+            $("#sector_name_dlg").dialog( "open" );
+        }
+    })
+
     .factory('LoadSectorTypes', function (AdapterStore, SectorTypes) {
         return function () {
             return AdapterStore.adapter.LoadSectorTypes().then(function(sectorTypes){
@@ -72,60 +140,6 @@ angular.module('SectorServices', ['DataServices', 'AdapterServices'])
             //}
         }
     })
-
-//    .factory('AddDefaultTbars', function (GridsterOpts,  SectorTypes) {
-//        return function (incident) {
-//            var SectorParseObj = Parse.Object.extend('Sector');
-//
-//            var rescuSector = new SectorParseObj()
-//            var rehabSector = new SectorParseObj()
-//            var safetSector = new SectorParseObj()
-//
-//            new ConvertParseObject(rescuSector, SECTOR_DEF);
-//            new ConvertParseObject(rehabSector, SECTOR_DEF);
-//            new ConvertParseObject(safetSector, SECTOR_DEF);
-//
-//            rescuSector.sectorType = SectorTypes.RESCUE;
-//            rehabSector.sectorType = SectorTypes.REHAB;
-//            safetSector.sectorType = SectorTypes.SAFETY;
-//
-//            rescuSector.col = GridsterOpts.columns - 1;
-//            rescuSector.row = 0;
-//            rehabSector.col = GridsterOpts.columns - 1;
-//            rehabSector.row = 1;
-//            safetSector.col = GridsterOpts.columns - 1;
-//            safetSector.row = 2;
-//
-//            rescuSector.incident = incident;
-//            rehabSector.incident = incident;
-//            safetSector.incident = incident;
-//
-//            TbarSectors.push(rescuSector);
-//            TbarSectors.push(rehabSector);
-//            TbarSectors.push(safetSector);
-//
-////            var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
-////            for (var i = 0; i < manySectors; i++) {
-//            for(var col=0; col<GridsterOpts.columns; col++) {
-//                for(var row=0; row<GridsterOpts.rows; row++) {
-//                    if(
-//                        (row==rescuSector.row && col==rescuSector.col) ||
-//                        (row==rehabSector.row && col==rehabSector.col) ||
-//                        (row==safetSector.row && col==safetSector.col)
-//                    ) {
-//                    } else {
-//                        var blankSector = new SectorParseObj();
-//                        ConvertParseObject(blankSector, SECTOR_DEF);
-//                        blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE;
-//                        blankSector.row = row;
-//                        blankSector.col = col;
-//                        blankSector.incident = incident;
-//                        TbarSectors.push(blankSector);
-//                    }
-//                }
-//            }
-//        }
-//    })
 
 ;
 

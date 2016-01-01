@@ -20,7 +20,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
 
     .factory('ParseAdapter', function(
         LoadIncident_Parse, LoadAllIncidents_Parse, LoadIncidentTypes_Parse, UpdateIncidentAsNeeded_Parse, isLoggedIn_Parse,
-        LoadActionTypes_Parse, LoadSectorTypes_Parse, LoadUnitTypes_Parse,
+        LoadActionTypes_Parse, LoadSectorTypes_Parse, CreateNewSectorType_Parse, LoadUnitTypes_Parse,
         SaveIncident_Parse, SaveSector_Parse, CreateNewSector_Parse, SaveReportAction_Parse,
         CreateNewMayday_Parse, SaveMayday_Parse, DeleteMayday_Parse
     ) {
@@ -53,6 +53,7 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
             isLoggedIn:             isLoggedIn_Parse,
             LoadActionTypes:        LoadActionTypes_Parse,
             LoadSectorTypes:        LoadSectorTypes_Parse,
+            CreateNewSectorType:    CreateNewSectorType_Parse,
             LoadUnitTypes:          LoadUnitTypes_Parse,
             SaveIncident:           SaveIncident_Parse,
             SaveSector:             SaveSector_Parse,
@@ -571,6 +572,29 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                     console.log('Failed to LoadSectorTypes, with error code: ' + error.message);
                 }
             });
+        }
+    })
+    .factory('CreateNewSectorType_Parse', function (ConvertParseObject) {
+        return function () {
+            //'name', '', '', '', '', '', '', '', '', '', '', '', '', ''
+            var SectorTypeParseObj = Parse.Object.extend('SectorType');
+            var sectorTypeObject = new SectorTypeParseObj();
+            ConvertParseObject(sectorTypeObject, SECTOR_TYPE_DEF);
+            sectorTypeObject.name               = "";
+            sectorTypeObject.manyBenchmarkBars  = 0;
+            sectorTypeObject.hasAcctBtn         = false;
+            sectorTypeObject.hasActions         = false;
+            sectorTypeObject.hasClock           = false;
+            sectorTypeObject.hasPsiBtn          = false;
+            sectorTypeObject.isVisible          = false;
+            sectorTypeObject.hasClassicBnch     = false;
+            sectorTypeObject.hasVentBnch        = false;
+            sectorTypeObject.hasIricBnch        = false;
+            sectorTypeObject.hasSafetyBnch      = false;
+            sectorTypeObject.hasTreatmentBnch   = false;
+            sectorTypeObject.hasLzBnch          = false;
+            sectorTypeObject.hasTriageBnch      = false;
+            return sectorTypeObject;
         }
     })
 

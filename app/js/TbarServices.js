@@ -1,4 +1,4 @@
-angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices'])
+angular.module('TbarServices', ['DataServices', 'SectorServices', 'AdapterServices'])
 
     .factory('TbarSectors', function() {
         return new Array();
@@ -29,17 +29,12 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         };
     })
 
-    .factory('AddDefaultTbars', ['GridsterOpts', 'TbarSectors', 'ConvertParseObject', 'SectorTypes', function (GridsterOpts, TbarSectors, ConvertParseObject, SectorTypes) {
+    .factory('LoadDefaultTbars', function (AdapterStore, GridsterOpts, SectorTypes) {
         return function (incident) {
-            var SectorParseObj = Parse.Object.extend('Sector');
 
-            var rescuSector = new SectorParseObj()
-            var rehabSector = new SectorParseObj()
-            var safetSector = new SectorParseObj()
-
-            new ConvertParseObject(rescuSector, SECTOR_DEF);
-            new ConvertParseObject(rehabSector, SECTOR_DEF);
-            new ConvertParseObject(safetSector, SECTOR_DEF);
+            var rescuSector = AdapterStore.adapter.CreateNewSector();
+            var rehabSector = AdapterStore.adapter.CreateNewSector();
+            var safetSector = AdapterStore.adapter.CreateNewSector();
 
             rescuSector.sectorType = SectorTypes.RESCUE;
             rehabSector.sectorType = SectorTypes.REHAB;
@@ -56,12 +51,10 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
             rehabSector.incident = incident;
             safetSector.incident = incident;
 
-            TbarSectors.push(rescuSector);
-            TbarSectors.push(rehabSector);
-            TbarSectors.push(safetSector);
+            incident.sectors.push(rescuSector);
+            incident.sectors.push(rehabSector);
+            incident.sectors.push(safetSector);
 
-//            var manySectors = (GridsterOpts.rows * GridsterOpts.columns) - 3;
-//            for (var i = 0; i < manySectors; i++) {
             for(var col=0; col<GridsterOpts.columns; col++) {
                 for(var row=0; row<GridsterOpts.rows; row++) {
                     if(
@@ -70,18 +63,17 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
                             (row==safetSector.row && col==safetSector.col)
                         ) {
                     } else {
-                        var blankSector = new SectorParseObj();
-                        ConvertParseObject(blankSector, SECTOR_DEF);
+                        var blankSector = AdapterStore.adapter.CreateNewSector();
                         blankSector.sectorType = SectorTypes.DEFAULT_SECTOR_TYPE;
                         blankSector.row = row;
                         blankSector.col = col;
                         blankSector.incident = incident;
-                        TbarSectors.push(blankSector);
+                        incident.sectors.push(blankSector);
                     }
                 }
-            }
+            }//for
         }
-    }])
+    })
 
     .factory('AddTbar', ['TbarSectors', function (TbarSectors) {
         return function (newSector) {
@@ -98,15 +90,13 @@ angular.module('TbarServices', ['ParseServices', 'DataServices', 'SectorServices
         }
     }])
 
-    .factory('CreateBlankSectorType', ['ConvertParseObject', function (ConvertParseObject) {
+    .factory('CreateBlankSectorType', function (AdapterStore) {
         return function () {
-            var SectorTypeParseObj = Parse.Object.extend('SectorType');
-            var BLANK_SECTOR_TYPE = new SectorTypeParseObj();
-            ConvertParseObject(BLANK_SECTOR_TYPE, SECTOR_TYPE_DEF);
+            var BLANK_SECTOR_TYPE = AdapterStore.adapter.CreateNewSectorType();
             BLANK_SECTOR_TYPE.isVisible = false;
             return BLANK_SECTOR_TYPE;
         }
-    }])
+    })
 
     .factory('ToggleUnitTypeForSector', [
         'CreateNewUnit', 'ReportFunctions', 'DefaultErrorLogger',
