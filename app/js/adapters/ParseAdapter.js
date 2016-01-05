@@ -431,6 +431,10 @@ angular.module('ParseAdapter', ['ParseServices','ObjectivesServices', 'OSRServic
                 return $q.all(promises).then(function(bunchOfObjects){
                     // Ignore the bunchOfObjects.  We just want to return the incident:
                     FindAllMaydayUnitsForIncident(incident);
+
+                    // Cache incident in localStorage
+                    localStorage.setItem('ict.v2.incident', incident);
+
                     return incident;
                 });
             });
